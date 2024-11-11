@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Kalnia+Glaze:wght@100..700&family=Lilita+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Rowdies:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+// app global css in SCSS form
+* {
+    font-family: "Montserrat", sans-serif;
+    scroll-behavior: smooth;
+}
+
+html,body {
+  background: #2a2a2af0;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #2a2a2af0, #0e0e0e);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, #0f0a1cf0, #00002e); 
+    
+}
+
+.bg-grad-1 {
+    background: #4A00E0;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #4A00E0, #670bb8);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #4A00E0, #670bb8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+}
+.bg-grad-2 {
+    background: #8E2DE2;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #682edc, #8E2DE2);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #682edc, #8E2DE2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+}
+.bg-glass-2 {
+    background: #682edc9f;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #682edc9f, #8d2de2ab);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #682edc9f, #8d2de2ab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    backdrop-filter: blur(10px);
+}
+.bg-grad-3 {
+    background: #682edc;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #682edc, #670bb8);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #682edc, #670bb8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bg-grad-4 {
+    background: #8E2DE2;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #682edc, #8E2DE2);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #682edc, #8E2DE2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.bg-grad-5 {
+    background: #3b3b3b;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #3b3b3b, #272727);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #3b3b3b, #272727); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.bg-grad-6 {
+    background: #3d3d3df0;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #3d3d3df0, #232323);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #3d3d3df0, #232323); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.bg-grad-7 {
+    background: #2a2a2af0;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #2a2a2af0, #0e0e0e);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #0f0a1cf0, #00002e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bg-glass-1{
+  background: #f0e5ff;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #f0e5ff, #f7f3ff);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #f0e5ff, #f7f3ff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  
+}
+
+.w100{
+    width: 100%;
+}
+.w80{
+    width: 80%;
+
+}
+.relative {
+    position: relative;
+}
+
+.opacity-8{
+    opacity: 0.6;
+}
+
+.bg-white {
+    background-color: #efefef!important;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 20px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+  }
+  
+  /* Handle */::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background: #6310E1;
+    cursor: grab;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #57329F; 
+  }
+
+  .hline{
+    height: 2px;
+    opacity: 0.5;
+  }
+
+  .mid-opacity{
+    opacity: 0.5;
+  }
+
+th{
+    font-weight: bold!important;
+    font-size: 1rem!important;
+}
+
+.h12 {
+  height: 12px;
+}
+
+#title {
+  font-family: "Rowdies", sans-serif;
+  letter-spacing: 1px;
+  font-size: 40px;
+}
+#title-menu {
+  font-family: "Rowdies", sans-serif;
+  letter-spacing: 1px;
+  font-size: 26px;
+}
+#title-layout {
+  font-family: "Rowdies", sans-serif;
+  font-size: 20px;
+}
+
+.text-shadow {
+  text-shadow: 0px 0px .5px #0000009a;
+}
+.bg-purple-light{
+  background: #dbccf7!important;
+}
+
+tr:nth-child(2n){
+  background: #efe6fd!important;
+}
+
+.q-dialog{
+    backdrop-filter: blur(12px)!important;
+    animation: fadeIn 0.5s;
+    transition: all 0.5s;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

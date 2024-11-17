@@ -10,7 +10,8 @@
 
 
 const { configure } = require('quasar/wrappers');
-
+const dotenv = require('dotenv');
+dotenv.config();
 
 module.exports = configure(function (/* ctx */) {
   return {
@@ -62,7 +63,10 @@ module.exports = configure(function (/* ctx */) {
 
       // publicPath: '/',
       // analyze: true,
-      // env: {},
+      env: {
+        PROD_BACKEND_URL: process.env.PROD_BACKEND_URL,
+        DEV_BACKEND_URL: process.env.DEV_BACKEND_URL,
+      },
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,

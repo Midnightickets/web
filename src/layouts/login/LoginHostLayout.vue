@@ -55,8 +55,10 @@
 import { useQuasar } from 'quasar';
 import { api } from 'src/boot/axios';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const $q = useQuasar()
+const router = useRouter()
 
 const formConfig = ref({
     showPassword: false,
@@ -92,12 +94,14 @@ async function login() {
     await api.post(formConfig.value.hostLoginRoute, makeReqObject())
     .then(response => {
         sessionStorage.setItem('host', JSON.stringify(response.data))
+        sessionStorage.setItem('isHost', true)
         $q.notify({
-            color: 'positive',
+            color: 'dark',
             position: 'top',
             message: 'Bem vindo '+ response.data.login,
             icon: 'diamond'
         })
+        router.push('/host/app')
     })
     .catch(err => {
         $q.notify({

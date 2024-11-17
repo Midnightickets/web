@@ -37,7 +37,7 @@
                     style="overflow: hidden ;z-index: 9;">
                     <q-btn glossy to="/login-host" color="secondary"
                         class="animate__animated text-primary animate__fadeInLeft  animate__delay-3s animate__slower q-pa-xl rounded-borders"
-                        icon-right="nightlife" label="Sou Produtor!" />
+                        icon-right="diamond" label="Sou Produtor!" />
                     <q-btn glossy to="/login" @click="scrollBot()"
                         class="animate__animated animate__fadeInRight bg-primary q-ml-sm text-white animate__delay-3s animate__slower q-pa-xl rounded-borders"
                         icon-right="confirmation_number" label="Quero Ingressos!" />

@@ -10,7 +10,7 @@ import axios from 'axios'
 const isProd = !window.location.href.includes('localhost')
 const axiosConfig = { baseURL: isProd ? process.env.PROD_BACKEND_URL : process.env.DEV_BACKEND_URL }
 const api = axios.create(axiosConfig)
-console.log(axiosConfig.baseURL)
+console.log('Api Url: ' + axiosConfig.baseURL)
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 

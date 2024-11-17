@@ -2,7 +2,7 @@
   "name": "midnightickets-web",
   "version": "0.0.1",
   "description": "Frontend do projeto MIDNIGHTICKETS",
-  "productName": "Midnightickets Web",
+  "productName": "Midnight Tickets",
   "author": "samuelvictorol",
   "private": true,
   "scripts": {

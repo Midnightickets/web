@@ -12,10 +12,11 @@ const routes = [
     component: () => import('layouts/login/LoginHostLayout.vue'),
   },
   {
-    path: '/host/app',
+    path: '/host',
     component: () => import('src/layouts/HostLayout.vue'),
     children: [
-      { path: '', component: () => import('src/pages/host/EventosPage.vue') },
+      { path: '', component: () => import('src/pages/host/eventos/EventosPage.vue') },
+      { path: 'criar-evento', component: () => import('src/pages/host/eventos/CreateEventoPage.vue') },
     ]
   },
   // Always leave this as last one,

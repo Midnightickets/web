@@ -339,7 +339,7 @@
 </template>
 <script setup>
 import { useQuasar } from "quasar";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { api } from 'src/boot/axios';
 import { useRouter } from "vue-router";
 
@@ -398,6 +398,10 @@ const checkEmail = () => {
     }
     return true
 }
+
+onMounted(() => {
+    sessionStorage.clear()
+})
 
 async function sendForm(msg) {
     if (!checkEmail()) {

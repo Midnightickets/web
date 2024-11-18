@@ -1,5 +1,5 @@
 <template>
-    <q-page class="animate__animated animate__fadeIn bg-grad-7 q-pb-xl">
+    <q-page class="animate__animated animate__fadeIn bg-twitch q-pb-xl">
         <div class="relative bg-grey-4">
             <div
                 class="title-1 w100 q-px-sm row items-center text-primary shadow-1 q-py-md justify-between no-wrap text-bold">
@@ -15,13 +15,17 @@
             </div>
         </div>
         <div id="title" class=" text-secondary q-mt-sm w100 text-center text-bold">Meus Eventos</div>
+        <div class="w100 q-my-md q-pl-md">
+            <q-btn class="q-pa-md text-bold" label="Novo Evento" glossy color="primary"
+                to="/host/criar-evento" icon="event" icon-right="add" />
+        </div>
         <div class="q-ma-md">
             <q-input v-model="filter.title" label="Buscar Evento" filled  class="bg-white">
                 <template v-slot:append>
                     <q-icon name="search" color="primary" size="md" @click="getEventos()"/>
                 </template>
             </q-input>
-            <q-toggle v-model="filter.inProgress" label="Em Andamento"  class="q-mt-xs q-mb-md text-white" />
+            <q-toggle color="green-13" v-model="filter.inProgress" :label="filter.inProgress ? 'Em Andamento' : 'Todos'" @update:model-value="getEventos()" class="q-mt-xs q-mb-md text-white" />
             <div v-if="loading" class="row w100 q-pb-xl justify-center">
                 <q-spinner-ball color="primary" size="lg" />
                 <q-spinner-ball color="primary" size="lg" />
@@ -68,10 +72,12 @@
 import { api } from 'src/boot/axios';
 import { Utils } from 'src/utils/Utils';
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const hostInfo = sessionStorage.getItem('host') ? JSON.parse(sessionStorage.getItem('host')) : null;
 const isMobile = window.innerWidth < 800 || document.documentElement.clientWidth < 800
 
+const router = useRouter();
 const loading = ref(false);
 const filter = ref({
     title: '',
@@ -94,16 +100,10 @@ const columns = [
         field: 'acoes'
     },
     {
-        name: 'date',
+        name: 'status',
         align: 'left',
-        label: 'Data do Evento',
-        field: 'date'
-    },
-    {
-        name: 'available_tickets',
-        align: 'left',
-        label: 'Ingressos Disponíveis',
-        field: 'available_tickets'
+        label: 'Status',
+        field: 'status'
     },
     {
         name: 'package',
@@ -112,19 +112,28 @@ const columns = [
         field: 'package'
     },
     {
+        name: 'available_tickets',
+        align: 'left',
+        label: 'Ingressos Disponíveis',
+        field: 'available_tickets'
+    },
+    {
         name: 'access',
         align: 'left',
         label: 'Acesso',
         field: 'access'
     },
     {
-        name: 'status',
+        name: 'date',
         align: 'left',
-        label: 'Status',
-        field: 'status'
+        label: 'Data do Evento',
+        field: 'date'
     },
-
 ];
+
+function openCreateEventoPage() {
+    router.push('/criar-evento');
+}
 
 async function getEventos() {
     const reqObject = {

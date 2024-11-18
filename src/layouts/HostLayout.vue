@@ -55,7 +55,8 @@
             </div>
             <div class="absolute-bottom w100  row no-wrap items-center justify-center q-mt-xl text-primary q-py-sm">
                 <div class="row items-center w100">
-                    <q-btn label="sair" color="secondary" class="w100 q-mx-md" to="/" glossy></q-btn>
+                    <q-btn class="w100 q-mb-xl" flat @click="rightDrawerOpen = !rightDrawerOpen" color="secondary">fechar menu</q-btn>
+                    <!-- <q-btn label="logout" icon-right="logout" color="secondary" class="w100 q-mx-md" to="/" glossy></q-btn> -->
                 </div>
             </div>
         </q-drawer>
@@ -84,10 +85,10 @@ const router = useRouter()
 const menuOptions = ref({
     items: [
         // HOST MENUS
-        { label: 'Eventos', icon: 'calendar_month', to: '/eventos', role: 'host', selected: true, },
-        { label: 'Acessos', icon: 'sensor_occupied', to: '/app/acesso', role: 'host', selected: false, },
-        { label: 'Recarregar', icon: 'currency_exchange', to: '/app/recarregar', role: 'host', selected: false, },
-        { label: 'Suporte', icon: 'support_agent', to: 'https://samuelvictorol.github.io/portfolio/contato', selected: false }
+        { label: 'Eventos', icon: 'calendar_month', to: '/host', role: 'host', selected: true, },
+        { label: 'Acessos', icon: 'sensor_occupied', to: '#', role: 'host', selected: false, },
+        { label: 'Recarregar', icon: 'currency_exchange', to: '#', role: 'host', selected: false, },
+        { label: 'Suporte', icon: 'support_agent', to: 'https://samuelvictorol.github.io/portfolio/contato', selected: false },
     ]
 })
 function goTo(item) {

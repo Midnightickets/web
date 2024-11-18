@@ -163,3 +163,9 @@ tr:nth-child(2n){
         opacity: 1;
     }
 }
+
+.bg-twitch{
+  background: #6441a5;
+  background: -webkit-linear-gradient(to top, #2a0845, #6441a5);
+  background: linear-gradient(to top, #2a0845, #6441a5);
+}

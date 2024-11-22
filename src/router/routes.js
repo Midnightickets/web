@@ -17,6 +17,7 @@ const routes = [
     children: [
       { path: '', component: () => import('src/pages/host/eventos/EventosPage.vue') },
       { path: 'criar-evento', component: () => import('src/pages/host/eventos/CreateEventoPage.vue') },
+      { path: 'evento', component: () => import('src/pages/host/eventos/EventoPage.vue') },
     ]
   },
   // Always leave this as last one,

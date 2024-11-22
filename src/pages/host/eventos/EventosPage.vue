@@ -131,9 +131,11 @@ const columns = [
     },
 ];
 
-function openCreateEventoPage() {
-    router.push('/criar-evento');
+function openMeuEventoPage(evento_id) {
+    sessionStorage.setItem('evento', evento_id);
+    router.push('/host/evento');
 }
+
 
 async function getEventos() {
     const reqObject = {

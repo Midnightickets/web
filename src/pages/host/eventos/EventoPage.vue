@@ -1,8 +1,8 @@
 <template>
     <q-page class="animate__animated animate__fadeIn">
-        <div v-if="evento != null" class="text-secondary q-pt-md">
+        <div v-if="evento != null" class="text-secondary q-pt-xs">
             <div class="w100">
-                <q-btn @click="goTo('/host')" flat icon="keyboard_return" label="voltar" color="secondary">
+                <q-btn @click="goTo('/host')" dense class="q-ml-sm" flat  icon="keyboard_return" label="voltar" color="secondary">
                 </q-btn>
             </div>
             <div id="title" class="text-white q-pl-md">{{ evento.title }}</div>

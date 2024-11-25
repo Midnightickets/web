@@ -11,29 +11,22 @@
                         size="md" class="q-mb-xs"></q-icon> Saldo Atual: {{
                             Utils.formatCurrency(hostInfo.balance, 'brl') }}</div>
                 <q-select v-if="!loading" v-model="pacote" @update:model-value="verificaSaldoDisponivel()"
-                    :options="pacoteOptions" outlined label="Pacote de Ingressos*" color="primary" />
+                    :options="pacoteOptions" outlined label="Pacote de Ingressos*" color="primary">
+                </q-select>
                 <div v-if="loading" class="row w100 q-pb-xl justify-center">
                     <q-spinner-ball color="primary" size="lg" />
                     <q-spinner-ball color="primary" size="lg" />
                     <q-spinner-ball color="primary" size="lg" />
                 </div>
             </div>
-            <div v-if="pacote != null && possuiSaldo && ingressosDisponiveis > 0" class="column q-gutter-y-md q-mb-xl">
-                <div class="w100 hline bg-primary"></div>
-                <q-input :inputStyle="{ fontWeight: 'bold', color: '#6310E1' }" outlined class="q-mt-lg"
+            <div v-if="pacote != null && possuiSaldo" class="column q-gutter-y-md q-mb-xs">
+                <q-input :inputStyle="{ fontWeight: 'bold', color: '#6310E1' }" filled class=""
                     v-model="ingressoHandler.title" placeholder="Entrada Masculina, Camarote, Pista Inteira"
                     maxlength="40" label="Título do Ingresso*" />
-                <q-input :inputStyle="{ fontWeight: 'bold', color: '#6310E1' }" outlined maxlength="7" prefix="R$"
+                <q-input :inputStyle="{ fontWeight: 'bold', color: '#6310E1' }" filled maxlength="7" prefix="R$"
                     v-model="ingressoHandler.price" label="Preço do Ingresso*" reverse-fill-mask mask="####,##">
                     <template v-slot:append>
                         <q-icon name="payments" color="primary" />
-                    </template>
-                </q-input>
-                <q-input :inputStyle="{ fontWeight: 'bold', color: '#6310E1' }" outlined mask="#####" maxlength="4"
-                    v-model="ingressoHandler.quantity" label="Quantidade de Ingressos*" reverse-fill-mask>
-                    <template v-slot:append>
-                        <div class="q-pr-sm">{{ ingressosDisponiveis }}</div>
-                        <q-icon name="confirmation_number" color="primary" />
                     </template>
                 </q-input>
                 <q-btn label="Adicionar Ingresso" color="blue-14" glossy :disable="validaIngresso()"
@@ -47,25 +40,26 @@
                     class="relative column no-wrap items-center rounded-borders shadow-4 bg-grad-1 q-mb-md  justify-between">
                     <div class="row q-py-xs items-center">
                         <div class="text-bold text-white q-py-sm text-center" id="title-layout">{{
-                            format(ingresso.title) }}</div>
+                            format(ingresso.title) }}
+                            <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                                {{ ingresso.title }}
+                            </q-tooltip>
+                        </div>
                     </div>
                     <div class="w100 bg-secondary mid-opacity q-mx-md" style="height: 2px"></div>
                     <div class="row w100 items-center justify-center ">
                         <q-btn class="absolute" style="top:-5px;left:-15px" color="red" flat icon="close"
                             @click="removeIngresso(index)" />
-                        <q-btn :label="ingresso.quantity" icon="local_activity" flat color="grey-4"
-                            class="text-bold q-mr-lg" />
-                        <div class="text-bold text-green-13 text-shadow">R$ {{ ingresso.price }}</div>
+                        <div class="text-bold text-green-13 text-shadow q-py-xs">R$ {{ ingresso.price }}</div>
                     </div>
                 </div>
-                <div v-if="ingressos.length" class="text-center text-bold text-secondary">{{ ingressos.length }} Tipo(s)
-                    de ingresso
+                <div v-if="ingressos.length" class="text-right text-bold text-secondary">{{ ingressos.length }}
                 </div>
                 <div v-else class="text-center text-bold text-secondary">No momento não há ingressos cadastrados</div>
             </div>
             <div class="w100 hline bg-primary"></div>
-            <q-btn :disabled="checkNext()" label="Criar Evento" glossy color="green-14" class="q-py-lg"
-                @click="criarEventTrigger()" icon-right="event" />
+            <q-btn v-if="!loading" :disabled="checkNext()" label="Criar Evento" glossy color="green-14" class="q-py-lg"
+                @click="criarEvento()" icon-right="event" />
             <q-btn label="voltar" flat color="primary" @click="goPrev()" />
         </div>
 
@@ -87,12 +81,11 @@ const pacoteOptions = ref([])
 const pacote = ref(null)
 const hostInfo = sessionStorage.getItem('host') ? JSON.parse(sessionStorage.getItem('host')) : null;
 const possuiSaldo = ref(false)
-const ingressosDisponiveis = ref(0)
 
 const ingressoHandler = ref({
     title: '',
     price: '',
-    quantity: '',
+    status: true
 })
 
 const $q = useQuasar()
@@ -112,7 +105,6 @@ function verificaSaldoDisponivel() {
     } else {
         possuiSaldo.value = true
         sessionStorage.setItem('pacote', JSON.stringify(pacote.value))
-        ingressosDisponiveis.value = pacote.value.max_tickets
     }
 }
 
@@ -154,34 +146,21 @@ function formatToNumber(inputString) {
 }
 const addIngresso = () => {
     let valid = true
-    if (ingressoHandler.value.quantity > ingressosDisponiveis.value) {
-        $q.notify({
-            color: 'blue-8',
-            position: 'top',
-            message: 'Quantidade de ingressos maior do que o disponível',
-            icon: 'report_problem'
-        })
-        ingressoHandler.value.quantity = 0
-        return
-    } else {
-        ingressoHandler.value.title = ingressoHandler.value.title.trim().toLowerCase()
-        ingressos.value.forEach(ingresso => {
-            if (ingresso.title.trim().toLowerCase() == ingressoHandler.value.title) {
-                $q.notify({
-                    color: 'orange-14',
-                    position: 'top',
-                    message: 'Título de ingresso já cadastrado',
-                    icon: 'report_problem'
-                })
-                ingressoHandler.value.title = ''
-                valid = false
-                return
-            }
-        });
-    }
+    ingressoHandler.value.title = ingressoHandler.value.title.trim().toLowerCase()
+    ingressos.value.forEach(ingresso => {
+        if (ingresso.title.trim().toLowerCase() == ingressoHandler.value.title) {
+            $q.notify({
+                color: 'orange-14',
+                position: 'top',
+                message: 'Título de ingresso já cadastrado',
+                icon: 'report_problem'
+            })
+            ingressoHandler.value.title = ''
+            valid = false
+            return
+        }
+    });
     if (valid) {
-        ingressoHandler.value.quantity = Number(ingressoHandler.value.quantity)
-        ingressosDisponiveis.value -= ingressoHandler.value.quantity
         ingressoHandler.value.price = formatToNumber(ingressoHandler.value.price)
         ingressos.value.push(ingressoHandler.value)
         sessionStorage.setItem('pacote', JSON.stringify(pacote.value))
@@ -196,7 +175,7 @@ const addIngresso = () => {
 }
 
 function validaIngresso() {
-    return ingressoHandler.value.title == '' || ingressoHandler.value.price == '' || ingressoHandler.value.quantity == 0 || ingressoHandler.value.quantity == null
+    return ingressoHandler.value.title == '' || ingressoHandler.value.price == ''
 
 }
 
@@ -210,12 +189,12 @@ function format(text) {
 function removeIngresso(index) {
     const confirm = window.confirm('Deseja realmente remover este tipo de ingresso?')
     if (confirm) {
-        ingressosDisponiveis.value += Number(ingressos.value[index].quantity)
         ingressos.value.splice(index, 1)
     }
 }
 
 const criarEvento = async () => {
+    loading.value = true
     const reqObject = {
         ...JSON.parse(sessionStorage.getItem('eventoStep1')),
         ticket_types: ingressos.value,
@@ -246,20 +225,7 @@ const criarEvento = async () => {
                 icon: 'report_problem'
             })
         })
-}
-
-const criarEventTrigger = async () => {
-    if (ingressosDisponiveis.value > 0) {
-        const confirm = window.confirm('Você ainda possui Ingressos Disponíveis para uso.\nCaso não os utilize eles serão perdidos.\nDeseja Continuar?')
-        if (confirm) {
-            await criarEvento()
-        }
-        else {
-            return
-        }
-    } else {
-        await criarEvento()
-    }
+        .finally(() => { loading.value = false })
 }
 
 const goPrev = () => {
@@ -275,7 +241,6 @@ onMounted(async () => {
         ingressos.value = es2
         pacote.value = JSON.parse(sessionStorage.getItem('pacote'))
         verificaSaldoDisponivel()
-        ingressosDisponiveis.value = pacote.value.max_tickets - es2.reduce((acc, curr) => acc + curr.quantity, 0)
     }
 })
 

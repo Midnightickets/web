@@ -14,7 +14,8 @@
                 </div>
             </div>
         </div>
-        <div id="title" class=" text-secondary q-mt-sm w100 text-center text-bold">Meus Eventos</div>
+        <div class="w100 q-pt-md"></div>
+        <div id="title" class=" text-secondary q-pt-xl w100 text-center text-bold">Meus Eventos</div>
         <div class="w100 q-my-md q-pl-md">
             <q-btn class="q-pa-md text-bold" label="Novo Evento" glossy color="primary"
                 to="/host/criar-evento" icon="event" icon-right="add" />
@@ -178,9 +179,9 @@ onMounted(async () => {
 }
 
 .title-1 {
-    position: sticky;
+    position: fixed;
     top: 50px;
-    background: #dacaff56;
+    background: #fdfcffcc;
     backdrop-filter: blur(12px);
     z-index: 2;
 }

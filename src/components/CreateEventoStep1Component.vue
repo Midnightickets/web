@@ -19,7 +19,7 @@
                     <q-btn flat icon="info" color="primary" />
                 </template>
             </q-input>
-            <q-input maxlength="200" filled type="textarea" v-model="evento.address" label="Endereço*">
+            <q-input maxlength="400" filled type="textarea" v-model="evento.address" label="Endereço*">
                 <template v-slot:append>
                     <q-btn flat icon="pin_drop" color="primary" />
                 </template>
@@ -30,7 +30,7 @@
                 </template>
             </q-input>
             <div class="w100">
-                <q-input  id="times" label="Início*" outlined v-model="evento.initial_time" mask="time" :rules="['time']">
+                <q-input  id="times" label="Início" outlined v-model="evento.initial_time" mask="time" :rules="['time']">
                     <template v-slot:append>
                         <q-icon name="access_time" color="primary" class="cursor-pointer">
                             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -57,6 +57,7 @@
                     </template>
                 </q-input>
             </div>
+            <div class="text-secondary" id="title-layout">Data do Evento é Obrigatória*</div>
             <q-date id="date-picker" class="w100" v-model="evento.date" mask="DD-MM-YYYY HH:mm" :options="(date) => {
                 const today = new Date();
                 const yesterday = new Date(today);
@@ -122,13 +123,12 @@ const returnEventos = () => {
 }
 
 const checkRequiredFields = () => {
-    const { title, address, contact, initial_time, date } = evento.value;
+    const { title, address, contact, date } = evento.value;
 
     // Verifica se algum campo obrigatório está vazio ou nulo
-    if (!title || !address || !contact || !initial_time || !date) {
+    if (!title || !address || !contact || !date) {
         return true;
     }
-    // console.log(date)
     // Converte a data do formato DD-MM-YYYY para um objeto Date no fuso horário local
     const [day, month, year] = date.slice(0, -6).split('-');
     const dataEventoDate = new Date(year, month - 1, day); // Mês é zero-indexado

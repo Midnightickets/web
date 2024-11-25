@@ -30,7 +30,13 @@
                         />
                     </template>
                 </q-input>
+                <div v-if="loading" class="row w100 q-pb-xl justify-center">
+                    <q-spinner-ball color="primary" size="lg" />
+                    <q-spinner-ball color="primary" size="lg" />
+                    <q-spinner-ball color="primary" size="lg" />
+                </div>
                 <q-btn
+                    v-if="!loading"
                     :disabled="isLoginFormInvalid()"
                     @click="login"
                     label="Login"
@@ -59,6 +65,7 @@ import { useRouter } from 'vue-router';
 
 const $q = useQuasar()
 const router = useRouter()
+const loading = ref(false)
 
 const formConfig = ref({
     showPassword: false,
@@ -93,6 +100,7 @@ onMounted(() => {
     sessionStorage.clear()
 })
 async function login() {
+    loading.value = true
     await api.post(formConfig.value.hostLoginRoute, makeReqObject())
     .then(response => {
         sessionStorage.setItem('host', JSON.stringify(response.data))
@@ -113,6 +121,9 @@ async function login() {
             icon: 'report_problem',
         })
         host.value.password = ''
+    })
+    .finally(() => {
+        loading.value = false
     })
 }
 

@@ -7,8 +7,8 @@
             </div>
             <div id="title" class="text-white q-pl-md">{{ evento.title }}</div>
             <div class="text-bold q-pb-sm q-pl-md">{{ evento.status }}</div>
-            <div class="text-bold q-pl-md">🕑 {{ evento.date.replaceAll("-", "/") }} às {{ evento.initial_time +
-                (evento.final_time ? (' - ' + evento.final_time) : null ) }}</div>
+            <div class="text-bold q-pl-md">🕑 {{ evento.date.replaceAll("-", "/") }} {{ (evento.initial_time ? ' às ' + evento.initial_time : '') +
+                (evento.final_time ? (' - ' + evento.final_time) : '' ) }}</div>
             <!-- <q-date id="date-picker" class="" v-model="evento.date" mask="DD-MM-YYYY HH:mm" :options="(date) => {
                     const today = new Date();
                     const yesterday = new Date(today);
@@ -46,7 +46,7 @@
                         <div class="text-h6 text-primary">Contato</div>
                         <div>{{ evento.contact }}</div>
                     </q-card-section>
-                    <q-card-section>
+                    <q-card-section v-if="evento.maps_loc">
                         <div class="text-h6 text-primary q-mb-sm">Localização</div>
                         <iframe :src="evento.maps_loc" class="w100" height="450" style="border:0;" loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade"></iframe>

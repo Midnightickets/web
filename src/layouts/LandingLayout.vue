@@ -1,5 +1,5 @@
 <template>
-    <q-layout class="relative animate__animated animate__fadeIn bg-grad-7">
+    <q-layout class="relative animate__animated animate__fadeIn">
         <q-header class="fixed bg-glass-2 text-white animate__animated animate__backInDown animate__slow shadow-1"
             height-hint="98">
             <div style="font-size: 1rem;" class=" q-py-md w100 row no-wrap items-center  justify-evenly">
@@ -29,7 +29,6 @@
                     </q-btn>
                 </div>
             </div>
-
         </q-header>
         <q-page-container>
             <div class="w100 row justify-center q-mt-md relative" style="overflow: hidden ">
@@ -447,6 +446,8 @@ function scrollToVantagem() {
 </script>
 
 <style scoped>
+
+
 * {
     overflow-x: hidden;
 }

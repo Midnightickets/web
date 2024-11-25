@@ -1,7 +1,7 @@
 <template>
     <div class="es1 bg-white q-mx-sm  rounded-borders shadow-4 relative">
         <div
-            class="title-1 w100 text-h6 row items-center text-primary shadow-1 q-py-xs q-px-sm justify-center text-bold">
+            class="title-1 w100 text-h6 row items-center text-primary shadow-1 q-pt-md q-pb-sm q-mt-lg q-px-sm justify-center text-bold">
             <q-icon size="md" color="primary" name="confirmation_number" class="q-pr-sm" />
             Configurar Ingressos
         </div>

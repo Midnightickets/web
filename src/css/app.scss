@@ -4,14 +4,14 @@
 * {
     font-family: "Montserrat", sans-serif;
     scroll-behavior: smooth;
-    overflow-x: hidden;
 }
 
 html,body {
   background: #2a2a2af0;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to top, #2a2a2af0, #0e0e0e);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to top, #0f0a1cf0, #00002e); 
-    
+  overflow-x: hidden;
+  
 }
 
 .bg-grad-1 {
@@ -169,4 +169,8 @@ tr:nth-child(2n){
   background: #6441a5;
   background: -webkit-linear-gradient(to top, #2a0845, #6441a5);
   background: linear-gradient(to top, #2a0845, #6441a5);
+}
+
+.vw100{
+  width: 100vw;
 }

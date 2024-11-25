@@ -1,6 +1,6 @@
 <template>
-  <q-page class="bg-grad-7 animate__animated animate__fadeIn relative">
-      <div class="steps w100 row justify-center bg-grad-7 q-py-xs">
+  <q-page class="bg-grad-7 w100 animate__animated animate__fadeIn relative">
+      <div class="steps w100  row justify-center bg-grad-7 q-py-sm">
           <div  id="step-1" :class=" step == 1 ?  'bg-secondary' : 'bg-secondary mid-opacity'"></div>
           <div  id="step-2" :class=" step == 2 ? 'bg-secondary' : 'bg-secondary mid-opacity'"></div>
       </div>
@@ -44,9 +44,9 @@ onBeforeUnmount(() => {
 
 }
 .steps{
-  position: sticky;
+  position: fixed;
   top: 50px;
-  z-index: 2;
+  z-index: 9999;
 }
 
 #step-1, #step-2, #step-3 {

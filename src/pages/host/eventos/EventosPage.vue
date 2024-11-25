@@ -61,9 +61,7 @@
                     </q-td>
                 </template>
             </q-table>
-            <div  v-if="!loading" class="w100 text-right text-secondary  q-mb-md text-bold">
-                {{ rows.length > 0 ? (rows.length.toString() + ' evento(s) encontrado(s)🔎') : 'Nenhum evento encontrado🌃' }} 
-            </div>
+
         </div>
     </q-page>
 </template>
@@ -150,7 +148,7 @@ async function getEventos() {
     await api.post('/host/events', reqObject).then((response) => {
         rows.value = response.data;
     }).catch((error) => {
-        console.log(error);
+        console.log(error.data);
     })
     .finally(() => {
         loading.value = false;

@@ -13,6 +13,10 @@ const Utils = {
             return str.slice(0, 8) + '...'
         }
         return str
+    },
+    getIframeLink(url) {
+        const srcMatch = iframeString.match(/src="([^"]+)"/);
+        return srcMatch ? srcMatch[1] : null;
     }
 }
 

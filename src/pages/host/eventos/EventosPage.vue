@@ -162,7 +162,8 @@ async function getSaldo() {
             id: hostInfo.value.id,
     }
     await api.post('/host/get_saldo', reqObject).then((response) => {
-        hostInfo.value.balance = response.data.balance;
+        hostInfo.value.balance = response.data;
+        console.log(hostInfo.value);
         sessionStorage.setItem('host', JSON.stringify(hostInfo.value));
     }).catch((error) => {
         console.log(error.data);

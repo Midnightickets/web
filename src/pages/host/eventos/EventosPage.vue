@@ -5,7 +5,7 @@
                 class="title-1 w100 q-px-sm row items-center text-primary shadow-1 q-py-md justify-between no-wrap text-bold">
                 <div class="row no-wrap items-center">
                     <q-icon size="sm" color="primary" name="paid" class="q-pr-sm" />
-                    {{ Utils.formatCurrency(hostInfo.balance, 'brl') }}
+                    {{ Utils.formatCurrency(hostInfo.balance ? hostInfo.balance : 0, 'brl') }}
                 </div>
                 <div class="row no-wrap items-center">
                     <div class="text-blue-7"> <strong class="high-opacity"></strong>
@@ -23,7 +23,7 @@
         <div class="q-ma-md">
             <q-input v-model="filter.title" label="Buscar Evento" filled  class="bg-white">
                 <template v-slot:append>
-                    <q-icon name="search" color="primary" size="md" @click="getEventos()"/>
+                    <q-icon name="search" class="cursor-pointer " color="primary" size="md" @click="getEventos()"/>
                 </template>
             </q-input>
             <q-toggle color="green-13" v-model="filter.inProgress" :label="filter.inProgress ? 'Em Andamento' : 'Todos'" @update:model-value="getEventos()" class="q-mt-xs q-mb-md text-white" />
@@ -70,11 +70,12 @@
 <script setup>
 import { api } from 'src/boot/axios';
 import { Utils } from 'src/utils/Utils';
-import { onMounted, ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-const hostInfo = sessionStorage.getItem('host') ? JSON.parse(sessionStorage.getItem('host')) : null;
+const hostInfo = ref(null);
 const isMobile = window.innerWidth < 800 || document.documentElement.clientWidth < 800
+
 
 const router = useRouter();
 const loading = ref(false);
@@ -139,8 +140,8 @@ function openMeuEventoPage(evento_id) {
 async function getEventos() {
     const reqObject = {
         host: {
-            id: hostInfo.id,
-            token: hostInfo.token,
+            id: hostInfo.value.id,
+            token: hostInfo.value.token,
         },
         isActiveEventsOnly: filter.value.inProgress,
         title: filter.value.title,
@@ -156,8 +157,22 @@ async function getEventos() {
     });
 }
 
-onMounted(async () => {
+async function getSaldo() {
+    const reqObject = {
+            id: hostInfo.value.id,
+    }
+    await api.post('/host/get_saldo', reqObject).then((response) => {
+        hostInfo.value.balance = response.data.balance;
+        sessionStorage.setItem('host', JSON.stringify(hostInfo.value));
+    }).catch((error) => {
+        console.log(error.data);
+    });
+}
+
+onBeforeMount(async () => {
     window.scrollTo(0, 0);
+    hostInfo.value = sessionStorage.getItem('host') ? JSON.parse(sessionStorage.getItem('host')) : null
+    await getSaldo();
     await getEventos();
 })
 

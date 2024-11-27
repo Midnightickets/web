@@ -168,8 +168,7 @@ const addIngresso = () => {
         ingressoHandler.value = {
             title: '',
             price: '',
-            quantity: '',
-            vendidos: 0
+            status: true,
         }
     }
 }

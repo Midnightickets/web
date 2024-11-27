@@ -30,7 +30,7 @@
                         />
                     </template>
                 </q-input>
-                <div v-if="loading" class="row w100 q-pb-xl justify-center">
+                <div v-if="loading" class="row w100 q-py-sm justify-center">
                     <q-spinner-ball color="primary" size="lg" />
                     <q-spinner-ball color="primary" size="lg" />
                     <q-spinner-ball color="primary" size="lg" />

@@ -18,6 +18,7 @@ const routes = [
       { path: '', component: () => import('src/pages/host/eventos/EventosPage.vue') },
       { path: 'criar-evento', component: () => import('src/pages/host/eventos/CreateEventoPage.vue') },
       { path: 'evento', component: () => import('src/pages/host/eventos/EventoPage.vue') },
+      { path: 'acessos', component: () => import('src/pages/host/AcessosPage.vue') },
     ]
   },
   // Always leave this as last one,

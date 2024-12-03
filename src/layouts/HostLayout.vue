@@ -86,9 +86,9 @@ const menuOptions = ref({
     items: [
         // HOST MENUS
         { label: 'Eventos', icon: 'calendar_month', to: '/host', role: 'host', selected: true, },
-        { label: 'Acessos', icon: 'sensor_occupied', to: '#', role: 'host', selected: false, },
-        { label: 'Recarregar', icon: 'currency_exchange', to: '#', role: 'host', selected: false, },
-        { label: 'Suporte', icon: 'support_agent', to: 'https://samuelvictorol.github.io/portfolio/contato', selected: false },
+        { label: 'Acessos', icon: 'sensor_occupied', to: '/host/acessos', role: 'host', selected: false, },
+        // { label: 'Recarregar', icon: 'currency_exchange', to: '#', role: 'host', selected: false, },
+        // { label: 'Suporte', icon: 'support_agent', to: 'https://samuelvictorol.github.io/portfolio/contato', selected: false },
     ]
 })
 function goTo(item) {

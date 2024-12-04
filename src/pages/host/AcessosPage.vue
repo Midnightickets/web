@@ -1,19 +1,19 @@
 <template>
-    <q-page class="bg-twitch w100 animate__animated animate__fadeIn relative">
+    <q-page class=" w100 animate__animated animate__fadeIn relative">
         <div class="w100">
             <q-btn to='/host' dense class="q-ml-sm" flat  icon="keyboard_return" label="eventos" color="secondary">
             </q-btn>
         </div>
-        <div id="title" class="text-white q-px-sm q-pb-sm text-center">
+        <div id="title" class="text-secondary q-px-sm q-pb-sm text-center">
             Acessos
         </div>
         <div v-if="!editing" class="w100 flex flex-center">
             <q-btn @click="editing = !editing" label="Criar Acesso" color="blue" glossy icon-right="add_circle"></q-btn>
         </div>
-        <div v-if="editing"  class="q-px-xl rounded-borders q-gutter-y-sm text-bold">
-            <q-input v-model="subhostHandler.name" dense maxlenght="20" class="rounded-borders bg-grey-4 q-px-sm text-white" color="primary" placeholder="Nome*"/>
-            <q-input v-model="subhostHandler.login" dense maxlenght="20" class="rounded-borders bg-grey-4 q-px-sm text-white" color="primary" placeholder="Login*"/>
-            <q-input v-model="subhostHandler.password" dense maxlenght="4" mask="####" class="rounded-borders bg-grey-4 q-px-sm text-white" color="primary" placeholder="Senha*"/>
+        <div v-if="editing"  class="q-px-xl rounded-borders q-gutter-y-sm text-bold row justify-center">
+            <q-input v-model="subhostHandler.name" dense maxlenght="20" class="rounded-borders w80 bg-grey-4 q-px-sm text-white" color="primary" placeholder="Nome*"/>
+            <q-input v-model="subhostHandler.login" dense maxlenght="20" class="rounded-borders w80 bg-grey-4 q-px-sm text-white" color="primary" placeholder="Login*"/>
+            <q-input v-model="subhostHandler.password" dense maxlenght="4" mask="####" class="rounded-borders w80 bg-grey-4 q-px-sm text-white" color="primary" placeholder="Senha*"/>
             <q-btn style="width: 100%;" label="Adicionar" @click="adicionarSubhost()" :disabled="!subhostHandler.name || !subhostHandler.login || !subhostHandler.password" glossy icon-right="add" color="green" class="w100 q-mt-md"></q-btn>
             <q-btn class="w100" flat @click="editing = !editing; clearSubhostHandler()" label="Cancelar" color="secondary"></q-btn>
         </div>

@@ -32,16 +32,16 @@
             <div id="title-menu" v-if="isHost" class="text-center text-bold text-purple-1">
                 {{ hostInfo.login.toUpperCase() }}</div>
             <div v-if="isAuthenticated" class="text-center text-purple-1 mid-opacity text-bold q-mb-md "><q-btn
-                    @click="goTo({ to: '/app', selected: false })" label="Perfil" flat></q-btn></div>
+                    @click="goTo({ to: '/app' })" label="Perfil" flat></q-btn></div>
             <q-list v-if="isAuthenticated" class="text-bold text-white">
                 <q-item v-for="item in menuOptions.items" :key="item.label" clickable @click="goTo(item)"
                     style="border-radius: 8px;"
-                    :class="'q-mt-md q-mx-md text-blue-2  ' + (item.selected ? 'shadow-inset' : 'shadow-2')">
+                    class="q-mt-md q-mx-md text-blue-2 shadow-2">
                     <q-item-section avatar>
-                        <q-icon :name="item.icon" :color="!item.selected ? 'grey-3' : 'secondary'" />
+                        <q-icon :name="item.icon" color="secondary" />
                     </q-item-section>
                     <q-item-section>
-                        <q-item-label :class="!item.selected ? 'text-grey-4' : 'text-secondary'">{{ item.label
+                        <q-item-label class="text-white">{{ item.label
                             }}</q-item-label>
                     </q-item-section>
                 </q-item>
@@ -85,15 +85,13 @@ const router = useRouter()
 const menuOptions = ref({
     items: [
         // HOST MENUS
-        { label: 'Eventos', icon: 'calendar_month', to: '/host', role: 'host', selected: true, },
-        { label: 'Acessos', icon: 'sensor_occupied', to: '/host/acessos', role: 'host', selected: false, },
+        { label: 'Eventos', icon: 'calendar_month', to: '/host', role: 'host' },
+        { label: 'Acessos', icon: 'sensor_occupied', to: '/host/acessos', role: 'host' },
         // { label: 'Recarregar', icon: 'currency_exchange', to: '#', role: 'host', selected: false, },
         // { label: 'Suporte', icon: 'support_agent', to: 'https://samuelvictorol.github.io/portfolio/contato', selected: false },
     ]
 })
 function goTo(item) {
-    menuOptions.value.items.forEach(i => i.selected = false)
-    item.selected = true
     router.push(item.to)
 }
 

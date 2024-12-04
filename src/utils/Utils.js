@@ -17,6 +17,12 @@ const Utils = {
     getIframeLink(url) {
         const srcMatch = iframeString.match(/src="([^"]+)"/);
         return srcMatch ? srcMatch[1] : null;
+    },
+    checkSameTicketTypeTitle: (ticket_types) => {
+        ticket_types.map((ticket) => ticket.title = ticket.title.toUpperCase().trim());
+        const titles = ticket_types.map((ticket) => ticket.title);
+        if (new Set(titles).size !== titles.length) return true
+        return false
     }
 }
 

@@ -16,24 +16,16 @@
             <div class="text-bold q-pl-md">🕑 {{ evento.date.replaceAll("-", "/") }} {{ (evento.initial_time ? ' às ' +
                 evento.initial_time : '') +
                 (evento.final_time ? (' - ' + evento.final_time) : '' ) }}</div>
-            <!-- <q-date id="date-picker" class="" v-model="evento.date" mask="DD-MM-YYYY HH:mm" :options="(date) => {
-                    const today = new Date();
-                    const yesterday = new Date(today);
-                    yesterday.setDate(today.getDate());
-                    const minDate = yesterday.toISOString().split('T')[0];
-                    const mydate = new Date(date);
-                    return mydate >= new Date(minDate);
-                }" color="primary" /> -->
             <div v-if="!loading" class="q-card-wrapper">
-                <q-card class="w100 q-mt-md q-mx-md">
+                <q-card class="w100 q-mt-md q-mx-md" :class="editando ? 'bg-orange-1' : ''">
                     <div id="title-menu" class="text-primary w100 q-pt-md text-center">
                         Informações do Evento
                     </div>
                     <div class="w100 row justify-center q-gutter-x-xs">
-                        <q-btn v-if="!editando" @click="dialogImg = !dialogImg" label="Ver Banner" icon-right="search"
+                        <q-btn v-if="!editando" @click="dialogImg = !dialogImg"  glossy icon="image" icon-right="search"
                             class="q-mt-md q-px-sm" dense color="blue-14"></q-btn>
-                        <q-btn @click="editando = !editando" :label="!editando ? 'Editar Evento' : 'cancelar'" :icon-right="!editando ? 'edit' : 'cancel'" :flat="editando"
-                            class="q-mt-md q-px-sm " dense color="primary" glossy></q-btn>
+                        <q-btn @click="alternarEdicao()" :label="!editando ? 'Editar Evento' : 'cancelar'" :icon-right="!editando ? 'edit' : 'cancel'" :flat="editando"
+                            class="q-mt-md q-px-md " dense color="primary" glossy></q-btn>
                     </div>
                     <q-dialog v-model="dialogImg">
                         <q-card>
@@ -46,29 +38,47 @@
                         </q-card>
                     </q-dialog>
                     <q-card-section v-if="!editando">
-                        <div class="text-h6 text-primary">Descrição</div>
-                        <div>{{ evento.desc }}</div>
+                        <div class="text-h6 text-primary row items-center">
+                            <q-icon class="q-pr-xs" color="primary" name="description" size="sm"/>
+                            Descrição</div>
+                        <div style="font-size: 16px;">{{ evento.desc }}</div>
                     </q-card-section>
                     <q-card-section v-if="!editando">
-                        <div class="text-h6 text-primary">Endereço</div>
-                        <div>{{ evento.address }}</div>
+                        <div class="text-h6 text-primary row items-center">
+                            <q-icon class="q-pr-xs" color="primary" name="location_city" size="sm"/>
+                            Endereço</div>
+                        <div style="font-size: 16px;">{{ evento.address }}</div>
                     </q-card-section>
                     <q-card-section v-if="!editando">
-                        <div class="text-h6 text-primary">Contato</div>
-                        <div>{{ evento.contact }}</div>
+                        <div class="text-h6 text-primary row items-center">
+                            <q-icon class="q-pr-xs" color="primary" name="phone" size="sm"/>
+                            Contato</div>
+                        <div style="font-size: 16px;">{{ evento.contact }}</div>
                     </q-card-section>
                     <q-card-section v-if="evento.maps_loc && !editando">
-                        <div class="text-h6 text-primary q-mb-sm">Localização</div>
+                        <div class="text-h6 text-primary q-mb-sm row items-center">
+                            <q-icon class="q-pr-xs" color="primary" name="location_on" size="sm"/>
+                            Localização</div>
                         <iframe :src="evento.maps_loc" class="w100" height="450" style="border:0;" loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </q-card-section>
                     <!-- MODO EDITANDO -->
                     <div v-if="editando" class="editando w100 q-py-md q-px-md q-gutter-y-md">
-                        <q-input :inputStyle="{ fontWeight: 'bold' }" filled v-model="evento.title" label="Título" color="primary"/>
+                        <q-input :inputStyle="{ fontWeight: 'bold' }" filled v-model="evento.title" label="Título*" color="primary"/>
                         <q-input :inputStyle="{ fontWeight: 'bold' }" type="textarea" filled v-model="evento.desc" label="Descrição" color="primary"/>
-                        <q-input :inputStyle="{ fontWeight: 'bold' }" type="textarea" filled v-model="evento.address" label="Endereço" color="primary" />
-                        <q-input :inputStyle="{ fontWeight: 'bold' }" type="textarea" filled v-model="evento.contact" label="Contato" color="primary" />
-                        <div class="w100">
+                        <q-input :inputStyle="{ fontWeight: 'bold' }" type="textarea" filled v-model="evento.address" label="Endereço*" color="primary" />
+                        <q-input :inputStyle="{ fontWeight: 'bold' }" type="textarea" filled v-model="evento.contact" label="Contato*" color="primary" />
+                        <q-input :inputStyle="{ fontWeight: 'bold' }" filled v-model="evento.img_url" label="Banner Url" color="primary" />
+                        <div class="text-secondary" id="title-layout">Data do Evento é Obrigatória*</div>
+                        <q-date id="date-picker" class="w100" v-model="evento.date" mask="DD-MM-YYYY" :options="(date) => {
+                            const today = new Date();
+                            const yesterday = new Date(today);
+                            yesterday.setDate(today.getDate());
+                            const minDate = yesterday.toISOString().split('T')[0];
+                            const mydate = new Date(date);
+                            return mydate >= new Date(minDate);
+                        }" color="primary" />
+                        <div class="w100 row no-wrap q-gutter-x-sm justify-center items-center">
                             <q-input  id="times" label="Início" filled v-model="evento.initial_time" mask="time" :rules="['time']">
                                 <template v-slot:append>
                                     <q-icon name="access_time" color="primary" class="cursor-pointer">
@@ -98,7 +108,7 @@
                         </div>
                         <q-input :inputStyle="{ fontWeight: 'bold' }" filled v-model="evento.maps_loc" label="Localização" color="primary" />
                         <q-input :inputStyle="{ fontWeight: 'bold' }" filled v-model="evento.img_url" label="URL da Imagem" color="primary" />
-                        <q-btn label="salvar alterações" color="green-14" icon-right="save" class="w100" glossy></q-btn>
+                        <q-btn @click="updateEventInfo()" label="salvar alterações" color="orange-14" :disabled="checkEdit()" icon-right="save" class="w100 q-py-md" glossy></q-btn>
                     </div>
                     
                 </q-card>
@@ -163,7 +173,7 @@
                     </q-card-section>
                     <div class="w100 row items-center justify-center q-pb-sm q-px-md">
                         <q-btn label="Adicionar" @click="addPackage()" :disabled="packageHandler.title.trim() == '' || packageHandler.price.trim() == ''" color="primary" icon-right="add" class="q-py-md q-mb-sm w100" glossy></q-btn>
-                        <q-btn flat label="Cancelar" color="grey" v-close-popup />
+                        <q-btn flat label="Cancelar" color="secondary" v-close-popup />
                     </div>
                 </q-card>
             </q-dialog>
@@ -182,6 +192,7 @@ const hostInfo = sessionStorage.getItem('host') ? JSON.parse(sessionStorage.getI
 const editando = ref(false);
 const loading = ref(false)
 const evento = ref(null);
+const eventoBefore = ref(null);
 const dialogImg = ref(false);
 const router = useRouter();
 const modalPackage = ref(false);
@@ -191,6 +202,26 @@ const packageHandler = ref({
     price: '',
     status: true
 });
+
+function alternarEdicao() {
+    if(editando.value){
+        evento.value = eventoBefore.value;
+        editando.value = false;
+        return;
+    }
+    editando.value = !editando.value;
+}
+
+function checkEdit() {
+    if(evento.value.title.trim() == '' || evento.value.address.trim() == '' || evento.value.contact.trim() == '' || evento.value.date.trim() == '') return true
+    const checkEventoIgualEventoBefore = () =>{
+        if(evento.value.title == eventoBefore.value.title && evento.value.desc == eventoBefore.value.desc && evento.value.address == eventoBefore.value.address && evento.value.contact == eventoBefore.value.contact && evento.value.date == eventoBefore.value.date && evento.value.initial_time == eventoBefore.value.initial_time && evento.value.final_time == eventoBefore.value.final_time && evento.value.maps_loc == eventoBefore.value.maps_loc && evento.value.img_url == eventoBefore.value.img_url){
+            return true;
+        }
+        return false;
+    }
+    return checkEventoIgualEventoBefore()
+}
 
 async function addPackage() {
     const array = []
@@ -264,6 +295,7 @@ async function getEvento() {
     await api.post('/host/event', reqObject)
         .then(response => {
             evento.value = response.data;
+            eventoBefore.value = JSON.parse(JSON.stringify(evento.value));
         })
         .finally(() => {
             loading.value = false;
@@ -279,6 +311,46 @@ async function updateStatusTickets(){
         .finally(() => {
             getEvento();
         })
+}
+
+async function updateEventInfo() {
+    const req = {
+        host: {
+            id: hostInfo.id,
+            token: hostInfo.token
+        },
+        id: evento.value.id,
+        title: evento.value.title,
+        desc: evento.value.desc,
+        address: evento.value.address,
+        contact: evento.value.contact,
+        date: evento.value.date,
+        maps_loc: evento.value.maps_loc,
+        img_url: evento.value.img_url,
+        initial_time: evento.value.initial_time,
+        final_time: evento.value.final_time
+    }
+    await api.put('/update_evento', req)
+        .then(response => {
+            $q.notify({
+                color: 'primary',
+                position: 'top',
+                message: response.data.message,
+                icon: 'event'
+            });
+            getEvento();
+        })
+        .catch(error => {
+            $q.notify({
+                color: 'red-14',
+                position: 'top',
+                message: error.response.data.error,
+                icon: 'report_problem'
+            });
+        })
+        .finally(() => {
+            editando.value = false;
+        });
 }
 
 onBeforeMount(async () => {
@@ -299,6 +371,10 @@ onBeforeUnmount(() => {
 
 .q-card {
     width: 90vw;
+}
+
+.bg-orange-1{
+    background-color: #fff7ec;
 }
 
 @media (min-width: 1024px) {

@@ -15,17 +15,19 @@
             </div>
         </div>
         <div class="w100 q-pt-md"></div>
-        <div id="title" class=" text-secondary q-pt-xl w100 text-center text-bold">Meus Eventos</div>
+        <div id="title" class=" text-white q-pt-xl w100 text-center text-bold">Meus Eventos</div>
         <div class="w100 q-my-md q-pl-md">
-            <q-btn class="q-pa-md text-bold" label="Novo Evento" glossy color="primary"
+            <q-btn class="q-pa-md text-bold" label="Novo Evento" glossy color="green-14"
                 to="/host/criar-evento" icon="event" icon-right="add" />
         </div>
         <div class="q-ma-md">
-            <q-input v-model="filter.title" label="Buscar Evento" filled  class="bg-white">
-                <template v-slot:append>
-                    <q-icon name="search" class="cursor-pointer " color="primary" size="md" @click="getEventos()"/>
-                </template>
-            </q-input>
+            <div class="bg-white rounded-borders">
+                <q-input v-model="filter.title" label="Buscar Evento" outlined  >
+                    <template v-slot:append>
+                        <q-btn color="primary" icon-right="search" class="cursor-pointer " @click="getEventos ()" label="buscar"></q-btn>
+                    </template>
+                </q-input>
+            </div>
             <q-toggle color="green-13" v-model="filter.inProgress" :label="filter.inProgress ? 'Em Andamento' : 'Todos'" @update:model-value="getEventos()" class="q-mt-xs q-mb-md text-white" />
             <div v-if="loading" class="row w100 q-pb-xl justify-center">
                 <q-spinner-ball color="primary" size="lg" />
@@ -37,7 +39,7 @@
                 :columns="columns">
                 <template v-slot:body-cell-acoes="props">
                     <div class="column items-center justify-center q-gutter-y-xs q-py-sm">
-                        <q-btn glossy icon="visibility" color="green-14"  @click="openMeuEventoPage(props.row.id)">
+                        <q-btn glossy icon="visibility" color="blue-14"  @click="openMeuEventoPage(props.row.id)">
                             <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
                                 Gerenciar Evento
                             </q-tooltip>
@@ -76,7 +78,7 @@ import { useRouter } from 'vue-router';
 const hostInfo = ref(null);
 const isMobile = window.innerWidth < 800 || document.documentElement.clientWidth < 800
 
-
+window.scrollTo(0, 0);
 const router = useRouter();
 const loading = ref(false);
 const filter = ref({
@@ -171,7 +173,6 @@ async function getSaldo() {
 }
 
 onBeforeMount(async () => {
-    window.scrollTo(0, 0);
     hostInfo.value = sessionStorage.getItem('host') ? JSON.parse(sessionStorage.getItem('host')) : null
     await getSaldo();
     await getEventos();

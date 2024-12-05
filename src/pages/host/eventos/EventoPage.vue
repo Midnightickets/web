@@ -24,7 +24,7 @@
                     <div class="w100 row justify-center q-gutter-x-xs">
                         <q-btn v-if="!editando" @click="dialogImg = !dialogImg"  glossy icon="image" icon-right="search"
                             class="q-mt-md q-px-sm" dense color="blue-14"></q-btn>
-                        <q-btn @click="alternarEdicao()" :label="!editando ? 'Editar Evento' : 'cancelar'" :icon-right="!editando ? 'edit' : 'cancel'" :flat="editando"
+                        <q-btn v-if="evento.status.includes('andamento')" @click="alternarEdicao()" :label="!editando ? 'Editar Evento' : 'cancelar'" :icon-right="!editando ? 'edit' : 'cancel'" :flat="editando"
                             class="q-mt-md q-px-md " dense color="primary" glossy></q-btn>
                     </div>
                     <q-dialog v-model="dialogImg">
@@ -152,9 +152,9 @@
             <div class="w100 q-mt-md q-px-md">
                 <q-btn class="w100 q-py-xl" label="Painel de Vendas" color="orange" glossy
                     icon-right="payments"></q-btn>
-                <q-btn class="w100 q-py-md q-mt-md" label="Encerrar Evento" @click="confirmChangeStatusEvento('ENCERRADO')" color="secondary" glossy
+                <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-md" label="Encerrar Evento" @click="confirmChangeStatusEvento('ENCERRADO')" color="secondary" glossy
                     icon-right="event_available"></q-btn>
-                <q-btn class="w100 q-py-md q-mt-sm" label="Cancelar Evento" @click="confirmChangeStatusEvento('CANCELADO')" color="red" flat></q-btn>
+                <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-sm" label="Cancelar Evento" @click="confirmChangeStatusEvento('CANCELADO')" color="red" flat></q-btn>
             </div>
             <q-dialog v-model="modalPackage">
                 <q-card>

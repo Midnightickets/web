@@ -16,14 +16,15 @@
             <div class="text-bold q-pl-md">🕑 {{ evento.date.replaceAll("-", "/") }} {{ (evento.initial_time ? ' às ' +
                 evento.initial_time : '') +
                 (evento.final_time ? (' - ' + evento.final_time) : '' ) }}</div>
+                <q-btn v-if="!editando && evento.img_url.trim() != ''" @click="dialogImg = !dialogImg" label="Ver Banner"  glossy icon-right="image"
+                class="q-px-md" dense color="blue-14"></q-btn>
             <div v-if="!loading" class="q-card-wrapper row justify-center ">
                 <q-card class="w100 q-mt-md" :class="editando ? 'bg-orange-1' : ''">
                     <div id="title-menu" class="text-primary w100 q-pt-md text-center">
                         Informações do Evento
                     </div>
                     <div class="w100 row justify-center q-gutter-x-xs">
-                        <q-btn v-if="!editando && evento.img_url.trim() != ''" @click="dialogImg = !dialogImg"  glossy icon="image" icon-right="search"
-                            class="q-mt-md q-px-sm" dense color="blue-14"></q-btn>
+
                         <q-btn v-if="evento.status.includes('andamento')" @click="alternarEdicao()" :label="!editando ? 'Editar Evento' : 'cancelar'" :icon-right="!editando ? 'edit' : 'cancel'" :flat="editando"
                             class="q-mt-md q-px-md " dense color="primary" glossy></q-btn>
                     </div>

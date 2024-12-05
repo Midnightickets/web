@@ -152,9 +152,9 @@
             <div class="w100 q-mt-md q-px-md">
                 <q-btn class="w100 q-py-xl" label="Painel de Vendas" color="orange" glossy
                     icon-right="payments"></q-btn>
-                <q-btn class="w100 q-py-md q-mt-md" label="Encerrar Evento" color="secondary" glossy
+                <q-btn class="w100 q-py-md q-mt-md" label="Encerrar Evento" @click="confirmChangeStatusEvento('ENCERRADO')" color="secondary" glossy
                     icon-right="event_available"></q-btn>
-                <q-btn class="w100 q-py-md q-mt-sm" label="Cancelar Evento" color="red" flat></q-btn>
+                <q-btn class="w100 q-py-md q-mt-sm" label="Cancelar Evento" @click="confirmChangeStatusEvento('CANCELADO')" color="red" flat></q-btn>
             </div>
             <q-dialog v-model="modalPackage">
                 <q-card>
@@ -351,6 +351,61 @@ async function updateEventInfo() {
         .finally(() => {
             editando.value = false;
         });
+}
+
+async function changeStatusEvento(status) {
+    loading.value = true;
+    const reqObject = {
+        id: hostInfo.id,
+        token: hostInfo.token,
+        event: evento.value.id,
+    }
+    await api.patch('/event_status/' + status.toLowerCase(), reqObject)
+        .then(response => {
+            $q.notify({
+                color: 'primary',
+                position: 'top',
+                message: response.data.message,
+                icon: 'toggle_off'
+            });
+            router.push('/host');
+        })
+        .catch(error => {
+            $q.notify({
+                color: 'red-14',
+                position: 'top',
+                message: error.response.data.error,
+                icon: 'report_problem'
+            });
+        })
+        .finally(() => {
+            loading.value = false;
+        });
+}
+
+async function confirmChangeStatusEvento(status) {
+    $q.dialog({
+        title: (status.includes('CANC') ? 'Cancelar' : 'Encerrar')+ ' Evento',
+        message: 'Deseja realmente alterar o status do evento para ' + status + '?',
+        cancel: true,
+        persistent: true,
+        ok: {
+            label: 'Sim',
+            color: status.includes('CANC') ? 'red-14' : 'primary',
+            glossy: true,
+            handler: () => {
+                changeStatusEvento(status);
+            }
+        },
+        cancel: {
+            label: 'Não',
+            color: 'primary',
+            flat: true,
+            handler: () => {
+                return;
+            }
+        }
+    });
 }
 
 onBeforeMount(async () => {

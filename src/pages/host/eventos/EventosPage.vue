@@ -72,13 +72,12 @@
 <script setup>
 import { api } from 'src/boot/axios';
 import { Utils } from 'src/utils/Utils';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const hostInfo = ref(null);
 const isMobile = window.innerWidth < 800 || document.documentElement.clientWidth < 800
 
-window.scrollTo(0, 0);
 const router = useRouter();
 const loading = ref(false);
 const filter = ref({
@@ -171,6 +170,10 @@ async function getSaldo() {
         console.log(error.data);
     });
 }
+
+onMounted( () => {
+    window.scrollTo(0, 0);
+})
 
 onBeforeMount(async () => {
     hostInfo.value = sessionStorage.getItem('host') ? JSON.parse(sessionStorage.getItem('host')) : null

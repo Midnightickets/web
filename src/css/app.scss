@@ -168,6 +168,11 @@ tr:nth-child(2n){
   background: -webkit-linear-gradient(to top, #2a0845, #6441a5);
   background: linear-gradient(to top, #2a0845, #6441a5);
 }
+.bg-twitch-rev{
+  background: #6441a5;
+  background: -webkit-linear-gradient(to left, #2a0845, #6441a5);
+  background: linear-gradient(to left, #2a0845, #6441a5);
+}
 
 .vw100{
   width: 100vw;

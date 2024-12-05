@@ -38,10 +38,10 @@
                     style="border-radius: 8px;"
                     class="q-mt-md q-mx-md text-blue-2 shadow-2 bg-twitch-rev">
                     <q-item-section avatar>
-                        <q-icon :name="item.icon" color="grey-2" />
+                        <q-icon :name="item.icon" color="secondary" />
                     </q-item-section>
                     <q-item-section>
-                        <q-item-label  class="text-white">{{ item.label.toUpperCase()
+                        <q-item-label  class="text-secondary">{{ item.label
                             }}</q-item-label>
                     </q-item-section>
                 </q-item>

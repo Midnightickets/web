@@ -16,13 +16,13 @@
             <div class="text-bold q-pl-md">🕑 {{ evento.date.replaceAll("-", "/") }} {{ (evento.initial_time ? ' às ' +
                 evento.initial_time : '') +
                 (evento.final_time ? (' - ' + evento.final_time) : '' ) }}</div>
-            <div v-if="!loading" class="q-card-wrapper">
-                <q-card class="w100 q-mt-md q-mx-md" :class="editando ? 'bg-orange-1' : ''">
+            <div v-if="!loading" class="q-card-wrapper row justify-center ">
+                <q-card class="w100 q-mt-md" :class="editando ? 'bg-orange-1' : ''">
                     <div id="title-menu" class="text-primary w100 q-pt-md text-center">
                         Informações do Evento
                     </div>
                     <div class="w100 row justify-center q-gutter-x-xs">
-                        <q-btn v-if="!editando" @click="dialogImg = !dialogImg"  glossy icon="image" icon-right="search"
+                        <q-btn v-if="!editando && evento.img_url.trim() != ''" @click="dialogImg = !dialogImg"  glossy icon="image" icon-right="search"
                             class="q-mt-md q-px-sm" dense color="blue-14"></q-btn>
                         <q-btn v-if="evento.status.includes('andamento')" @click="alternarEdicao()" :label="!editando ? 'Editar Evento' : 'cancelar'" :icon-right="!editando ? 'edit' : 'cancel'" :flat="editando"
                             class="q-mt-md q-px-md " dense color="primary" glossy></q-btn>
@@ -149,12 +149,12 @@
                     </q-card-section>
                 </q-card>
             </div>
-            <div class="w100 q-mt-md q-px-md">
-                <q-btn class="w100 q-py-xl" label="Painel de Vendas" color="orange" glossy
+            <div class="w100 q-mt-xl q-px-sm">
+                <q-btn class="w100 q-py-xl" label="Painel de Vendas" color="green-7" glossy
                     icon-right="payments"></q-btn>
                 <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-md" label="Encerrar Evento" @click="confirmChangeStatusEvento('ENCERRADO')" color="secondary" glossy
                     icon-right="event_available"></q-btn>
-                <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-sm" label="Cancelar Evento" @click="confirmChangeStatusEvento('CANCELADO')" color="red" flat></q-btn>
+                <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-sm" label="Cancelar Evento" @click="confirmChangeStatusEvento('CANCELADO')" color="red-3" flat></q-btn>
             </div>
             <q-dialog v-model="modalPackage">
                 <q-card>
@@ -434,15 +434,16 @@ onBeforeUnmount(() => {
 
 @media (min-width: 1024px) {
     .q-page {
-        width: 90%;
-        margin: 0 auto;
+        width: 100%;
+        padding: 0 38px;
     }
 
     .q-card-wrapper {
         display: flex;
         flex-direction: row;
         align-items: flex-start;
-        justify-content: space-around;
+        justify-content: space-between;
+        flex-wrap: nowrap;
     }
 
     .q-card {

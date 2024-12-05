@@ -62,15 +62,45 @@
                         <iframe :src="evento.maps_loc" class="w100" height="450" style="border:0;" loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </q-card-section>
+                    <!-- MODO EDITANDO -->
                     <div v-if="editando" class="editando w100 q-py-md q-px-md q-gutter-y-md">
-                        <q-input :inputStyle="{ fontWeight: 'bold' }" filled v-model="evento.title" label="Título" color="primary" />
-                        <q-input :inputStyle="{ fontWeight: 'bold' }" type="textarea" filled v-model="evento.desc" label="Descrição" color="primary" />
+                        <q-input :inputStyle="{ fontWeight: 'bold' }" filled v-model="evento.title" label="Título" color="primary"/>
+                        <q-input :inputStyle="{ fontWeight: 'bold' }" type="textarea" filled v-model="evento.desc" label="Descrição" color="primary"/>
                         <q-input :inputStyle="{ fontWeight: 'bold' }" type="textarea" filled v-model="evento.address" label="Endereço" color="primary" />
                         <q-input :inputStyle="{ fontWeight: 'bold' }" type="textarea" filled v-model="evento.contact" label="Contato" color="primary" />
+                        <div class="w100">
+                            <q-input  id="times" label="Início" filled v-model="evento.initial_time" mask="time" :rules="['time']">
+                                <template v-slot:append>
+                                    <q-icon name="access_time" color="primary" class="cursor-pointer">
+                                        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                                            <q-time v-model="evento.initial_time">
+                                                <div class="row items-center justify-end">
+                                                    <q-btn v-close-popup label="Fechar" color="primary" flat />
+                                                </div>
+                                            </q-time>
+                                        </q-popup-proxy>
+                                    </q-icon>
+                                </template>
+                            </q-input>
+                            <q-input label="Final" filled v-model="evento.final_time" mask="time" :rules="['time']">
+                                <template v-slot:append>
+                                    <q-icon name="access_time" color="primary" class="cursor-pointer">
+                                        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                                            <q-time v-model="evento.final_time">
+                                                <div class="row items-center justify-end">
+                                                    <q-btn v-close-popup label="Fechar" color="primary" flat />
+                                                </div>
+                                            </q-time>
+                                        </q-popup-proxy>
+                                    </q-icon>
+                                </template>
+                            </q-input>
+                        </div>
                         <q-input :inputStyle="{ fontWeight: 'bold' }" filled v-model="evento.maps_loc" label="Localização" color="primary" />
                         <q-input :inputStyle="{ fontWeight: 'bold' }" filled v-model="evento.img_url" label="URL da Imagem" color="primary" />
                         <q-btn label="salvar alterações" color="green-14" icon-right="save" class="w100" glossy></q-btn>
                     </div>
+                    
                 </q-card>
                 <q-card class="w100 q-mx-md q-mt-md">
                     <div id="title-menu" class="text-primary w100 q-pt-md text-center">
@@ -88,10 +118,10 @@
                     <q-card-section>
                         <div class="text-h5 text-primary text-bold q-mb-md">Tipos de Ingressos</div>
                         <div v-for="ticket in evento.ticket_types" :key="ticket.id">
-                            <div class="text-bold text-primary"><q-icon name="local_activity" color="primary" size="xs" ></q-icon> {{ ticket.title }}</div>
+                            <div class="text-bold text-primary"  :class="ticket.status ? '' : 'mid-opacity'"><q-icon name="local_activity" color="primary" size="xs" ></q-icon> {{ ticket.title }}</div>
                             <div class="row items-center">
-                                <q-toggle class="text-bold" v-model="ticket.status" :label="ticket.status ? 'Ativo' : 'Inativo'"></q-toggle>
-                                <div class="text-bold text-green-14 q-ml-lg">{{ 'R$ ' + ticket.price }}</div>
+                                <q-toggle class="text-bold" v-model="ticket.status" @update:model-value="updateStatusTickets()" :label="ticket.status ? 'Ativo' : 'Inativo'" :color="ticket.status ? 'primary' : 'secondary'"></q-toggle>
+                                <div  :class="ticket.status ? '' : 'mid-opacity'" class="text-bold text-green-14 q-ml-lg">{{ 'R$ ' + ticket.price }}</div>
                             </div>
                             <div class="w100 bg-secondary q-pt-xs q-mb-sm rounded-borders"></div>
                         </div>
@@ -120,8 +150,16 @@
                 <q-card>
                     <q-card-section class="q-gutter-y-sm">
                         <div id="title-menu" class="text-primary">Adicionar Ingressos</div>
-                        <q-input :inputStyle="{ fontWeight: 'bold'}" outlined maxlength="40" v-model="packageHandler.title" label="Título do Ingresso*" color="primary" />
-                        <q-input :inputStyle="{ fontWeight: 'bold'}" outlined v-model="packageHandler.price" maxlength="7" prefix="R$" label="Preço*" reverse-fill-mask mask="####,##"  color="primary" />
+                        <q-input :inputStyle="{ fontWeight: 'bold'}" outlined maxlength="40" v-model="packageHandler.title" label="Título do Ingresso*" color="primary">
+                            <template v-slot:append>
+                                <q-icon name="local_activity" color="primary" size="xs" />
+                            </template>
+                        </q-input>
+                        <q-input :inputStyle="{ fontWeight: 'bold'}" outlined v-model="packageHandler.price" maxlength="7" prefix="R$" label="Preço*" reverse-fill-mask mask="####,##"  color="primary">
+                            <template v-slot:append>
+                                <q-icon name="attach_money" color="primary" size="xs" />
+                            </template>
+                        </q-input>
                     </q-card-section>
                     <div class="w100 row items-center justify-center q-pb-sm q-px-md">
                         <q-btn label="Adicionar" @click="addPackage()" :disabled="packageHandler.title.trim() == '' || packageHandler.price.trim() == ''" color="primary" icon-right="add" class="q-py-md q-mb-sm w100" glossy></q-btn>
@@ -188,7 +226,7 @@ async function updateTicketTypes() {
     await api.put('/update_ticket_types', reqObject)
         .then(response => {
             $q.notify({
-                color: 'green',
+                color: 'primary',
                 position: 'top',
                 message: response.data.message,
                 icon: 'local_activity'
@@ -234,6 +272,13 @@ async function getEvento() {
 
 function goTo(path) {
     router.push(path);
+}
+
+async function updateStatusTickets(){
+    await updateTicketTypes()
+        .finally(() => {
+            getEvento();
+        })
 }
 
 onBeforeMount(async () => {

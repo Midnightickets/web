@@ -41,7 +41,7 @@
                         <q-icon :name="item.icon" color="secondary" />
                     </q-item-section>
                     <q-item-section>
-                        <q-item-label  class="text-secondary">{{ item.label
+                        <q-item-label  class="text-grey-4">{{ item.label
                             }}</q-item-label>
                     </q-item-section>
                 </q-item>

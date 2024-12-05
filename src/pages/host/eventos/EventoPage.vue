@@ -17,14 +17,13 @@
                 evento.initial_time : '') +
                 (evento.final_time ? (' - ' + evento.final_time) : '' ) }}</div>
                 <q-btn v-if="!editando && evento.img_url.trim() != ''" @click="dialogImg = !dialogImg" label="Ver Banner"  glossy icon-right="image"
-                class="q-px-md" dense color="blue-14"></q-btn>
+                class="q-px-md q-ml-md q-mt-md" dense color="blue-14"></q-btn>
             <div v-if="!loading" class="q-card-wrapper row justify-center ">
                 <q-card class="w100 q-mt-md" :class="editando ? 'bg-orange-1' : ''">
                     <div id="title-menu" class="text-primary w100 q-pt-md text-center">
                         Informações do Evento
                     </div>
-                    <div class="w100 row justify-center q-gutter-x-xs">
-
+                    <div class="q-ml-md">
                         <q-btn v-if="evento.status.includes('andamento')" @click="alternarEdicao()" :label="!editando ? 'Editar Evento' : 'cancelar'" :icon-right="!editando ? 'edit' : 'cancel'" :flat="editando"
                             class="q-mt-md q-px-md " dense color="primary" glossy></q-btn>
                     </div>
@@ -117,8 +116,8 @@
                     <div id="title-menu" class="text-primary w100 q-pt-md text-center">
                         Pacote de Ingressos
                     </div>
-                    <div class="w100 q-px-md">
-                        <q-btn @click="modalPackage = !modalPackage" label="Adicionar Ingressos" glossy icon-right="add_circle" color="primary" class="w100 q-mt-sm"></q-btn>
+                    <div class="w100 q-ml-md q-mt-md">
+                        <q-btn @click="modalPackage = !modalPackage" label="Adicionar Ingressos" glossy icon-right="add_circle" color="primary"></q-btn>
                     </div>
                     <q-card-section>
                         <div class="text-h6 text-primary">Pacote</div>
@@ -128,11 +127,11 @@
                     </q-card-section>
                     <q-card-section>
                         <div class="text-h5 text-primary text-bold q-mb-md">Tipos de Ingressos</div>
-                        <div v-for="ticket in evento.ticket_types" :key="ticket.id">
+                        <div v-for="ticket in evento.ticket_types" :key="ticket.id" id="ticket">
                             <div class="text-bold text-primary"  :class="ticket.status ? '' : 'mid-opacity'"><q-icon name="local_activity" color="primary" size="xs" ></q-icon> {{ ticket.title }}</div>
-                            <div class="row items-center">
-                                <q-toggle class="text-bold" v-model="ticket.status" @update:model-value="updateStatusTickets()" :label="ticket.status ? 'Ativo' : 'Inativo'" :color="ticket.status ? 'primary' : 'secondary'"></q-toggle>
-                                <div  :class="ticket.status ? '' : 'mid-opacity'" class="text-bold text-green-14 q-ml-lg">{{ 'R$ ' + ticket.price }}</div>
+                            <div class="row items-center justify-between q-mt-sm">
+                                <div  :class="ticket.status ? '' : 'mid-opacity'" class="text-bold bg-green-14 q-pa-xs rounded-borders text-white">{{ 'R$ ' + ticket.price }}</div>
+                                <q-toggle class="text-bold" v-model="ticket.status" @update:model-value="updateStatusTickets()" left-label :label="ticket.status ? 'Ativo' : 'Inativo'" :color="ticket.status ? 'primary' : 'secondary'"></q-toggle>
                             </div>
                             <div class="w100 bg-secondary q-pt-xs q-mb-sm rounded-borders"></div>
                         </div>
@@ -150,7 +149,7 @@
                     </q-card-section>
                 </q-card>
             </div>
-            <div class="w100 q-mt-xl q-px-sm">
+            <div class="w100 q-mt-xl q-px-sm" v-if="!loading">
                 <q-btn class="w100 q-py-xl" label="Painel de Vendas" color="green-7" glossy
                     icon-right="payments"></q-btn>
                 <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-md" label="Encerrar Evento" @click="confirmChangeStatusEvento('ENCERRADO')" color="secondary" glossy
@@ -431,6 +430,15 @@ onBeforeUnmount(() => {
 
 .bg-orange-1{
     background-color: #fff7ec;
+}
+
+#ticket {
+    padding: 10px;
+    background-color: #efe4ff;
+}
+
+#ticket:nth-child(odd){
+    background-color: #eeeeee;
 }
 
 @media (min-width: 1024px) {

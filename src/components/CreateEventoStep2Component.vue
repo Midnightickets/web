@@ -29,7 +29,7 @@
                         <q-icon name="payments" color="primary" />
                     </template>
                 </q-input>
-                <q-btn label="Adicionar Ingresso" color="blue-14" glossy :disable="validaIngresso()"
+                <q-btn class="q-py-md" label="Adicionar Ingresso" color="blue-14" glossy :disable="validaIngresso()"
                     @click="addIngresso()" icon-right="add_circle" />
             </div>
             <div v-if="pacote" class="w100 hline bg-primary"></div>
@@ -37,7 +37,7 @@
             </div>
             <div id="list-ingressos" class="column">
                 <div v-for="(ingresso, index) in ingressos" :key="index"
-                    class="relative column no-wrap items-center rounded-borders shadow-4 bg-grad-1 q-mb-md  justify-between">
+                    class="relative column no-wrap items-center rounded-borders shadow-4 bg-twitch q-mb-md  justify-between">
                     <div class="row q-py-xs items-center">
                         <div class="text-bold text-white q-py-sm text-center" id="title-layout">{{
                             format(ingresso.title) }}
@@ -48,17 +48,15 @@
                     </div>
                     <div class="w100 bg-secondary mid-opacity q-mx-md" style="height: 2px"></div>
                     <div class="row w100 items-center justify-center ">
-                        <q-btn class="absolute" style="top:-5px;left:-15px" color="red" flat icon="close"
+                        <q-btn class="absolute" style="top:-5px;left:-15px" color="secondary" flat icon="close"
                             @click="removeIngresso(index)" />
-                        <div class="text-bold text-green-13 text-shadow q-py-xs">R$ {{ ingresso.price }}</div>
+                        <div class="text-bold text-secondary text-shadow q-py-xs text-h6">R$ {{ ingresso.price }}</div>
                     </div>
                 </div>
-                <div v-if="ingressos.length" class="text-right text-bold text-secondary">{{ ingressos.length }}
-                </div>
-                <div v-else class="text-center text-bold text-secondary">No momento não há ingressos cadastrados</div>
+                <div v-if="ingressos.length == 0" class="text-center text-bold text-secondary">No momento não há ingressos cadastrados</div>
             </div>
             <div class="w100 hline bg-primary"></div>
-            <q-btn v-if="!loading" :disabled="checkNext()" label="Criar Evento" glossy color="green-14" class="q-py-lg"
+            <q-btn v-if="!loading" :disabled="checkNext()" label="Criar Evento" glossy color="primary" class="q-py-xl"
                 @click="criarEvento()" icon-right="event" />
             <q-btn label="voltar" flat color="primary" @click="goPrev()" />
         </div>

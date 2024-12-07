@@ -17,7 +17,7 @@
         <div class="w100 q-pt-md"></div>
         <div id="title" class=" text-white q-pt-xl w100 text-center text-bold">Meus Eventos</div>
         <div class="w100 q-my-md q-pl-md">
-            <q-btn class="q-pa-md text-bold" label="Novo Evento" glossy color="green-14"
+            <q-btn class="q-pa-md text-bold" label="Novo Evento" glossy color="orange-14"
                 to="/host/criar-evento" icon="event" icon-right="add" />
         </div>
         <div class="q-ma-md">
@@ -39,7 +39,7 @@
                 :columns="columns">
                 <template v-slot:body-cell-acoes="props">
                     <div class="column items-center justify-center q-gutter-y-xs q-py-sm">
-                        <q-btn glossy icon="visibility" color="blue-14"  @click="openMeuEventoPage(props.row.id)">
+                        <q-btn glossy icon="visibility" color="primary"  @click="openMeuEventoPage(props.row.id)">
                             <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
                                 Gerenciar Evento
                             </q-tooltip>

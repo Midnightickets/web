@@ -19,7 +19,7 @@
                 <q-btn v-if="!editando && evento.img_url.trim() != ''" @click="dialogImg = !dialogImg" label="Ver Banner"  glossy icon-right="image"
                 class="q-px-md q-ml-md q-mt-md" dense color="blue-14"></q-btn>
             <div v-if="!loading" class="q-card-wrapper row justify-center ">
-                <q-card class="w100 q-mt-md" :class="editando ? 'bg-orange-1' : ''">
+                <q-card class="w100 q-mt-md" :class="editando ? 'bg-orangy' : ''">
                     <div id="title-menu" class="text-primary w100 q-pt-md text-center">
                         Informações do Evento
                     </div>
@@ -130,7 +130,7 @@
                         <div v-for="ticket in evento.ticket_types" :key="ticket.id" id="ticket">
                             <div class="text-bold text-primary"  :class="ticket.status ? '' : 'mid-opacity'"><q-icon name="local_activity" color="primary" size="xs" ></q-icon> {{ ticket.title }}</div>
                             <div class="row items-center justify-between q-mt-sm">
-                                <div  :class="ticket.status ? '' : 'mid-opacity'" class="text-bold bg-green-14 q-pa-xs rounded-borders text-white">{{ 'R$ ' + ticket.price }}</div>
+                                <div  :class="ticket.status ? '' : 'mid-opacity'" class="text-bold bg-secondary q-pa-xs rounded-borders text-white">{{ 'R$ ' + ticket.price }}</div>
                                 <q-toggle v-if="evento.status.includes('andamento')" class="text-bold" v-model="ticket.status" @update:model-value="updateStatusTickets()" left-label :label="ticket.status ? 'Ativo' : 'Inativo'" :color="ticket.status ? 'primary' : 'secondary'"></q-toggle>
                             </div>
                             <div class="w100 bg-secondary q-pt-xs q-my-sm rounded-borders"></div>
@@ -144,9 +144,9 @@
                     <q-btn v-if="evento.status.includes('andamento')" @click="openSubhostModal()" label="Adicionar Subhost" icon-right="person_add" color="primary" glossy
                         class="q-mt-md q-ml-md"></q-btn>
                     <q-card-section>
-                        <div v-if="evento.subhosts.length > 0" class="text-h6 text-primary q-mb-md">Subhosts Cadastrados: {{ evento.subhosts.length }}</div>
+                        <div v-if="evento.subhosts.length > 0" class="text-h6 text-primary">Subhosts Cadastrados: {{ evento.subhosts.length }}</div>
                         <div id="evento-subhosts">
-                            <div v-for="subhost in evento.subhosts" :key="subhost" id="subhost" class="rounded-borders shadow-2">
+                            <div v-for="subhost in evento.subhosts" :key="subhost" id="subhost" class="rounded-borders shadow-2 q-mt-md">
                                 <div class="text-bold text-primary">{{ subhost.name }}</div>
                                 <div class="text-bold text-secondary">👨🏼‍💼{{ subhost.login.toLowerCase() }}</div>
                                 <div v-if="showSubhostsPassword" class="text-bold text-primary">🔑{{ subhost.password }}</div>
@@ -159,11 +159,11 @@
                 </q-card>
             </div>
             <div class="w100 q-mt-xl q-px-sm" v-if="!loading">
-                <q-btn class="w100 q-py-xl" label="Painel de Vendas" color="green-7" glossy
+                <q-btn class="w100 q-py-xl" label="Painel de Vendas" color="primary" glossy
                     icon-right="payments"></q-btn>
-                <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-md" label="Encerrar Evento" @click="confirmChangeStatusEvento('ENCERRADO')" color="secondary" glossy
+                <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-md" label="Encerrar Evento" @click="confirmChangeStatusEvento('ENCERRADO')" color="green" glossy
                     icon-right="event_available"></q-btn>
-                <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-sm" label="Cancelar Evento" @click="confirmChangeStatusEvento('CANCELADO')" color="red-3" flat></q-btn>
+                <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-sm" label="Cancelar Evento" @click="confirmChangeStatusEvento('CANCELADO')" color="red-4" flat></q-btn>
             </div>
             <q-dialog v-model="modalPackage">
                 <q-card>
@@ -308,7 +308,7 @@ async function addPackage() {
     array.push(packageHandler.value)
     if(Utils.checkSameTicketTypeTitle(array)){
         $q.notify({
-            color: 'orange-14',
+            color: 'secondary',
             position: 'top',
             message: 'Já existe um pacote com esse nome',
             icon: 'report_problem'
@@ -507,8 +507,8 @@ onBeforeUnmount(() => {
     width: 90vw;
 }
 
-.bg-orange-1{
-    background-color: #fff7ec;
+.bg-orangy{
+    background-color: #fff3e9;
 }
 
 #ticket, #subhost {

@@ -129,20 +129,18 @@
                         Vantagens</div>
                     <div style="font-size:1.1rem"
                         class="text-shadow q-px-md bg-grey-4 text-left q-py-md rounded-borders">
-                        🟣 <strong class="text-primary">SEM TAXA POR VENDA<br></strong> Nossa <strong>moeda
-                            virtual</strong>
+                        🟣 <strong class="text-primary">SEM TAXA POR INGRESSO<br></strong> Nosso <strong>modelo de negócio</strong>
                         permite realizar <strong>Eventos</strong> com <strong>0% de taxa</strong> em ingressos
                         vendidos. Obtenha
                         o <strong>máximo do seu
-                            lucro</strong> e ainda <strong>GANHE CASHBACK</strong>
+                            lucro</strong>
                         <br>🟣 <strong class="text-primary">LUCRO EM TEMPO REAL<br></strong> Disponibilizamos a
                         possibilidade de receber o
                         <strong>lucro de suas vendas automaticamente em tempo real na sua conta</strong> enquanto
                         acontece o seu evento<br>
                         🟣 <strong class="text-primary">AJUSTES DE LOTES GRATUITOS<br></strong>
-                        Realize <strong>ajustes de lotes</strong> e <strong>preços</strong> dos seus ingressos sem custo
-                        adicional.
-                        <strong>Altere</strong> o valor dos seus ingressos a <strong>qualquer momento</strong>
+                        Realize <strong>reajustes</strong> de ingressos dos seus ingressos <strong>sem custo
+                        adicional</strong> de forma intuitiva na palma da sua mão.
                         <br>
                         🟣 <strong class="text-primary">NOVAS FUNCIONALIDADES PERIODICAMENTE<br></strong>
                         Estamos sempre <strong>inovando</strong> e <strong>adicionando novas funcionalidades</strong>
@@ -160,9 +158,7 @@
                             TAXAS<br></strong>
                         Estamos
                         integrados ao <strong>Mercado Pago</strong> com segurança
-                        e confidencialidade. Integrado a todos os métodos de pagamentos, existe a possibilidade de
-                        <strong>Taxa
-                            0</strong> na venda de ingressos
+                        e confidencialidade. Integrado a todos os métodos de pagamentos
                         <br>
                         <br>
                         🤳🏼 <strong style="font-size:1.2rem" class="text-primary text-bold">SEM INSTALAÇÃO

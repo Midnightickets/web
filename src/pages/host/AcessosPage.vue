@@ -1,28 +1,43 @@
 <template>
     <q-page class=" w100 animate__animated animate__fadeIn relative">
-        <div class="w100">
+        <div class="w100 q-mt-xs">
             <q-btn to='/host' dense class="q-ml-sm" flat  icon="keyboard_return" label="eventos" color="secondary">
             </q-btn>
         </div>
         <div id="title" class="text-white q-px-sm q-pb-sm text-center">
             Acessos
         </div>
-        <div v-if="!editing" class="w100 flex flex-center">
-            <q-btn @click="editing = !editing" label="Criar Acesso" color="blue" glossy icon-right="add_circle"></q-btn>
+        <div v-if="!editing" class="w100 flex flex-center q-mb-md">
+            <q-btn @click="editing = !editing" label="Criar Acesso" color="secondary" glossy icon-right="add_circle"></q-btn>
         </div>
-        <div v-if="editing"  class="q-px-xl rounded-borders q-gutter-y-sm text-bold row justify-center">
-            <q-input v-model="subhostHandler.name" dense maxlenght="20" class="rounded-borders w80 bg-grey-4 q-px-sm text-white" color="primary" placeholder="Nome*"/>
-            <q-input v-model="subhostHandler.login" dense maxlenght="20" class="rounded-borders w80 bg-grey-4 q-px-sm text-white" color="primary" placeholder="Login*"/>
-            <q-input v-model="subhostHandler.password" dense maxlenght="4" mask="####" class="rounded-borders w80 bg-grey-4 q-px-sm text-white" color="primary" placeholder="Senha*"/>
-            <q-btn style="width: 100%;" label="Adicionar" @click="adicionarSubhost()" :disabled="!subhostHandler.name || !subhostHandler.login || !subhostHandler.password" glossy icon-right="add" color="green" class="w100 q-mt-md"></q-btn>
-            <q-btn class="w100" flat @click="editing = !editing; clearSubhostHandler()" label="Cancelar" color="secondary"></q-btn>
+        <div v-if="editing"  class="add-subhost bg-grad-2 q-px-xl q-py-md q-gutter-y-sm text-bold row justify-center q-mb-xl  q-mt-sm animate__animated animate__slideInLeft shadow-2">
+            <q-input v-model="subhostHandler.name" dense maxlenght="20" class="rounded-borders w80 bg-grey-4 q-px-sm text-white" color="primary" placeholder="Título*">
+                <template v-slot:prepend>
+                    <q-icon name="list_alt" color="primary" />
+                </template>
+            </q-input>
+            <q-input v-model="subhostHandler.login" dense maxlenght="20" class="rounded-borders w80 bg-grey-4 q-px-sm text-white" color="primary" placeholder="Login*">
+                <template v-slot:prepend>
+                    <q-icon name="account_circle" color="primary" />
+                </template>
+            </q-input>
+            <q-input v-model="subhostHandler.password" dense maxlenght="4" mask="####" class="rounded-borders w80 bg-grey-4 q-px-sm text-white" color="primary" placeholder="Senha*">
+                <template v-slot:prepend>
+                    <q-icon name="lock" color="primary" />
+                </template>
+            </q-input>
+            <q-btn  label="Adicionar" @click="adicionarSubhost()" :disabled="!subhostHandler.name || !subhostHandler.login || !subhostHandler.password" glossy icon-right="add" color="primary" class="shadow-2 q-mt-md"></q-btn>
+            <q-btn class="w100" flat @click="editing = !editing; clearSubhostHandler()" label="Cancelar" color="grey"></q-btn>
+        </div>
+        <div id="title-menu" class="text-secondary q-pl-md">
+            Subhosts
         </div>
         <div id="subhosts" class="row q-mt-md" v-if="subhosts && !loading">
-            <q-card v-for="subhost in subhosts" :key="subhost.name" class="w100 q-mx-md q-mt-md q-pb-sm">
+            <q-card v-for="subhost in subhosts" :key="subhost.name" class="w100 q-mx-md q-pb-sm">
                 <q-card-section class="text-bold">
                     <div class="w100 row items-center justify-between">
                         <div id="title-layout" class="text-primary">{{ subhost.name }}</div>
-                        <q-btn @click="removerSubhost(subhost.login)" style="width: 20%;"  icon-right="close" flat color="red" class="w100 q-mt-sm"></q-btn>
+                        <q-btn @click="removerSubhost(subhost.login)"  icon-right="remove" flat color="red"></q-btn>
                     </div>
                     <div class="text-blue">👨🏼‍💼 {{ subhost.login.toLowerCase() }}</div>
                     <div class="text-secondary">🔑 {{ subhost.password }}</div>
@@ -154,6 +169,17 @@ onMounted( async () => {
 
 @media (min-width: 600px) {
     .q-card {
+        width: 20vw;
+    }
+    
+    .add-subhost{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+    }
+    .add-subhost .q-input, .add-subhost .q-btn{
         width: 20vw;
     }
 }

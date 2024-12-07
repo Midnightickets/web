@@ -87,7 +87,7 @@ const menuOptions = ref({
         // HOST MENUS
         { label: 'Eventos', icon: 'calendar_month', to: '/host', role: 'host' },
         { label: 'Acessos', icon: 'sensor_occupied', to: '/host/acessos', role: 'host' },
-        // { label: 'Recarregar', icon: 'currency_exchange', to: '#', role: 'host', selected: false, },
+        { label: 'Saldo', icon: 'currency_exchange', to: '/host/saldo', role: 'host', selected: false, },
         // { label: 'Suporte', icon: 'support_agent', to: 'https://samuelvictorol.github.io/portfolio/contato', selected: false },
     ]
 })

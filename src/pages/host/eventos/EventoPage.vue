@@ -116,7 +116,7 @@
                     <div id="title-menu" class="text-primary w100 q-pt-md text-center">
                         Pacote de Ingressos
                     </div>
-                    <div class="w100 q-ml-md q-mt-md">
+                    <div class="w100 q-ml-md q-mt-md" v-if="evento.status.includes('andamento')">
                         <q-btn @click="modalPackage = !modalPackage" label="Adicionar Ingressos" glossy icon-right="add_circle" color="primary"></q-btn>
                     </div>
                     <q-card-section>
@@ -131,9 +131,9 @@
                             <div class="text-bold text-primary"  :class="ticket.status ? '' : 'mid-opacity'"><q-icon name="local_activity" color="primary" size="xs" ></q-icon> {{ ticket.title }}</div>
                             <div class="row items-center justify-between q-mt-sm">
                                 <div  :class="ticket.status ? '' : 'mid-opacity'" class="text-bold bg-green-14 q-pa-xs rounded-borders text-white">{{ 'R$ ' + ticket.price }}</div>
-                                <q-toggle class="text-bold" v-model="ticket.status" @update:model-value="updateStatusTickets()" left-label :label="ticket.status ? 'Ativo' : 'Inativo'" :color="ticket.status ? 'primary' : 'secondary'"></q-toggle>
+                                <q-toggle v-if="evento.status.includes('andamento')" class="text-bold" v-model="ticket.status" @update:model-value="updateStatusTickets()" left-label :label="ticket.status ? 'Ativo' : 'Inativo'" :color="ticket.status ? 'primary' : 'secondary'"></q-toggle>
                             </div>
-                            <div class="w100 bg-secondary q-pt-xs q-mb-sm rounded-borders"></div>
+                            <div class="w100 bg-secondary q-pt-xs q-my-sm rounded-borders"></div>
                         </div>
                     </q-card-section>
                 </q-card>
@@ -141,21 +141,20 @@
                     <div id="title-menu" class="text-primary w100 q-pt-md text-center">
                         Acesso
                     </div>
-                    <q-btn @click="openSubhostModal()" label="Adicionar Subhost" icon-right="person_add" color="primary" glossy
+                    <q-btn v-if="evento.status.includes('andamento')" @click="openSubhostModal()" label="Adicionar Subhost" icon-right="person_add" color="primary" glossy
                         class="q-mt-md q-ml-md"></q-btn>
                     <q-card-section>
-                        <div class="text-h6 text-primary q-mb-md">Subhosts Cadastrados</div>
+                        <div v-if="evento.subhosts.length > 0" class="text-h6 text-primary q-mb-md">Subhosts Cadastrados: {{ evento.subhosts.length }}</div>
                         <div id="evento-subhosts">
                             <div v-for="subhost in evento.subhosts" :key="subhost" id="subhost" class="rounded-borders shadow-2">
                                 <div class="text-bold text-primary">{{ subhost.name }}</div>
-                                <div class="text-bold text-secondary">{{ subhost.login.toLowerCase() }}</div>
-                                <div v-if="showSubhostsPassword" class="text-bold text-primary">{{ subhost.password }}</div>
+                                <div class="text-bold text-secondary">👨🏼‍💼{{ subhost.login.toLowerCase() }}</div>
+                                <div v-if="showSubhostsPassword" class="text-bold text-primary">🔑{{ subhost.password }}</div>
                                 <div class="w100 row q-gutter-x-sm">
-                                    <q-btn @click="copyCredentials(subhost.login)"  icon="file_copy" icon-right="key" label="Copiar Credenciais" color="primary" glossy class=" q-mt-sm"></q-btn>
+                                    <q-btn @click="copyCredentials(subhost)"  icon="file_copy" icon-right="key" label="Copiar Credenciais" color="blue-14" glossy class=" q-mt-sm"></q-btn>
                                 </div>
                             </div>
                         </div>
-                        <div class="q-mt-md text-right text-bold text-secondary">{{ evento.subhosts.length }}</div>
                     </q-card-section>
                 </q-card>
             </div>
@@ -190,13 +189,13 @@
             <q-dialog v-model="modalSubhosts">
                 <q-card>
                     <q-card-section class="q-gutter-y-sm">
-                        <div id="title-menu" class="text-primary">Subhosts Cadastrados</div>
+                        <div id="title-menu" class="text-primary">Subhosts</div>
+                        <q-btn label="gerenciar"  class="q-px-md" icon-right="sensor_occupied" color="secondary" glossy to="/host/acessos" dense></q-btn>
                         <div id="subhost" v-for="subhost in subhostOptions" :key="subhost.login" class="q-mt-md rounded-borders shadow-2">
                             <div class="text-bold text-primary">{{ subhost.name }}</div>
-                            <div class="text-bold text-secondary">{{ subhost.login }}</div>
-                            <div class="text-bold text-secondary">{{ subhost.password }}</div>
+                            <div class="text-bold text-secondary">👨🏼‍💼{{ subhost.login.toLowerCase() }}</div>
                             <div class="w100 row q-gutter-x-sm">
-                                <q-btn @click="permitirSubhost(subhost)" label="permitir acesso" icon-right="person_add" color="primary" glossy class=" q-mt-sm"></q-btn>
+                                <q-btn @click="permitirSubhost(subhost)" label="permitir acesso" icon-right="person_add" color="green-14" glossy class=" q-mt-sm"></q-btn>
                             </div>
                         </div>
                     </q-card-section>
@@ -247,22 +246,28 @@ async function openSubhostModal() {
     modalSubhosts.value = true;
 }
 
-async function getSubhosts () {
+async function getSubhosts() {
     const req = {
         id: hostInfo.id,
         token: hostInfo.token
-    }
+    };
+
     await api.post('/host/get_subhosts', req)
         .then(response => {
-            subhostOptions.value = response.data.subhosts.filter(subhost => subhost.login != evento.value.login);
+            const existingSubhosts = evento.value.subhosts.map(subhost => subhost.login);
+            subhostOptions.value = response.data.subhosts.filter(
+                subhost => !existingSubhosts.includes(subhost.login)
+            );
         })
+        .catch(error => {
+            console.error('Erro ao buscar subhosts:', error);
+        });
 }
 
 
-function copyCredentials (login) {
+function copyCredentials (subhost) {
     showSubhostsPassword.value = true
-    const subhost = subhostOptions.value.find(subhost => subhost.login == login);
-    navigator.clipboard.writeText(`🎫 MIDNIGHT TICKETS\nSuas credenciais para o evento: ${evento.value.title}\nID do Evento: ${evento.value.id}\nNome: ${subhost.name}\nLogin: ${subhost.login}\nSenha: ${subhost.password}\n\nMANTENHA AS CREDENCIAIS SEGURAS POIS  ELAS O DARÃO ACESSO PARA VALIDAR OS INGRESSOS`);
+    navigator.clipboard.writeText(`🎫 MIDNIGHT TICKETS\nSuas credenciais para o evento: ${evento.value.title}\nID do Evento: ${evento.value.id}\nNome: ${subhost.name}\nLogin: ${subhost.login}\nSenha: ${subhost.password}\n\nMANTENHA AS CREDENCIAIS SEGURAS POIS ELAS O DARÃO ACESSO PARA VALIDAR OS INGRESSOS`);
     $q.notify({
         color: 'blue-14',
         textColor: 'white',
@@ -522,10 +527,11 @@ onBeforeUnmount(() => {
     }
 
     .q-card-wrapper {
+        width: 100%;
         display: flex;
         flex-direction: row;
         align-items: flex-start;
-        justify-content: space-between;
+        justify-content: space-evenly;
         flex-wrap: nowrap;
     }
 

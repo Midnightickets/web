@@ -17,15 +17,15 @@
             <q-btn style="width: 100%;" label="Adicionar" @click="adicionarSubhost()" :disabled="!subhostHandler.name || !subhostHandler.login || !subhostHandler.password" glossy icon-right="add" color="green" class="w100 q-mt-md"></q-btn>
             <q-btn class="w100" flat @click="editing = !editing; clearSubhostHandler()" label="Cancelar" color="secondary"></q-btn>
         </div>
-        <div id="subhosts" class="row" v-if="subhosts && !loading">
-            <q-card v-for="subhost in subhosts" :key="subhost.name" class="w100 q-mx-md q-mt-md">
+        <div id="subhosts" class="row q-mt-md" v-if="subhosts && !loading">
+            <q-card v-for="subhost in subhosts" :key="subhost.name" class="w100 q-mx-md q-mt-md q-pb-sm">
                 <q-card-section class="text-bold">
-                    <div id="title-layout" class="text-primary">{{ subhost.name }}</div>
-                    <div class="text-blue">{{ subhost.login }}</div>
-                    <div class="text-secondary">{{ subhost.password }}</div>
-                    <div class="w100 row q-gutter-x-sm">
-                        <q-btn @click="removerSubhost(subhost.login)" style="width: 20%;"  icon-right="delete" color="red" glossy class="w100 q-mt-sm"></q-btn>
+                    <div class="w100 row items-center justify-between">
+                        <div id="title-layout" class="text-primary">{{ subhost.name }}</div>
+                        <q-btn @click="removerSubhost(subhost.login)" style="width: 20%;"  icon-right="close" flat color="red" class="w100 q-mt-sm"></q-btn>
                     </div>
+                    <div class="text-blue">👨🏼‍💼 {{ subhost.login.toLowerCase() }}</div>
+                    <div class="text-secondary">🔑 {{ subhost.password }}</div>
                 </q-card-section>
             </q-card>                
         </div>

@@ -141,11 +141,21 @@
                     <div id="title-menu" class="text-primary w100 q-pt-md text-center">
                         Acesso
                     </div>
-                    <q-btn label="Adicionar Subhost" icon-right="person_add" color="primary" glossy
-                        class="q-my-sm q-ml-md"></q-btn>
+                    <q-btn @click="openSubhostModal()" label="Adicionar Subhost" icon-right="person_add" color="primary" glossy
+                        class="q-mt-md q-ml-md"></q-btn>
                     <q-card-section>
-                        <div class="text-h6 text-primary">Subhosts Cadastrados</div>
-                        <div>{{ evento.subhosts.length }}</div>
+                        <div class="text-h6 text-primary q-mb-md">Subhosts Cadastrados</div>
+                        <div id="evento-subhosts">
+                            <div v-for="subhost in evento.subhosts" :key="subhost" id="subhost" class="rounded-borders shadow-2">
+                                <div class="text-bold text-primary">{{ subhost.name }}</div>
+                                <div class="text-bold text-secondary">{{ subhost.login.toLowerCase() }}</div>
+                                <div v-if="showSubhostsPassword" class="text-bold text-primary">{{ subhost.password }}</div>
+                                <div class="w100 row q-gutter-x-sm">
+                                    <q-btn @click="copyCredentials(subhost.login)"  icon="file_copy" icon-right="key" label="Copiar Credenciais" color="primary" glossy class=" q-mt-sm"></q-btn>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="q-mt-md text-right text-bold text-secondary">{{ evento.subhosts.length }}</div>
                     </q-card-section>
                 </q-card>
             </div>
@@ -177,6 +187,24 @@
                     </div>
                 </q-card>
             </q-dialog>
+            <q-dialog v-model="modalSubhosts">
+                <q-card>
+                    <q-card-section class="q-gutter-y-sm">
+                        <div id="title-menu" class="text-primary">Subhosts Cadastrados</div>
+                        <div id="subhost" v-for="subhost in subhostOptions" :key="subhost.login" class="q-mt-md rounded-borders shadow-2">
+                            <div class="text-bold text-primary">{{ subhost.name }}</div>
+                            <div class="text-bold text-secondary">{{ subhost.login }}</div>
+                            <div class="text-bold text-secondary">{{ subhost.password }}</div>
+                            <div class="w100 row q-gutter-x-sm">
+                                <q-btn @click="permitirSubhost(subhost)" label="permitir acesso" icon-right="person_add" color="primary" glossy class=" q-mt-sm"></q-btn>
+                            </div>
+                        </div>
+                    </q-card-section>
+                    <div class="w100 row items-center justify-center q-pb-sm q-px-md">
+                        <q-btn flat label="Fechar" color="secondary" v-close-popup />
+                    </div>
+                </q-card>
+            </q-dialog>
         </div>
     </q-page>
 </template>
@@ -188,6 +216,7 @@ import { Utils } from 'src/utils/Utils';
 import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
+const showSubhostsPassword = ref(false);
 const hostInfo = sessionStorage.getItem('host') ? JSON.parse(sessionStorage.getItem('host')) : null;
 const editando = ref(false);
 const loading = ref(false)
@@ -196,12 +225,55 @@ const eventoBefore = ref(null);
 const dialogImg = ref(false);
 const router = useRouter();
 const modalPackage = ref(false);
+const modalSubhosts = ref(false);
 const $q = useQuasar();
 const packageHandler = ref({
     title: '',
     price: '',
     status: true
 });
+const subhostOptions = ref([]);
+
+async function permitirSubhost(subhost) {
+    evento.value.subhosts.push(subhost);
+    await updateEventInfo()
+    .then(() => {
+            modalSubhosts.value = false;
+    })
+}
+
+async function openSubhostModal() {
+    await getSubhosts();
+    modalSubhosts.value = true;
+}
+
+async function getSubhosts () {
+    const req = {
+        id: hostInfo.id,
+        token: hostInfo.token
+    }
+    await api.post('/host/get_subhosts', req)
+        .then(response => {
+            subhostOptions.value = response.data.subhosts.filter(subhost => subhost.login != evento.value.login);
+        })
+}
+
+
+function copyCredentials (login) {
+    showSubhostsPassword.value = true
+    const subhost = subhostOptions.value.find(subhost => subhost.login == login);
+    navigator.clipboard.writeText(`🎫 MIDNIGHT TICKETS\nSuas credenciais para o evento: ${evento.value.title}\nID do Evento: ${evento.value.id}\nNome: ${subhost.name}\nLogin: ${subhost.login}\nSenha: ${subhost.password}\n\nMANTENHA AS CREDENCIAIS SEGURAS POIS  ELAS O DARÃO ACESSO PARA VALIDAR OS INGRESSOS`);
+    $q.notify({
+        color: 'blue-14',
+        textColor: 'white',
+        icon: 'content_paste',
+        position: 'top',
+        message: 'Credenciais copiadas para a área de transferência',
+    });
+    setTimeout(() => {
+        showSubhostsPassword.value = false;
+    }, 2000);
+}
 
 function alternarEdicao() {
     if(editando.value){
@@ -328,7 +400,8 @@ async function updateEventInfo() {
         maps_loc: evento.value.maps_loc,
         img_url: evento.value.img_url,
         initial_time: evento.value.initial_time,
-        final_time: evento.value.final_time
+        final_time: evento.value.final_time,
+        subhosts: evento.value.subhosts
     }
     await api.put('/update_evento', req)
         .then(response => {
@@ -347,6 +420,7 @@ async function updateEventInfo() {
                 message: error.response.data.error,
                 icon: 'report_problem'
             });
+            evento.value = eventoBefore.value;
         })
         .finally(() => {
             editando.value = false;
@@ -432,7 +506,7 @@ onBeforeUnmount(() => {
     background-color: #fff7ec;
 }
 
-#ticket {
+#ticket, #subhost {
     padding: 10px;
     background-color: #efe4ff;
 }

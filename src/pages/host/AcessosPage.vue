@@ -4,7 +4,7 @@
             <q-btn to='/host' dense class="q-ml-sm" flat  icon="keyboard_return" label="eventos" color="secondary">
             </q-btn>
         </div>
-        <div id="title" class="text-secondary q-px-sm q-pb-sm text-center">
+        <div id="title" class="text-white q-px-sm q-pb-sm text-center">
             Acessos
         </div>
         <div v-if="!editing" class="w100 flex flex-center">
@@ -25,7 +25,6 @@
                     <div class="text-secondary">{{ subhost.password }}</div>
                     <div class="w100 row q-gutter-x-sm">
                         <q-btn @click="removerSubhost(subhost.login)" style="width: 20%;"  icon-right="delete" color="red" glossy class="w100 q-mt-sm"></q-btn>
-                        <q-btn @click="copyCredentials(subhost.login)" style="width: 20%;"  icon-right="file_copy" color="primary" glossy class="w100 q-mt-sm"></q-btn>
                     </div>
                 </q-card-section>
             </q-card>                
@@ -70,17 +69,6 @@ async function removerSubhost(login) {
     await updateSubhosts();
 }
 
-function copyCredentials (login) {
-    const subhost = subhosts.value.find(subhost => subhost.login == login);
-    navigator.clipboard.writeText(`Nome: ${subhost.name}\nLogin: ${subhost.login}\nSenha: ${subhost.password}`);
-    $q.notify({
-        color: 'blue',
-        textColor: 'white',
-        icon: 'content_paste',
-        position: 'top',
-        message: 'Credenciais copiadas para a área de transferência',
-    });
-}
 
 async function adicionarSubhost() {
     loading.value = true;

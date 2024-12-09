@@ -10,7 +10,7 @@
         <div v-if="!editing" class="w100 flex flex-center q-mb-md">
             <q-btn @click="editing = !editing" label="Criar Acesso" color="secondary" glossy icon-right="add_circle"></q-btn>
         </div>
-        <div v-if="editing"  class="add-subhost bg-grad-2 q-px-xl q-py-md q-gutter-y-sm text-bold row justify-center q-mb-xl  q-mt-sm animate__animated animate__slideInLeft shadow-2">
+        <div v-if="editing"  class="add-subhost bg-grad-2 q-px-xl q-py-md q-gutter-y-sm text-bold row justify-center q-mb-xl  q-mt-sm animate__animated animate__zoomIn shadow-2">
             <q-input v-model="subhostHandler.name" dense maxlenght="20" class="rounded-borders w80 bg-grey-4 q-px-sm text-white" color="primary" placeholder="Título*">
                 <template v-slot:prepend>
                     <q-icon name="list_alt" color="primary" />

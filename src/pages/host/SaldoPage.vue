@@ -13,24 +13,31 @@
                     </q-input>
                 </div>
                 <div class="pacotes w100">
-                    <q-btn label="Recarregar" class="q-mb-md bg-green text-center w100 q-py-lg text-white rounded-borders" :disabled="recargaValor.trim() === ''" icon-right="currency_exchange" />
+                    <q-btn label="Recarregar" class="q-mb-md bg-green text-center w100 q-py-lg text-white rounded-borders" glossy :disabled="recargaValor.trim() === ''" icon-right="currency_exchange" />
+                    <q-btn label="Solicitar Saque" class="q-mb-md bg-blue-14 text-center w100 q-py-lg text-white rounded-borders" glossy icon-right="payments" />
                     <div id="title-menu" class="w100 q-my-md text-secondary">
                         Opções de Pacotes
                     </div>
                     <div class="w100 rounded-borders q-pt-xs bg-secondary q-mb-lg"></div>
-                    <div class="pacote" 
-                        v-for="pacote in pacoteOptions"
-                        :key="pacote.id"
-                    >
-                        <q-card class="q-mb-md">
-                            <q-card-section>
-                                <q-icon name="local_activity" class="q-pr-sm" size="md" color="primary"></q-icon> 
-                                <div id="title-menu" class="text-primary row items-center">{{ pacote.max_tickets }} Ingressos</div>
-                                <div class="text-bold q-py-sm text-white bg-secondary row items-center q-px-md rounded-borders q-mt-md w50 no-wrap">
-                                    {{ Utils.formatCurrency(pacote.price, 'brl') }}</div>
-                            </q-card-section>
-                        </q-card>
-                        </div>
+                    <div class="w100">
+                        <q-btn class="q-mb-md" color="secondary" :label="!showPacotes ? 'Ver pacotes de ingressos' : 'Ocultar'" icon-right="local_activity" glossy @click="showPacotes = !showPacotes"></q-btn>
+                    </div>
+                    <div v-if="showPacotes" class="w100 pacotes">
+                        <div  class="pacote"  
+                            v-for="pacote in pacoteOptions"
+                            :key="pacote.id"
+                        >
+                            <q-card class="q-mb-md bg-grey-4">
+                                <q-card-section>
+                                    <q-icon name="confirmation_number" class="q-pr-sm" size="md" color="primary"></q-icon> 
+                                    <div id="title-menu" class="text-primary row items-center">{{ pacote.max_tickets }} Ingressos</div>
+                                    <div class="w100 rounded-borders q-pt-xs bg-secondary q-mb-lg q-mt-md"></div>
+                                    <div class="text-bold q-py-sm text-white bg-secondary row items-center q-px-md rounded-borders q-mt-md w50 no-wrap">
+                                        {{ Utils.formatCurrency(pacote.price, 'brl') }}</div>
+                                </q-card-section>
+                            </q-card>
+                            </div>
+                    </div>
                 </div>
             </div>
         </q-page>
@@ -44,6 +51,7 @@ import { Utils } from 'src/utils/Utils';
 
 const pacoteOptions = ref([])
 const recargaValor = ref('')
+const showPacotes = ref(false)
 
 const loadPacotes = async () => {
     await api.get('/get_packages')
@@ -69,11 +77,12 @@ onMounted(async () => {
     .pacotes{
         padding: 0 5%;
         display: flex;
+        flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
     }
    .pacote{
-        width: 27vw;
+        width: 26vw;
     }
     .recarga .q-input{
         width: 25vw;

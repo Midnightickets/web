@@ -21,8 +21,8 @@
                 to="/host/criar-evento" icon="event" icon-right="add" />
         </div>
         <div class="q-ma-md">
-            <div class="bg-white rounded-borders">
-                <q-input v-model="filter.title" label="Buscar Evento" outlined  >
+            <div class="rounded-borders">
+                <q-input v-model="filter.title" class="rounded-borders bg-white buscar-input" label="Buscar Evento" outlined  >
                     <template v-slot:append>
                         <q-btn color="primary" icon-right="search" class="cursor-pointer " @click="getEventos ()" label="buscar"></q-btn>
                     </template>
@@ -34,7 +34,7 @@
                 <q-spinner-ball color="primary" size="lg" />
                 <q-spinner-ball color="primary" size="lg" />
             </div>
-            <div id="title-layout" v-if="rows.length == 0" class="text-secondary w100 text-center">
+            <div id="title-layout" v-if="rows.length == 0" class="text-secondary w100 text-center q-mt-xl q-pt-xl">
                 Nenhum evento encontrado 🌆
             </div>
             <q-table v-if="!loading && rows.length > 0" no-data-label="Nenhum evento encontrado 🌆" separator="cell"
@@ -204,7 +204,11 @@ onBeforeMount(async () => {
     .es1 {
         margin: 0px 100px;
     }
+    .buscar-input{
+        width: 40%;
+    }
 }
+
 
 .title-1 {
     position: fixed;

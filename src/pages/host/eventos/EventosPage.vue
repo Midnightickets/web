@@ -34,6 +34,9 @@
                 <q-spinner-ball color="primary" size="lg" />
                 <q-spinner-ball color="primary" size="lg" />
             </div>
+            <div id="title-layout" v-if="rows.length == 0" class="text-secondary w100 text-center">
+                Nenhum evento encontrado 🌆
+            </div>
             <q-table v-if="!loading && rows.length > 0" no-data-label="Nenhum evento encontrado 🌆" separator="cell"
                 class="my-sticky-column-table text-primary q-mb-md w100 text-bold" :rows="rows"
                 :columns="columns">
@@ -149,7 +152,13 @@ async function getEventos() {
     }
     loading.value = true;
     await api.post('/host/events', reqObject).then((response) => {
-        rows.value = response.data;
+        if(response.data.message) {
+            console.log(response.data.message);
+            rows.value = [];
+            return
+        } else {
+            rows.value = response.data;
+        }
     }).catch((error) => {
         console.log(error.data);
     })

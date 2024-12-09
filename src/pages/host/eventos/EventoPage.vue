@@ -150,7 +150,7 @@
                                 <div class="text-bold text-primary">{{ subhost.name }}</div>
                                 <div class="text-bold text-secondary">👨🏼‍💼{{ subhost.login.toLowerCase() }}</div>
                                 <div v-if="showSubhostsPassword" class="text-bold text-primary">🔑{{ subhost.password }}</div>
-                                <div class="w100 row q-gutter-x-sm">
+                                <div class="w100 row q-gutter-x-sm" v-if="evento.status.includes('andamento')">
                                     <q-btn @click="copyCredentials(subhost)"  icon="file_copy" icon-right="key" label="Copiar Credenciais" color="blue-14" glossy class=" q-mt-sm"></q-btn>
                                 </div>
                             </div>
@@ -161,7 +161,7 @@
             <div class="w100 q-mt-xl q-px-sm" v-if="!loading">
                 <q-btn class="w100 q-py-xl" label="Painel de Vendas" color="primary" glossy
                     icon-right="payments"></q-btn>
-                <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-md" label="Encerrar Evento" @click="confirmChangeStatusEvento('ENCERRADO')" color="green" glossy
+                <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-md" label="Encerrar Evento" @click="confirmChangeStatusEvento('FINALIZADO')" color="green" glossy
                     icon-right="event_available"></q-btn>
                 <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-sm" label="Cancelar Evento" @click="confirmChangeStatusEvento('CANCELADO')" color="red-4" flat></q-btn>
             </div>
@@ -439,6 +439,7 @@ async function changeStatusEvento(status) {
         token: hostInfo.token,
         event: evento.value.id,
     }
+    console.log(reqObject);
     await api.patch('/event_status/' + status.toLowerCase(), reqObject)
         .then(response => {
             $q.notify({
@@ -462,29 +463,12 @@ async function changeStatusEvento(status) {
         });
 }
 
-async function confirmChangeStatusEvento(status) {
-    $q.dialog({
-        title: (status.includes('CANC') ? 'Cancelar' : 'Encerrar')+ ' Evento',
-        message: 'Deseja realmente alterar o status do evento para ' + status + '?',
-        cancel: true,
-        persistent: true,
-        ok: {
-            label: 'Sim',
-            color: status.includes('CANC') ? 'red-14' : 'primary',
-            glossy: true,
-            handler: () => {
-                changeStatusEvento(status);
-            }
-        },
-        cancel: {
-            label: 'Não',
-            color: 'primary',
-            flat: true,
-            handler: () => {
-                return;
-            }
-        }
-    });
+function confirmChangeStatusEvento(status) {
+    status = status.toLowerCase();
+    const confirm = window.confirm('🚨 Deseja realmente alterar o status do evento para ' + status + '?');
+    if(confirm){
+        changeStatusEvento(status);
+    }
 }
 
 onBeforeMount(async () => {

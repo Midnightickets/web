@@ -79,7 +79,7 @@
                 </template>
             </q-input>
             <div class="w100 hline bg-primary"></div>
-            <q-btn :disabled="checkRequiredFields()" label="próximo" color="primary" @click="goNext()"
+            <q-btn :disabled="checkRequiredFields()" label="próximo" class="q-py-md" color="primary" @click="goNext()"
                 icon-right="skip_next" />
             <q-btn class="q-mb-md" label="meus eventos" flat color="primary" to="/host" />
         </div>

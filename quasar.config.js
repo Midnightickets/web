@@ -64,8 +64,7 @@ module.exports = configure(function (/* ctx */) {
       // publicPath: '/',
       // analyze: true,
       env: {
-        PROD_BACKEND_URL: process.env.PROD_BACKEND_URL,
-        DEV_BACKEND_URL: process.env.DEV_BACKEND_URL,
+        BACKEND_URL: process.env.BACKEND_URL,
       },
       // rawDefine: {}
       // ignorePublicFolder: true,

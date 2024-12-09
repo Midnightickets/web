@@ -29,7 +29,7 @@
                         <q-icon name="payments" color="primary" />
                     </template>
                 </q-input>
-                <q-btn class="q-py-md" label="Adicionar Ingresso" color="blue-14" glossy :disable="validaIngresso()"
+                <q-btn class="q-py-md" label="Adicionar Ingresso" color="primary" glossy :disable="validaIngresso()"
                     @click="addIngresso()" icon-right="add_circle" />
             </div>
             <div v-if="pacote" class="w100 hline bg-primary"></div>
@@ -56,7 +56,7 @@
                 <div v-if="ingressos.length == 0" class="text-center text-bold text-secondary">No momento não há ingressos cadastrados</div>
             </div>
             <div class="w100 hline bg-primary"></div>
-            <q-btn v-if="!loading" :disabled="checkNext()" label="Criar Evento" glossy color="primary" class="q-py-xl"
+            <q-btn v-if="!loading" :disabled="checkNext()" label="Criar Evento" glossy color="blue-14" class="q-py-xl"
                 @click="criarEvento()" icon-right="event" />
             <q-btn label="voltar" flat color="primary" @click="goPrev()" />
         </div>

@@ -18,8 +18,8 @@
             </q-toolbar>
 
             <!-- <q-tabs align="center" v-if="!isMobile">
-          <q-route-tab class="text-purple-1" to="/app" label="Perfil" />
-          <q-route-tab class="text-purple-1" v-if="isAuthenticated && isHost" to="/evento" label="Eventos" />
+            <q-route-tab class="text-purple-1" to="/app" label="Perfil" />
+            <q-route-tab class="text-purple-1" v-if="isAuthenticated && isHost" to="/evento" label="Eventos" />
         </q-tabs> -->
         </q-header>
 
@@ -87,7 +87,7 @@ const menuOptions = ref({
         // HOST MENUS
         { label: 'Eventos', icon: 'calendar_month', to: '/host', role: 'host' },
         { label: 'Acessos', icon: 'sensor_occupied', to: '/host/acessos', role: 'host' },
-        { label: 'Saldo', icon: 'currency_exchange', to: '/host/saldo', role: 'host', selected: false, },
+        { label: 'Saldo e Recarga', icon: 'currency_exchange', to: '/host/saldo', role: 'host', selected: false, },
         // { label: 'Suporte', icon: 'support_agent', to: 'https://samuelvictorol.github.io/portfolio/contato', selected: false },
     ]
 })

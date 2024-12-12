@@ -14,13 +14,14 @@
                 </div>
                 <div class="pacotes w100">
                     <q-btn label="Recarregar" class="q-mb-md bg-green text-center w100 q-py-lg text-white rounded-borders" glossy :disabled="recargaValor.trim() === ''" icon-right="currency_exchange" />
-                    <q-btn label="Solicitar Saque" class="q-mb-md bg-blue-14 text-center w100 q-py-lg text-white rounded-borders" glossy icon-right="payments" />
+                    <div class="q-mt-md q-pb-xs w100 text-secondary text-bold">Saldo Atual: {{ Utils.formatCurrency(host.balance, 'brl') }}</div>
+                    <q-btn label="Solicitar Saque" class="q-mb-md bg-primary text-center w100 q-py-lg text-white rounded-borders" glossy icon-right="payments" />
                     <div id="title-menu" class="w100 q-my-md text-secondary">
-                        Opções de Pacotes
+                        Pacotes e Valores
                     </div>
                     <div class="w100 rounded-borders q-pt-xs bg-secondary q-mb-lg"></div>
                     <div class="w100">
-                        <q-btn class="q-mb-md" color="secondary" :label="!showPacotes ? 'Ver pacotes de ingressos' : 'Ocultar'" icon-right="local_activity" glossy @click="showPacotes = !showPacotes"></q-btn>
+                        <q-btn class="q-mb-md" color="secondary" :label="!showPacotes ? 'Ver pacotes de ingressos' : 'Ocultar'" :icon-right="!showPacotes ? 'arrow_drop_down' : 'arrow_drop_up'" glossy @click="showPacotes = !showPacotes"></q-btn>
                     </div>
                     <div v-if="showPacotes" class="w100 pacotes">
                         <div  class="pacote"  
@@ -52,6 +53,7 @@ import { Utils } from 'src/utils/Utils';
 const pacoteOptions = ref([])
 const recargaValor = ref('')
 const showPacotes = ref(false)
+const host = JSON.parse(sessionStorage.getItem('host'))
 
 const loadPacotes = async () => {
     await api.get('/get_packages')

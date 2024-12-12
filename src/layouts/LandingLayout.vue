@@ -356,6 +356,18 @@ const contato = ref({
         mercadopago: false,
         percentAvista: '',
         localizacao: '',
+        perguntas: [
+            '1.Qual é o seu nome?',
+            '2.Nome da Empresa',
+            '3.Telefone/WhatsApp',
+            '4.Tipos de Eventos',
+            '5.Capacidade máxima de público',
+            '6.Média de público por evento',
+            '7.Quantidade de Ingressos Digitais',
+            '8.Percentual de Vendas à Vista',
+            '9.Lucro por evento em Ingressos Digitais',
+            '10.Localização'
+        ]
     },
     dispositivo: window.innerWidth < 900 ? 'Mobile' : 'Desktop'
 })
@@ -377,7 +389,7 @@ async function fastEmailGetter() {
         return false
     } else {
         lowDownScrolling()
-        await sendForm('Entraremos em Contato em Breve! Continue navegando pelo site para mais informações')
+        await sendForm('Continue navegando pelo site para mais informações ou preencha o formulário em contato para uma consultoria personalizada')
     }
 }
 
@@ -403,12 +415,19 @@ async function sendForm(msg) {
         return
     }
     sendLoading.value = true
-    await api.post('/landing/email', contato.value).then(() => {
+    await api.post('/landing', contato.value).then((response) => {
         $q.notify({
-            message: msg || 'Formulário enviado com sucesso, em breve entraremos em contato',
+            message: response.data,
             color: 'green',
             position: 'top',
             icon: 'email',
+            timeout: 1000
+        });
+        $q.notify({
+            message: msg,
+            color: 'primary',
+            position: 'bottom',
+            icon: 'local_activity',
             timeout: 6000
         });
     }).catch(() => {

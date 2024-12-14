@@ -65,6 +65,7 @@ module.exports = configure(function (/* ctx */) {
       // analyze: true,
       env: {
         BACKEND_URL: process.env.BACKEND_URL,
+        MIDNIGHTICKETS_MERCADO_PAGO_PK: process.env.MIDNIGHTICKETS_MERCADO_PAGO_PK,
       },
       // rawDefine: {}
       // ignorePublicFolder: true,

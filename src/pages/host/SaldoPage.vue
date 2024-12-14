@@ -1,8 +1,7 @@
 <template>
-    <q-page>
         <q-page class="w100 animate__animated animate__fadeIn relative q-pb-xl">
             <div class="w100 text-center q-py-md text-white" id="title">
-                Saldo
+                Saldo e Recarga
             </div>
             <div class="q-mx-md ">
                 <div class="recarga row justify-center rounded-borders text-center">
@@ -13,7 +12,7 @@
                     </q-input>
                 </div>
                 <div class="pacotes w100">
-                    <q-btn label="Recarregar" class="q-mb-md bg-green text-center w100 q-py-lg text-white rounded-borders" glossy :disabled="recargaValor.trim() === ''" icon-right="currency_exchange" />
+                    <q-btn label="Recarregar" class="q-mb-md bg-green text-center w100 q-py-lg text-white rounded-borders" glossy :disabled="recargaValor.trim() === ''" @click="recarregarBtn()" icon-right="currency_exchange" />
                     <div class="q-mt-md q-pb-xs w100 text-secondary text-bold">Saldo Atual: {{ Utils.formatCurrency(host.balance, 'brl') }}</div>
                     <q-btn label="Solicitar Saque" class="q-mb-md bg-primary text-center w100 q-py-lg text-white rounded-borders" glossy icon-right="payments" />
                     <div id="title-menu" class="w100 q-my-md text-secondary">
@@ -41,19 +40,31 @@
                     </div>
                 </div>
             </div>
-        </q-page>
+            <q-dialog v-model=showRecargaModal>
+                <RecargaPaymentComponent />
+                <template v-slot:footer>
+                    <q-btn label="Fechar" color="primary" @click="showRecargaModal = false" />
+                </template>
+            </q-dialog>
     </q-page>
 </template>
 
 <script setup>
+import RecargaPaymentComponent from 'src/components/RecargaPaymentComponent.vue'
 import { api } from 'src/boot/axios';
-import { onMounted, ref } from 'vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { Utils } from 'src/utils/Utils';
 
 const pacoteOptions = ref([])
 const recargaValor = ref('')
 const showPacotes = ref(false)
 const host = JSON.parse(sessionStorage.getItem('host'))
+const showRecargaModal = ref(false)
+
+function recarregarBtn() {
+    sessionStorage.setItem('recarga', Number(recargaValor.value.replace(',', '.')))
+    showRecargaModal.value = true
+}
 
 const loadPacotes = async () => {
     await api.get('/get_packages')
@@ -67,6 +78,10 @@ const loadPacotes = async () => {
 
 onMounted(async () => {
     await loadPacotes()
+})
+
+onBeforeUnmount(() => {
+    sessionStorage.getItem('recarga') && sessionStorage.removeItem('recarga')
 })
 
 </script>

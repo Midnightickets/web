@@ -5,7 +5,7 @@
             </div>
             <div class="q-mx-md ">
                 <div class="recarga row justify-center rounded-borders text-center">
-                    <q-input v-model="recargaValor" label="Recarga" class="w100 q-mb-md bg-white rounded-borders text-bold" :inputStyle="{fontWeight: 'bold'}" prefix="R$" reverse-fill-mask mask="#####,##" maxlength="8" placeholder="Digite o valor que deseja adicionar" filled>
+                    <q-input v-model="recargaValor" label="Recarga" class="w100 q-mb-md bg-white rounded-borders text-bold" :inputStyle="{color: '#6310E1',fontWeight: 'bold'}" prefix="R$" reverse-fill-mask mask="#####,##" maxlength="8" placeholder="Digite o valor que deseja adicionar" filled>
                         <template v-slot:prepend>
                             <q-icon name="payments" class="q-mr-sm" color="primary"></q-icon>
                         </template>
@@ -40,11 +40,15 @@
                     </div>
                 </div>
             </div>
-            <q-dialog v-model=showRecargaModal>
-                <RecargaPaymentComponent />
-                <template v-slot:footer>
-                    <q-btn label="Fechar" color="primary" @click="showRecargaModal = false" />
-                </template>
+            <q-dialog  v-model="showRecargaModal" persistent>
+                <div class="q-px-md q-pb-md bg-grey-4">
+                    <div class="w100 q-mt-md text-primary text-center" id="title-layout">CONFIRMAR RECARGA</div>
+                    <div class="text-center q-pt-lg text-secondary text-h6">Deseja realmente <strong class="text-primary">adicionar</strong> R$ {{ recargaValor }} ao seu saldo?</div><br>
+                    <RecargaPaymentComponent />
+                    <div class="w100 row justify-center">
+                        <q-btn label="voltar" flat color="secondary" @click="showRecargaModal = false" />
+                    </div>
+                </div>
             </q-dialog>
     </q-page>
 </template>
@@ -62,7 +66,7 @@ const host = JSON.parse(sessionStorage.getItem('host'))
 const showRecargaModal = ref(false)
 
 function recarregarBtn() {
-    sessionStorage.setItem('recarga', Number(recargaValor.value.replace(',', '.')))
+    sessionStorage.setItem('recarga', recargaValor.value)
     showRecargaModal.value = true
 }
 

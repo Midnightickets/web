@@ -12,10 +12,11 @@
 </template>
 
 <script setup>
-import { onBeforeMount, onBeforeUnmount, ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 import { api } from "src/boot/axios";
 import { useQuasar } from "quasar";
-import { Utils } from "src/utils/Utils";
+import { Utils } from 'src/utils/Utils';
+
 
 const loading = ref(true)
 const $q = useQuasar();
@@ -37,7 +38,7 @@ const baseURL = isProd ? 'https://midnightickets.com' : 'http://localhost:9000'
 const preferenceId = ref('');
 
 onBeforeMount(async () => {
-    const host = JSON.parse(sessionStorage.getItem('userLogado'));
+    const host = JSON.parse(sessionStorage.getItem('host'));
     try {
         const recarga = sessionStorage.getItem('recarga');
         await loadScript('https://sdk.mercadopago.com/js/v2');
@@ -50,14 +51,12 @@ onBeforeMount(async () => {
                     "pending": baseURL + '/host',
                 },
                 host: host.id,
-                pacote: recargaPacote,
                 auto_return: "approved",
                 items: [
                     {
-                        id: recarga.id,
-                        title: 'Recarga de ' + Utils.formatCurrency(recarga.preco, 'brl'),
+                        title: 'Recarga de ' + Utils.formatCurrency(Number(recarga.replace(',', '.')), 'brl'),
                         quantity: 1,
-                        unit_price: recarga,
+                        unit_price: Number(recarga.replace(',', '.')),
                         tipo: 'Recarga de Saldo para Perfil Host',
                     }
                 ],

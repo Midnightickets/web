@@ -43,11 +43,12 @@ onBeforeMount(async () => {
         message: 'Confirmando a recarga, você concorda com a taxa de 1% sobre o valor da transação.',
         color: 'primary',
         position: 'top',
-        icon: 'check',
+        icon: 'request_quote',
         timeout: 5000
     });
     try {
         const recarga = sessionStorage.getItem('recarga');
+        const recargaSemTaxa = Number(recarga.replace(',', '.')) - (Number(recarga.replace(',', '.')) * 0.01);
         await loadScript('https://sdk.mercadopago.com/js/v2');
         const mp = new MercadoPago(process.env.MIDNIGHTICKETS_MERCADO_PAGO_PK, { locale: 'pt-BR' });
         const createPreference = async () => {
@@ -61,7 +62,7 @@ onBeforeMount(async () => {
                 auto_return: "approved",
                 items: [
                     {
-                        title: 'Recarga de ' + Utils.formatCurrency(Number(recarga.replace(',', '.')) , 'brl'),
+                        title: '🎫 Recarga de ' + Utils.formatCurrency(recargaSemTaxa , 'brl'),
                         quantity: 1,
                         unit_price: Number(recarga.replace(',', '.')),
                         tipo: 'Recarga de Saldo para Perfil Host',

@@ -12,7 +12,7 @@
                     </q-input>
                 </div>
                 <div class="pacotes w100">
-                    <q-btn label="Recarregar" class="q-mb-md bg-green text-center w100 q-py-lg text-white rounded-borders" glossy :disabled="recargaValor.trim() === ''" @click="recarregarBtn()" icon-right="currency_exchange" />
+                    <q-btn label="Recarregar" class="q-mb-md bg-green text-center w100 q-py-xl text-white rounded-borders" glossy :disabled="recargaValor.trim() === ''" @click="recarregarBtn()" icon-right="currency_exchange" />
                     <div class="q-mt-md q-pb-xs w100 text-secondary text-bold">Saldo Atual: {{ Utils.formatCurrency(host.balance, 'brl') }}</div>
                     <q-btn label="Solicitar Saque" class="q-mb-md bg-primary text-center w100 q-py-lg text-white rounded-borders" glossy icon-right="payments" />
                     <div id="title-menu" class="w100 q-my-md text-secondary">
@@ -42,7 +42,7 @@
             </div>
             <q-dialog  v-model="showRecargaModal" persistent>
                 <div class="q-px-md q-pb-md bg-grey-4">
-                    <div class="w100 q-mt-md text-primary text-center" id="title-layout">CONFIRMAR RECARGA</div>
+                    <div class="w100 q-mt-md text-white bg-blue-5 q-py-md text-center" id="title-layout">CONFIRMAR RECARGA</div>
                     <div class="text-center q-pt-lg text-secondary text-h6">Deseja realmente <strong class="text-primary">adicionar {{ format(recargaValor) }}</strong> ao seu saldo<br>por <strong class="text-primary">{{ calculaTaxaTransacao(recargaValor) }}</strong> ?</div><br>
                     <RecargaPaymentComponent />
                     <div class="w100 row justify-center">

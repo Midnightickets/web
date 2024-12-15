@@ -43,7 +43,7 @@
             <q-dialog  v-model="showRecargaModal" persistent>
                 <div class="q-px-md q-pb-md bg-grey-4">
                     <div class="w100 q-mt-md text-primary text-center" id="title-layout">CONFIRMAR RECARGA</div>
-                    <div class="text-center q-pt-lg text-secondary text-h6">Deseja realmente <strong class="text-primary">adicionar</strong> R$ {{ recargaValor }} ao seu saldo?</div><br>
+                    <div class="text-center q-pt-lg text-secondary text-h6">Deseja realmente <strong class="text-primary">adicionar {{ format(recargaValor) }}</strong> ao seu saldo<br>por <strong class="text-primary">{{ calculaTaxaTransacao(recargaValor) }}</strong> ?</div><br>
                     <RecargaPaymentComponent />
                     <div class="w100 row justify-center">
                         <q-btn label="voltar" flat color="secondary" @click="showRecargaModal = false" />
@@ -66,8 +66,34 @@ const host = JSON.parse(sessionStorage.getItem('host'))
 const showRecargaModal = ref(false)
 
 function recarregarBtn() {
-    sessionStorage.setItem('recarga', recargaValor.value)
+    let recargaTaxaCalculada = calculaTaxaTransacaoFinal(recargaValor.value)
+    recargaTaxaCalculada = recargaTaxaCalculada.toString()
+    if(recargaTaxaCalculada.includes('.')) {
+        recargaTaxaCalculada = recargaTaxaCalculada.replace('.', ',')
+    }
+    sessionStorage.setItem('recarga', recargaTaxaCalculada)
     showRecargaModal.value = true
+}
+
+function calculaTaxaTransacaoFinal(value) {
+    if(value.includes(',')) {
+        value = value.replace(',', '.')
+    }
+    return Number(value) + (Number(value) * 0.01)
+}
+
+function format(value) {
+    if(value.includes(',')) {
+        value = value.replace(',', '.')
+    }
+    return Utils.formatCurrency(Number(value), 'brl')
+}
+
+function calculaTaxaTransacao(value) {
+    if(value.includes(',')) {
+        value = value.replace(',', '.')
+    }
+    return Utils.formatCurrency(Number(value) + (Number(value) * 0.01), 'brl')
 }
 
 const loadPacotes = async () => {

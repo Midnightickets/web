@@ -39,6 +39,13 @@ const preferenceId = ref('');
 
 onBeforeMount(async () => {
     const host = JSON.parse(sessionStorage.getItem('host'));
+    $q.notify({
+        message: 'Confirmando a recarga, você concorda com a taxa de 1% sobre o valor da transação.',
+        color: 'primary',
+        position: 'top',
+        icon: 'check',
+        timeout: 5000
+    });
     try {
         const recarga = sessionStorage.getItem('recarga');
         await loadScript('https://sdk.mercadopago.com/js/v2');
@@ -54,7 +61,7 @@ onBeforeMount(async () => {
                 auto_return: "approved",
                 items: [
                     {
-                        title: 'Recarga de ' + Utils.formatCurrency(Number(recarga.replace(',', '.')), 'brl'),
+                        title: 'Recarga de ' + Utils.formatCurrency(Number(recarga.replace(',', '.')) , 'brl'),
                         quantity: 1,
                         unit_price: Number(recarga.replace(',', '.')),
                         tipo: 'Recarga de Saldo para Perfil Host',

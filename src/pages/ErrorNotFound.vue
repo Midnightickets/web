@@ -17,6 +17,7 @@
       </div>
 
       <q-btn
+        glossy
         class="q-mt-xl"
         color="white"
         text-color="primary"

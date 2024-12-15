@@ -135,8 +135,8 @@
                         o <strong>máximo do seu
                             lucro</strong>
                         <br>🟣 <strong class="text-primary">LUCRO EM TEMPO REAL<br></strong> Disponibilizamos a
-                        possibilidade de receber o
-                        <strong>lucro de suas vendas automaticamente em tempo real na sua conta</strong> enquanto
+                        visualização do andamento do 
+                        <strong>lucro de suas vendas atualizadas automaticamente em tempo real na sua conta</strong> enquanto
                         acontece o seu evento<br>
                         🟣 <strong class="text-primary">AJUSTES DE LOTES GRATUITOS<br></strong>
                         Realize <strong>reajustes</strong> de ingressos dos seus ingressos <strong>sem custo

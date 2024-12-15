@@ -1,10 +1,10 @@
 <template>
-    <div id="login-host" class="animate__animated animate__fadeIn bg-grad-7 w100 flex flex-center">
+    <div id="login-user" class="animate__animated animate__fadeIn bg-grad-7 w100 flex flex-center">
         <div id="login-card" class="bg-white animate__animated animate__zoomIn">
-            <div id="title-menu" class="text-primary text-center q-mt-md row justify-center items-center"><q-icon name="diamond" size="md" color="primary" class="q-mr-xs"></q-icon>HOST LOGIN</div>
+            <div id="title-menu" class="text-primary text-center q-mt-md row justify-center items-center"><q-icon name="account_circle" size="md" color="primary" class="q-mr-xs"></q-icon>LOGIN</div>
             <div class="q-pa-md">
                 <q-input
-                    v-model="host.login"
+                    v-model="user.login"
                     filled
                     placeholder="Login*"
                     maxlength="40"
@@ -13,7 +13,7 @@
                     @keyup.enter="login"
                 />
                 <q-input
-                    v-model="host.password"
+                    v-model="user.password"
                     filled
                     placeholder="Senha*"
                     :type="formConfig.showPassword ? 'text' : 'password'"
@@ -43,7 +43,15 @@
                     color="primary"
                     glossy
                     icon-right="login"
-                    class="full-width q-mt-md q-py-md"
+                    class="full-width q-mt-md q-py-lg"
+                />
+                <q-btn
+                    v-if="!loading"
+                    label="Registre-se"
+                    color="blue-14"
+                    glossy
+                    icon-right="person_add"
+                    class="full-width q-mt-md q-py-sm"
                 />
                 <q-btn
                     class="full-width q-mt-sm"
@@ -69,28 +77,20 @@ const loading = ref(false)
 
 const formConfig = ref({
     showPassword: false,
-    hostLoginRoute: '/login/host',
+    userLoginRoute: '/login_user',
 })
 
-const host = ref({
+const user = ref({
     login: '',
     password: '',
 })
 
 function isLoginFormValid() {
-    return host.value.login.trim().length < 3 || host.value.password.trim().length < 3
-}
-
-const makeReqObject = () => {
-    const req = {
-        login: host.value.login.trim().toLowerCase(),
-        password: host.value.password.trim().toLowerCase(),
-    }
-    return req
+    return user.value.login.trim().length < 3 || user.value.password.trim().length < 3
 }
 
 const isLoginFormInvalid = () => {
-    if (host.value.login.trim().length < 3 || host.value.password.trim().length < 3) {
+    if (user.value.login.trim().length < 3 || user.value.password.trim().length < 3) {
         return true
     }
     return false
@@ -101,17 +101,21 @@ onMounted(() => {
 })
 async function login() {
     loading.value = true
-    await api.post(formConfig.value.hostLoginRoute, makeReqObject())
+    const req = {
+        login: user.value.login,
+        password: user.value.password
+    }
+    await api.post(formConfig.value.userLoginRoute, req)
     .then(response => {
-        sessionStorage.setItem('host', JSON.stringify(response.data))
-        sessionStorage.setItem('isHost', true)
+        sessionStorage.setItem('user', JSON.stringify(response.data))
+        sessionStorage.setItem('isUser', true)
         $q.notify({
             color: 'secondary',
             position: 'top',
             message: 'Bem vindo, '+ response.data.login + '!',
-            icon: 'diamond'
+            icon: 'local_activity'
         })
-        router.push('/host')
+        router.push('/me')
     })
     .catch(err => {
         $q.notify({
@@ -120,7 +124,7 @@ async function login() {
             message: err.response.data.error,
             icon: 'report_problem',
         })
-        host.value.password = ''
+        user.value.password = ''
     })
     .finally(() => {
         loading.value = false
@@ -130,7 +134,7 @@ async function login() {
 </script>
 
 <style scoped>
-#login-host{
+#login-user{
     height: 100vh;
 }
 

@@ -17,23 +17,14 @@
                     @click="toggleRightDrawer" />
             </q-toolbar>
 
-            <!-- <q-tabs align="center" v-if="!isMobile">
-            <q-route-tab class="text-purple-1" to="/app" label="Perfil" />
-            <q-route-tab class="text-purple-1" v-if="isAuthenticated && isHost" to="/evento" label="Eventos" />
-        </q-tabs> -->
         </q-header>
 
-        <q-drawer show-if-above v-model="rightDrawerOpen" side="right" class="bg-grad-1">
-            <div v-if="isAuthenticated" class="w100 flex q-mb-md flex-center q-mt-lg">
-                <q-avatar style="width:110px;height:110px;" class="shadow-2">
-                    <img :src="hostInfo.img_url" alt="">
-                </q-avatar>
-            </div>
-            <div id="title-menu" v-if="isHost" class="text-center text-bold text-purple-1">
-                {{ Utils.convertStringToFirstAndLast(hostInfo.name).toUpperCase() }}</div>
-            <div v-if="isAuthenticated" class="text-center text-purple-1 mid-opacity text-bold q-mb-md "><q-btn
-                    @click="goTo({ to: '/app' })" label="Perfil" flat></q-btn></div>
-            <q-list v-if="isAuthenticated" class="text-bold text-white">
+        <q-drawer show-if-above v-if="userInfo" v-model="rightDrawerOpen" side="right" class="bg-grad-1">
+            <div id="title-menu" class="text-center text-bold text-purple-1 q-pt-xl">
+                {{ Utils.convertStringToFirstAndLast(userInfo.name).toUpperCase() }}</div>
+            <div class="text-center text-purple-1 mid-opacity text-bold q-mb-md q-pb-lg "><q-btn
+                    @click="goTo({ to: '/me' })" label="Perfil" flat></q-btn></div>
+            <q-list class="text-bold text-white">
                 <q-item v-for="item in menuOptions.items" :key="item.label" clickable @click="goTo(item)"
                     style="border-radius: 8px;"
                     class="q-mt-md q-mx-md text-blue-2 shadow-2 bg-twitch-rev">
@@ -46,13 +37,6 @@
                     </q-item-section>
                 </q-item>
             </q-list>
-            <div v-if="!isAuthenticated" class="w100 text-white text-bold row items-center justify-center q-mt-xl">
-                <div class="text-center q-mb-md q-mx-md">
-                    Registre-se ou Faça Login para ter acesso aos seus Eventos e Ingressos!!
-                </div>
-                <q-btn v-if="!isAuthenticated" class="q-mt-lg" to="/" label="Página Inicial" color="primary"
-                    icon="home" />
-            </div>
             <div class="absolute-bottom w100  row no-wrap items-center justify-center q-mt-xl text-primary q-py-sm">
                 <div class="row items-center w100">
                     <q-btn class="w100 q-mb-xl" flat @click="rightDrawerOpen = !rightDrawerOpen" color="secondary">fechar menu</q-btn>
@@ -73,10 +57,7 @@ import { Utils } from 'src/utils/Utils';
 import { computed, onBeforeUnmount, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-const hostInfo = JSON.parse(sessionStorage.getItem('host'));
-
-const isHost = computed(() => hostInfo != null);
-const isAuthenticated = computed(() => sessionStorage.getItem('isHost'));
+const userInfo = JSON.parse(sessionStorage.getItem('user'));
 
 const rightDrawerOpen = ref(false)
 const router = useRouter()
@@ -85,11 +66,9 @@ const router = useRouter()
 
 const menuOptions = ref({
     items: [
-        // HOST MENUS
-        { label: 'Eventos', icon: 'calendar_month', to: '/host', role: 'host' },
-        { label: 'Acessos', icon: 'sensor_occupied', to: '/host/acessos', role: 'host' },
-        { label: 'Saldo e Recarga', icon: 'currency_exchange', to: '/host/saldo', role: 'host', selected: false, },
-        // { label: 'Suporte', icon: 'support_agent', to: 'https://samuelvictorol.github.io/portfolio/contato', selected: false },
+        // USER MENUS
+        { label: 'Meus Ingressos', icon: 'confirmation_number', to: '#', role: 'user' },
+        { label: 'Buscar Eventos', icon: 'travel_explore', to: '#', role: 'user' },
     ]
 })
 function goTo(item) {

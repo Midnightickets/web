@@ -12,6 +12,10 @@ const routes = [
     component: () => import('layouts/login/LoginHostLayout.vue'),
   },
   {
+    path: '/login',
+    component: () => import('layouts/login/LoginUserLayout.vue'),
+  },
+  {
     path: '/host',
     component: () => import('src/layouts/HostLayout.vue'),
     children: [
@@ -22,6 +26,15 @@ const routes = [
       { path: 'saldo', component: () => import('src/pages/host/SaldoPage.vue') },
     ]
   },
+  {
+    path: '/me',
+    component: () => import('src/layouts/UserLayout.vue'),
+    children: [
+      { path: '', component: () => import('src/pages/user/IngressosPage.vue') },
+      { path: 'perfil', component: () => import('src/pages/user/UserPage.vue') },
+    ]
+  },
+
   // Always leave this as last one,
   // but you can also remove it
   {

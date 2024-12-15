@@ -106,8 +106,7 @@
                                 </template>
                             </q-input>
                         </div>
-                        <q-input :inputStyle="{ fontWeight: 'bold' }" filled v-model="evento.maps_loc" label="Localização" color="primary" />
-                        <q-input :inputStyle="{ fontWeight: 'bold' }" filled v-model="evento.img_url" label="URL da Imagem" color="primary" />
+                        <q-input :inputStyle="{ fontWeight: 'bold' }" filled v-model="evento.maps_loc" label="Localização Google Maps" color="primary" />
                         <q-btn @click="updateEventInfo()" label="salvar alterações" color="orange-14" :disabled="checkEdit()" icon-right="save" class="w100 q-py-md" glossy></q-btn>
                     </div>
                     

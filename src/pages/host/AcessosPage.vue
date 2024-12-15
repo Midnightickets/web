@@ -27,7 +27,7 @@
                 </template>
             </q-input>
             <q-btn  label="Adicionar" @click="adicionarSubhost()" :disabled="!subhostHandler.name || !subhostHandler.login || !subhostHandler.password" glossy icon-right="add" color="primary" class="shadow-2 q-mt-md"></q-btn>
-            <q-btn class="w100" flat @click="editing = !editing; clearSubhostHandler()" label="Cancelar" color="grey"></q-btn>
+            <q-btn class="w100" flat @click="editing = !editing; clearSubhostHandler()" label="fechar" color="grey"></q-btn>
         </div>
         <div id="title-menu" class="text-secondary q-pl-md">
             Subhosts

@@ -29,8 +29,8 @@
                         >
                             <q-card class="q-mb-md bg-grey-4">
                                 <q-card-section>
-                                    <q-icon name="confirmation_number" class="q-pr-sm" size="md" color="primary"></q-icon> 
-                                    <div id="title-menu" class="text-primary row items-center">{{ pacote.max_tickets }} Ingressos</div>
+                                    <q-icon name="confirmation_number" class="q-pr-sm" size="md" color="primary"></q-icon><strong class="text-secondary text-bold">UM EVENTO DE</strong><br>
+                                    <div id="title-menu" class="text-primary row items-center">{{ pacote.max_tickets }} Ingressos <strong class="text-h6 text-secondary text-bold q-pl-sm">por</strong></div>
                                     <div class="w100 rounded-borders q-pt-xs bg-secondary q-mb-lg q-mt-md"></div>
                                     <div class="text-bold q-py-sm text-white bg-secondary row items-center q-px-md rounded-borders q-mt-md w50 no-wrap">
                                         {{ Utils.formatCurrency(pacote.price, 'brl') }}</div>

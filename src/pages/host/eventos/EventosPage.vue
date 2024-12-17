@@ -30,9 +30,9 @@
             </div>
             <q-toggle color="green-13" v-model="filter.inProgress" :label="filter.inProgress ? 'Em Andamento' : 'Todos'" @update:model-value="getEventos()" class="q-mt-xs q-mb-md text-white" />
             <div v-if="loading" class="row w100 q-pb-xl justify-center">
-                <q-spinner-ball color="primary" size="lg" />
-                <q-spinner-ball color="primary" size="lg" />
-                <q-spinner-ball color="primary" size="lg" />
+                <q-spinner-ball color="secondary" size="lg" />
+                <q-spinner-ball color="secondary" size="lg" />
+                <q-spinner-ball color="secondary" size="lg" />
             </div>
             <div id="title-layout" v-if="rows.length == 0" class="text-secondary w100 text-center q-mt-xl q-pt-xl">
                 Nenhum evento encontrado 🌆

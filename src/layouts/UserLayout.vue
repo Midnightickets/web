@@ -7,7 +7,7 @@
                     <q-avatar>
                         <q-icon size="md" color="purple-1" name="local_activity" />
                     </q-avatar>
-                    <a @click="goTo('/app')" style="text-decoration: none;" id="title-layout"
+                    <a style="text-decoration: none;" id="title-layout"
                         class="text-purple-1 q-pl-xs text-bold">
                         Midnight Tickets
                     </a>
@@ -19,29 +19,43 @@
 
         </q-header>
 
-        <q-drawer show-if-above v-if="userInfo" v-model="rightDrawerOpen" side="right" class="bg-grad-1">
-            <div id="title-menu" class="text-center text-bold text-purple-1 q-pt-xl">
-                {{ Utils.convertStringToFirstAndLast(userInfo.name).toUpperCase() }}</div>
-            <div class="text-center text-purple-1 mid-opacity text-bold q-mb-md q-pb-lg "><q-btn
-                    @click="goTo({ to: '/me' })" label="Perfil" flat></q-btn></div>
-            <q-list class="text-bold text-white">
-                <q-item v-for="item in menuOptions.items" :key="item.label" clickable @click="goTo(item)"
-                    style="border-radius: 8px;"
-                    class="q-mt-md q-mx-md text-blue-2 shadow-2 bg-twitch-rev">
-                    <q-item-section avatar>
-                        <q-icon :name="item.icon" color="secondary" />
-                    </q-item-section>
-                    <q-item-section>
-                        <q-item-label  class="text-grey-4">{{ item.label
-                            }}</q-item-label>
-                    </q-item-section>
-                </q-item>
-            </q-list>
-            <div class="absolute-bottom w100  row no-wrap items-center justify-center q-mt-xl text-primary q-py-sm">
-                <div class="row items-center w100">
-                    <q-btn class="w100 q-mb-xl" flat @click="rightDrawerOpen = !rightDrawerOpen" color="secondary">fechar menu</q-btn>
-                    <!-- <q-btn label="logout" icon-right="logout" color="secondary" class="w100 q-mx-md" to="/" glossy></q-btn> -->
+        <q-drawer show-if-above v-model="rightDrawerOpen" side="right" class="bg-grad-1">
+            <div v-if="userInfo" class="w100">
+                <div id="title-menu" class="text-center text-bold text-purple-1 q-pt-xl">
+                    {{ Utils.convertStringToFirstAndLast(userInfo.name).toUpperCase() }}</div>
+                <div class="text-center text-purple-1 mid-opacity text-bold q-mb-md q-pb-lg "><q-btn
+                        @click="goTo({ to: '/me' })" label="Perfil" flat></q-btn></div>
+                <q-list class="text-bold text-white">
+                    <q-item v-for="item in menuOptions.items" :key="item.label" clickable @click="goTo(item)"
+                        style="border-radius: 8px;"
+                        class="q-mt-md q-mx-md text-blue-2 shadow-2 bg-twitch-rev">
+                        <q-item-section avatar>
+                            <q-icon :name="item.icon" color="secondary" />
+                        </q-item-section>
+                        <q-item-section>
+                            <q-item-label  class="text-grey-4">{{ item.label
+                                }}</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                </q-list>
+                <div class="absolute-bottom w100  row no-wrap items-center justify-center q-mt-xl text-primary q-py-sm">
+                    <div class="row items-center w100">
+                        <q-btn class="w100 q-mb-xl" flat @click="rightDrawerOpen = !rightDrawerOpen" color="secondary">fechar menu</q-btn>
+                        <!-- <q-btn label="logout" icon-right="logout" color="secondary" class="w100 q-mx-md" to="/" glossy></q-btn> -->
+                    </div>
                 </div>
+            </div>
+            <div v-if="!userInfo" class="w100 text-white text-bold row items-center justify-center q-mt-xl q-pt-xl">
+                <a href="/" style="text-decoration: none;" id="title-layout"
+                class="text-purple-1 text-bold row items-center q-mb-md">
+                <q-icon size="md" class="q-pr-xs" color="purple-1" name="local_activity" />
+                Midnight Tickets
+                 </a>
+                <div class="text-center text-grey-4 q-mb-md q-mx-md">
+                    Faça Login para Comprar Ingressos e Encontrar Eventos
+                </div>
+                <q-btn class="q-my-lg q-pa-lg" to="/login" color="blue-14" glossy label="Iniciar Sessão" icon-right="login" />
+                <q-btn class="q-mt-xl" to="/" flat label="Página Inicial" color="secondary" icon="home" />
             </div>
         </q-drawer>
 

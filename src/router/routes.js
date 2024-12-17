@@ -8,6 +8,13 @@ const routes = [
     ]
   },
   {
+    path: '/:events_host',
+    component: () => import('src/layouts/UserLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/user/EventsByHostPublic.vue') }
+    ]
+  },
+  {
     path: '/login-host',
     component: () => import('layouts/login/LoginHostLayout.vue'),
   },

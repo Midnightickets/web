@@ -3,10 +3,10 @@
         <q-header class="fixed bg-glass-2 text-white animate__animated animate__backInDown animate__slow shadow-1"
             height-hint="98">
             <div style="font-size: 1rem;" class=" q-py-md w100 row no-wrap items-center  justify-evenly">
-                <a v-if="!isMobile" @click="scrollBot()" class="menu-item row items-center" id="title-menu">
+                <a v-if="!isMobile" @click="scrollTop()" class="menu-item row items-center" id="title-menu">
                     <q-icon class="q-pr-xs" name="local_activity" size="xl" /> Midnight Tickets
                 </a>
-                <a v-else @click="scrollBot()" class="menu-item row items-center">
+                <a v-else @click="scrollTop()" class="menu-item row items-center">
                     <q-icon name="local_activity" size="65px" />
                 </a>
                 <div class="row items-center no-wrap q-gutter-x-sm">
@@ -322,7 +322,7 @@
                             glossy dense class="q-mt-sm q-pa-lg " color="dark" to="/login-host" />
                     </div>
                 </div>
-                <div class="w100 text-secondary text-purple-1 text-bold q-mb-xl text-center q-mt-md">
+                <div class="w100 text-secondary text-purple-1 text-bold q-mb-xl text-center q-mt-md q-pt-xl">
                     Siga-nos no <a href="https://www.instagram.com/midnightickets" class="text-secondary"
                         target="_blank">Instagram</a>
                     e
@@ -378,6 +378,10 @@ function wppConsultor() {
 
 const lowDownScrolling = () => {
     window.scrollTo(0, 500);
+}
+
+function scrollTop() {
+    window.scrollTo(0, 0);
 }
 
 function navigateTo(to) {

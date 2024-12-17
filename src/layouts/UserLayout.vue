@@ -19,7 +19,7 @@
 
         </q-header>
 
-        <q-drawer show-if-above v-model="rightDrawerOpen" side="right" class="bg-grad-1">
+        <q-drawer show-if-above v-model="rightDrawerOpen" side="right" class="bg-grad-1 relative">
             <div v-if="userInfo" class="w100">
                 <div id="title-menu" class="text-center text-bold text-purple-1 q-pt-xl">
                     {{ Utils.convertStringToFirstAndLast(userInfo.name).toUpperCase() }}</div>
@@ -37,6 +37,7 @@
                                 }}</q-item-label>
                         </q-item-section>
                     </q-item>
+                    <q-btn @click="Utils.logout()" class="z-index-999 absolute-bottom cursor-pointer q-py-sm" label="logout" icon-right="logout" color="secondary"></q-btn>
                 </q-list>
                 <div class="absolute-bottom w100  row no-wrap items-center justify-center q-mt-xl text-primary q-py-sm">
                     <div class="row items-center w100">

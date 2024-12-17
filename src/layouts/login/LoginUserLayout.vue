@@ -102,8 +102,8 @@ onMounted(() => {
 async function login() {
     loading.value = true
     const req = {
-        login: user.value.login,
-        password: user.value.password
+        login: user.value.login.toLocaleLowerCase(),
+        password: user.value.password.toLocaleLowerCase()
     }
     await api.post(formConfig.value.userLoginRoute, req)
     .then(response => {

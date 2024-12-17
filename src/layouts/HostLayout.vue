@@ -23,7 +23,7 @@
         </q-tabs> -->
         </q-header>
 
-        <q-drawer show-if-above v-model="rightDrawerOpen" side="right" class="bg-grad-1">
+        <q-drawer show-if-above v-model="rightDrawerOpen" side="right" class="bg-grad-1 relative">
             <div v-if="isAuthenticated" class="w100 flex q-mb-md flex-center q-mt-lg">
                 <q-avatar style="width:110px;height:110px;" class="shadow-2">
                     <img :src="hostInfo.img_url" alt="">
@@ -33,7 +33,7 @@
                 {{ Utils.convertStringToFirstAndLast(hostInfo.name).toUpperCase() }}</div>
             <div v-if="isAuthenticated" class="text-center text-purple-1 mid-opacity text-bold q-mb-md "><q-btn
                     @click="goTo({ to: '/app' })" label="Perfil" flat></q-btn></div>
-            <q-list v-if="isAuthenticated" class="text-bold text-white">
+            <q-list v-if="isAuthenticated" class="text-bold text-white" >
                 <q-item v-for="item in menuOptions.items" :key="item.label" clickable @click="goTo(item)"
                     style="border-radius: 8px;"
                     class="q-mt-md q-mx-md text-blue-2 shadow-2 bg-twitch-rev">
@@ -45,6 +45,7 @@
                             }}</q-item-label>
                     </q-item-section>
                 </q-item>
+                <q-btn @click="Utils.logout()" class="z-index-999 absolute-bottom cursor-pointer q-py-sm" label="logout" icon-right="logout" color="secondary"></q-btn>
             </q-list>
             <div v-if="!isAuthenticated" class="w100 text-white text-bold row items-center justify-center q-mt-xl">
                 <div class="text-center q-mb-md q-mx-md">

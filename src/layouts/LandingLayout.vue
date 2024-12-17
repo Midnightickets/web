@@ -37,10 +37,30 @@
                     <q-btn glossy to="/login-host" color="secondary"
                         class="animate__animated text-primary animate__fadeInLeft  animate__delay-3s animate__slower q-pa-xl rounded-borders"
                         icon-right="diamond" label="Sou Produtor!" />
-                    <q-btn glossy to="/login" @click="scrollBot()"
+                    <q-btn glossy @click="searchPublic.opened = !searchPublic.opened"
                         class="animate__animated animate__fadeInRight bg-primary q-ml-sm text-white animate__delay-3s animate__slower q-pa-xl rounded-borders"
                         icon-right="confirmation_number" label="Quero Ingressos!" />
                 </div>
+            </div>
+            <div v-if="searchPublic.opened" id="search-public" class="w100 rounded-borders">
+                <q-card id="search-card" class="q-mt-md q-mb-md q-mx-md animate__animated rounded-borders animate__fadeInDown animate__slower">
+                    <q-card-section class="bg-grad-4 text-white text-bold text-center q-pa-md ">
+                        <q-icon name="nightlife" size="lg" color="white" />
+                        <div class="text-center">Encontre Produtores e Eventos em Andamento</div>
+                    </q-card-section>
+                    <q-card-section class="q-pa-md column q-gutter-y-md">
+                        <q-input maxlength="100" v-model="searchPublic.titleEventOrHostName" filled label="Nome do Evento ou Produtor"
+                            placeholder="Digite o nome do Evento ou Produtor">
+                            <template v-slot:prepend>
+                                <q-icon name="search" color="primary" />
+                            </template>
+                        </q-input>
+                            <q-btn @click="searchPublicEventsOrHost(false)" color="primary" glossy class="shadow-1" label="Buscar por Evento"
+                            icon="event" />
+                            <q-btn @click="searchPublicEventsOrHost(true)" color="secondary" glossy class="shadow-1" label="Buscar por Produtor"
+                                icon="person_search" />
+                    </q-card-section>
+                </q-card>
             </div>
             <q-page class="">
                 <div id="home" style="border: 8px solid #692EDD;border-radius: 8px;"
@@ -56,7 +76,7 @@
                     </q-toolbar>
                     <div class="text-shadow space bg-grad-2 w100 text-center text-grey-4 q-py-md text-bold q-px-md "
                         style="font-size:1rem">
-                        REALIZE seus EVENTOS com 0% de TAXA e PARE de PAGAR TRIBUTOS excessivos na VENDA de SEUS
+                        REALIZE seus EVENTOS com A MENOR TAXA do mercado e PARE de PAGAR TRIBUTOS excessivos na VENDA de SEUS
                         INGRESSOS!!
                     </div>
                     <div class="row justify-center  q-mx-md">
@@ -337,6 +357,12 @@ import { useQuasar } from "quasar";
 import { onMounted, ref } from "vue";
 import { api } from 'src/boot/axios';
 import { useRouter } from "vue-router";
+
+const searchPublic = ref({
+    opened: false,
+    isByHostName: false,
+    titleEventOrHostName: ''
+})
 
 const router = useRouter()
 const $q = useQuasar()

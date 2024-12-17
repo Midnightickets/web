@@ -1,4 +1,3 @@
-
 const Utils = {
     formatCurrency: (num, currency) => {
         switch (currency) {
@@ -32,6 +31,13 @@ const Utils = {
         } else {
             return bigString;
         }
+    },
+    logout: () => {
+        console.log('-> Logout realizado com sucesso, sentiremos sua falta\n  ¯\_( ͡° ͜ʖ ͡°)_/¯ \n');
+        sessionStorage.clear()
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 1500);
     },
 }
 

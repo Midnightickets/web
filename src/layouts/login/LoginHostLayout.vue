@@ -1,6 +1,6 @@
 <template>
-    <div id="login-host" class="animate__animated animate__fadeIn bg-grad-7 w100 flex flex-center">
-        <div id="login-card" class="bg-white animate__animated animate__zoomIn">
+    <div id="login-host" class="animate__animated animate__fadeIn bg-dark w100 flex flex-center">
+        <div id="login-card" class="bg-white animate__animated animate__zoomIn rounded-borders shadow-2">
             <div id="title-menu" class="text-primary text-center q-mt-md row justify-center items-center"><q-icon name="diamond" size="md" color="primary" class="q-mr-xs"></q-icon>HOST LOGIN</div>
             <div class="q-pa-md">
                 <q-input
@@ -30,17 +30,17 @@
                         />
                     </template>
                 </q-input>
-                <div v-if="loading" class="row w100 q-py-sm justify-center">
-                    <q-spinner-ball color="primary" size="lg" />
-                    <q-spinner-ball color="primary" size="lg" />
-                    <q-spinner-ball color="primary" size="lg" />
+                <div v-if="loading" class="row w100 q-py-sm q-mt-xs justify-center">
+                    <q-spinner-ball color="secondary" size="lg" />
+                    <q-spinner-ball color="secondary" size="lg" />
+                    <q-spinner-ball color="secondary" size="lg" />
                 </div>
                 <q-btn
                     v-if="!loading"
                     :disabled="isLoginFormInvalid()"
                     @click="login"
                     label="Login"
-                    color="primary"
+                    color="dark"
                     glossy
                     icon-right="login"
                     class="full-width q-mt-md q-py-md"

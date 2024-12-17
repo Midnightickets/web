@@ -1,10 +1,10 @@
 <template>
     <q-page class="q-pb-xl bg-twitch animate__animated animate__fadeInRight">
         <div class="w100 q-pt-sm q-pl-sm" >
-            <q-btn to="/" icon="home" color="secondary" glossy></q-btn>
+            <q-btn to="/" icon="travel_explore" color="secondary" glossy class="shadow-1"></q-btn>
         </div>
-        <div v-if="!loading && events.length>0" class="animate__animated animate__fadeInLeft w100 text-white text-center q-pb-lg" id="title">
-            Eventos de {{ hostName }}
+        <div v-if="!loading && events.length>0" class="animate__animated animate__fadeInLeft w100 text-white text-center q-pb-lg q-mt-sm q-px-md" id="title-2">
+            Eventos de {{ hostName.toUpperCase() }}
         </div>
         <div v-if="!loading" class="w100 row items-center q-gutter-y-md">
             <q-card v-for="(event, index) in events" :key="index" class="card-event q-mx-md bg-grey-4 q-mt-md">
@@ -16,10 +16,10 @@
                             <q-item-label class="text-bold text-secondary">{{ event.date.replaceAll('-', '/') }}</q-item-label>
                             <img id="img-events" :src="event.img_url" class="q-mt-md" alt="🎇 Banner do Evento"/>
                         </q-item-section>
-                        <q-item-section side>
-                            <q-btn @click="goToEvent(event.id)" icon="visibility" class="shadow-2" color="green" glossy style="height: 100%;width: 100%;"></q-btn>
-                        </q-item-section>
                     </q-item>
+                    <q-item-section class="q-px-md">
+                        <q-btn @click="goToEvent(event.id)" label="Visualizar evento" icon-right="event" class="shadow-1 q-py-md" color="primary" glossy style="height: 100%;width: 100%;"></q-btn>
+                    </q-item-section>
                 </q-card-section>
             </q-card>
         </div>

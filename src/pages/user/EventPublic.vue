@@ -7,15 +7,19 @@
             {{ event.title }}
         </div>
         <div  v-if="!loading" class="text-secondary text-bold w100 text-center q-mb-lg">{{ event.host }}</div>
+        <div v-if="isMobile" class="w100 q-mb-xl row justify-center">
+            <a class="text-white bg-green-14 q-pa-sm rounded-borders text-bold shadow-1" style="text-decoration: none;" href="#ingressos">Comprar Ingressos <q-icon size="sm" name="add_shopping_cart"></q-icon></a>
+        </div>
         <div v-if="!loading" id="cards-wrapper" class="w100 row items-start q-gutter-y-md">
             <q-card class="card-event q-mx-md bg-grey-4 q-mt-md">
-                <q-card-section>
+                <q-card-section >
                     <q-item >
                         <q-item-section class="text-black">
                             <q-item-label id="title-2"  class="text-primary">INFORMAÇÕES</q-item-label>
                             <q-item-label class="text-bold text-grey-14 q-py-sm">{{ event.desc }}</q-item-label>
                             <q-item-label class="text-bold text-primary w100 column text-bold" >📆 {{ event.date.replaceAll('-', '/') }}<br>⏱️ {{ event.initial_time ? event.initial_time : 'xx:xx' }}{{ event.final_time ? (' - ' + event.final_time) : ''}}</q-item-label>
                             <img id="img-events" :src="event.img_url" class="q-mt-md" alt="🎇 Banner do Evento"/>
+                            <div id="ingressos"></div>
                         </q-item-section>
                     </q-item>
                 </q-card-section>
@@ -24,8 +28,8 @@
                 <q-card-section>
                     <q-item >
                         <q-item-section class="text-black">
-                            <q-item-label id="title-2"  class="text-primary">INGRESSOS</q-item-label>
-                            <div id="ticket-types">
+                            <q-item-label id="title-2"  class="text-primary" >INGRESSOS</q-item-label>
+                            <div id="ticket-types" >
                                 <q-item id="ticket" v-for="(ticket, index) in event.ticket_types" :key="index" class="shadow-1 q-mt-md">
                                     <q-item-section class="text-bold text-grey-14 q-py-sm">
                                         {{ ticket.title }}<br>R$ {{ ticket.price }}
@@ -67,6 +71,7 @@ import { onBeforeMount, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from 'src/boot/axios';
 
+const isMobile = window.innerWidth < 800;
 const route = useRoute();
 const event = ref(null);
 const loading = ref(false);
@@ -83,6 +88,10 @@ onBeforeMount(async () => {
 });
 
 function returnBack() {
+    if (window.location.href.includes('ingressos')) {
+        window.history.back();
+        window.history.back();
+    } else
     window.history.back();
 }
 

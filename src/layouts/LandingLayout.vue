@@ -22,17 +22,21 @@
                     <a v-if="isMobile" class="menu-item" @click="scrollToBottom()">
                         <q-btn icon="contact_support" color="secondary"></q-btn>
                     </a>
-                    <q-btn glossy dense class="menu-item text-bold bg-primary q-pa-md text-purple-1 row items-center"
+                    <q-btn v-if="userInfo == ''" glossy dense class="menu-item text-bold bg-primary q-pa-md text-purple-1 row items-center"
                         style="border-radius:8px" @click="navigateTo('/login')">
                         Entrar
                         <q-icon name="login" size="md" />
+                    </q-btn>
+                    <q-btn v-if="userInfo != ''" glossy dense class="menu-item text-bold bg-secondary q-pa-md text-purple-1 row items-center"
+                        style="border-radius:8px" @click="navigateTo('/me')">
+                        <q-icon name="person" size="md" />
                     </q-btn>
                 </div>
             </div>
         </q-header>
         <q-page-container>
-            <div class="w100 row justify-center q-mt-md relative" style="overflow: hidden ">
-                <div class="animate__animated animate__zoomInDown animate__delay-1s animate__slower row no-wrap justify-center q-px-sm  w100"
+            <div  class="w100 row justify-center q-mt-md relative" style="overflow: hidden ">
+                <div v-if="userInfo == ''" class="animate__animated animate__zoomInDown animate__delay-1s animate__slower row no-wrap justify-center q-px-sm  w100"
                     style="overflow: hidden ;z-index: 9;">
                     <q-btn glossy to="/login-host" color="secondary"
                         class="animate__animated text-primary animate__fadeInLeft  animate__delay-3s animate__slower q-pa-xl rounded-borders"
@@ -42,7 +46,7 @@
                         icon-right="confirmation_number" label="Quero Ingressos!" />
                 </div>
             </div>
-            <div v-if="searchPublic.opened" id="search-public" class="w100 rounded-borders">
+            <div v-if="searchPublic.opened" id="search-public" class="w100 rounded-borders row justify-center">
                 <q-card id="search-card" class="q-mt-md q-mb-md q-mx-md animate__animated rounded-borders animate__fadeInDown animate__slower">
                     <q-card-section class="bg-grad-4 text-white text-bold text-center q-pa-md ">
                         <q-icon name="nightlife" size="lg" color="white" />
@@ -55,9 +59,9 @@
                                 <q-icon name="search" color="primary" />
                             </template>
                         </q-input>
-                            <q-btn @click="searchPublicEventsOrHost(false)" color="primary" glossy class="shadow-1" label="Buscar por Evento"
+                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(false)" color="primary" glossy class="shadow-1" label="Buscar por Evento"
                             icon="event" />
-                            <q-btn @click="searchPublicEventsOrHost(true)" color="secondary" glossy class="shadow-1" label="Buscar por Produtor"
+                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(true)" color="secondary" glossy class="shadow-1" label="Buscar por Produtor"
                                 icon="person_search" />
                     </q-card-section>
                 </q-card>
@@ -79,8 +83,8 @@
                         REALIZE seus EVENTOS com A MENOR TAXA do mercado e PARE de PAGAR TRIBUTOS excessivos na VENDA de SEUS
                         INGRESSOS!!
                     </div>
-                    <div class="row justify-center  q-mx-md">
-                        <q-card id="email-card"
+                    <div v-if="userInfo == ''" class="row justify-center  q-mx-md">
+                        <q-card  id="email-card"
                             class="text-white bg-grad-1 q-mt-md text-bold rounded-borders animate__animated animate__zoomIn animate__slower animate__delay-3s">
                             <p class="text-center q-pt-md q-px-md high-opacity" style="font-size: .8rem;">DIGITE seu
                                 EMAIL e ALAVANQUE o seu FATURAMENTO em INGRESSOS</p>
@@ -149,8 +153,8 @@
                         Vantagens</div>
                     <div style="font-size:1.1rem"
                         class="text-shadow q-px-md bg-grey-4 text-left q-py-md rounded-borders">
-                        🟣 <strong class="text-primary">SEM TAXA POR INGRESSO<br></strong> Nosso <strong>modelo de negócio</strong>
-                        permite realizar <strong>Eventos</strong> com <strong>0% de taxa</strong> em ingressos
+                        🟣 <strong class="text-primary">REDUZA TAXA POR INGRESSO<br></strong> Nosso <strong>modelo de negócio</strong>
+                        permite realizar <strong>Eventos</strong> com <strong>5% de taxa</strong> em ingressos
                         vendidos. Obtenha
                         o <strong>máximo do seu
                             lucro</strong>
@@ -256,6 +260,12 @@
                             <div class="mid-opacity text-blue-6 text-center w100 text-bold">
                                 Todos campos abaixos são opcionais
                             </div>
+                            <q-input placeholder="Digite seu email" :inputStyle="{ fontWeight: 'bold', color: '#6310E1' }" maxlength="200" filled
+                                v-model="contato.email" label="Email">
+                                <template v-slot:append>
+                                    <q-icon name="mail" color="primary" />
+                                </template>
+                            </q-input>
                             <q-input :inputStyle="{ fontWeight: 'bold', color: '#6310E1' }" maxlength="200" filled
                                 v-model="contato.form.name" label="1.Qual é o seu nome?">
                                 <template v-slot:append>
@@ -334,7 +344,7 @@
                         <q-btn @click="wppConsultor()" class="q-pa-md w100" color="green" icon-right="sms"
                             label="Fale Agora Com um de nossos Consultores" glossy />
                     </div>
-                    <div
+                    <div v-if="userInfo == ''"
                         class="w100 text-bold rounded-borders column bg-grad-2 items-center justify-center text-white q-pa-md text-center q-mt-md ">
                         <div class="column text-h5 text-white text-bold">LOGIN HOST</div>
                         <div class="text-purple-2">É Produtor de Eventos ou Possui Acesso Externo??</div>
@@ -349,20 +359,85 @@
                     acompanhe o nosso desenvolvimento!
                 </div>
             </q-page>
+            <q-dialog v-model="dialogResults">
+                <div v-if="loading" class="row w100 q-py-sm q-mt-xs justify-center">
+                    <q-spinner-ball color="secondary" size="lg" />
+                    <q-spinner-ball color="secondary" size="lg" />
+                    <q-spinner-ball color="secondary" size="lg" />
+                </div>
+                <q-card v-if="!loading">
+                    <div class="w100 q-px-md text-primary q-pt-sm" id="title">{{ searchPublic.isByHostName ? `HOST's` : 'EVENTOS' }}</div>
+                    <q-card-section>
+                        <q-list class="column q-gutter-y-md">
+                            <q-item class="card-search rounded-borders shadow-1  q-pb-md" v-for="host in hostsResults" :key="host.id" clickable>
+                                <q-item-section>
+                                        <img v-if="host.img_url && host.img_url.trim() !== ''" :src="host.img_url" class="rounded-borders shadow-1 q-mb-md q-mt-sm" alt="banner do Evento">
+                                        <q-item-label class="text-bold text-primary" id="title-layout">
+                                            {{ host.name.toUpperCase() }}
+                                        </q-item-label>
+                                        <q-item-label class="text-secondary">
+                                            <q-icon name="person" class="q-pr-xs"/>
+                                            {{ host.name.toLowerCase() }}
+                                        </q-item-label>
+                                        <q-item-section class="w100 q-mt-md">
+                                            <q-btn @click="goToPublicHostPage(host.login)" icon="person_search" color="primary" glossy class="shadow-1"></q-btn>
+                                        </q-item-section>
+                                    </q-item-section>
+                            </q-item>
+                            <q-item class="card-search q-py-md shadow-1 rounded-borders" v-for="event in eventsResults" :key="event.id" clickable>
+                                <q-item-section>
+                                    <img v-if="event.img_url && event.img_url.trim() !== ''"  :src="event.img_url" class="rounded-borders shadow-1 q-mb-md" alt="banner do Evento">
+                                    <q-item-label class="text-bold text-primary" id="title-layout">
+                                        {{ event.title.toUpperCase() }}
+                                    </q-item-label>
+                                    <div class="text-secondary row items-center q-mt-sm">
+                                        <q-icon name="event" class="q-pr-xs" />
+                                        {{ event.date.replaceAll('-', '/') }}
+                                    </div>
+                                    <q-item-label class="text-secondary">
+                                        <q-icon name="person" class="q-pr-xs"/>
+                                        {{ event.host.toLowerCase() }}
+                                    </q-item-label>
+                                    <q-item-section class="w100 q-mt-md">
+                                        <q-btn  @click="goToPublicEventPage(event.id)"  icon="travel_explore" color="primary" glossy class="w100 shadow-1"></q-btn>
+                                    </q-item-section>
+                                </q-item-section>
+
+                            </q-item>
+                        </q-list>
+                    </q-card-section>
+                    <div class="w100 row justify-center close dialog q-pb-md">
+                        <q-btn @click="dialogResults = false" color="secondary" flat label="Fechar" />
+                    </div>
+                </q-card>
+            </q-dialog>
         </q-page-container>
     </q-layout>
 </template>
 <script setup>
 import { useQuasar } from "quasar";
-import { onMounted, ref } from "vue";
+import { onBeforeMount, onMounted, ref } from "vue";
 import { api } from 'src/boot/axios';
 import { useRouter } from "vue-router";
 
+const userInfo = ref('')
 const searchPublic = ref({
     opened: false,
     isByHostName: false,
     titleEventOrHostName: ''
 })
+
+const loading = ref(false)
+
+onMounted(() => {
+    if(sessionStorage.getItem('user')) {
+        userInfo.value = JSON.parse(sessionStorage.getItem('user'))
+        searchPublic.value.opened = true
+    } else {
+        userInfo.value = ''
+    }
+})
+
 
 const router = useRouter()
 const $q = useQuasar()
@@ -402,6 +477,59 @@ function wppConsultor() {
     window.open('https://wa.me/5561981748795?text=Ola,%20Gostaria%20de%20realizar%20uma%20consultoria%20para%20Potencializar%20a%20Venda%20dos%20meus%20Ingressos%20e%20Escalar%20o%20Lucro%20dos%20Meus%20Eventos%20com%20a%20Midnight%20Tickets!', '_blank');
 }
 
+function disabledSearch() {
+    if(searchPublic.value.titleEventOrHostName.trim() === '') {
+        return true
+    } else {
+        return false
+    }
+}
+
+const hostsResults = ref([])
+const eventsResults = ref([])
+const dialogResults = ref(false)
+async function searchPublicEventsOrHost(isByHostName) {
+    loading.value = true
+    searchPublic.value.isByHostName = isByHostName
+    await api.post('/host/public_events', searchPublic.value).then((response) => {
+        if (response.data.length === 0) {
+            $q.notify({
+                message: 'Nenhum resultado encontrado para sua busca :(',
+                color: 'secondary',
+                position: 'top',
+                icon: 'event',
+            });
+        } else {
+            dialogResults.value = true
+            if (isByHostName) {
+                hostsResults.value = response.data
+                eventsResults.value = []
+            } else {
+                eventsResults.value = response.data
+                hostsResults.value = []
+            }
+        }
+    }).catch(() => {
+        $q.notify({
+            message: 'Erro ao buscar eventos',
+            color: 'orange-14',
+            position: 'top',
+            icon: 'event',
+        });
+    }).
+    finally(() => {
+        loading.value = false
+    })
+}
+
+function goToPublicHostPage(login) {
+    router.push(`/${login}`)
+}
+
+function goToPublicEventPage(event_id){
+    router.push(`/events/${event_id}`)
+}
+
 const lowDownScrolling = () => {
     window.scrollTo(0, 500);
 }
@@ -427,7 +555,7 @@ const checkEmail = () => {
     if (!contato.value.email || contato.value.email === '' || !contato.value.email.includes('@')) {
         $q.notify({
             message: 'Campo de Email inválido',
-            color: 'red',
+            color: 'orange-14',
             position: 'top',
             icon: 'email',
         });
@@ -435,10 +563,6 @@ const checkEmail = () => {
     }
     return true
 }
-
-onMounted(() => {
-    sessionStorage.clear()
-})
 
 async function sendForm(msg) {
     if (!checkEmail()) {
@@ -530,6 +654,8 @@ img {
     transition: all 0.2s linear;
 }
 
+
+
 a {
     color: white;
     text-decoration: none;
@@ -582,6 +708,17 @@ a {
     }
 }
 
+@media (min-width: 800px) {
+    #search-card {
+        width: 50%;
+    }
+}
+.card-search{
+    background: #f8effc;
+}
+.card-search:nth-child(odd) {
+    background: #efeffc;
+}
 .high-opacity {
     opacity: 0.8;
 }

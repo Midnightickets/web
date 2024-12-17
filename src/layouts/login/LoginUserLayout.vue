@@ -1,6 +1,6 @@
 <template>
     <div id="login-user" class="animate__animated animate__fadeIn bg-grad-7 w100 flex flex-center">
-        <div id="login-card" class="bg-white animate__animated animate__zoomIn">
+        <div id="login-card" class="bg-white animate__animated animate__zoomIn rounded-borders">
             <div id="title-menu" class="text-primary text-center q-mt-md row justify-center items-center"><q-icon name="account_circle" size="md" color="primary" class="q-mr-xs"></q-icon>LOGIN</div>
             <div class="q-pa-md">
                 <q-input
@@ -30,7 +30,7 @@
                         />
                     </template>
                 </q-input>
-                <div v-if="loading" class="row w100 q-py-sm justify-center">
+                <div v-if="loading" class="row w100 q-py-sm q-mt-xs justify-center">
                     <q-spinner-ball color="primary" size="lg" />
                     <q-spinner-ball color="primary" size="lg" />
                     <q-spinner-ball color="primary" size="lg" />
@@ -40,7 +40,7 @@
                     :disabled="isLoginFormInvalid()"
                     @click="login"
                     label="Login"
-                    color="primary"
+                    color="green"
                     glossy
                     icon-right="login"
                     class="full-width q-mt-md q-py-lg"
@@ -48,7 +48,7 @@
                 <q-btn
                     v-if="!loading"
                     label="Registre-se"
-                    color="blue-14"
+                    color="primary"
                     glossy
                     icon-right="person_add"
                     class="full-width q-mt-md q-py-sm"

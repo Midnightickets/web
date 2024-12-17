@@ -55,7 +55,7 @@
                 <div class="text-center text-grey-4 q-mb-md q-mx-md">
                     Faça Login para Comprar Ingressos e Encontrar Eventos
                 </div>
-                <q-btn class="q-my-lg q-pa-lg" to="/login" color="blue-14" glossy label="Iniciar Sessão" icon-right="login" />
+                <q-btn class="q-my-lg q-pa-lg shadow-2" to="/login" color="secondary" glossy label="Iniciar Sessão" icon-right="login" />
                 <q-btn class="q-mt-xl" to="/" flat label="Página Inicial" color="secondary" icon="home" />
             </div>
         </q-drawer>
@@ -82,22 +82,13 @@ const router = useRouter()
 const menuOptions = ref({
     items: [
         // USER MENUS
-        { label: 'Meus Ingressos', icon: 'confirmation_number', to: '#', role: 'user' },
-        { label: 'Buscar Eventos', icon: 'travel_explore', to: '#', role: 'user' },
+        { label: 'Buscar Eventos', icon: 'travel_explore', to: '/', role: 'user' },
+        { label: 'Meus Ingressos', icon: 'confirmation_number', to: '/me', role: 'user' },
     ]
 })
 function goTo(item) {
     router.push(item.to)
 }
-
-function cleanSessionStorage() {
-    sessionStorage.clear()
-}
-
-onBeforeUnmount(() => {
-    cleanSessionStorage()
-})
-
 
 const toggleRightDrawer = () => {
     rightDrawerOpen.value = !rightDrawerOpen.value

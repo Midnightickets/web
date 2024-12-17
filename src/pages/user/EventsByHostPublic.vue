@@ -1,7 +1,10 @@
 <template>
-    <q-page class="q-pb-xl animate__animated animate__fadeIn">
-        <div class="w100 text-white text-center q-py-md" id="title">
-            {{ hostName }}
+    <q-page class="q-pb-xl bg-twitch animate__animated animate__fadeInRight">
+        <div class="w100 q-pt-sm q-pl-sm" >
+            <q-btn to="/" icon="home" color="secondary" glossy></q-btn>
+        </div>
+        <div v-if="!loading && events.length>0" class="animate__animated animate__fadeInLeft w100 text-white text-center q-pb-lg" id="title">
+            Eventos de {{ hostName }}
         </div>
         <div v-if="!loading" class="w100 row items-center q-gutter-y-md">
             <q-card v-for="(event, index) in events" :key="index" class="card-event q-mx-md bg-grey-4 q-mt-md">
@@ -14,7 +17,7 @@
                             <img id="img-events" :src="event.img_url" class="q-mt-md" alt="🎇 Banner do Evento"/>
                         </q-item-section>
                         <q-item-section side>
-                            <q-btn icon="visibility" class="shadow-2" color="green" glossy style="height: 100%;width: 100%;"></q-btn>
+                            <q-btn @click="goToEvent(event.id)" icon="visibility" class="shadow-2" color="green" glossy style="height: 100%;width: 100%;"></q-btn>
                         </q-item-section>
                     </q-item>
                 </q-card-section>
@@ -30,13 +33,15 @@
 
 <script setup>
 import { onBeforeMount, ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { api } from 'src/boot/axios';
 
 const route = useRoute();
+const router = useRouter();
 const events = ref([]);
 const loading = ref(false);
 const hostName = ref(route.params.events_host);
+
 onBeforeMount(async () => {
     loading.value = true;
     
@@ -48,6 +53,10 @@ onBeforeMount(async () => {
         loading.value = false;
     });
 });
+
+function goToEvent(id) {
+    router.push('/events/' + id);
+}
 
 </script>
 

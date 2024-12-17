@@ -15,6 +15,13 @@ const routes = [
     ]
   },
   {
+    path: '/events/:event',
+    component: () => import('src/layouts/UserLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/user/EventPublic.vue') }
+    ]
+  },
+  {
     path: '/login-host',
     component: () => import('layouts/login/LoginHostLayout.vue'),
   },

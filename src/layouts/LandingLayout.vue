@@ -59,9 +59,9 @@
                                 <q-icon name="search" color="primary" />
                             </template>
                         </q-input>
-                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(false)" color="primary" glossy class="shadow-1" label="Buscar por Evento"
+                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(false)" color="primary" glossy class="shadow-1 q-py-md" label="Buscar por Evento"
                             icon="event" />
-                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(true)" color="secondary" glossy class="shadow-1" label="Buscar por Produtor"
+                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(true)" color="blue-14" glossy class="shadow-1 q-py-md" label="Buscar por Produtor"
                                 icon="person_search" />
                     </q-card-section>
                 </q-card>
@@ -375,9 +375,9 @@
                                         <q-item-label class="text-bold text-primary" id="title-layout">
                                             {{ host.name.toUpperCase() }}
                                         </q-item-label>
-                                        <q-item-label class="text-secondary">
+                                        <q-item-label class="text-secondary text-bold">
                                             <q-icon name="person" class="q-pr-xs"/>
-                                            {{ host.name.toLowerCase() }}
+                                            {{ host.login.toLowerCase() }}
                                         </q-item-label>
                                         <q-item-section class="w100 q-mt-md">
                                             <q-btn @click="goToPublicHostPage(host.login)" icon="person_search" color="primary" glossy class="shadow-1"></q-btn>
@@ -491,6 +491,7 @@ const dialogResults = ref(false)
 async function searchPublicEventsOrHost(isByHostName) {
     loading.value = true
     searchPublic.value.isByHostName = isByHostName
+    searchPublic.value.titleEventOrHostName = searchPublic.value.titleEventOrHostName.trim()
     await api.post('/host/public_events', searchPublic.value).then((response) => {
         if (response.data.length === 0) {
             $q.notify({

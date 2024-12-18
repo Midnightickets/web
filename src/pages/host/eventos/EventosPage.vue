@@ -17,7 +17,7 @@
         <div class="w100 q-pt-md"></div>
         <div id="title" class=" text-white q-pt-xl w100 text-center text-bold">Meus Eventos</div>
         <div class="w100 q-my-md q-pl-md">
-            <q-btn class="q-pa-md text-bold" label="Novo Evento" glossy color="orange-14"
+            <q-btn class="q-pa-md text-bold" label="Novo Evento" glossy color="green"
                 to="/host/criar-evento" icon="event" icon-right="add" />
         </div>
         <div class="q-ma-md">
@@ -47,7 +47,7 @@
                                 Gerenciar Evento
                             </q-tooltip>
                         </q-btn>
-                        <q-btn glossy v-if="props.row.status.includes('andamento')" icon="payments" color="blue-14">
+                        <q-btn glossy v-if="props.row.status.includes('andamento')" icon="payments" color="orange">
                             <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
                                 Painel de Vendas
                             </q-tooltip>

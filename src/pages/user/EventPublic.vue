@@ -3,12 +3,12 @@
         <div class="w100 q-pt-sm q-pl-sm" >
             <q-btn @click="returnBack()" icon="keyboard_return" color="secondary" glossy></q-btn>
         </div>
-        <div v-if="!loading" class="animate__animated animate__fadeInRight w100 text-white text-center q-pb-sm" id="title">
+        <div v-if="!loading" class="animate__animated animate__fadeInRight w100 text-white text-center q-pb-sm q-mt-sm" id="title">
             {{ event.title }}
         </div>
-        <div  v-if="!loading" class="text-secondary text-bold w100 text-center q-mb-lg">{{ event.host }}</div>
-        <div v-if="isMobile" class="w100 q-mb-xl row justify-center">
-            <a class="text-white bg-green-14 q-pa-sm rounded-borders text-bold shadow-1" style="text-decoration: none;" href="#ingressos">Comprar Ingressos <q-icon size="sm" name="add_shopping_cart"></q-icon></a>
+        <div  v-if="!loading" class="text-secondary text-bold w100 text-center q-mb-md">{{ event.host }}</div>
+        <div v-if="isMobile" class="w100 q-mb-lg row justify-center">
+            <a class="text-white bg-green-14 q-pa-md rounded-borders text-bold shadow-1" style="text-decoration: none;" href="#ingressos">Comprar Ingressos <q-icon size="sm" name="add_shopping_cart"></q-icon></a>
         </div>
         <div v-if="!loading" id="cards-wrapper" class="w100 row items-start q-gutter-y-md">
             <q-card class="card-event q-mx-md bg-grey-4 q-mt-md">
@@ -17,7 +17,7 @@
                         <q-item-section class="text-black">
                             <q-item-label id="title-2"  class="text-primary">INFORMAÇÕES</q-item-label>
                             <q-item-label class="text-bold text-grey-14 q-py-sm">{{ event.desc }}</q-item-label>
-                            <q-item-label class="text-bold text-primary w100 column text-bold" >📆 {{ event.date.replaceAll('-', '/') }}<br>⏱️ {{ event.initial_time ? event.initial_time : 'xx:xx' }}{{ event.final_time ? (' - ' + event.final_time) : ''}}</q-item-label>
+                            <q-item-label class="text-bold text-secondary w100 column text-bold" >📆 {{ event.date.replaceAll('-', '/') }} ⏱️ {{ event.initial_time ? event.initial_time : 'xx:xx' }}{{ event.final_time ? (' - ' + event.final_time) : ''}}</q-item-label>
                             <img id="img-events" :src="event.img_url" class="q-mt-md" alt="🎇 Banner do Evento"/>
                             <div id="ingressos"></div>
                         </q-item-section>
@@ -51,7 +51,7 @@
                             <q-item-label class="text-bold text-grey-14 q-py-sm">{{ event.contact }}<br><br><strong class="text-secondary">Hospedado por {{ event.host }}</strong></q-item-label>
                             <q-item-label id="title-2"  class="text-primary q-pt-md">LOCALIZAÇÃO</q-item-label>
                             <q-item-label class="text-bold text-grey-14 q-py-sm">{{ event.address }}</q-item-label>
-                            <iframe :src="event.maps_loc" class="q-mt-md w100" height="450" style="border:0;" loading="lazy"
+                            <iframe v-if="event.maps_loc" :src="event.maps_loc" class="q-mt-md w100" height="450" style="border:0;" loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </q-item-section>
                     </q-item>
@@ -102,13 +102,14 @@ function returnBack() {
     width: 100%;
     object-fit: cover;
     border-radius: 12px;
-    border: 4px solid #9573f3;
+    border-bottom: 4px solid #9573f3;
+    border-right: 4px solid #9573f3;
 }
 
 .q-card {
     width: 100%;
     border-radius: 4px;
-    border: 6px solid #6310E1;
+    border-left: 6px solid #6310E1;
 }
 
 #ticket{

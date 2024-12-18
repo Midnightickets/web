@@ -1,7 +1,7 @@
 <template>
     <q-layout view="hHh lpR lFr">
 
-        <q-header class="bg-glass-2 text-white" height-hint="98">
+        <q-header class="bg-glass-2 text-white animate__animated animate__fadeInDown" height-hint="98">
             <q-toolbar>
                 <q-toolbar-title class="row items-center">
                     <q-avatar>

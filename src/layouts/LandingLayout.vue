@@ -42,7 +42,7 @@
                         class="animate__animated text-primary animate__fadeInLeft  animate__delay-3s animate__slower q-pa-xl rounded-borders"
                         icon-right="diamond" label="Sou Produtor!" />
                     <q-btn glossy @click="searchPublic.opened = !searchPublic.opened"
-                        class="animate__animated animate__fadeInRight bg-primary q-ml-sm text-white animate__delay-3s animate__slower q-pa-xl rounded-borders"
+                        class="animate__animated animate__fadeInRight text-bold bg-primary q-ml-sm text-white animate__delay-3s animate__slower q-pa-xl rounded-borders"
                         icon-right="confirmation_number" label="Quero Ingressos!" />
                 </div>
             </div>
@@ -257,15 +257,15 @@
                                 ALAVANQUE seus FATURAMENTO otimizando o LUCRO de suas VENDAS com uma CONSULTORIA
                                 PERSONALIZADA para a
                                 SUA DEMANDA</div>
+                                <q-input v-if="hostInfo == ''" placeholder="Digite seu email" :inputStyle="{ fontWeight: 'bold', color: '#6310E1' }" maxlength="200" filled
+                                    v-model="contato.email" label="Email*">
+                                    <template v-slot:append>
+                                        <q-icon name="mail" color="primary" />
+                                    </template>
+                                </q-input>
                             <div class="mid-opacity text-blue-6 text-center w100 text-bold">
                                 Todos campos abaixos são opcionais
                             </div>
-                            <q-input placeholder="Digite seu email" :inputStyle="{ fontWeight: 'bold', color: '#6310E1' }" maxlength="200" filled
-                                v-model="contato.email" label="Email">
-                                <template v-slot:append>
-                                    <q-icon name="mail" color="primary" />
-                                </template>
-                            </q-input>
                             <q-input :inputStyle="{ fontWeight: 'bold', color: '#6310E1' }" maxlength="200" filled
                                 v-model="contato.form.name" label="1.Qual é o seu nome?">
                                 <template v-slot:append>

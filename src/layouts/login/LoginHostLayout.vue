@@ -1,8 +1,18 @@
 <template>
     <div id="login-host" class="animate__animated animate__fadeIn bg-dark w100 flex flex-center">
-        <div id="login-card" class="bg-white animate__animated animate__zoomIn rounded-borders shadow-2">
-            <div id="title-menu" class="text-primary text-center q-mt-md row justify-center items-center"><q-icon name="diamond" size="md" color="primary" class="q-mr-xs"></q-icon>HOST LOGIN</div>
+        <div id="login-card" class="bg-white animate__animated animate__zoomIn rounded-borders">
+            <div id="title-menu" class="text-primary text-center q-mt-md row justify-center items-center"><q-icon name="diamond" size="md" color="primary" class="q-mr-xs"></q-icon>{{ editando ? 'CADASTRO' :'LOGIN'}} HOST</div>
             <div class="q-pa-md">
+                <q-input
+                    v-if="editando"
+                    v-model="host.name"
+                    filled
+                    placeholder="Nome*"
+                    maxlength="40"
+                    type="text"
+                    class="q-mb-md"
+                    outlined
+                />
                 <q-input
                     v-model="host.login"
                     filled
@@ -10,17 +20,25 @@
                     maxlength="40"
                     type="text"
                     outlined
-                    @keyup.enter="login"
                 />
                 <q-input
-                    v-model="host.password"
+                    v-if="editando"
+                    v-model="host.email"
+                    filled
+                    placeholder="Email*"
+                    maxlength="40"
+                    class="q-mt-md"
+                    type="email"
+                    outlined
+                />
+                <q-input
+                v-model="host.password"
                     filled
                     placeholder="Senha*"
                     :type="formConfig.showPassword ? 'text' : 'password'"
                     maxlength="20"
                     outlined
                     class="q-mt-md"
-                    @keyup.enter="login"
                 >
                     <template v-slot:append>
                         <q-icon
@@ -30,25 +48,67 @@
                         />
                     </template>
                 </q-input>
+                <q-input
+                    v-if="editando"
+                    class="q-mt-md"
+                    v-model="host.cpf_cnpj"
+                    filled
+                    maxlength="20"
+                    placeholder="CPF/CNPJ*"
+                    type="text"
+                    mask="####################"
+                    outlined
+                    @keyup.enter="login"
+                />
+                <q-input
+                    v-if="editando"
+                    class="q-mt-md"
+                    v-model="host.phone"
+                    filled
+                    placeholder="Telefone*"
+                    type="text"
+                    mask="(##) #####-####"
+                    outlined
+                    @keyup.enter="login"
+                />
                 <div v-if="loading" class="row w100 q-py-sm q-mt-xs justify-center">
                     <q-spinner-ball color="secondary" size="lg" />
                     <q-spinner-ball color="secondary" size="lg" />
                     <q-spinner-ball color="secondary" size="lg" />
                 </div>
                 <q-btn
-                    v-if="!loading"
+                    v-if="!loading && !editando"
                     :disabled="isLoginFormInvalid()"
                     @click="login"
                     label="Login"
-                    color="dark"
+                    color="green"
                     glossy
                     icon-right="login"
+                    class="full-width q-mt-md q-py-lg"
+                />
+                <q-btn
+                    v-if="!loading && editando"
+                    :disabled="isRegisterFormInvalid()"
+                    @click="registrar"
+                    label="Registrar"
+                    color="green"
+                    glossy
+                    icon-right="person_add"
                     class="full-width q-mt-md q-py-md"
                 />
                 <q-btn
-                    class="full-width q-mt-sm"
-                    label="Voltar"
+                    @click="editando = !editando"
+                    :label="editando ? 'Voltar' : 'Registre-se'"
                     color="primary"
+                    :glossy="!editando"
+                    :flat="editando"
+                    class="full-width q-mt-md q-py-xs"
+                />
+                <q-btn
+                    v-if="!editando"
+                    class="full-width q-mt-sm"
+                    label="página inicial"
+                    color="secondary"
                     flat
                     to="/"
                 />
@@ -65,6 +125,7 @@ import { useRouter } from 'vue-router';
 
 const $q = useQuasar()
 const router = useRouter()
+const editando = ref(false)
 const loading = ref(false)
 
 const formConfig = ref({
@@ -75,10 +136,14 @@ const formConfig = ref({
 const host = ref({
     login: '',
     password: '',
+    name: '',
+    email: '',
+    cpf_cnpj: '',
+    phone: '',
 })
 
 function isLoginFormValid() {
-    return host.value.login.trim().length < 3 || host.value.password.trim().length < 3
+    return host.value.login.trim().length < 3 || host.value.password.trim().length < 6
 }
 
 const makeReqObject = () => {
@@ -90,7 +155,7 @@ const makeReqObject = () => {
 }
 
 const isLoginFormInvalid = () => {
-    if (host.value.login.trim().length < 3 || host.value.password.trim().length < 3) {
+    if (host.value.login.trim().length < 3 || host.value.password.trim().length < 6) {
         return true
     }
     return false
@@ -121,6 +186,40 @@ async function login() {
             icon: 'report_problem',
         })
         host.value.password = ''
+    })
+    .finally(() => {
+        loading.value = false
+    })
+}
+
+function isRegisterFormInvalid() {
+    if (host.value.login.trim().length < 3 || host.value.password.trim().length < 6 || host.value.name.trim() == '' || host.value.email.trim() ==  '' || host.value.cpf_cnpj.trim() == '' || host.value.phone.trim() == '') {
+        return true
+    }
+    return false
+}
+
+async function registrar(){
+    loading.value = true
+    await api.post('/create_host', host.value)
+    .then(response => {
+        $q.notify({
+            color: 'secondary',
+            position: 'top',
+            message: 'Cadastro realizado com sucesso!',
+            icon: 'diamond'
+        })
+        sessionStorage.setItem('host', JSON.stringify(response.data))
+        sessionStorage.setItem('isHost', true)
+        router.push('/host')
+    })
+    .catch(err => {
+        $q.notify({
+            color: 'orange-14',
+            position: 'top',
+            message: err.response.data.error,
+            icon: 'report_problem',
+        })
     })
     .finally(() => {
         loading.value = false

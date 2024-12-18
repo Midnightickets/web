@@ -33,11 +33,11 @@ const Utils = {
         }
     },
     logout: () => {
-        console.log('-> Logout realizado com sucesso, sentiremos sua falta\n  ¯\_( ͡° ͜ʖ ͡°)_/¯ \n');
-        sessionStorage.clear()
-        setTimeout(() => {
+        const confirm = window.confirm('-> Deseja realmente sair ?\n  ¯|_( ͡° ͜ʖ ͡°)_/¯ \n');
+        if (confirm) {
+            sessionStorage.clear();
             window.location.href = '/';
-        }, 1500);
+        }
     },
 }
 

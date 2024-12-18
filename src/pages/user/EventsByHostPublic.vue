@@ -13,7 +13,7 @@
                         <q-item-section class="text-black">
                             <q-item-label id="title-2"  class="text-primary">{{ (index + 1) + '. ' + event.title }}</q-item-label>
                             <q-item-label class="text-bold text-grey-14 q-py-sm">{{ event.desc }}</q-item-label>
-                            <q-item-label class="text-bold text-secondary">{{ event.date.replaceAll('-', '/') }}</q-item-label>
+                            <q-item-label class="text-bold text-secondary">📆 {{ event.date.replaceAll('-', '/') }}</q-item-label>
                             <img id="img-events" :src="event.img_url" class="q-mt-md" alt="🎇 Banner do Evento"/>
                         </q-item-section>
                     </q-item>
@@ -65,12 +65,13 @@ function goToEvent(id) {
     width: 100%;
     object-fit: cover;
     border-radius: 12px;
-    border: 4px solid #9573f3;
+    border-bottom: 4px solid #9573f3;
+    border-right: 4px solid #9573f3;
 }
 
 .q-card {
     border-radius: 4px;
-    border: 6px solid #6310E1;
+    border-left: 6px solid #6310E1;
 }
 
 @media (min-width: 800px) {

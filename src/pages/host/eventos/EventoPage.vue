@@ -113,13 +113,12 @@
                 </q-card>
                 <q-card class="w100 q-mx-md q-mt-md">
                     <div id="title-menu" class="text-primary w100 q-pt-md text-center">
-                        Pacote de Ingressos
+                        Tipos de Ingressos
                     </div>
                     <div class="w100 q-ml-md q-mt-md" v-if="evento.status.includes('andamento')">
                         <q-btn @click="modalPackage = !modalPackage" label="Adicionar Ingressos" glossy icon-right="add_circle" color="primary"></q-btn>
                     </div>
                     <q-card-section>
-                        <div class="text-h5 text-primary text-bold q-mb-md">Ingressos</div>
                         <div v-for="ticket in evento.ticket_types" :key="ticket.id" :class="ticket.status ? 'bg-blue-1': 'bg-grey-3'" class="q-pa-sm">
                             <div class="text-bold text-primary"  :class="ticket.status ? '' : 'mid-opacity'"><q-icon name="local_activity" color="primary" size="xs" ></q-icon> {{ ticket.title }}</div>
                             <div class="text-bold text-secondary"  :class="ticket.status ? '' : 'mid-opacity'"><q-icon name="confirmation_number" color="secondary" size="xs" ></q-icon> {{ ticket.sales }} vendidos</div>

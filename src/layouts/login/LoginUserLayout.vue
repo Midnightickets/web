@@ -97,7 +97,7 @@ const isLoginFormInvalid = () => {
     
 }
 onMounted(() => {
-    sessionStorage.clear()
+    sessionStorage.getItem('user') ? router.push('/me') : sessionStorage.removeItem('host')
 })
 async function login() {
     loading.value = true
@@ -115,7 +115,12 @@ async function login() {
             message: 'Bem vindo, '+ response.data.login + '!',
             icon: 'local_activity'
         })
-        router.push('/me')
+        if(sessionStorage.getItem('comeFromTicketIntention')) {
+            const rota = sessionStorage.getItem('comeFromTicketIntention')
+            sessionStorage.removeItem('comeFromTicketIntention')
+            router.push('/events/' + rota)
+        }
+        else router.push('/me')
     })
     .catch(err => {
         $q.notify({

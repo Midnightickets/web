@@ -44,7 +44,7 @@
                 <div class="q-px-md q-pb-md bg-grey-4">
                     <div class="w100 q-mt-md text-white bg-blue-5 q-py-md text-center" id="title-layout">CONFIRMAR RECARGA</div>
                     <div class="text-center q-pt-lg text-secondary text-h6">Deseja realmente <strong class="text-primary">adicionar {{ format(recargaValor) }}</strong> ao seu saldo<br>por <strong class="text-primary">{{ calculaTaxaTransacao(recargaValor) }}</strong> ?</div><br>
-                    <RecargaPaymentComponent />
+                    <TicketPaymentComponent />
                     <div class="w100 row justify-center">
                         <q-btn label="voltar" flat color="secondary" @click="showRecargaModal = false" />
                     </div>
@@ -54,7 +54,7 @@
 </template>
 
 <script setup>
-import RecargaPaymentComponent from 'src/components/RecargaPaymentComponent.vue'
+import TicketPaymentComponent from 'src/components/TicketPaymentComponent.vue'
 import { api } from 'src/boot/axios';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { Utils } from 'src/utils/Utils';

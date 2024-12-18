@@ -3,7 +3,7 @@
         <div class="w100 q-pt-sm q-pl-sm" >
             <q-btn @click="returnBack()" icon="keyboard_return" color="secondary" glossy></q-btn>
         </div>
-        <div v-if="!loading" class="animate__animated animate__fadeInRight w100 text-white text-center q-pb-sm q-mt-sm" id="title">
+        <div v-if="!loading" class="animate__animated animate__fadeInRight w100 text-white text-center q-mt-sm" id="title">
             {{ event.title }}
         </div>
         <div  v-if="!loading" class="text-secondary text-bold w100 text-center q-mb-md">{{ event.host }}</div>
@@ -30,12 +30,12 @@
                         <q-item-section class="text-black">
                             <q-item-label id="title-2"  class="text-primary" >INGRESSOS</q-item-label>
                             <div id="ticket-types" >
-                                <q-item id="ticket" v-for="(ticket, index) in event.ticket_types" :key="index" class="shadow-1 q-mt-md">
-                                    <q-item-section class="text-bold text-grey-14 q-py-sm">
-                                        {{ ticket.title }}<br>R$ {{ ticket.price }}
+                                <q-item id="ticket" v-for="(ticket, index) in event.ticket_types" :key="index" style="border-left: 6px solid #9573f3;" class="shadow-1 q-mt-md">
+                                    <q-item-section class="text-bold text-primary q-py-sm" id="title-layout">
+                                        <q-icon name="confirmation_number"></q-icon>{{ ticket.title }}<br><strong class="text-secondary q-pt-xs">R$ {{ ticket.price }}</strong>
                                     </q-item-section>
                                     <q-item-section side>
-                                        <q-btn icon="add_shopping_cart" color="green" glossy></q-btn>
+                                        <q-btn @click="openModalBuyTicket(ticket)" class="q-py-md" icon="add_shopping_cart" color="green-14" glossy></q-btn>
                                     </q-item-section>
                                 </q-item>
                             </div>
@@ -58,6 +58,16 @@
                 </q-card-section>
             </q-card>
         </div>
+        <q-dialog  v-model="showRecargaModal" persistent>
+            <div class="q-px-md q-pb-md bg-grey-4">
+                <div class="w100 q-mt-md text-white bg-blue-5 q-py-md text-center" id="title-layout">COMPRAR INGRESSO</div>
+                <div class="text-center q-pt-lg text-secondary text-h6">Deseja realmente <strong class="text-primary">adicionar {{ format(recargaValor) }}</strong> ao seu saldo<br>por <strong class="text-primary">{{ calculaTaxaTransacao(recargaValor) }}</strong> ?</div><br>
+                <TicketPaymentComponent />
+                <div class="w100 row justify-center">
+                    <q-btn label="voltar" flat color="secondary" @click="showRecargaModal = false" />
+                </div>
+            </div>
+        </q-dialog>
         <div v-if="loading" class="row w100 q-pb-xl justify-center">
             <q-spinner-ball color="secondary" size="lg" />
             <q-spinner-ball color="secondary" size="lg" />
@@ -69,12 +79,18 @@
 <script setup>
 import { onBeforeMount, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import TicketPaymentComponent from 'src/components/TicketPaymentComponent.vue'
+
 import { api } from 'src/boot/axios';
+import { SessionStorage, useQuasar } from "quasar";
 
 const isMobile = window.innerWidth < 800;
 const route = useRoute();
+const router = useRouter();
 const event = ref(null);
 const loading = ref(false);
+const modalBuyTicket = ref(false);
+const $q = useQuasar();
 
 onBeforeMount(async () => {
     loading.value = true;
@@ -93,6 +109,25 @@ function returnBack() {
         window.history.back();
     } else
     window.history.back();
+}
+
+function openModalBuyTicket(ticket) {
+    if(sessionStorage.getItem('user')){
+        modalBuyTicket.value = true;
+        console.log(ticket);
+    } else {
+        $q.notify({
+            message: 'Você precisa estar logado para comprar ingressos.',
+            color: 'secondary',
+            position: 'top',
+            icon: 'local_activity',
+            timeout: 4000
+        });
+        const id  = event.value.id;
+        console.log(id)
+        sessionStorage.setItem('comeFromTicketIntention', id);
+        router.push('/login')
+    }
 }
 
 </script>
@@ -114,7 +149,13 @@ function returnBack() {
 
 #ticket{
     border-radius: 8px;
-    background-color: #edebff;
+    background-color: #f9f8ff;
+    cursor: pointer;
+    transition: all 0.3s linear;
+}
+
+#ticket:hover {
+    background-color: #e5efff;
 }
 
 @media (min-width: 800px) {

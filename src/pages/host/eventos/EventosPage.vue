@@ -47,6 +47,11 @@
                                 Gerenciar Evento
                             </q-tooltip>
                         </q-btn>
+                        <q-btn glossy v-if="props.row.status.includes('andamento')" icon="payments" color="blue-14">
+                            <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                                Painel de Vendas
+                            </q-tooltip>
+                        </q-btn>
                     </div>
                 </template>
                 <template v-slot:body-cell-title="props">
@@ -59,11 +64,9 @@
                         </q-tooltip>
                     </q-td>
                 </template>
-                <template v-slot:body-cell-pacote="props">
+                <template v-slot:body-cell-profit="props">
                     <q-td :props="props">
-                        <div class="q-gutter-y-xs q-py-sm">
-                            {{ props.row.package }} 
-                        </div>
+                            {{ Utils.formatCurrency(props.row.profit, 'brl') }} 
                     </q-td>
                 </template>
             </q-table>
@@ -110,28 +113,22 @@ const columns = [
         field: 'status'
     },
     {
-        name: 'package',
-        label: 'Pacote',
+        name: 'date',
         align: 'left',
-        field: 'package'
+        label: 'Data do Evento',
+        field: 'date'
     },
     {
-        name: 'available_tickets',
+        name: 'profit',
+        label: 'Faturamento',
         align: 'left',
-        label: 'Ingressos Disponíveis',
-        field: 'available_tickets'
+        field: 'profit'
     },
     {
         name: 'access',
         align: 'left',
         label: 'Acesso',
         field: 'access'
-    },
-    {
-        name: 'date',
-        align: 'left',
-        label: 'Data do Evento',
-        field: 'date'
     },
 ];
 

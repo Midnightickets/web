@@ -33,7 +33,7 @@ const Utils = {
         }
     },
     logout: () => {
-        const confirm = window.confirm('-> Deseja realmente sair ?\n  ¯|_( ͡° ͜ʖ ͡°)_/¯ \n');
+        const confirm = window.confirm('Deseja realmente Sair ?\n 👋🏼__( ͡° ͜ʖ ͡°)__, \n');
         if (confirm) {
             sessionStorage.clear();
             window.location.href = '/';

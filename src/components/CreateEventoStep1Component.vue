@@ -1,5 +1,5 @@
 <template>
-    <div class="w100 bg-white  rounded-borders shadow-4 relative">
+    <div class="w100 bg-grey-4  rounded-borders shadow-4 relative">
         <div
             class="title-1 w100 text-h6 row items-center text-primary shadow-1 q-mt-xl q-py-sm justify-center text-bold">
             <q-icon size="md" color="primary" name="date_range" class="q-pr-sm" />
@@ -24,13 +24,13 @@
                     <q-btn flat icon="pin_drop" color="primary" />
                 </template>
             </q-input>
-            <q-input maxlength="100" filled type="textarea" v-model="evento.contact" label="Contato*">
+            <q-input maxlength="200" filled type="textarea" v-model="evento.contact" label="Contato*">
                 <template v-slot:append>
                     <q-btn flat icon="phone" color="primary" />
                 </template>
             </q-input>
-            <div class="w100">
-                <q-input  id="times" label="Início" outlined v-model="evento.initial_time" mask="time" :rules="['time']">
+            <div class="w100 row justify-center items-center no-wrap">
+                <q-input class="q-mr-sm" id="times" label="Início" outlined v-model="evento.initial_time" mask="time" :rules="['time']">
                     <template v-slot:append>
                         <q-icon name="access_time" color="primary" class="cursor-pointer">
                             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -57,15 +57,17 @@
                     </template>
                 </q-input>
             </div>
-            <div class="text-secondary" id="title-layout">Data do Evento é Obrigatória*</div>
-            <q-date id="date-picker" class="w100" v-model="evento.date" mask="DD-MM-YYYY HH:mm" :options="(date) => {
-                const today = new Date();
-                const yesterday = new Date(today);
-                yesterday.setDate(today.getDate());
-                const minDate = yesterday.toISOString().split('T')[0];
-                const mydate = new Date(date);
-                return mydate >= new Date(minDate);
-            }" color="primary" />
+            <div class="w100 row justify-center">
+                <q-date id="date-picker" class="w100 row" v-model="evento.date" mask="DD-MM-YYYY HH:mm" :options="(date) => {
+                    const today = new Date();
+                    const yesterday = new Date(today);
+                    yesterday.setDate(today.getDate());
+                    const minDate = yesterday.toISOString().split('T')[0];
+                    const mydate = new Date(date);
+                    return mydate >= new Date(minDate);
+                }" color="primary" />
+            </div>
+            <div class="w100 text-center text-secondary" id="title-layout">Data do Evento é Obrigatória*</div>
             <q-input maxlength="300" placeholder="Insira a url do banner" filled v-model="evento.img_url"
                 label="Link da Imagem do Evento">
                 <template v-slot:append>
@@ -79,7 +81,7 @@
                 </template>
             </q-input>
             <div class="w100 hline bg-primary"></div>
-            <q-btn :disabled="checkRequiredFields()" label="próximo" class="q-py-md" color="primary" @click="goNext()"
+            <q-btn :disabled="checkRequiredFields()" label="próximo" glossy class="q-py-lg" color="primary" @click="goNext()"
                 icon-right="skip_next" />
             <q-btn class="q-mb-md" label="meus eventos" flat color="primary" to="/host" />
         </div>

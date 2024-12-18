@@ -119,18 +119,13 @@
                         <q-btn @click="modalPackage = !modalPackage" label="Adicionar Ingressos" glossy icon-right="add_circle" color="primary"></q-btn>
                     </div>
                     <q-card-section>
-                        <div class="text-h6 text-primary">Pacote</div>
-                        <div class="text-bold">{{ evento.package }}</div>
-                        <div class="text-h6 text-primary q-mt-md">Ingressos Disponíveis</div>
-                        <div class="text-bold">{{ evento.available_tickets }}</div>
-                    </q-card-section>
-                    <q-card-section>
-                        <div class="text-h5 text-primary text-bold q-mb-md">Tipos de Ingressos</div>
-                        <div v-for="ticket in evento.ticket_types" :key="ticket.id" id="ticket">
+                        <div class="text-h5 text-primary text-bold q-mb-md">Ingressos</div>
+                        <div v-for="ticket in evento.ticket_types" :key="ticket.id" :class="ticket.status ? 'bg-blue-1': 'bg-grey-3'" class="q-pa-sm">
                             <div class="text-bold text-primary"  :class="ticket.status ? '' : 'mid-opacity'"><q-icon name="local_activity" color="primary" size="xs" ></q-icon> {{ ticket.title }}</div>
+                            <div class="text-bold text-secondary"  :class="ticket.status ? '' : 'mid-opacity'"><q-icon name="confirmation_number" color="secondary" size="xs" ></q-icon> {{ ticket.sales }} vendidos</div>
                             <div class="row items-center justify-between q-mt-sm">
                                 <div  :class="ticket.status ? '' : 'mid-opacity'" class="text-bold bg-secondary q-pa-xs rounded-borders text-white">{{ 'R$ ' + ticket.price }}</div>
-                                <q-toggle v-if="evento.status.includes('andamento')" class="text-bold" v-model="ticket.status" @update:model-value="updateStatusTickets()" left-label :label="ticket.status ? 'Ativo' : 'Inativo'" :color="ticket.status ? 'primary' : 'secondary'"></q-toggle>
+                                <q-toggle v-if="evento.status.includes('andamento')" :class="ticket.status ? 'text-green' : 'text-orange-14'" class="text-bold" v-model="ticket.status" @update:model-value="updateStatusTickets()" left-label :label="ticket.status ? 'Ativo' : 'Inativo'" color="green"></q-toggle>
                             </div>
                             <div class="w100 bg-secondary q-pt-xs q-my-sm rounded-borders"></div>
                         </div>
@@ -144,11 +139,12 @@
                         class="q-mt-md q-ml-md"></q-btn>
                     <q-card-section>
                         <div v-if="evento.subhosts.length > 0" class="text-h6 text-primary">Subhosts Cadastrados: {{ evento.subhosts.length }}</div>
-                        <div id="evento-subhosts">
+                        <div id="evento-subhosts" class="relative">
                             <div v-for="subhost in evento.subhosts" :key="subhost" id="subhost" class="rounded-borders shadow-2 q-mt-md">
                                 <div class="text-bold text-primary">{{ subhost.name }}</div>
                                 <div class="text-bold text-secondary">👨🏼‍💼{{ subhost.login.toLowerCase() }}</div>
                                 <div v-if="showSubhostsPassword" class="text-bold text-primary">🔑{{ subhost.password }}</div>
+                                <q-btn label="remover acesso" color="secondary" @click="removeSubhost(subhost)" icon-right="remove" class="q-mt-md" glossy></q-btn>
                                 <div class="w100 row q-gutter-x-sm" v-if="evento.status.includes('andamento')">
                                     <q-btn @click="copyCredentials(subhost)"  icon="file_copy" icon-right="key" label="Copiar Credenciais" color="blue-14" glossy class=" q-mt-sm"></q-btn>
                                 </div>
@@ -239,7 +235,12 @@ async function permitirSubhost(subhost) {
             modalSubhosts.value = false;
     })
 }
-
+async function removeSubhost(subhost) {
+    if(window.confirm('Deseja realmente remover o acesso do subhost ' + subhost.name + '?\n(˘･_･˘)')) {
+        evento.value.subhosts = evento.value.subhosts.filter(sub => sub.login != subhost.login);
+        await updateEventInfo();
+    }
+}
 async function openSubhostModal() {
     await getSubhosts();
     modalSubhosts.value = true;

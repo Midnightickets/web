@@ -32,7 +32,7 @@
                             <div id="ticket-types" >
                                 <q-item id="ticket" v-for="(ticket, index) in event.ticket_types" :key="index" style="border-left: 6px solid #9573f3;" class="shadow-1 q-mt-md">
                                     <q-item-section class="text-bold text-primary q-py-sm" id="title-layout">
-                                        <q-icon name="confirmation_number"></q-icon>{{ ticket.title }}<br><strong class="text-secondary q-pt-xs">R$ {{ ticket.price }}</strong>
+                                        <q-icon name="confirmation_number"></q-icon>{{ ticket.title }}<br><strong class="text-secondary q-pt-xs">R$ {{ formatStringValue(ticket.price) }}</strong>
                                     </q-item-section>
                                     <q-item-section side>
                                         <q-btn @click="openModalBuyTicket(ticket)" class="q-py-md" icon="add_shopping_cart" color="green-14" glossy></q-btn>
@@ -58,13 +58,14 @@
                 </q-card-section>
             </q-card>
         </div>
-        <q-dialog  v-model="showRecargaModal" persistent>
+        <q-dialog  v-model="modalBuyTicket" persistent>
             <div class="q-px-md q-pb-md bg-grey-4">
-                <div class="w100 q-mt-md text-white bg-blue-5 q-py-md text-center" id="title-layout">COMPRAR INGRESSO</div>
-                <div class="text-center q-pt-lg text-secondary text-h6">Deseja realmente <strong class="text-primary">adicionar {{ format(recargaValor) }}</strong> ao seu saldo<br>por <strong class="text-primary">{{ calculaTaxaTransacao(recargaValor) }}</strong> ?</div><br>
+                <div class="w100 q-mt-md text-white bg-grad-2 q-py-md text-center" id="title-layout">COMPRAR INGRESSO</div>
+                <div class="text-center q-pt-lg text-black text-h6 q-px-xs">Deseja realmente comprar o ingresso <strong class="text-primary">{{ ingressoHandle.title }}</strong> por<br><strong class="text-primary"> {{ Utils.formatCurrency(ingressoHandle.totalValue, 'brl') }}</strong>?</div>
+                <div class="q-pt-md mid-opacity text-center text-bold text-primary">{{ stringTaxes() }}</div>
                 <TicketPaymentComponent />
                 <div class="w100 row justify-center">
-                    <q-btn label="voltar" flat color="secondary" @click="showRecargaModal = false" />
+                    <q-btn label="voltar" flat color="secondary" @click="modalBuyTicket = false" />
                 </div>
             </div>
         </q-dialog>
@@ -83,7 +84,8 @@ import TicketPaymentComponent from 'src/components/TicketPaymentComponent.vue'
 
 import { api } from 'src/boot/axios';
 import { SessionStorage, useQuasar } from "quasar";
-
+import { Utils } from "src/utils/Utils";
+const ingressoHandle = ref()
 const isMobile = window.innerWidth < 800;
 const route = useRoute();
 const router = useRouter();
@@ -111,10 +113,35 @@ function returnBack() {
     window.history.back();
 }
 
+function formatStringValue(str){
+    if(typeof str === 'string') {
+        str = str.includes(',') ? str.replace(',', '.') : str;
+        str = Number(str);
+    }
+    return str.toFixed(2).toString().replace('.', ',');
+}
+
+function stringTaxes() {
+    let value = ingressoHandle.value.price
+    return 'R$ ' + value.toFixed(2).toString().replace('.', ',')+ ' + ' + 'R$ ' + (value * 0.05).toFixed(2).toString().replace('.', ',') + ' (5% de taxa)';
+}
+
 function openModalBuyTicket(ticket) {
     if(sessionStorage.getItem('user')){
+        if(typeof ticket.price === 'string') {
+            ticket.price = ticket.price.includes(',') ? ticket.price.replace(',', '.') : ticket.price;
+            ticket.price = Number(ticket.price);
+        }
+        const ticketConfigs = {
+            event_id: event.value.id,
+            title: ticket.title,
+            price: ticket.price,
+            taxes: 0.05, // taxa de 5% pela venda do ingresso
+            totalValue: ticket.price + (ticket.price * 0.05),
+        }
+        ingressoHandle.value = ticketConfigs;
+        sessionStorage.setItem('ticketConfigs', JSON.stringify(ticketConfigs));
         modalBuyTicket.value = true;
-        console.log(ticket);
     } else {
         $q.notify({
             message: 'Você precisa estar logado para comprar ingressos.',
@@ -123,8 +150,6 @@ function openModalBuyTicket(ticket) {
             icon: 'local_activity',
             timeout: 4000
         });
-        const id  = event.value.id;
-        console.log(id)
         sessionStorage.setItem('comeFromTicketIntention', id);
         router.push('/login')
     }

@@ -15,8 +15,6 @@
 import { onBeforeMount, ref } from "vue";
 import { api } from "src/boot/axios";
 import { useQuasar } from "quasar";
-import { Utils } from 'src/utils/Utils';
-
 
 const loading = ref(true)
 const $q = useQuasar();
@@ -38,17 +36,17 @@ const baseURL = isProd ? 'https://midnightickets.com' : 'http://localhost:9000'
 const preferenceId = ref('');
 
 onBeforeMount(async () => {
-    const host = JSON.parse(sessionStorage.getItem('host'));
+    const user = JSON.parse(sessionStorage.getItem('user'));
     $q.notify({
-        message: 'Confirmando a recarga, você concorda com a taxa de 1% sobre o valor da transação.',
-        color: 'primary',
+        message: 'Confirmando a compra do Ingresso, você concorda com a taxa de 5% sobre o valor da transação.',
+        color: 'secondary',
         position: 'top',
         icon: 'request_quote',
-        timeout: 5000
+        timeout: 6000
     });
     try {
-        const recarga = sessionStorage.getItem('recarga');
-        const recargaSemTaxa = Number(recarga.replace(',', '.')) - (Number(recarga.replace(',', '.')) * 0.01);
+        const ticketConfigs = JSON.parse(sessionStorage.getItem('ticketConfigs'));
+        
         await loadScript('https://sdk.mercadopago.com/js/v2');
         const mp = new MercadoPago(process.env.MIDNIGHTICKETS_MERCADO_PAGO_PK, { locale: 'pt-BR' });
         const createPreference = async () => {
@@ -58,18 +56,17 @@ onBeforeMount(async () => {
                     "failure": baseURL + '/host',
                     "pending": baseURL + '/host',
                 },
-                host: host.id,
+                user: user.id,
                 auto_return: "approved",
                 items: [
                     {
-                        title: '🎫 Recarga de ' + Utils.formatCurrency(recargaSemTaxa , 'brl'),
+                        title: '🎫 Compra do Ingresso: ' + ticketConfigs.title + ' por R$ ' + ticketConfigs.totalValue,
                         quantity: 1,
-                        unit_price: Number(recarga.replace(',', '.')),
-                        tipo: 'Recarga de Saldo para Perfil Host',
+                        unit_price: ticketConfigs.totalValue,
+                        event_id: ticketConfigs.event_id,
                     }
                 ],
                 
-
             }).then(response => {
                 preferenceId.value = response.data.id;
             }).catch(() => {

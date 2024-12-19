@@ -46,7 +46,7 @@ onBeforeMount(async () => {
     });
     try {
         const ticketConfigs = JSON.parse(sessionStorage.getItem('ticketConfigs'));
-        
+
         await loadScript('https://sdk.mercadopago.com/js/v2');
         const mp = new MercadoPago(process.env.MIDNIGHTICKETS_MERCADO_PAGO_PK, { locale: 'pt-BR' });
         const createPreference = async () => {
@@ -61,13 +61,13 @@ onBeforeMount(async () => {
                 auto_return: "approved",
                 items: [
                     {
-                        title: '🎫 Compra do Ingresso: ' + ticketConfigs.title + ' por R$ ' + ticketConfigs.totalValue,
+                        title: 'Compra do Ingresso ' + ticketConfigs.title,
                         quantity: 1,
                         unit_price: ticketConfigs.price,
                         event_id: ticketConfigs.event_id,
                     }
                 ],
-                
+
             }).then(response => {
                 preferenceId.value = response.data.id;
             }).catch(() => {
@@ -89,6 +89,14 @@ onBeforeMount(async () => {
                 texts: {
                     valueProp: 'smart_option',
                 },
+                customization: {
+                    checkout: {
+                        theme: {
+                            elementsColor: "#6310E1",
+                            headerColor: "#6310E1",
+                        },
+                    },
+                },
             }
         });
         loading.value = false;
@@ -99,7 +107,7 @@ onBeforeMount(async () => {
 </script>
 
 <style>
-.grey-3WMlEf.svelte-1a1oxv8.svelte-1a1oxv8{
-    color: rgba(255, 255, 255, 0.824)!important;
+.grey-3WMlEf.svelte-1a1oxv8.svelte-1a1oxv8 {
+    color: rgba(255, 255, 255, 0.824) !important;
 }
 </style>

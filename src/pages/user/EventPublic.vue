@@ -150,7 +150,7 @@ function openModalBuyTicket(ticket) {
             icon: 'local_activity',
             timeout: 4000
         });
-        sessionStorage.setItem('comeFromTicketIntention', id);
+        sessionStorage.setItem('comeFromTicketIntention', event.value.id);
         router.push('/login')
     }
 }

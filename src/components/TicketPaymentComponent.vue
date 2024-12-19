@@ -52,9 +52,9 @@ onBeforeMount(async () => {
         const createPreference = async () => {
             await api.post('/create_preference', {
                 back_urls: {
-                    "success": baseURL + '/host',
-                    "failure": baseURL + '/host',
-                    "pending": baseURL + '/host',
+                    "success": baseURL + '/me',
+                    "failure": baseURL + '/me',
+                    "pending": baseURL + '/me',
                 },
                 user: user.id,
                 ticket_type: ticketConfigs,

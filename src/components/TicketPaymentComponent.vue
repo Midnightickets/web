@@ -57,12 +57,13 @@ onBeforeMount(async () => {
                     "pending": baseURL + '/host',
                 },
                 user: user.id,
+                ticket_type: ticketConfigs,
                 auto_return: "approved",
                 items: [
                     {
                         title: '🎫 Compra do Ingresso: ' + ticketConfigs.title + ' por R$ ' + ticketConfigs.totalValue,
                         quantity: 1,
-                        unit_price: ticketConfigs.totalValue,
+                        unit_price: ticketConfigs.price,
                         event_id: ticketConfigs.event_id,
                     }
                 ],

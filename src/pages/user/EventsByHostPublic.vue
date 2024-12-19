@@ -3,7 +3,7 @@
         <div class="w100 q-pt-sm q-pl-sm" >
             <q-btn to="/" icon="travel_explore" color="secondary" glossy class="shadow-1"></q-btn>
         </div>
-        <div v-if="!loading && events.length>0" class="animate__animated animate__fadeInLeft w100 text-white text-center q-pb-lg q-mt-sm q-px-md" id="title-2">
+        <div v-if="!loading" class="animate__animated animate__fadeInLeft w100 text-white text-center q-pb-lg q-mt-sm q-px-md" id="title-2">
             Eventos de {{ hostName.toUpperCase() }}
         </div>
         <div v-if="!loading" class="w100 row items-center q-gutter-y-md">
@@ -22,6 +22,9 @@
                     </q-item-section>
                 </q-card-section>
             </q-card>
+        </div>
+        <div v-if="!loading && events.length == 0" class="w100 text-center text-secondary" id="title-2">
+            Nenhum Evento Em Andamento foi encontrado para esse Host<br>( ˘︹˘ )
         </div>
         <div v-if="loading" class="row w100 q-pb-xl justify-center">
             <q-spinner-ball color="secondary" size="lg" />
@@ -44,10 +47,11 @@ const hostName = ref(route.params.events_host);
 
 onBeforeMount(async () => {
     loading.value = true;
-    
     await api.get('?events_host=' + route.params.events_host).then((res) => {
-        events.value = res.data;
-        hostName.value = res.data[0].host;
+        if (res.data.length > 0){
+            events.value = res.data;
+            hostName.value = res.data[0].host;
+        }
     })
     .finally(() => {
         loading.value = false;

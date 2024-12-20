@@ -11,7 +11,7 @@
                         <div :class="!ingresso.isExpired ? 'text-primary' : 'text-secondary'" id="title-menu">{{ ingresso.ticket_type.title }}</div>
                         <div class="text-h6 text-secondary text-bold">{{ ingresso.event }}</div>
                         <div class="text-grey-8 text-bold q-pt-md" style="font-size: 16px">{{ !ingresso.isExpired ? '🟢 Disponível' : '🟡  Utilizado' }}</div>
-                        <div class="text-h6 text-blue-14 text-bold mid-opacity text-right">R$ {{ formatCurrency(ingresso.ticket_type.totalValue) }}</div>
+                        <div class="text-h6 text-blue-14 text-bold mid-opacity text-right">R$ {{ ingresso.ticket_type.price ? formatCurrency(ingresso.ticket_type.price) : formatCurrency(ingresso.ticket_type.totalValue) }}</div>
                     </q-card-section>
                     <div class="w100 q-px-md">
                         <q-btn @click="generateQRCode(ingresso.id)" label="Ver Ingresso" icon-right="confirmation_number" class="w100 q-py-md" color="primary" glossy></q-btn>

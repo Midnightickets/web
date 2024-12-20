@@ -1,13 +1,13 @@
 <template>
     <q-layout view="hHh lpR lFr">
 
-        <q-header v-if="userInfo" class="bg-glass-2 text-white animate__animated animate__fadeInDown" height-hint="98">
+        <q-header class="bg-glass-2 text-white animate__animated animate__fadeInDown" height-hint="98">
             <q-toolbar>
                 <q-toolbar-title class="row items-center">
                     <q-avatar>
                         <q-icon size="md" color="purple-1" name="local_activity" />
                     </q-avatar>
-                    <a style="text-decoration: none;" id="title-layout"
+                    <a  v-if="userInfo" style="text-decoration: none;" id="title-layout"
                         class="text-purple-1 q-pl-xs text-bold">
                         {{ userInfo.login }}
                     </a>
@@ -60,14 +60,25 @@
                 Midnight Tickets
                  </a>
                 <div class="text-center text-grey-4 q-mb-md q-mx-md">
-                    Faça Login para Comprar Ingressos e Encontrar Eventos
+                    Faça Login para Comprar Ingressos e Acompanhar seus Eventos
                 </div>
                 <q-btn class="q-my-lg q-pa-lg shadow-2" to="/login" color="secondary" glossy label="Iniciar Sessão" icon-right="login" />
                 <q-btn class="q-mt-xl" to="/" flat label="Página Inicial" color="secondary" icon="home" />
             </div>
         </q-drawer>
 
-        <q-page-container>
+        <q-page-container class="relative">
+            <div v-if="!userInfo" class="w100 text-white text-bold row items-center wrap q-px-md justify-center q-gutter-y-sm q-gutter-x-md  q-pt-lg">
+                <a href="/" style="text-decoration: none;" id="title-2"
+                class="text-grey-4 text-bold row items-center q-mb-sm">
+                <q-icon size="md" class="q-pr-xs" color="secondary" name="local_activity" />
+                Midnight Tickets
+                 </a>
+                <q-btn class=" q-pa-lg shadow-2" to="/login" color="primary" glossy label="Iniciar Sessão" />
+                <div class="w100 q-pt-xs q-my-md mid-opacity bg-secondary rounded-borders">
+
+                </div>
+            </div>
             <router-view />
         </q-page-container>
 
@@ -101,11 +112,6 @@ const toggleRightDrawer = () => {
     rightDrawerOpen.value = !rightDrawerOpen.value
 }
 
-onMounted(() => {
-    if (!userInfo) {
-        router.push('/login')
-    }
-})
 
 function openInstagramMidnightickets() {
     window.open('https://www.instagram.com/midnightickets', '_blank')

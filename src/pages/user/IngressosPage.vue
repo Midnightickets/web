@@ -1,14 +1,17 @@
 <template>
-    <q-page class="bg-grey-5 text-white q-px-md animate__animated animate__fadeIn q-pb-xl" id="title">
+    <q-page class="bg-roxo-light text-white q-px-md animate__animated animate__fadeIn q-pb-xl" id="title">
         <div class="w100" >
             <q-btn to="/" icon="home" color="secondary" glossy></q-btn>
         </div>
         <div class="w100 text-primary animate__animated animate__zoomIn text-center q-mb-md" id="title">Meus Ingressos</div>
         <div id="meus-ingressos">
-            <q-list >
-                <q-card v-for="ingresso in ingressos" :key="ingresso.id" class="q-pb-md bg-grey-3">
+            <q-list class="row q-gutter-x-md q-gutter-y-md">
+                <q-card v-for="ingresso in ingressos" :key="ingresso.id" class="w100 q-pb-md bg-grey-3">
                     <q-card-section>
-                        <div :class="!ingresso.isExpired ? 'text-primary' : 'text-secondary'" id="title-menu">{{ ingresso.ticket_type.title }}</div>
+                        <div :class="!ingresso.isExpired ? 'text-primary' : 'text-secondary'" id="title-menu">
+                            <q-icon class="q-pb-xs" name="local_activity" color="primary"></q-icon>
+                            {{ ingresso.ticket_type.title }}
+                        </div>
                         <div class="text-h6 text-secondary text-bold">{{ ingresso.event }}</div>
                         <div class="text-grey-8 text-bold q-pt-md" style="font-size: 16px">{{ !ingresso.isExpired ? '🟢 Disponível' : '🟡  Utilizado' }}</div>
                         <div class="text-h6 text-blue-14 text-bold mid-opacity text-right">R$ {{ ingresso.ticket_type.price ? formatCurrency(ingresso.ticket_type.price) : formatCurrency(ingresso.ticket_type.totalValue) }}</div>
@@ -56,6 +59,10 @@ function formatCurrency(valor) {
     if(typeof valor === 'number') {
         return valor.toFixed(2).toString().replace('.', ',')
     } else {
+        if(valor.includes(',')) {
+            valor = valor.replace(',', '.')
+        }
+        valor = Number(valor).toFixed(2)        
         return valor.toString().replace('.', ',')
     }
 }
@@ -78,11 +85,16 @@ const generateQRCode = (ingressoId) => {
 <style scoped>
 .q-card{
     border-left: 6px solid #9573f3;
-
+    cursor: pointer;
 }
+
+.bg-roxo-light{
+    background-color: #d1c0ff;
+}
+
 @media (min-width: 600px) {
    .q-card{
-        width: 50%;
+        width: 45%;
     }
     .q-list {
         display: flex;

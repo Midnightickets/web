@@ -366,7 +366,7 @@
                     <q-spinner-ball color="secondary" size="lg" />
                 </div>
                 <q-card v-if="!loading">
-                    <div class="w100 q-px-md text-primary q-pt-sm" id="title">{{ searchPublic.isByHostName ? `HOST's` : 'EVENTOS' }}</div>
+                    <div class="w100 q-px-md text-primary q-pt-sm" id="title">{{ searchPublic.isByHostName ? `Produtores` : 'EVENTOS' }}</div>
                     <q-card-section>
                         <q-list class="column q-gutter-y-md">
                             <q-item class="card-search rounded-borders shadow-1  q-pb-md" v-for="host in hostsResults" :key="host.id" clickable>
@@ -380,7 +380,7 @@
                                             {{ host.login.toLowerCase() }}
                                         </q-item-label>
                                         <q-item-section class="w100 q-mt-md">
-                                            <q-btn @click="goToPublicHostPage(host.login)" icon="person_search" color="primary" glossy class="shadow-2"></q-btn>
+                                            <q-btn @click="goToPublicHostPage(host.login)" label="ver produtor" icon="person_search" color="primary" glossy class="shadow-2"></q-btn>
                                         </q-item-section>
                                     </q-item-section>
                             </q-item>
@@ -399,7 +399,7 @@
                                         {{ event.host.toLowerCase() }}
                                     </q-item-label>
                                     <q-item-section class="w100 q-mt-md">
-                                        <q-btn  @click="goToPublicEventPage(event.id)"  icon="travel_explore" color="primary" glossy class="w100 shadow-2"></q-btn>
+                                        <q-btn  @click="goToPublicEventPage(event.id)" label="ver evento"  icon="travel_explore" color="primary" glossy class="w100 shadow-2"></q-btn>
                                     </q-item-section>
                                 </q-item-section>
 

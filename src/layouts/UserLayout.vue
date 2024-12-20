@@ -1,7 +1,7 @@
 <template>
     <q-layout view="hHh lpR lFr">
 
-        <q-header class="bg-glass-2 text-white animate__animated animate__fadeInDown" height-hint="98">
+        <q-header v-if="userInfo" class="bg-glass-2 text-white animate__animated animate__fadeInDown" height-hint="98">
             <q-toolbar>
                 <q-toolbar-title class="row items-center">
                     <q-avatar>
@@ -9,11 +9,11 @@
                     </q-avatar>
                     <a style="text-decoration: none;" id="title-layout"
                         class="text-purple-1 q-pl-xs text-bold">
-                        Midnight Tickets
+                        {{ userInfo.login }}
                     </a>
                 </q-toolbar-title>
 
-                <q-btn class="rounded-borders" size="md" label="menu" color="primary" glossy icon-right="menu"
+                <q-btn class="rounded-borders" size="md" :label="isMobile ? null :'menu'" color="primary" glossy icon-right="menu"
                     @click="toggleRightDrawer" />
             </q-toolbar>
 
@@ -39,6 +39,13 @@
                     </q-item>
                     <q-btn @click="Utils.logout()" class="z-index-999 absolute-bottom cursor-pointer q-py-sm" label="logout" icon-right="logout" color="secondary"></q-btn>
                 </q-list>
+                <div class="w100 text-center q-mt-xl q-pt-xl">
+                    <q-btn @click="openInstagramMidnightickets()"  style="text-decoration: none;"
+                    class="text-purple-1 text-bold"> 
+                    <q-icon size="md" class="q-pr-xs q-pb-xs" color="purple-1" name="local_activity" />
+                    Midnight Tickets
+                    </q-btn>
+                </div>
                 <div class="absolute-bottom w100  row no-wrap items-center justify-center q-mt-xl text-primary q-py-sm">
                     <div class="row items-center w100">
                         <q-btn class="w100 q-mb-xl" flat @click="rightDrawerOpen = !rightDrawerOpen" color="secondary">fechar menu</q-btn>
@@ -69,11 +76,11 @@
 
 <script setup>
 import { Utils } from 'src/utils/Utils';
-import { computed, onBeforeUnmount, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const userInfo = JSON.parse(sessionStorage.getItem('user'));
-
+const isMobile = window.innerWidth < 800
 const rightDrawerOpen = ref(false)
 const router = useRouter()
 // const isMobile = window.innerWidth < 800
@@ -93,6 +100,17 @@ function goTo(item) {
 const toggleRightDrawer = () => {
     rightDrawerOpen.value = !rightDrawerOpen.value
 }
+
+onMounted(() => {
+    if (!userInfo) {
+        router.push('/login')
+    }
+})
+
+function openInstagramMidnightickets() {
+    window.open('https://www.instagram.com/midnightickets', '_blank')
+}
+
 </script>
 <style scoped>
 .bg-purple-2 {

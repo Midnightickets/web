@@ -3,7 +3,8 @@
         <div
             class="title-1 w100 text-h6 row items-center text-primary shadow-1 q-mt-xl q-py-sm justify-center text-bold">
             <q-icon size="md" color="primary" name="date_range" class="q-pr-sm" />
-            Informações do Evento
+            Novo Evento
+            <q-icon size="md" color="primary" name="add_circle" class="q-pl-sm" />
         </div>
         <div class="q-mx-md column q-gutter-y-md q-mb-xl">
             <div class="text-center w100 text-secondary high-opacity text-bold q-pt-md">Preencha as informações para
@@ -81,7 +82,7 @@
                 </template>
             </q-input>
             <div class="w100 hline bg-primary"></div>
-            <q-btn :disabled="checkRequiredFields()" label="próximo" glossy class="q-py-lg" color="primary" @click="goNext()"
+            <q-btn :disabled="checkRequiredFields()" label="configurar ingressos" glossy class="q-py-lg" color="primary" @click="goNext()"
                 icon-right="skip_next" />
             <q-btn class="q-mb-md" label="meus eventos" flat color="primary" to="/host" />
         </div>

@@ -380,7 +380,7 @@
                                             {{ host.login.toLowerCase() }}
                                         </q-item-label>
                                         <q-item-section class="w100 q-mt-md">
-                                            <q-btn @click="goToPublicHostPage(host.login)" icon="person_search" color="primary" glossy class="shadow-1"></q-btn>
+                                            <q-btn @click="goToPublicHostPage(host.login)" icon="person_search" color="primary" glossy class="shadow-2"></q-btn>
                                         </q-item-section>
                                     </q-item-section>
                             </q-item>
@@ -399,7 +399,7 @@
                                         {{ event.host.toLowerCase() }}
                                     </q-item-label>
                                     <q-item-section class="w100 q-mt-md">
-                                        <q-btn  @click="goToPublicEventPage(event.id)"  icon="travel_explore" color="primary" glossy class="w100 shadow-1"></q-btn>
+                                        <q-btn  @click="goToPublicEventPage(event.id)"  icon="travel_explore" color="primary" glossy class="w100 shadow-2"></q-btn>
                                     </q-item-section>
                                 </q-item-section>
 

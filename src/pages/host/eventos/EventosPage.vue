@@ -42,7 +42,7 @@
                 :columns="columns">
                 <template v-slot:body-cell-acoes="props">
                     <div class="column items-center justify-center q-gutter-y-xs q-py-sm">
-                        <q-btn glossy icon="visibility" color="primary"  @click="openMeuEventoPage(props.row.id)">
+                        <q-btn glossy icon="edit" color="primary"  @click="openMeuEventoPage(props.row.id)">
                             <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
                                 Gerenciar Evento
                             </q-tooltip>

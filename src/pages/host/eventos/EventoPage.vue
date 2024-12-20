@@ -18,10 +18,12 @@
                 (evento.final_time ? (' - ' + evento.final_time) : '' ) }}</div>
                 <q-btn v-if="!editando && evento.img_url.trim() != ''" @click="dialogImg = !dialogImg" label="Ver Banner"  glossy icon-right="image"
                 class="q-px-md q-ml-md q-mt-md" dense color="blue-14"></q-btn>
+                <q-btn @click="previewPublicEvent(evento.id)" label="Evento Preview"  glossy icon-right="event"
+                class="q-px-md q-ml-md q-mt-md" dense color="primary"></q-btn>
             <div v-if="!loading" class="q-card-wrapper row justify-center ">
                 <q-card class="w100 q-mt-md" :class="editando ? 'bg-orangy' : ''">
                     <div id="title-menu" class="text-primary w100 q-pt-md text-center">
-                        Informações do Evento
+                        Informações
                     </div>
                     <div class="q-ml-md">
                         <q-btn v-if="evento.status.includes('andamento')" @click="alternarEdicao()" :label="!editando ? 'Editar Evento' : 'cancelar'" :icon-right="!editando ? 'edit' : 'cancel'" :flat="editando"
@@ -121,7 +123,7 @@
                     <q-card-section>
                         <div v-for="ticket in evento.ticket_types" :key="ticket.id" :class="ticket.status ? 'bg-blue-1': 'bg-grey-3'" class="q-pa-sm">
                             <div class="text-bold text-primary"  :class="ticket.status ? '' : 'mid-opacity'"><q-icon name="local_activity" color="primary" size="xs" ></q-icon> {{ ticket.title }}</div>
-                            <div class="text-bold text-secondary"  :class="ticket.status ? '' : 'mid-opacity'"><q-icon name="confirmation_number" color="secondary" size="xs" ></q-icon> {{ ticket.sales }} vendidos</div>
+                            <div class="text-bold text-secondary"  :class="ticket.status ? '' : 'mid-opacity'"><q-icon name="confirmation_number" color="secondary" size="xs" ></q-icon> {{ ticket.sales ? ticket.sales : 0  }} vendidos</div>
                             <div class="row items-center justify-between q-mt-sm">
                                 <div  :class="ticket.status ? '' : 'mid-opacity'" class="text-bold bg-secondary q-pa-xs rounded-borders text-white">{{ 'R$ ' + ticket.price }}</div>
                                 <q-toggle v-if="evento.status.includes('andamento')" :class="ticket.status ? 'text-green' : 'text-orange-14'" class="text-bold" v-model="ticket.status" @update:model-value="updateStatusTickets()" left-label :label="ticket.status ? 'Ativo' : 'Inativo'" color="green"></q-toggle>
@@ -143,10 +145,10 @@
                                 <div class="text-bold text-primary">{{ subhost.name }}</div>
                                 <div class="text-bold text-secondary">👨🏼‍💼{{ subhost.login.toLowerCase() }}</div>
                                 <div v-if="showSubhostsPassword" class="text-bold text-primary">🔑{{ subhost.password }}</div>
-                                <q-btn label="remover acesso" color="secondary" @click="removeSubhost(subhost)" icon-right="remove" class="q-mt-md" glossy></q-btn>
                                 <div class="w100 row q-gutter-x-sm" v-if="evento.status.includes('andamento')">
                                     <q-btn @click="copyCredentials(subhost)"  icon="file_copy" icon-right="key" label="Copiar Credenciais" color="blue-14" glossy class=" q-mt-sm"></q-btn>
                                 </div>
+                                <q-btn color="secondary" flat @click="removeSubhost(subhost)" icon-right="delete" class="q-mt-md absolute-top-right"></q-btn>
                             </div>
                         </div>
                     </q-card-section>
@@ -184,7 +186,7 @@
                 <q-card>
                     <q-card-section class="q-gutter-y-sm">
                         <div id="title-menu" class="text-primary">Subhosts</div>
-                        <q-btn label="gerenciar"  class="q-px-md" icon-right="sensor_occupied" color="secondary" glossy to="/host/acessos" dense></q-btn>
+                        <q-btn label="gerenciar acessos"  class="q-px-md" icon-right="sensor_occupied" color="green" glossy to="/host/acessos" dense></q-btn>
                         <div id="subhost" v-for="subhost in subhostOptions" :key="subhost.login" class="q-mt-md rounded-borders shadow-2">
                             <div class="text-bold text-primary">{{ subhost.name }}</div>
                             <div class="text-bold text-secondary">👨🏼‍💼{{ subhost.login.toLowerCase() }}</div>
@@ -234,6 +236,11 @@ async function permitirSubhost(subhost) {
             modalSubhosts.value = false;
     })
 }
+
+function previewPublicEvent(eventId) {
+    window.open(window.location.origin + '/events/' + eventId, '_blank');
+}
+
 async function removeSubhost(subhost) {
     if(window.confirm('Deseja realmente remover o acesso do subhost ' + subhost.name + '?\n(˘･_･˘)')) {
         evento.value.subhosts = evento.value.subhosts.filter(sub => sub.login != subhost.login);

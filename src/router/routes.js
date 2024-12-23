@@ -37,7 +37,7 @@ const routes = [
       { path: 'criar-evento', component: () => import('src/pages/host/eventos/CreateEventoPage.vue') },
       { path: 'evento', component: () => import('src/pages/host/eventos/EventoPage.vue') },
       { path: 'acessos', component: () => import('src/pages/host/AcessosPage.vue') },
-      { path: 'saldo', component: () => import('src/pages/host/SaldoPage.vue') },
+      { path: 'me', component: () => import('src/pages/host/HostPerfilPage.vue') },
     ]
   },
   {

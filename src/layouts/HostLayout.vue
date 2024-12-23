@@ -33,7 +33,7 @@
             <div id="title-menu" v-if="isHost" class="text-center text-bold text-purple-1">
                 {{ Utils.convertStringToFirstAndLast(hostInfo.name).toUpperCase() }}</div>
             <div v-if="isAuthenticated" class="text-center text-purple-1 mid-opacity text-bold q-mb-md "><q-btn
-                    @click="goTo({ to: '/app' })" label="Perfil" flat></q-btn></div>
+                    @click="goTo({ to: '/host/me' })" label="Perfil" flat></q-btn></div>
             <q-list v-if="isAuthenticated" class="text-bold text-white" >
                 <q-item v-for="item in menuOptions.items" :key="item.label" clickable @click="goTo(item)"
                     style="border-radius: 8px;"

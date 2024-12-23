@@ -30,6 +30,10 @@ const routes = [
     component: () => import('layouts/login/LoginUserLayout.vue'),
   },
   {
+    path: '/admin-auth',
+    component: () => import('layouts/login/LoginAdminLayout.vue'),
+  },
+  {
     path: '/host',
     component: () => import('src/layouts/HostLayout.vue'),
     children: [
@@ -46,6 +50,13 @@ const routes = [
     children: [
       { path: '', component: () => import('src/pages/user/IngressosPage.vue') },
       { path: 'perfil', component: () => import('src/pages/user/UserPage.vue') },
+    ]
+  },
+  {
+    path: '/admidnightickets',
+    component: () => import('src/layouts/AdminLayout.vue'),
+    children: [
+      { path: '', component: () => import('src/pages/admin/AdminPage.vue') },
     ]
   },
 

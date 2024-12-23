@@ -212,7 +212,7 @@ const buscarLogs = async () => {
             })
             return
         }
-        logs.value = response.data
+        logs.value = response.data.reverse()
     }).catch((error) => {
         $q.notify({
             color: 'orange-14',

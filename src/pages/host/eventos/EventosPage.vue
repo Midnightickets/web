@@ -1,5 +1,5 @@
 <template>
-    <q-page class="animate__animated animate__fadeIn bg-twitch q-pb-xl">
+    <q-page v-if="hostInfo" class="animate__animated animate__fadeIn bg-twitch q-pb-xl">
         <div class="relative bg-grey-4">
             <div
                 class="title-1 w100 q-px-sm row items-center text-primary shadow-1 q-py-md justify-between no-wrap text-bold">
@@ -7,37 +7,32 @@
                     <q-icon size="sm" color="primary" name="paid" class="q-pr-sm" />
                     {{ Utils.formatCurrency(hostInfo.balance ? hostInfo.balance : 0, 'brl') }}
                 </div>
-                <div class="row no-wrap items-center">
-                    <div class="text-blue-7"> <strong class="high-opacity"></strong>
-                        {{ hostInfo.name.toUpperCase() }}</div>
-                    <q-icon size="sm" color="blue" name="diamond" class="q-pl-sm" />
+                <div class="row no-wrap items-center" v-if="hostInfo.balance" >
+                        <q-btn to="/host/me" v-if="hostInfo.balance > 0" color="green-14" label="sacar" glossy="" icon-right="currency_exchange"  />
                 </div>
             </div>
         </div>
-        <div class="w100 q-pt-md"></div>
+        <div class="w100 q-pt-lg"></div>
         <div id="title" class=" text-white q-pt-xl w100 text-center text-bold">Meus Eventos</div>
         <div class="w100 q-my-md q-pl-md">
-            <q-btn class="q-pa-md text-bold" label="Novo Evento" glossy color="green"
+            <q-btn class="q-pa-md text-bold" label="Novo Evento" glossy color="green-14"
                 to="/host/criar-evento" icon="event" icon-right="add" />
         </div>
         <div class="q-ma-md">
             <div class="rounded-borders">
                 <q-input v-model="filter.title" class="rounded-borders bg-white buscar-input" label="Buscar Evento" outlined  >
                     <template v-slot:append>
-                        <q-btn color="primary" icon-right="search" class="cursor-pointer " @click="getEventos ()" label="buscar"></q-btn>
+                        <q-btn color="primary" glossy icon-right="search" class="cursor-pointer " @click="getEventos ()" label="buscar"></q-btn>
                     </template>
                 </q-input>
             </div>
-            <q-toggle color="green-13" v-model="filter.inProgress" :label="filter.inProgress ? 'Em Andamento' : 'Todos'" @update:model-value="getEventos()" class="q-mt-xs q-mb-md text-white" />
+            <q-toggle color="secondary" v-model="filter.inProgress" :label="filter.inProgress ? 'Em Andamento' : 'Todos'" @update:model-value="getEventos()" class="q-mt-xs q-mb-md text-white" />
             <div v-if="loading" class="row w100 q-pb-xl justify-center">
                 <q-spinner-ball color="secondary" size="lg" />
                 <q-spinner-ball color="secondary" size="lg" />
                 <q-spinner-ball color="secondary" size="lg" />
             </div>
-            <div id="title-layout" v-if="rows.length == 0" class="text-secondary w100 text-center q-mt-xl q-pt-xl">
-                Nenhum evento encontrado 🌆
-            </div>
-            <q-table v-if="!loading && rows.length > 0" no-data-label="Nenhum evento encontrado 🌆" separator="cell"
+            <q-table v-if="!loading" no-data-label="Nenhum Evento Encontrado" separator="cell"
                 class="my-sticky-column-table text-primary q-mb-md w100 text-bold" :rows="rows"
                 :columns="columns">
                 <template v-slot:body-cell-acoes="props">

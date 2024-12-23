@@ -1,7 +1,7 @@
 <template>
-    <div id="login-host" class="animate__animated animate__fadeIn bg-dark w100 flex flex-center">
+    <div id="login-host" class="animate__animated animate__fadeIn bg-dark w100 flex flex-center q-py-md">
         <div id="login-card" class="bg-white animate__animated animate__zoomIn rounded-borders">
-            <div id="title-menu" class="text-primary text-center q-mt-md row justify-center items-center"><q-icon name="diamond" size="md" color="primary" class="q-mr-xs"></q-icon>{{ editando ? 'CADASTRO' :'LOGIN'}} HOST</div>
+            <div id="title-menu" class="text-primary text-center q-mt-md row q-px-md justify-center items-center"><q-icon name="diamond" size="md" color="primary" class="q-mr-xs"></q-icon>{{ editando ? 'CADASTRO' :'LOGIN'}} PRODUTOR(A)</div>
             <div class="q-pa-md">
                 <q-input
                     v-if="editando"
@@ -58,7 +58,6 @@
                     type="text"
                     mask="####################"
                     outlined
-                    @keyup.enter="login"
                 />
                 <q-input
                     v-if="editando"
@@ -69,7 +68,6 @@
                     type="text"
                     mask="(##) #####-####"
                     outlined
-                    @keyup.enter="login"
                 />
                 <div v-if="loading" class="row w100 q-py-sm q-mt-xs justify-center">
                     <q-spinner-ball color="secondary" size="lg" />
@@ -81,7 +79,7 @@
                     :disabled="isLoginFormInvalid()"
                     @click="login"
                     label="Login"
-                    color="green"
+                    :color="isLoginFormInvalid() ? 'dark' : 'green-14'"
                     glossy
                     icon-right="login"
                     class="full-width q-mt-md q-py-lg"
@@ -100,18 +98,9 @@
                     @click="editando = !editando"
                     :label="editando ? 'Voltar' : 'Registre-se'"
                     color="primary"
-                    :glossy="!editando"
-                    :flat="editando"
                     class="full-width q-mt-md q-py-xs"
                 />
-                <q-btn
-                    v-if="!editando"
-                    class="full-width q-mt-sm"
-                    label="página inicial"
-                    color="secondary"
-                    flat
-                    to="/"
-                />
+                <q-btn class="full-width q-mt-md" color="secondary" flat v-if="!editando" to="/" label="página inicial" ></q-btn>
             </div>
         </div>
     </div>
@@ -171,7 +160,7 @@ async function login() {
         sessionStorage.setItem('host', JSON.stringify(response.data))
         sessionStorage.setItem('isHost', true)
         $q.notify({
-            color: 'secondary',
+            color: 'dark',
             position: 'top',
             message: 'Bem vindo, '+ response.data.login + '!',
             icon: 'diamond'

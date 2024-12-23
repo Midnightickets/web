@@ -190,3 +190,9 @@ tr:nth-child(2n){
 .z-index-999{
   z-index: 999;
 }
+
+.bg-grad-grey{
+  background: #616161;
+  background: -webkit-linear-gradient(to bottom, #616161, #dfceff);
+  background: linear-gradient(to bottom, #685d6e, #4f4f4f);
+}

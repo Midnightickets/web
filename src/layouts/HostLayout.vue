@@ -1,7 +1,7 @@
 <template>
     <q-layout view="hHh lpR lFr">
 
-        <q-header class="bg-glass-2 text-white" height-hint="98">
+        <q-header v-if="hostInfo" class="bg-grad-1 text-white" height-hint="98">
             <q-toolbar>
                 <q-toolbar-title class="row items-center">
                     <q-avatar>
@@ -9,7 +9,7 @@
                     </q-avatar>
                     <a @click="goTo('/app')" style="text-decoration: none;" id="title-layout"
                         class="text-purple-1 q-pl-xs text-bold">
-                        Midnight Tickets
+                        {{hostInfo.login ? hostInfo.login : 'Midnight' }}
                     </a>
                 </q-toolbar-title>
 
@@ -23,7 +23,7 @@
         </q-tabs> -->
         </q-header>
 
-        <q-drawer show-if-above v-model="rightDrawerOpen" side="right" class="bg-grad-1 relative">
+        <q-drawer v-if="hostInfo" show-if-above v-model="rightDrawerOpen" side="right" class="bg-grad-1 relative">
             <div v-if="isAuthenticated" class="w100 flex q-mb-md flex-center q-mt-lg">
                 <q-avatar style="width:110px;height:110px;" class="shadow-2">
                     <img v-if="hostInfo.img_url" :src="hostInfo.img_url" alt="">
@@ -71,8 +71,9 @@
 </template>
 
 <script setup>
+import { useQuasar } from 'quasar';
 import { Utils } from 'src/utils/Utils';
-import { computed, onBeforeUnmount, ref } from 'vue'
+import { computed, onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const hostInfo = JSON.parse(sessionStorage.getItem('host'));
@@ -80,6 +81,7 @@ const hostInfo = JSON.parse(sessionStorage.getItem('host'));
 const isHost = computed(() => hostInfo != null);
 const isAuthenticated = computed(() => sessionStorage.getItem('isHost'));
 
+const $q = useQuasar()
 const rightDrawerOpen = ref(false)
 const router = useRouter()
 // const isMobile = window.innerWidth < 800
@@ -106,6 +108,19 @@ onBeforeUnmount(() => {
     cleanSessionStorage()
 })
 
+onMounted(() => {
+    if(!hostInfo) {
+        $q.notify({
+            color: 'blue-14',
+            textColor: 'white',
+            icon: 'update',
+            message: 'Sessão expirada, faça login novamente',
+            position: 'top',
+            timeout: 3000
+        })
+        router.push('/login-host')
+    }
+})
 
 const toggleRightDrawer = () => {
     rightDrawerOpen.value = !rightDrawerOpen.value

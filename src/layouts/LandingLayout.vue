@@ -53,7 +53,7 @@
                         <div class="text-center">Encontre Produtores e Eventos em Andamento</div>
                     </q-card-section>
                     <q-card-section class="q-pa-md column q-gutter-y-md">
-                        <q-input maxlength="100" v-model="searchPublic.titleEventOrHostName" filled label="Nome do Evento ou Produtor*"
+                        <q-input maxlength="100" v-model="searchPublic.titleEventOrHostName" outlined label="Nome do Evento ou Produtor*"
                             placeholder="Digite o nome do Evento ou Produtor">
                             <template v-slot:prepend>
                                 <q-icon name="search" color="primary" />

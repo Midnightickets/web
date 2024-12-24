@@ -346,10 +346,10 @@
                     </div>
                     <div v-if="userInfo == ''"
                         class="w100 text-bold rounded-borders column bg-grad-2 items-center justify-center text-white q-pa-md text-center q-mt-md ">
-                        <div class="column text-h5 text-white text-bold">LOGIN HOST</div>
-                        <div class="text-purple-2">É Produtor de Eventos ou Possui Acesso Externo??</div>
-                        <q-btn icon-right="admin_panel_settings" label="Faça login Aqui" style="border-radius:12px"
-                            glossy dense class="q-mt-sm q-pa-lg " color="dark" to="/login-host" />
+                        <div class="column text-h5 text-white text-bold">Validar Ingressos</div>
+                        <div class="text-purple-2">Recebeu credenciais de um produtor para validar ingressos ??</div>
+                        <q-btn icon-right="sensor_occupied" label="Faça login Aqui" style="border-radius:12px"
+                            glossy dense class="q-mt-md q-pa-lg shadow-2" color="dark" to="/login-subhost" />
                     </div>
                 </div>
                 <div class="w100 text-secondary text-purple-1 text-bold q-mb-xl text-center q-mt-md q-pt-xl">

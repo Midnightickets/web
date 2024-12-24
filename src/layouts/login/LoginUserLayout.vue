@@ -98,7 +98,7 @@
                     label="Voltar"
                     color="primary"
                     flat
-                    @click="()=>{window.location.back}"
+                    @click="goBack()"
                 />
             </div>
         </div>
@@ -151,6 +151,15 @@ const isRegisterFormInvalid = () => {
 onMounted(() => {
     sessionStorage.getItem('user') ? router.push('/me') : sessionStorage.removeItem('host')
 })
+
+function goBack(){
+    if(sessionStorage.getItem('comeFromTicketIntention')) {
+            const rota = sessionStorage.getItem('comeFromTicketIntention')
+            sessionStorage.removeItem('comeFromTicketIntention')
+            router.push('/events/' + rota)
+        }
+    else router.push('/')
+}
 
 async function registrar () {
     loading.value = true

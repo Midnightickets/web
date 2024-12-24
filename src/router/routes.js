@@ -26,6 +26,10 @@ const routes = [
     component: () => import('layouts/login/LoginHostLayout.vue'),
   },
   {
+    path: '/login-subhost',
+    component: () => import('layouts/login/LoginSubHostLayout.vue'),
+  },
+  {
     path: '/login',
     component: () => import('layouts/login/LoginUserLayout.vue'),
   },
@@ -42,6 +46,13 @@ const routes = [
       { path: 'evento', component: () => import('src/pages/host/eventos/EventoPage.vue') },
       { path: 'acessos', component: () => import('src/pages/host/AcessosPage.vue') },
       { path: 'me', component: () => import('src/pages/host/HostPerfilPage.vue') },
+    ]
+  },
+  {
+    path: '/subhost',
+    component: () => import('src/layouts/SubhostLayout.vue'),
+    children: [
+      { path: '', component: () => import('src/pages/subhost/ValidarIngressoPage.vue') },
     ]
   },
   {

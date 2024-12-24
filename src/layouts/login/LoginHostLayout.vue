@@ -6,7 +6,6 @@
                 <q-input
                     v-if="editando"
                     v-model="host.name"
-                    filled
                     placeholder="Nome*"
                     maxlength="40"
                     type="text"
@@ -15,7 +14,6 @@
                 />
                 <q-input
                     v-model="host.login"
-                    filled
                     placeholder="Login*"
                     maxlength="40"
                     type="text"
@@ -24,7 +22,6 @@
                 <q-input
                     v-if="editando"
                     v-model="host.email"
-                    filled
                     placeholder="Email*"
                     maxlength="40"
                     class="q-mt-md"
@@ -33,7 +30,6 @@
                 />
                 <q-input
                 v-model="host.password"
-                    filled
                     placeholder="Senha*"
                     :type="formConfig.showPassword ? 'text' : 'password'"
                     maxlength="20"
@@ -52,7 +48,6 @@
                     v-if="editando"
                     class="q-mt-md"
                     v-model="host.cpf_cnpj"
-                    filled
                     maxlength="20"
                     placeholder="CPF/CNPJ*"
                     type="text"
@@ -63,7 +58,6 @@
                     v-if="editando"
                     class="q-mt-md"
                     v-model="host.phone"
-                    filled
                     placeholder="Telefone*"
                     type="text"
                     mask="(##) #####-####"
@@ -95,12 +89,13 @@
                     class="full-width q-mt-md q-py-md"
                 />
                 <q-btn
+                    v-if="!loading"
                     @click="editando = !editando"
                     :label="editando ? 'Voltar' : 'Registre-se'"
                     color="primary"
                     class="full-width q-mt-md q-py-xs"
                 />
-                <q-btn class="full-width q-mt-md" color="secondary" flat v-if="!editando" to="/" label="página inicial" ></q-btn>
+                <q-btn class="full-width q-mt-md" color="secondary" flat v-if="!editando && !loading" to="/" label="página inicial" ></q-btn>
             </div>
         </div>
     </div>

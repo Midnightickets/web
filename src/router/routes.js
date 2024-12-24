@@ -56,7 +56,10 @@ const routes = [
     path: '/admidnightickets',
     component: () => import('src/layouts/AdminLayout.vue'),
     children: [
-      { path: '', component: () => import('src/pages/admin/AdminPage.vue') },
+      { path: '', component: () => import('src/pages/admin/LogsRecentesPage.vue') },
+      { path: 'buscar-logs', component: () => import('src/pages/admin/AdminPage.vue') },
+      { path: 'users', component: () => import('src/pages/admin/UsersPage.vue') },
+      { path: 'hosts', component: () => import('src/pages/admin/HostsPage.vue') },
     ]
   },
 

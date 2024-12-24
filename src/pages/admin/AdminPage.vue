@@ -99,11 +99,14 @@
                 <q-card-section v-if="log.user" class="w100 bg-grey-6">
                     [usuário] {{ log.user }}
                 </q-card-section>
+                <q-card-section v-if="log.sake_status" class="w100 bg-grey-6">
+                    {{ log.sake_status.includes('Aguardando') ? '🟡 ' + log.sake_status : '🟢 ' + log.sake_status }}
+                </q-card-section>
                 <q-card-section  class="w100 bg-dark text-right">
                      {{ log.created_at }}
                 </q-card-section>
                 <q-card-section class="w100">
-                    <q-btn  label="ver log" color="primary" class="w100" icon-right="visibility"></q-btn>
+                    <q-btn  label="ver log" color="green-14" glossy class="w100" icon-right="visibility"></q-btn>
                 </q-card-section>
             </q-card>
         </q-list>
@@ -125,6 +128,7 @@ const typeOptions = [
     {value: 4, label: 'Evento Cancelado', index_enum: 'UPDATE_EVENT_CANCELED'},
     {value: 5, label: 'Solicitação de Saque', index_enum: 'REQUEST_SAKE'},
     {value: 6, label: 'Evento Finalizado', index_enum: 'UPDATE_EVENT_FINISHED'},
+    {value: 7, label: 'Formulário de Landing Criado', index_enum: 'LANDING_FORM_CREATED'},
     {value: 8, label: 'Novo Host Criado', index_enum: 'HOST_CREATED'},
 ]
 
@@ -144,6 +148,7 @@ const logs = ref([])
 //     REQUEST_SAKE: 'Solicitação de Saque',
 //     SAKE_STATUS_REQUESTED: 'Aguardando Saque',
 //     HOST_CREATED: 'Novo Host Criado',
+//     LANDING_FORM_CREATED: 'Formulário de Landing Criado',
 // }
 
 const filter = ref({

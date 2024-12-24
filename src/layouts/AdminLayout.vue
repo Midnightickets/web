@@ -96,10 +96,10 @@ const router = useRouter()
 const menuOptions = ref({
     items: [
         // USER MENUS
-        { label: 'Logs Recentes', icon: 'notifications', to: '#', role: 'admin' },
-        { label: 'Buscar Logs', icon: 'search', to: '/admin', role: 'admin' },
-        { label: 'Usuários', icon: 'groups', to: '#', role: 'admin' },
-        { label: 'Produtores', icon: 'diversity_3', to: '#', role: 'admin' },
+        { label: 'Logs Recentes', icon: 'notifications', to: '/admidnightickets', role: 'admin' },
+        { label: 'Buscar Logs', icon: 'search', to: '/admidnightickets/buscar-logs', role: 'admin' },
+        { label: 'Usuários', icon: 'groups', to: '/admidnightickets/users', role: 'admin' },
+        { label: 'Produtores', icon: 'diversity_3', to: '/admidnightickets/hosts', role: 'admin' },
     ]
 })
 function goTo(item) {

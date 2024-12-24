@@ -6,7 +6,6 @@
             <div class="q-pa-md">
                 <q-input
                     v-model="admin.login"
-                    filled
                     placeholder="Login*"
                     maxlength="40"
                     type="text"
@@ -16,7 +15,6 @@
                 />
                 <q-input
                     v-model="admin.password"
-                    filled
                     placeholder="Senha*"
                     :type="formConfig.showPassword ? 'text' : 'password'"
                     maxlength="20"
@@ -51,7 +49,7 @@
                 <q-btn
                     class="full-width q-mt-sm"
                     icon="home"
-                    color="secondary"
+                    color="grey-14"
                     to="/"
                 />
             </div>

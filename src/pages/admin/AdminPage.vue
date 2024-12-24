@@ -81,10 +81,10 @@
             <div id="title-layout" class="w100 justify-center items-center">
                 {{ logs.length }} logs encontrado(s)
             </div>
-            <q-card style="border-left: 4px solid #9573f3;" v-for="log in logs" :key="log._id" class="bg-grey-4 rounded-borders text-bold">
+            <q-card style="border-left: 6px solid #1D1D1D;" v-for="(log, index) in logs" :key="index" class="bg-grey-4 rounded-borders text-bold">
                 <q-card-section>
-                    <q-item-label id="title-2" class="text-primary">
-                        {{ log.type }}
+                    <q-item-label id="title-2" class="text-dark">
+                        {{ index + 1 }}. {{ log.type }}
                     </q-item-label>
                 </q-card-section>
                 <q-card-section v-if="log.host" class="w100 bg-grey-6">
@@ -130,6 +130,7 @@ const typeOptions = [
     {value: 6, label: 'Evento Finalizado', index_enum: 'UPDATE_EVENT_FINISHED'},
     {value: 7, label: 'Formulário de Landing Criado', index_enum: 'LANDING_FORM_CREATED'},
     {value: 8, label: 'Novo Host Criado', index_enum: 'HOST_CREATED'},
+    {value: 9, label: 'Novo Usuário Criado', index_enum: 'NEW_USER'},
 ]
 
 const sakeStatusOptions = [
@@ -149,6 +150,7 @@ const logs = ref([])
 //     SAKE_STATUS_REQUESTED: 'Aguardando Saque',
 //     HOST_CREATED: 'Novo Host Criado',
 //     LANDING_FORM_CREATED: 'Formulário de Landing Criado',
+//     NEW_USER: 'Novo Usuário Criado',
 // }
 
 const filter = ref({

@@ -8,17 +8,23 @@
             <div id="title-layout" class="w100 justify-center items-center text-secondary">
                 {{ users.length }} usuários encontrado(s)
             </div>
-            <q-card style="border-left: 4px solid #9573f3;" v-for="user in users" :key="user.id" class="bg-grey-4 rounded-borders text-bold">
+            <q-card style="border-left: 4px solid #616161;" v-for="(user, index) in users" :key="index" class="bg-grey-4 rounded-borders text-bold">
                 <q-card-section>
-                    <q-item-label id="title-2" class="text-primary">
-                        {{ user.login }}
+                    <q-item-label id="title-2" class="text-dark">
+                        {{index+1}}. {{ user.login }}
                     </q-item-label>
                 </q-card-section>
-                <q-card-section v-if="user.name" class="w100 bg-grey-6">
+                <q-card-section v-if="user.id" class="w100 bg-dark">
+                    <q-icon @click="copy(user.id)" name="content_copy" size="sm" class="cursor-pointer q-pr-sm" color="white"></q-icon>{{ user.id }}[ID]
+                </q-card-section>
+                <q-card-section v-if="user.name" class="w100 bg-grey-14">
                     {{ user.name }}
                 </q-card-section>
+                <q-card-section  class="w100 bg-dark text-right">
+                    {{ user.created_at }}
+               </q-card-section>
                 <q-card-section class="w100">
-                    <q-btn  label="ver usuário" color="green-14" glossy class="w100" icon-right="visibility"></q-btn>
+                    <q-btn  label="ver usuário" color="primary" glossy class="w100 q-py-md" icon-right="visibility"></q-btn>
                 </q-card-section>
             </q-card>
         </q-list>
@@ -67,6 +73,17 @@ const buscarUsers = async () => {
             position: 'top',
             timeout: 2500,
         })
+    })
+}
+
+async function copy (userId) {
+    await navigator.clipboard.writeText(userId)
+    $q.notify({
+        color: 'green-14',
+        icon: 'content_copy',
+        message: 'ID copiado para a área de transferência',
+        position: 'top',
+        timeout: 2500,
     })
 }
 

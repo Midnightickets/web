@@ -2,25 +2,54 @@
     <div id="login-user" class="animate__animated animate__fadeIn bg-grad-7 w100 flex flex-center">
         <div id="login-card" class="bg-white animate__animated animate__zoomIn rounded-borders">
             <div id="title-menu" class="text-primary text-center q-mt-md row justify-center items-center"><q-icon name="account_circle" size="md" color="primary" class="q-mr-xs"></q-icon>LOGIN</div>
-            <div class="q-pa-md">
+            <div class="q-pa-md column q-gutter-y-md">
                 <q-input
+                    v-if="editing"
+                    v-model="user.cpf"
+                    placeholder="CPF*"
+                    mask="###.###.###-##"
+                    reverse-fill-mask
+                    type="text"
+                    outlined
+                />
+                <q-input
+                v-if="editing"
+                v-model="user.name"
+                    placeholder="Nome Completo*"
+                    maxlength="100"
+                    type="text"
+                    outlined
+                    />
+                    <q-input
                     v-model="user.login"
-                    filled
                     placeholder="Login*"
                     maxlength="40"
                     type="text"
                     outlined
-                    @keyup.enter="login"
                 />
                 <q-input
-                    v-model="user.password"
-                    filled
+                    v-if="editing"
+                    v-model="user.phone"
+                    placeholder="Telefone*"
+                    mask="(##) #####-####"
+                    type="text"
+                    outlined
+                />
+                <q-input
+                    v-if="editing"
+                    v-model="user.email"
+                    placeholder="E-mail*"
+                    maxlength="100"
+                    type="email"
+                    outlined
+                />
+                <q-input
+                v-model="user.password"
                     placeholder="Senha*"
                     :type="formConfig.showPassword ? 'text' : 'password'"
                     maxlength="20"
                     outlined
                     class="q-mt-md"
-                    @keyup.enter="login"
                 >
                     <template v-slot:append>
                         <q-icon
@@ -36,10 +65,20 @@
                     <q-spinner-ball color="primary" size="lg" />
                 </div>
                 <q-btn
-                    v-if="!loading"
+                    v-if="!loading && !editing"
                     :disabled="isLoginFormInvalid()"
                     @click="login"
-                    label="Login"
+                    label="Fazer login"
+                    color="green"
+                    glossy
+                    icon-right="login"
+                    class="full-width q-mt-md q-py-lg"
+                />
+                <q-btn
+                    v-if="!loading && editing"
+                    :disabled="isRegisterFormInvalid()"
+                    @click="registrar"
+                    label="Registrar-se Agora"
                     color="green"
                     glossy
                     icon-right="login"
@@ -47,18 +86,19 @@
                 />
                 <q-btn
                     v-if="!loading"
-                    label="Registre-se"
+                    :label="editing ? 'fazer login' : 'Registre-se'"
+                    @click="editing = !editing"
                     color="primary"
                     glossy
-                    icon-right="person_add"
                     class="full-width q-mt-md q-py-sm"
                 />
                 <q-btn
+                    v-if="!loading"
                     class="full-width q-mt-sm"
                     label="Voltar"
                     color="primary"
                     flat
-                    to="/"
+                    @click="()=>{window.location.back}"
                 />
             </div>
         </div>
@@ -74,15 +114,21 @@ import { useRouter } from 'vue-router';
 const $q = useQuasar()
 const router = useRouter()
 const loading = ref(false)
+const editing = ref(false)
 
 const formConfig = ref({
     showPassword: false,
     userLoginRoute: '/login_user',
+    userCreateRoute: '/create_user',
 })
 
 const user = ref({
     login: '',
     password: '',
+    cpf: '',
+    name: '',
+    phone: '',
+    email: '',
 })
 
 function isLoginFormValid() {
@@ -94,11 +140,59 @@ const isLoginFormInvalid = () => {
         return true
     }
     return false
-    
+}
+
+const isRegisterFormInvalid = () => {
+    if (user.value.login.trim().length < 3 || user.value.password.trim().length < 3 || user.value.cpf.trim().length < 14 || user.value.name.trim().length < 3 || user.value.phone.trim().length < 15 || user.value.email.trim().length < 3) {
+        return true
+    }
+    return false
 }
 onMounted(() => {
     sessionStorage.getItem('user') ? router.push('/me') : sessionStorage.removeItem('host')
 })
+
+async function registrar () {
+    loading.value = true
+    const req = {
+        login: user.value.login.toLocaleLowerCase(),
+        password: user.value.password.toLocaleLowerCase(),
+        cpf: user.value.cpf,
+        name: user.value.name,
+        phone: user.value.phone,
+        email: user.value.email
+    }
+    await api.post(formConfig.value.userCreateRoute, req)
+    .then(response => {
+        sessionStorage.setItem('user', JSON.stringify(response.data))
+        sessionStorage.setItem('isUser', true)
+        $q.notify({
+            color: 'secondary',
+            position: 'top',
+            message: 'Bem vindo, '+ response.data.login + '!',
+            icon: 'local_activity'
+        })
+        if(sessionStorage.getItem('comeFromTicketIntention')) {
+            const rota = sessionStorage.getItem('comeFromTicketIntention')
+            sessionStorage.removeItem('comeFromTicketIntention')
+            router.push('/events/' + rota)
+        }
+        else router.push('/me')
+    })
+    .catch(err => {
+        $q.notify({
+            color: 'negative',
+            position: 'top',
+            message: err.response.data.error,
+            icon: 'report_problem',
+        })
+        user.value.password = ''
+    })
+    .finally(() => {
+        loading.value = false
+    })
+}
+
 async function login() {
     loading.value = true
     const req = {
@@ -141,6 +235,9 @@ async function login() {
 <style scoped>
 #login-user{
     height: 100vh;
+}
+#login-card{
+    width: 45vw
 }
 
 @media (max-width: 600px) {

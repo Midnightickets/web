@@ -8,23 +8,29 @@
             <div id="title-layout" class="w100 justify-center items-center text-secondary">
                 {{ hosts.length }} produtores encontrado(s)
             </div>
-            <q-card style="border-left: 4px solid #9573f3;" v-for="host in hosts" :key="host.id" class="bg-grey-4 rounded-borders text-bold">
+            <q-card style="border-left: 6px solid #1D1D1D" v-for="(host, index) in hosts" :key="index" class="bg-grey-4 rounded-borders text-bold">
                 <q-card-section>
-                    <q-item-label id="title-2" class="text-primary">
-                        {{ host.login }}
+                    <q-item-label id="title-2" class="text-dark">
+                        {{index + 1}}. {{ host.login }}
                     </q-item-label>
                 </q-card-section>
-                <q-card-section v-if="host.name" class="w100 bg-grey-6">
-                    {{ host.name }}
-                </q-card-section>
-                <q-card-section class="w100 bg-grey-6">
-                    R$ {{ host.balance.toFixed(2) }}
-                </q-card-section>
-                <q-card-section class="w100 bg-grey-6">
+                <q-card-section class="w100 bg-dark" :class="host.waitingSake ? 'text-orange-12' : 'text-green-12'">
                     {{ host.waitingSake ? '🟡 Aguardando Saque' : '🟢 Saque Disponível' }}
                 </q-card-section>
+                <q-card-section v-if="host.name" class="w100 bg-grey-14">
+                    {{ host.name }}
+                </q-card-section>
+                <q-card-section v-if="host.id" class="w100 bg-grey-14">
+                    <q-icon @click="copy(host.id)" name="content_copy" size="sm" class="cursor-pointer q-pr-sm" color="white"></q-icon>{{ host.id }} [ID]
+                </q-card-section>
+                <q-card-section class="w100 bg-grey-14">
+                    R$ {{ host.balance.toFixed(2) }}
+                </q-card-section>
+                <q-card-section  class="w100 bg-dark text-right">
+                    {{ host.created_at }}
+               </q-card-section>
                 <q-card-section class="w100">
-                    <q-btn  label="ver produtor" color="green-14" glossy class="w100" icon-right="visibility"></q-btn>
+                    <q-btn  label="ver produtor" color="primary" glossy class="w100 q-py-md" icon-right="visibility"></q-btn>
                 </q-card-section>
             </q-card>
         </q-list>
@@ -73,6 +79,17 @@ const buscarHosts = async () => {
             position: 'top',
             timeout: 2500,
         })
+    })
+}
+
+async function copy (hostId) {
+    await navigator.clipboard.writeText(hostId)
+    $q.notify({
+        color: 'green-14',
+        icon: 'content_copy',
+        message: 'ID copiado para a área de transferência',
+        position: 'top',
+        timeout: 2500,
     })
 }
 

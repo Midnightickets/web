@@ -18,20 +18,17 @@
       <div class="w100 rounded-borders column justify-center items-center">
         <q-card v-if="ingresso">
           <q-card-section>
-            <q-card-title class="text-center text-primary q-pt-md" id="title">Detalhes do Ingresso</q-card-title>
-                    <div  class="text-bold text-primary text-h5 text-center">Nome do Pagador</div>
+            <q-card-title class="text-center text-primary q-py-md q-mb-md" id="title">Detalhes</q-card-title>
+                    <div  class="text-bold text-blue q-mt-md text-h5 text-center">Nome do Pagador</div>
                     <div class="text-bold text-secondary text-h6 q-mb-md text-center">{{ ingresso.payer.name.toUpperCase() }}</div>
-                    <div  class="text-bold text-primary text-h5 text-center">CPF do Pagador</div>
-                    <div>{{ ingresso.payer.cpf }}</div>
-                    <div class="text-bold text-primary text-h5 text-center">Tipo de Ingresso</div>
-                    <div class="text-bold text-secondary text-h6 q-mb-md text-center">{{ ingresso.ticket_type.title }}</div>
-                    <div class="text-bold text-secondary text-h6 q-mb-md text-center">{{ ingresso.ticket_type.price }}</div>
-                    <div class="text-bold text-secondary text-h6 q-mb-md text-center">{{ ingresso.ticket_type.status }}</div>
-                    <div class="text-bold text-secondary text-h6 q-mb-md text-center">{{ ingresso.ticket_type.sales }}</div>
+                    <div  class="text-bold text-blue text-h5 text-center">CPF do Pagador</div>
+                    <div class="text-bold text-secondary text-h6 q-mb-md text-center">{{ ingresso.payer.cpf }}</div>
+                    <div class="text-bold text-blue text-h5 text-center">Tipo de Ingresso</div>
+                    <div class="text-bold text-secondary text-h6 q-mb-md text-center">[#{{ ingresso.ticket_type.sales }}] {{ ingresso.ticket_type.title }}</div>
+                    <q-btn  label="Fechar" @click="recarregar()" color="secondary" flat class="q-py-sm" />
           </q-card-section>
         </q-card>
         <q-btn v-if="!ingresso" label="Consultar QR" @click="validateTicket()" color="green-14" glossy class="q-py-sm q-mt-md" />
-        <q-btn v-else label="Fechar" @click="ingressoResponse.modal = false" color="secondary" flat class="q-py-sm q-mt-md" />
       </div>
     </q-dialog>
   </q-page>
@@ -120,6 +117,10 @@ const stopScanning = () => {
     videoElement.value.srcObject = null;
   }
 };
+
+function recarregar() {
+  window.location.reload();
+}
 </script>
 
 <style scoped>
@@ -135,4 +136,5 @@ video {
   max-width: 100%;
   border: 1px solid #ccc;
 }
+
 </style>

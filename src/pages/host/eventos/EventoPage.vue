@@ -143,7 +143,7 @@
                         <div id="evento-subhosts" class="relative">
                             <div v-for="subhost in evento.subhosts" :key="subhost" id="subhost" class="rounded-borders shadow-2 q-mt-md">
                                 <div class="text-bold text-primary">{{ subhost.name }}</div>
-                                <div class="text-bold text-secondary">👨🏼‍💼{{ subhost.login.toLowerCase() }}</div>
+                                <div class="text-bold text-secondary">{{ subhost.login.toLowerCase() }}</div>
                                 <div v-if="showSubhostsPassword" class="text-bold text-primary">🔑{{ subhost.password }}</div>
                                 <div class="w100 row q-gutter-x-sm" v-if="evento.status.includes('andamento')">
                                     <q-btn @click="copyCredentials(subhost)"  icon="file_copy" icon-right="key" label="Copiar Credenciais" color="blue-14" glossy class=" q-mt-sm"></q-btn>

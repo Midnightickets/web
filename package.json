@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.4",
+    "@zxing/browser": "^0.1.5",
     "axios": "^1.2.1",
     "dotenv": "^16.4.5",
     "mercadopago": "^2.0.11",

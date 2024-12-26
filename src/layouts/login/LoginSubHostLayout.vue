@@ -97,9 +97,9 @@ const formConfig = ref({
 })
 
 const subhost = ref({
-    login: '',
-    password: '',
-    event: '',
+    login: 'ENTRADA',
+    password: '2321',
+    event: '676b31c281bc5b6d03613723',
 })
 
 const isLoginFormInvalid = () => {

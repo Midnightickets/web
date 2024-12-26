@@ -48,12 +48,12 @@
                 </q-card-section>
                 <q-card-section class="q-pa-md">
                     <div class="text-h6 text-primary">Solicitação de Saque</div>
-                    <div @click="solicitarSaque()" class="text-bold">{{ host.waitingSake ? '🟣 Aguardando Processamento'
+                    <div class="text-bold">{{ host.waitingSake ? '🟣 Aguardando Processamento'
                         : '🟢 Disponível para saque' }}</div>
                 </q-card-section>
                 <q-card-section v-if="!host.waitingSake" class="q-pa-md">
                     <q-btn @click="confirmPassword('request_saque')" class="w100 q-py-md" label="Solicitar Saque"
-                        icon-right="paid" glossy color="green-14"></q-btn>
+                        icon-right="paid" glossy color="blue-14"></q-btn>
                 </q-card-section>
             </q-card>
         </div>
@@ -120,6 +120,15 @@ async function solicitar() {
                     setTimeout(() => {
                         window.location.reload()
                     }, 2000)
+                })
+                .catch(err => {
+                    $q.notify({
+                        color: 'secondary',
+                        icon: 'key',
+                        position: 'top',
+                        message: err.response.data.message,
+                    })
+                    passwordOptions.value.password = ''
                 })
         }
     })

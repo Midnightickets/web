@@ -1,7 +1,7 @@
 <template>
     <q-layout view="hHh lpR lFr">
 
-        <q-header v-if="hostInfo" class="bg-grad-1 text-white" height-hint="98">
+        <q-header v-if="hostInfo" class="bg-dark text-white" height-hint="98">
             <q-toolbar>
                 <q-toolbar-title class="row items-center">
                     <q-avatar>
@@ -23,7 +23,7 @@
         </q-tabs> -->
         </q-header>
 
-        <q-drawer v-if="hostInfo" show-if-above v-model="rightDrawerOpen" side="right" class="bg-grad-1 relative">
+        <q-drawer v-if="hostInfo" show-if-above v-model="rightDrawerOpen" side="right" class="bg-dark relative">
             <div v-if="isAuthenticated" class="w100 flex q-mb-md flex-center q-mt-lg">
                 <q-avatar style="width:110px;height:110px;" class="shadow-2">
                     <img v-if="hostInfo.img_url" :src="hostInfo.img_url" alt="">
@@ -46,7 +46,7 @@
                             }}</q-item-label>
                     </q-item-section>
                 </q-item>
-                <q-btn @click="Utils.logout()" class="z-index-999 absolute-bottom cursor-pointer q-py-sm" label="logout" icon-right="logout" color="secondary"></q-btn>
+                <q-btn @click="Utils.logout()" class="z-index-999 absolute-bottom cursor-pointer q-py-md" label="logout" icon-right="logout" color="secondary"></q-btn>
             </q-list>
             <div v-if="!isAuthenticated" class="w100 text-white text-bold row items-center justify-center q-mt-xl">
                 <div class="text-center q-mb-md q-mx-md">
@@ -55,12 +55,11 @@
                 <q-btn v-if="!isAuthenticated" class="q-mt-lg" to="/" label="Página Inicial" color="primary"
                     icon="home" />
             </div>
-            <div class="absolute-bottom w100  row no-wrap items-center justify-center q-mt-xl text-primary q-py-sm">
+            <!-- <div class="absolute-bottom w100  row no-wrap items-center justify-center q-mt-xl text-primary q-py-sm">
                 <div class="row items-center w100">
                     <q-btn class="w100 q-mb-xl" flat @click="rightDrawerOpen = !rightDrawerOpen" color="secondary">fechar menu</q-btn>
-                    <!-- <q-btn label="logout" icon-right="logout" color="secondary" class="w100 q-mx-md" to="/" glossy></q-btn> -->
                 </div>
-            </div>
+            </div> -->
         </q-drawer>
 
         <q-page-container>
@@ -92,7 +91,6 @@ const menuOptions = ref({
         // HOST MENUS
         { label: 'Eventos', icon: 'calendar_month', to: '/host', role: 'host' },
         { label: 'Acessos', icon: 'sensor_occupied', to: '/host/acessos', role: 'host' },
-        // { label: 'Saldo e Recarga', icon: 'currency_exchange', to: '/host/saldo', role: 'host', selected: false, },
         // { label: 'Suporte', icon: 'support_agent', to: 'https://samuelvictorol.github.io/portfolio/contato', selected: false },
     ]
 })

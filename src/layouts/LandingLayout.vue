@@ -22,7 +22,7 @@
                     <a v-if="isMobile" class="menu-item" @click="scrollToBottom()">
                         <q-btn icon="contact_support" color="secondary"></q-btn>
                     </a>
-                    <q-btn v-if="userInfo == ''" glossy dense class="menu-item text-bold bg-primary q-pa-md text-purple-1 row items-center"
+                    <q-btn v-if="userInfo == ''" glossy dense class="menu-item text-bold bg-green-14 q-pa-md text-purple-1 row items-center"
                         style="border-radius:8px" @click="navigateTo('/login')">
                         Entrar
                         <q-icon name="login" size="md" />
@@ -345,7 +345,7 @@
                             label="Fale Agora Com um de nossos Consultores" glossy />
                     </div>
                     <div v-if="userInfo == ''"
-                        class="w100 text-bold rounded-borders column bg-grad-2 items-center justify-center text-white q-pa-md text-center q-mt-md ">
+                        class="w100 text-bold rounded-borders column bg-primary items-center justify-center text-white q-pa-md text-center q-mt-md ">
                         <div class="column text-h5 text-white text-bold">Validar Ingressos</div>
                         <div class="text-purple-2">Recebeu credenciais de um produtor para validar ingressos ??</div>
                         <q-btn icon-right="sensor_occupied" label="Faça login Aqui" style="border-radius:12px"

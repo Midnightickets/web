@@ -73,7 +73,7 @@
                     :disabled="isLoginFormInvalid()"
                     @click="login"
                     label="Login"
-                    :color="isLoginFormInvalid() ? 'dark' : 'green-14'"
+                    :color="isLoginFormInvalid() ? 'secondary' : 'green-14'"
                     glossy
                     icon-right="login"
                     class="full-width q-mt-md q-py-lg"

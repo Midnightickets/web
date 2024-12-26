@@ -7,9 +7,11 @@
         <div id="title" class="text-white q-px-sm q-pb-sm text-center">
             Meu Perfil
         </div>
-        <div v-if="!editing" class="w100 flex flex-center q-mb-md">
-            <q-btn @click="editing = !editing" label="Editar Pefil" color="secondary" glossy
+        <div v-if="!editing" class="w100 row justify-center q-mb-md q-gutter-x-md q-gutter-y-md">
+            <q-btn @click="editing = !editing" label="Editar Pefil" color="orange-14" glossy
                 icon-right="account_circle"></q-btn>
+            <q-btn @click="openPerfilPublico()" label="Perfil Público" color="secondary" glossy
+                icon-right="public"></q-btn>
         </div>
         <div v-if="host" class="row wrap w100 q-pl-md q-mt-md cards-wrapper justify-center q-gutter-x-md items-start">
             <q-card class="q-mb-md animate__animated animate__fadeInRight" style="border-left: 4px solid #9573f3;">
@@ -146,6 +148,9 @@ function cancelar() {
     passwordModal.value = false
 }
 
+function openPerfilPublico() {
+    window.open('/' + host.login, '_blank')
+}
 
 async function updateLogin() {
     await api.post('/login/host', { login: host.login, password: passwordOptions.value.password.trim() })

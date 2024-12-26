@@ -21,6 +21,13 @@
 
         <q-drawer show-if-above v-model="rightDrawerOpen" side="right" class="bg-grad-1 relative">
             <div v-if="userInfo" class="w100">
+                <div class="w100 text-center q-pt-lg">
+                    <q-btn @click="openInstagramMidnightickets()"  style="text-decoration: none;"
+                    class="text-purple-1 text-bold"> 
+                    <q-icon size="md" class="q-pr-xs q-pb-xs" color="purple-1" name="local_activity" />
+                    Midnight Tickets
+                    </q-btn>
+                </div>
                 <div id="title-menu" class="text-center text-bold text-purple-1 q-pt-xl">
                     {{ Utils.convertStringToFirstAndLast(userInfo.name).toUpperCase() }}</div>
                 <div class="text-center text-purple-1 mid-opacity text-bold q-mb-md q-pb-lg "><q-btn
@@ -37,20 +44,12 @@
                                 }}</q-item-label>
                         </q-item-section>
                     </q-item>
-                    <q-btn @click="Utils.logout()" class="z-index-999 absolute-bottom cursor-pointer q-py-sm" label="logout" icon-right="logout" color="secondary"></q-btn>
+                    <q-btn @click="Utils.logout()" class="z-index-999 absolute-bottom cursor-pointer q-py-md" label="logout" icon-right="logout" color="secondary"></q-btn>
                 </q-list>
-                <div class="w100 text-center q-mt-xl q-pt-xl">
-                    <q-btn @click="openInstagramMidnightickets()"  style="text-decoration: none;"
-                    class="text-purple-1 text-bold"> 
-                    <q-icon size="md" class="q-pr-xs q-pb-xs" color="purple-1" name="local_activity" />
-                    Midnight Tickets
-                    </q-btn>
-                </div>
                 <div class="absolute-bottom w100  row no-wrap items-center justify-center q-mt-xl text-primary q-py-sm">
-                    <div class="row items-center w100">
+                    <!-- <div class="row items-center w100">
                         <q-btn class="w100 q-mb-xl" flat @click="rightDrawerOpen = !rightDrawerOpen" color="secondary">fechar menu</q-btn>
-                        <!-- <q-btn label="logout" icon-right="logout" color="secondary" class="w100 q-mx-md" to="/" glossy></q-btn> -->
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div v-if="!userInfo" class="w100 text-white text-bold row items-center justify-center q-mt-xl q-pt-xl">
@@ -100,8 +99,9 @@ const router = useRouter()
 const menuOptions = ref({
     items: [
         // USER MENUS
-        { label: 'Buscar Eventos', icon: 'travel_explore', to: '/', role: 'user' },
         { label: 'Meus Ingressos', icon: 'confirmation_number', to: '/me', role: 'user' },
+        { label: 'Buscar Eventos', icon: 'travel_explore', to: '/', role: 'user' },
+        { label: 'Favoritos', icon: 'star', to: '#', role: 'user' },
     ]
 })
 function goTo(item) {

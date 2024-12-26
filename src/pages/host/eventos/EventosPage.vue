@@ -1,5 +1,5 @@
 <template>
-    <q-page v-if="hostInfo" class="animate__animated animate__fadeIn bg-twitch q-pb-xl">
+    <q-page v-if="hostInfo" class="animate__animated animate__fadeIn bg-roxo-light q-pb-xl">
         <div class="relative bg-grey-4">
             <div
                 class="title-1 w100 q-px-sm row items-center text-primary shadow-1 q-py-md justify-between no-wrap text-bold">
@@ -8,12 +8,12 @@
                     {{ Utils.formatCurrency(hostInfo.balance ? hostInfo.balance : 0, 'brl') }}
                 </div>
                 <div class="row no-wrap items-center" v-if="hostInfo.balance" >
-                        <q-btn to="/host/me" v-if="hostInfo.balance > 0" color="green-14" label="sacar" glossy="" icon-right="currency_exchange"  />
+                        <q-btn to="/host/me" v-if="hostInfo.balance > 0" color="blue-14" label="sacar" glossy icon-right="currency_exchange"  />
                 </div>
             </div>
         </div>
         <div class="w100 q-pt-lg"></div>
-        <div id="title" class=" text-white q-pt-xl w100 text-center text-bold">Meus Eventos</div>
+        <div id="title" class=" text-primary q-pt-xl w100 text-center text-bold">Meus Eventos</div>
         <div class="w100 q-my-md q-pl-md">
             <q-btn class="q-pa-md text-bold" label="Novo Evento" glossy color="green-14"
                 to="/host/criar-evento" icon="event" icon-right="add" />
@@ -26,7 +26,7 @@
                     </template>
                 </q-input>
             </div>
-            <q-toggle color="secondary" v-model="filter.inProgress" :label="filter.inProgress ? 'Em Andamento' : 'Todos'" @update:model-value="getEventos()" class="q-mt-xs q-mb-md text-white" />
+            <q-toggle color="secondary" v-model="filter.inProgress" :label="filter.inProgress ? 'Em Andamento' : 'Todos'" @update:model-value="getEventos()" class="q-mt-xs q-mb-md text-bold text-secondary" />
             <div v-if="loading" class="row w100 q-pb-xl justify-center">
                 <q-spinner-ball color="secondary" size="lg" />
                 <q-spinner-ball color="secondary" size="lg" />

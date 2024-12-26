@@ -66,10 +66,10 @@
                 </div>
                 <q-btn
                     v-if="!loading && !editing"
+                    color="green-14"
                     :disabled="isLoginFormInvalid()"
                     @click="login"
                     label="Fazer login"
-                    color="green"
                     glossy
                     icon-right="login"
                     class="full-width q-mt-md q-py-lg"
@@ -78,10 +78,10 @@
                     v-if="!loading && editing"
                     :disabled="isRegisterFormInvalid()"
                     @click="registrar"
-                    label="Registrar-se Agora"
-                    color="green"
+                    label="Registre-se"
                     glossy
-                    icon-right="login"
+                    color="green-14"
+                    icon-right="person_add"
                     class="full-width q-mt-md q-py-lg"
                 />
                 <q-btn

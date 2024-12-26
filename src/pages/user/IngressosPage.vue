@@ -1,7 +1,7 @@
 <template>
     <q-page class="bg-roxo-light text-white q-px-md animate__animated animate__fadeIn q-pb-xl" id="title">
         <div class="w100" >
-            <q-btn to="/" icon="home" color="secondary" glossy></q-btn>
+            <q-btn @click="retornar()" icon="keyboard_return" color="secondary" glossy></q-btn>
         </div>
         <div class="w100 text-primary animate__animated animate__zoomIn text-center q-mb-md" id="title">Meus Ingressos</div>
         <div id="meus-ingressos">
@@ -16,21 +16,28 @@
                         <div class="text-grey-8 text-bold q-pt-md" style="font-size: 16px">{{ !ingresso.isExpired ? '🟢 Disponível' : '🟡  Utilizado' }}</div>
                         <div class="text-h6 text-blue-14 text-bold mid-opacity text-right">R$ {{ ingresso.ticket_type.price ? formatCurrency(ingresso.ticket_type.price) : formatCurrency(ingresso.ticket_type.totalValue) }}</div>
                     </q-card-section>
-                    <div class="w100 q-px-md">
-                        <q-btn @click="generateQRCode(ingresso.id)" label="Ver Ingresso" icon-right="confirmation_number" class="w100 q-py-md" color="primary" glossy></q-btn>
+                    <div class="w100 q-px-md" v-if="!ingresso.isExpired">
+                        <q-btn @click="generateQRCode(ingresso)" label="Ver Ingresso" icon-right="confirmation_number" class="w100 q-py-md" color="green-14" glossy></q-btn>
                     </div>
                 </q-card>                
             </q-list>
         </div>
         <q-dialog v-model="dialogQrIngresso" persistent >
-            <div v-if="loading" class="row w100 q-py-sm q-mt-xs justify-center">
-                <q-spinner-ball color="secondary" size="lg" />
-                <q-spinner-ball color="secondary" size="lg" />
-                <q-spinner-ball color="secondary" size="lg" />
-            </div>
-            <div class="column items-center justify-center">
-                <canvas ref="qrcodeCanvas"></canvas>
-                <q-btn v-if="!loading" @click="dialogQrIngresso = false" label="Fechar" color="primary" class="q-mt-xl" glossy></q-btn>
+            <div class="text-primary bg-white q-pa-md shadow-2" id="title-2">
+                <q-icon class="q-pb-xs" name="local_activity" color="primary"></q-icon>
+                {{ ingressoHandler.ticket_type.title }}
+                <div class="text-secondary text-center bg-grey- q-mt-md q-pa-md shadow-1" id="title-layout">
+                    Apresente este QRCode na entrada do Evento
+                </div>
+                <div class="column q-mt-lg items-center justify-center">
+                    <canvas style="width:70%; height:70%" class="shadow-1 rounded-borders" ref="qrcodeCanvas"></canvas>
+                </div>
+                <div v-if="loading" class="row w100 q-py-sm q-mt-xs justify-center">
+                    <q-spinner-ball color="secondary" size="lg" />
+                    <q-spinner-ball color="secondary" size="lg" />
+                    <q-spinner-ball color="secondary" size="lg" />
+                </div>
+                <q-btn @click="dialogQrIngresso = false" label="Fechar" color="primary" class="w100 q-mt-md" flat></q-btn>
             </div>
         </q-dialog>
     </q-page>
@@ -43,6 +50,7 @@ import QRCode from 'qrcode';
 
 const dialogQrIngresso = ref(false)
 const ingressos = ref([])
+const ingressoHandler = ref(null)
 const loading = ref(false)
 onBeforeMount(async () => {
     const user = JSON.parse(sessionStorage.getItem('user'))
@@ -67,13 +75,18 @@ function formatCurrency(valor) {
     }
 }
 
+function retornar() {
+    window.history.back()
+}
+
 const qrcodeCanvas = ref(null);
 
-const generateQRCode = (ingressoId) => {
+const generateQRCode = (ingresso) => {
     loading.value = true
+    ingressoHandler.value = ingresso
     dialogQrIngresso.value = true
     setTimeout(() => {
-        QRCode.toCanvas(qrcodeCanvas.value, ingressoId, (error) => {
+        QRCode.toCanvas(qrcodeCanvas.value, ingresso.id, (error) => {
             if (error) console.error(error);
         });
         loading.value = false
@@ -88,9 +101,7 @@ const generateQRCode = (ingressoId) => {
     cursor: pointer;
 }
 
-.bg-roxo-light{
-    background-color: #d1c0ff;
-}
+
 
 @media (min-width: 600px) {
    .q-card{

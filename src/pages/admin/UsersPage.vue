@@ -82,7 +82,7 @@ async function copy (userId) {
         color: 'green-14',
         icon: 'content_copy',
         message: 'ID copiado para a área de transferência',
-        position: 'top',
+        position: 'bottom',
         timeout: 2500,
     })
 }

@@ -73,7 +73,7 @@
             </template>
         </q-input>
         <div class="q-mb-md w100 row justify-end items-center">
-            <q-btn @click="buscarLogs()" :disabled="disableSearch()" class="w80 q-py-md" icon-right="search" label="Buscar logs" color="primary" glossy></q-btn>
+            <q-btn @click="buscarLogs()" :disabled="disableSearch()" class="w80 q-py-md" icon-right="search" label="Buscar logs" color="blue-14" glossy></q-btn>
         </div>
     </div>
     <div id="logs" v-if="logs.length > 0" class="w100 q-px-md q-mt-md rounded-borders">
@@ -83,8 +83,9 @@
             </div>
             <q-card style="border-left: 6px solid #1D1D1D;" v-for="(log, index) in logs" :key="index" class="bg-grey-4 rounded-borders text-bold">
                 <q-card-section>
-                    <q-item-label id="title-2" class="text-dark">
-                        {{ index + 1 }}. {{ log.type }}
+                    <q-item-label id="title-2" class="row justify-center items-center text-dark">
+                        <q-icon color="dark" :name="getIconByLogType(log.type)" class="q-mr-sm">
+                        </q-icon> {{ log.type }}
                     </q-item-label>
                 </q-card-section>
                 <q-card-section v-if="log.host" class="w100 bg-grey-6">
@@ -106,7 +107,7 @@
                      {{ log.created_at }}
                 </q-card-section>
                 <q-card-section class="w100">
-                    <q-btn  label="ver log" color="green-14" glossy class="w100" icon-right="visibility"></q-btn>
+                    <q-btn @click="showLogJson(log)" label="ver log" color="primary" glossy class="w100" icon-right="visibility"></q-btn>
                 </q-card-section>
             </q-card>
         </q-list>
@@ -122,21 +123,59 @@ import { onBeforeMount, ref } from 'vue';
 const $q = useQuasar()
 
 const typeOptions = [
-    {value: 1, label: 'Novo Evento Criado', index_enum: 'NEW_EVENT'},
-    {value: 2, label: 'Informações de Evento Atualizadas', index_enum: 'UPDATE_EVENT'},
-    {value: 3, label: 'Ingressos Atualizados', index_enum: 'UPDATE_TICKET_TYPES'},
-    {value: 4, label: 'Evento Cancelado', index_enum: 'UPDATE_EVENT_CANCELED'},
-    {value: 5, label: 'Solicitação de Saque', index_enum: 'REQUEST_SAKE'},
-    {value: 6, label: 'Evento Finalizado', index_enum: 'UPDATE_EVENT_FINISHED'},
-    {value: 7, label: 'Formulário de Landing Criado', index_enum: 'LANDING_FORM_CREATED'},
-    {value: 8, label: 'Novo Host Criado', index_enum: 'HOST_CREATED'},
-    {value: 9, label: 'Novo Usuário Criado', index_enum: 'NEW_USER'},
+    {value: 1, label: 'Solicitação de Saque', index_enum: 'REQUEST_SAKE', icon: 'currency_exchange'},
+    {value: 2, label: 'Novo Host Criado', index_enum: 'HOST_CREATED', icon: 'diamond'},
+    {value: 3, label: 'Novo Evento Criado', index_enum: 'NEW_EVENT', icon: 'event'},
+    {value: 4, label: 'Novo Usuário Criado', index_enum: 'NEW_USER', icon: 'person_add'},
+    {value: 5, label: 'Ingressos Atualizados', index_enum: 'UPDATE_TICKET_TYPES', icon: 'confirmation_number'},
+    {value: 7, label: 'Pagamento de Ingresso Bem Sucedido', index_enum: 'INGRESSO_PAYMENT_SUCESSFULLY', icon: 'confirmation_number'},
+    {value: 8, label: 'Ingresso Gerado com Sucesso', index_enum: 'INGRESSO_GENERATED_SUCESSFULLY', icon: 'local_activity'},
+    {value: 9, label: 'Formulário de Landing Criado', index_enum: 'LANDING_FORM_CREATED', icon: 'flight'},
+    {value: 10, label: 'Informações de Evento Atualizadas', index_enum: 'UPDATE_EVENT', icon: 'date_range'},
+    {value: 11, label: 'Evento Finalizado', index_enum: 'UPDATE_EVENT_FINISHED', icon: 'event_available'},
+    {value: 12, label: 'Evento Cancelado', index_enum: 'UPDATE_EVENT_CANCELED', icon: 'event_busy'},
 ]
+
+// const LogEnum = {
+//     HOST_CREATED: 'Novo Host Criado',
+//     NEW_EVENT: 'Novo Evento Criado',
+//     NEW_USER: 'Novo Usuário Criado',
+//     UPDATE_TICKET_TYPES: 'Ingressos Atualizados',
+//     REQUEST_SAKE: 'Solicitação de Saque',
+//     SAKE_STATUS_REQUESTED: 'Aguardando Saque',
+//     INGRESSO_PAYMENT_SUCESSFULLY: 'Pagamento de Ingresso Bem Sucedido',
+//     INGRESSO_GENERATED_SUCESSFULLY: 'Ingresso Gerado com Sucesso',
+//     LANDING_FORM_CREATED: 'Formulário de Landing Criado',
+//     UPDATE_EVENT: 'Informações de Evento Atualizadas',
+//     UPDATE_EVENT_FINISHED: 'Evento Finalizado',
+//     UPDATE_EVENT_CANCELED: 'Evento Cancelado',
+// }
 
 const sakeStatusOptions = [
     {value: 1, label: 'Aguardando Saque', index_enum: 'SAKE_STATUS_REQUESTED'},
     {value: 2, label: 'Saque Realizado', index_enum: 'SAKE_STATUS_DONE'},
 ]
+
+async function showLogJson(log) {
+    const admin = JSON.parse(sessionStorage.getItem('admin'))
+    await api.post('/admin/log', { id: log.id, admin: { login: admin.login, token: admin.token } }).then((response) => {
+        const formattedJson = JSON.stringify(response.data, null, 2);
+        $q.dialog({
+            title: 'Log',
+            color: 'secondary',
+            message: `<pre style="font-family: monospace; white-space: pre-wrap; text-align: left;">${formattedJson}</pre>`,
+            html: true,
+            ok: 'Fechar',
+        })
+    }).catch((error) => {
+        $q.notify({
+            color: 'orange-14',
+            message: error.response.data.message,
+            position: 'top',
+            timeout: 2500,
+        })
+    })
+}
 
 const logs = ref([])
 
@@ -232,6 +271,11 @@ const buscarLogs = async () => {
 
 function disableSearch() {
     return filter.value.payment.trim() === '' && filter.value.event.trim() === '' && filter.value.user.trim() === '' && filter.value.host.trim() === '' && filter.value.sake_status === null && filter.value.type === null && filter.value._id.trim() === ''
+}
+
+function getIconByLogType(type) {
+    const log = typeOptions.find((option) => option.label === type)
+    return log.icon
 }
 
 </script>

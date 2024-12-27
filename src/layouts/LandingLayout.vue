@@ -34,15 +34,15 @@
                 </div>
             </div>
         </q-header>
-        <q-page-container>
-            <div  class="w100 row justify-center q-mt-md relative" style="overflow: hidden ">
-                <div v-if="userInfo == ''" class="animate__animated animate__zoomInDown animate__delay-1s animate__slower row no-wrap justify-center q-px-sm  w100"
+        <q-page-container class="bg-roxo-light">
+            <div  class="rounded-borders w100 row justify-center q-mt-md relative" style="overflow: hidden ">
+                <div v-if="userInfo == ''" class="animate__animated animate__zoomInDown animate__delay-1s animate__slower row no-wrap rounded-borders justify-center q-px-sm  w100"
                     style="overflow: hidden ;z-index: 9;">
-                    <q-btn glossy to="/login-host" color="secondary"
-                        class="animate__animated text-primary animate__fadeInLeft  animate__delay-3s animate__slower q-pa-xl rounded-borders"
+                    <q-btn glossy to="/login-host" color="primary"
+                        class="shadow animate__animated text-primary animate__fadeInLeft  animate__delay-3s animate__slower q-pa-xl rounded-borders"
                         icon-right="diamond" label="Sou Produtor!" />
                     <q-btn glossy @click="searchPublic.opened = !searchPublic.opened"
-                        class="animate__animated animate__fadeInRight text-bold bg-primary q-ml-sm text-white animate__delay-3s animate__slower q-pa-xl rounded-borders"
+                        class="shadow-2 animate__animated animate__fadeInRight text-bold bg-blue-14 q-ml-sm text-white animate__delay-3s animate__slower q-pa-xl rounded-borders"
                         icon-right="confirmation_number" label="Quero Ingressos!" />
                 </div>
             </div>
@@ -59,9 +59,9 @@
                                 <q-icon name="search" color="primary" />
                             </template>
                         </q-input>
-                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(false)" color="primary" glossy class="shadow-1 q-py-md" label="Buscar por Evento"
+                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(false)" color="blue-14" glossy class="shadow-1 q-py-md" label="Buscar por Evento"
                             icon="event" />
-                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(true)" color="blue-14" glossy class="shadow-1 q-py-md" label="Buscar por Produtor"
+                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(true)" color="primary" glossy class="shadow-1 q-py-md" label="Buscar por Produtor"
                                 icon="person_search" />
                     </q-card-section>
                 </q-card>
@@ -112,12 +112,11 @@
                         um
                         Aplicativo Web de Bilheteria Online e Monitoramento de Eventos focados na Escalabilidade
                         de seus Lucros em Venda de Ingressos Digitais.</div>
-                    <div class="w100 img-wrapper">
+                    <div class="w100 img-wrapper bg-grad-3">
                         <img class="img"
                             src="https://images.blush.design/UKjlMI8EIiiOMVntZau4?w=920&auto=compress&cs=srgb" alt="">
                     </div>
-                    <div style="font-size:1.3rem" class=" bg-grad-4 text-white text-bold q-px-sm q-py-md text-right">O
-                        que Fazemos ?</div>
+                    <div style="font-size:1.3rem" class=" bg-grad-4 text-white text-bold q-px-sm q-py-md text-right">O que Fazemos ?</div>
                     <div style="font-size:1.1rem"
                         class="text-shadow q-mb-md bg-grad-2 text-white high-opacity text-bold q-px-sm q-py-md text-left">
                         Maximizamos seus lucros na venda de ingressos de forma escalável com serviços personalizados,
@@ -349,11 +348,11 @@
                         <div class="column text-h5 text-white text-bold">Validar Ingressos</div>
                         <div class="text-purple-2">Recebeu credenciais de um produtor para validar ingressos ??</div>
                         <q-btn icon-right="sensor_occupied" label="Faça login Aqui" style="border-radius:12px"
-                            glossy dense class="q-mt-md q-pa-lg shadow-2" color="dark" to="/login-subhost" />
+                            glossy dense class="q-mt-md q-pa-lg shadow-2" color="primary" to="/login-subhost" />
                     </div>
                 </div>
-                <div class="w100 text-secondary text-purple-1 text-bold q-mb-xl text-center q-mt-md q-pt-xl">
-                    Siga-nos no <a href="https://www.instagram.com/midnightickets" class="text-secondary"
+                <div class="w100 text-secondary text-bold q-mb-xl text-center q-mt-md q-pt-xl">
+                    Siga-nos no <a href="https://www.instagram.com/midnightickets" class="text-primary"
                         target="_blank">Instagram</a>
                     e
                     acompanhe o nosso desenvolvimento!
@@ -641,7 +640,7 @@ function scrollToVantagem() {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    padding-top: 20px;
 }
 
 .img,

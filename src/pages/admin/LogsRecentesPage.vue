@@ -33,7 +33,7 @@
                      {{ log.created_at }}
                 </q-card-section>
                 <q-card-section class="w100">
-                    <q-btn  label="ver log" color="primary" glossy class="w100 q-py-md" icon-right="visibility"></q-btn>
+                    <q-btn @click="showLogJson(log)" label="ver log" color="primary" glossy class="w100 q-py-md" icon-right="visibility"></q-btn>
                 </q-card-section>
             </q-card>
         </q-list>
@@ -63,6 +63,27 @@ const filter = ref({
 onMounted(async () => {
     await buscarLogs()
 })
+
+async function showLogJson(log) {
+    const admin = JSON.parse(sessionStorage.getItem('admin'))
+    await api.post('/admin/log', { id: log.id, admin: { login: admin.login, token: admin.token } }).then((response) => {
+        const formattedJson = JSON.stringify(response.data, null, 2);
+        $q.dialog({
+            title: 'Log ' + log.type,
+            color: 'secondary',
+            message: `<pre style="font-family: monospace; white-space: pre-wrap; text-align: left;">${formattedJson}</pre>`,
+            html: true,
+            ok: 'Fechar',
+        })
+    }).catch((error) => {
+        $q.notify({
+            color: 'orange-14',
+            message: error.response.data.message,
+            position: 'top',
+            timeout: 2500,
+        })
+    })
+}
 
 const buscarLogs = async () => {
     const admin = JSON.parse(sessionStorage.getItem('admin'))

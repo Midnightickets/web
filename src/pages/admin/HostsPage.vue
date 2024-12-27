@@ -88,7 +88,7 @@ async function copy (hostId) {
         color: 'green-14',
         icon: 'content_copy',
         message: 'ID copiado para a área de transferência',
-        position: 'top',
+        position: 'bottom',
         timeout: 2500,
     })
 }

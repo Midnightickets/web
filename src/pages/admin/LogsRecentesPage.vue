@@ -1,6 +1,6 @@
 <template>
-  <q-page class="text-white q-pb-xl">
-    <div id="title" class="q-pt-sm w100 text-center">
+  <q-page class="text-white bg-grey-4 q-pb-xl">
+    <div id="title" class="q-pt-sm w100 text-primary text-center">
       Logs Recentes
     </div>
     <div id="logs" v-if="logs.length > 0" class="w100 q-px-md q-mt-md rounded-borders">

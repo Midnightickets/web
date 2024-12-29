@@ -1,6 +1,6 @@
 <template>
-<q-page class="text-white q-pb-xl">
-    <div id="title" class="q-pt-sm w100 text-center">
+<q-page class="text-white bg-grey-3 q-pb-xl">
+    <div id="title" class="q-pt-sm text-primary w100 text-center">
         Produtores
     </div>
     <div id="hosts" v-if="hosts.length > 0" class="w100 q-px-md q-mt-md rounded-borders">

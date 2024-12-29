@@ -21,19 +21,12 @@
 
         <q-drawer show-if-above v-model="rightDrawerOpen" side="right" class="bg-dark relative">
             <div v-if="adminInfo" class="w100">
-                <div class="w100 text-center q-pt-sm bg-grad-3 q-pb-sm">
-                    <q-btn @click="openInstagramMidnightickets()"  style="text-decoration: none;"
-                    class="text-purple-1 text-bold"> 
-                    <q-icon size="md" class="q-pr-xs q-pb-xs" color="purple-1" name="local_activity" />
-                    Midnight Tickets
-                    </q-btn>
-                </div>
-                <q-list class="text-bold text-white">
+                <q-list class="q-pt-md text-bold text-white">
                     <q-item v-for="item in menuOptions.items" :key="item.label" clickable @click="goTo(item)"
                         style="border-radius: 8px;"
-                        class="q-mt-md q-mx-md text-blue-2 shadow-2 bg-twitch-rev">
+                        class="q-mt-md q-mx-md text-blue-2 shadow-2 bg-grad-4">
                         <q-item-section avatar>
-                            <q-icon :name="item.icon" color="secondary" />
+                            <q-icon :name="item.icon" color="grey-4" />
                         </q-item-section>
                         <q-item-section>
                             <q-item-label  class="text-grey-4">{{ item.label

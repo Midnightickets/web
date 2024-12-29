@@ -1,6 +1,6 @@
 <template>
-  <q-page class="text-white q-pb-xl">
-    <div id="title" class="q-pt-sm w100 text-center">
+  <q-page class="text-white bg-grey-3 q-pb-xl">
+    <div id="title" class="q-pt-sm w100 text-primary text-center">
         Buscar Logs
     </div>
     <div style="border-left: 4px solid #9573f3;" class="shadow-2 bg-grey-4 row q-gutter-x-md q-gutter-y-md q-mx-md rounded-borders justify-start items-center q-pa-md q-mt-md">
@@ -78,7 +78,7 @@
     </div>
     <div id="logs" v-if="logs.length > 0" class="w100 q-px-md q-mt-md rounded-borders">
         <q-list  class="row justify-center items-center q-gutter-md">
-            <div id="title-layout" class="w100 justify-center items-center">
+            <div id="title-layout" class="w100 text-primary justify-center items-center">
                 {{ logs.length }} logs encontrado(s)
             </div>
             <q-card style="border-left: 6px solid #1D1D1D;" v-for="(log, index) in logs" :key="index" class="bg-grey-4 rounded-borders text-bold">

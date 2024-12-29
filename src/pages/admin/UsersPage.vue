@@ -1,6 +1,6 @@
 <template>
-  <q-page class="text-white q-pb-xl">
-    <div id="title" class="q-pt-sm w100 text-center">
+  <q-page class="text-white q-pb-xl bg-grey-4">
+    <div id="title" class="text-primary q-pt-sm w100 text-center">
         Usuários
     </div>
     <div id="users" v-if="users.length > 0" class="w100 q-px-md q-mt-md rounded-borders">

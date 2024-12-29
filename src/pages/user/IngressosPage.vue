@@ -24,10 +24,10 @@
         </div>
         <q-dialog v-model="dialogQrIngresso" persistent >
             <div class="text-primary bg-white q-pa-md shadow-2" id="title-2">
-                <q-icon class="q-pb-xs" name="local_activity" color="primary"></q-icon>
+                <q-icon class="q-pb-xs" size="md" name="local_activity" color="primary"></q-icon>
                 {{ ingressoHandler.ticket_type.title }}
                 <div class="text-secondary text-center bg-grey- q-mt-md q-pa-md shadow-1" id="title-layout">
-                    Apresente este QRCode na entrada do Evento
+                    Apresente este QRCode na entrada do Evento junto com seu Documento de Identidade
                 </div>
                 <div class="column q-mt-lg items-center justify-center">
                     <canvas style="width:70%; height:70%" class="shadow-1 rounded-borders" ref="qrcodeCanvas"></canvas>
@@ -37,7 +37,7 @@
                     <q-spinner-ball color="secondary" size="lg" />
                     <q-spinner-ball color="secondary" size="lg" />
                 </div>
-                <q-btn @click="dialogQrIngresso = false" label="Fechar" color="primary" class="w100 q-mt-md" flat></q-btn>
+                <q-btn @click="dialogQrIngresso = false" label="Fechar" color="secondary" class="w100 q-mt-md" flat></q-btn>
             </div>
         </q-dialog>
     </q-page>

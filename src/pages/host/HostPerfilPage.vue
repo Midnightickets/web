@@ -1,10 +1,10 @@
 <template>
     <q-page class=" w100 animate__animated animate__fadeIn relative q-pb-xl">
-        <div class="w100 q-mt-xs">
-            <q-btn to='/host' dense class="q-ml-sm" flat icon="keyboard_return" label="eventos" color="secondary">
+        <div class="w100">
+            <q-btn to='/host' dense class="q-pr-xs" flat icon="keyboard_return" label="eventos"  color="primary" glossy>
             </q-btn>
         </div>
-        <div id="title" class="text-white q-px-sm q-pb-sm text-center">
+        <div id="title" class="text-primary q-px-sm q-pb-sm text-center">
             Meu Perfil
         </div>
         <div v-if="!editing" class="w100 row justify-center q-mb-md q-gutter-x-md q-gutter-y-md">

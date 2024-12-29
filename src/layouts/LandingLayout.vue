@@ -42,7 +42,7 @@
                         class="shadow animate__animated text-primary animate__fadeInLeft  animate__delay-3s animate__slower q-pa-xl rounded-borders"
                         icon-right="diamond" label="Sou Produtor!" />
                     <q-btn glossy @click="searchPublic.opened = !searchPublic.opened"
-                        class="shadow-2 animate__animated animate__fadeInRight text-bold bg-blue-14 q-ml-sm text-white animate__delay-3s animate__slower q-pa-xl rounded-borders"
+                        class="shadow-1 animate__animated animate__fadeInRight  text-bold bg-blue-14 q-ml-sm text-white animate__delay-3s animate__slower q-pa-xl rounded-borders"
                         icon-right="confirmation_number" label="Quero Ingressos!" />
                 </div>
             </div>
@@ -52,8 +52,8 @@
                         <q-icon name="nightlife" size="lg" color="white" />
                         <div class="text-center">Encontre Produtores e Eventos em Andamento</div>
                     </q-card-section>
-                    <q-card-section class="q-pa-md column q-gutter-y-md">
-                        <q-input maxlength="100" v-model="searchPublic.titleEventOrHostName" outlined label="Nome do Evento ou Produtor*"
+                    <q-card-section class="rounded-borders q-pa-md column q-gutter-y-md">
+                        <q-input maxlength="100" v-model="searchPublic.titleEventOrHostName" outlined label="Nome do Evento ou Produtor(a)*"
                             placeholder="Digite o nome do Evento ou Produtor">
                             <template v-slot:prepend>
                                 <q-icon name="search" color="primary" />
@@ -78,13 +78,13 @@
                             <q-icon v-if="!isMobile" size="xl" color="white" name="local_activity" />
                         </q-toolbar-title>
                     </q-toolbar>
-                    <div class="text-shadow space bg-grad-2 w100 text-center text-grey-4 q-py-md text-bold q-px-md "
+                    <div class="text-shadow-2 space bg-grad-2 w100 text-center text-grey-2 q-py-md text-bold q-px-md "
                         style="font-size:1rem">
                         REALIZE seus EVENTOS com A MENOR TAXA do mercado e PARE de PAGAR TRIBUTOS excessivos na VENDA de SEUS
                         INGRESSOS!!
                     </div>
-                    <div v-if="userInfo == ''" class="row justify-center  q-mx-md">
-                        <q-card  id="email-card"
+                    <div v-if="userInfo == ''" class="rounded-borders row justify-center  q-mx-md">
+                        <q-card  id="email-card" c
                             class="text-white bg-grad-1 q-mt-md text-bold rounded-borders animate__animated animate__zoomIn animate__slower animate__delay-3s">
                             <p class="text-center q-pt-md q-px-md high-opacity" style="font-size: .8rem;">DIGITE seu
                                 EMAIL e ALAVANQUE o seu FATURAMENTO em INGRESSOS</p>

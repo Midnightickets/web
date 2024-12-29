@@ -1,108 +1,112 @@
 <template>
-    <div id="login-user" class="animate__animated animate__fadeIn bg-grad-7 w100 flex flex-center">
-        <div id="login-card" class="bg-white animate__animated animate__zoomIn rounded-borders">
-            <div id="title-menu" class="text-primary text-center q-mt-md row justify-center items-center"><q-icon name="account_circle" size="md" color="primary" class="q-mr-xs"></q-icon>LOGIN</div>
-            <div class="q-pa-md column q-gutter-y-md">
-                <q-input
-                    v-if="editing"
-                    v-model="user.cpf"
-                    placeholder="CPF*"
-                    mask="###.###.###-##"
-                    reverse-fill-mask
-                    type="text"
-                    outlined
-                />
-                <q-input
-                v-if="editing"
-                v-model="user.name"
-                    placeholder="Nome Completo*"
-                    maxlength="100"
-                    type="text"
-                    outlined
-                    />
-                    <q-input
-                    v-model="user.login"
-                    placeholder="Login*"
-                    maxlength="40"
-                    type="text"
-                    outlined
-                />
-                <q-input
-                    v-if="editing"
-                    v-model="user.phone"
-                    placeholder="Telefone*"
-                    mask="(##) #####-####"
-                    type="text"
-                    outlined
-                />
-                <q-input
-                    v-if="editing"
-                    v-model="user.email"
-                    placeholder="E-mail*"
-                    maxlength="100"
-                    type="email"
-                    outlined
-                />
-                <q-input
-                v-model="user.password"
-                    placeholder="Senha*"
-                    :type="formConfig.showPassword ? 'text' : 'password'"
-                    maxlength="20"
-                    outlined
-                    class="q-mt-md"
-                >
-                    <template v-slot:append>
-                        <q-icon
-                            :name="formConfig.showPassword ? 'visibility' : 'visibility_off'"
-                            class="cursor-pointer"
-                            @click="formConfig.showPassword = !formConfig.showPassword"
+    <q-layout>
+        <q-page-container>
+            <q-page id="login-user" class="animate__animated animate__fadeIn bg-grad-2 w100 q-pt-md q-pb-xl flex flex-center">
+                <div id="login-card" class="bg-white animate__animated animate__zoomIn rounded-borders">
+                    <div id="title-menu" class="text-primary text-center q-mt-md row justify-center items-center"><q-icon name="account_circle" size="md" color="primary" class="q-mr-xs"></q-icon>INICIAR SESSÃO</div>
+                    <div class="q-pa-md column q-gutter-y-md">
+                        <q-input
+                            v-if="editing"
+                            v-model="user.cpf"
+                            placeholder="CPF*"
+                            mask="###.###.###-##"
+                            reverse-fill-mask
+                            type="text"
+                            outlined
                         />
-                    </template>
-                </q-input>
-                <div v-if="loading" class="row w100 q-py-sm q-mt-xs justify-center">
-                    <q-spinner-ball color="primary" size="lg" />
-                    <q-spinner-ball color="primary" size="lg" />
-                    <q-spinner-ball color="primary" size="lg" />
+                        <q-input
+                        v-if="editing"
+                        v-model="user.name"
+                            placeholder="Nome Completo*"
+                            maxlength="100"
+                            type="text"
+                            outlined
+                            />
+                            <q-input
+                            v-model="user.login"
+                            placeholder="Login*"
+                            maxlength="40"
+                            type="text"
+                            outlined
+                        />
+                        <q-input
+                            v-if="editing"
+                            v-model="user.phone"
+                            placeholder="Telefone*"
+                            mask="(##) #####-####"
+                            type="text"
+                            outlined
+                        />
+                        <q-input
+                            v-if="editing"
+                            v-model="user.email"
+                            placeholder="E-mail*"
+                            maxlength="100"
+                            type="email"
+                            outlined
+                        />
+                        <q-input
+                        v-model="user.password"
+                            placeholder="Senha*"
+                            :type="formConfig.showPassword ? 'text' : 'password'"
+                            maxlength="20"
+                            outlined
+                            class="q-mt-md"
+                        >
+                            <template v-slot:append>
+                                <q-icon
+                                    :name="formConfig.showPassword ? 'visibility' : 'visibility_off'"
+                                    class="cursor-pointer"
+                                    @click="formConfig.showPassword = !formConfig.showPassword"
+                                />
+                            </template>
+                        </q-input>
+                        <div v-if="loading" class="row w100 q-py-sm q-mt-xs justify-center">
+                            <q-spinner-ball color="primary" size="lg" />
+                            <q-spinner-ball color="primary" size="lg" />
+                            <q-spinner-ball color="primary" size="lg" />
+                        </div>
+                        <q-btn
+                            v-if="!loading && !editing"
+                            :color="isLoginFormInvalid() ? 'primary' : 'green-14'"
+                            :disabled="isLoginFormInvalid()"
+                            @click="login"
+                            label="Fazer login"
+                            glossy
+                            icon-right="login"
+                            class="full-width q-mt-md q-py-lg"
+                        />
+                        <q-btn
+                            v-if="!loading && editing"
+                            :color="isRegisterFormInvalid() ? 'primary' : 'green-14'"
+                            :disabled="isRegisterFormInvalid()"
+                            @click="registrar"
+                            label="Registre-se"
+                            glossy
+                            icon-right="person_add"
+                            class="full-width q-mt-md q-py-lg"
+                        />
+                        <q-btn
+                            v-if="!loading"
+                            :label="editing ? 'fazer login' : 'Registre-se'"
+                            @click="editing = !editing"
+                            color="primary"
+                            glossy
+                            class="full-width q-mt-md q-py-sm"
+                        />
+                        <q-btn
+                            v-if="!loading"
+                            class="full-width q-mt-sm"
+                            label="Voltar"
+                            color="secondary"
+                            flat
+                            @click="goBack()"
+                        />
+                    </div>
                 </div>
-                <q-btn
-                    v-if="!loading && !editing"
-                    color="green-14"
-                    :disabled="isLoginFormInvalid()"
-                    @click="login"
-                    label="Fazer login"
-                    glossy
-                    icon-right="login"
-                    class="full-width q-mt-md q-py-lg"
-                />
-                <q-btn
-                    v-if="!loading && editing"
-                    :disabled="isRegisterFormInvalid()"
-                    @click="registrar"
-                    label="Registre-se"
-                    glossy
-                    color="green-14"
-                    icon-right="person_add"
-                    class="full-width q-mt-md q-py-lg"
-                />
-                <q-btn
-                    v-if="!loading"
-                    :label="editing ? 'fazer login' : 'Registre-se'"
-                    @click="editing = !editing"
-                    color="primary"
-                    glossy
-                    class="full-width q-mt-md q-py-sm"
-                />
-                <q-btn
-                    v-if="!loading"
-                    class="full-width q-mt-sm"
-                    label="Voltar"
-                    color="primary"
-                    flat
-                    @click="goBack()"
-                />
-            </div>
-        </div>
-    </div>
+            </q-page>
+        </q-page-container>
+    </q-layout>
 </template>
 
 <script setup>
@@ -243,7 +247,7 @@ async function login() {
 
 <style scoped>
 #login-user{
-    height: 100vh;
+    min-height: 100vh;
 }
 #login-card{
     width: 45vw

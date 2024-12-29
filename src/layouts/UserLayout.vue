@@ -11,6 +11,10 @@
                         class="text-purple-1 q-pl-xs text-bold">
                         {{ userInfo.login }}
                     </a>
+                    <a  v-else style="text-decoration: none;" id="title-layout"
+                        class="text-purple-1 q-pl-xs text-bold">
+                        {{ route.params.events_host }}
+                    </a>
                 </q-toolbar-title>
 
                 <q-btn class="rounded-borders" size="md" :label="isMobile ? null :'menu'" color="primary" glossy icon-right="menu"
@@ -69,7 +73,7 @@
         <q-page-container class="relative">
             <div v-if="!userInfo" class="w100 text-white text-bold row items-center wrap q-px-md justify-center q-gutter-y-sm q-gutter-x-md  q-pt-lg">
                 <a href="/" style="text-decoration: none;" id="title-2"
-                class="text-grey-4 text-bold row items-center q-mb-sm">
+                class="text-secondary  text-shadow text-bold row items-center q-mb-sm">
                 <q-icon size="md" class="q-pr-xs" color="secondary" name="local_activity" />
                 Midnight Tickets
                  </a>
@@ -94,7 +98,7 @@ const isMobile = window.innerWidth < 800
 const rightDrawerOpen = ref(false)
 const router = useRouter()
 // const isMobile = window.innerWidth < 800
-
+const route = router.currentRoute
 
 const menuOptions = ref({
     items: [

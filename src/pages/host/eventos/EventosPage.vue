@@ -1,5 +1,5 @@
 <template>
-    <q-page v-if="hostInfo" class="animate__animated animate__fadeIn bg-roxo-light q-pb-xl">
+    <q-page v-if="hostInfo" class="animate__animated animate__fadeIn bg-grey-4 q-pb-xl">
         <div class="relative bg-grey-4">
             <div
                 class="title-1 w100 q-px-sm row items-center text-primary shadow-1 q-py-md justify-between no-wrap text-bold">

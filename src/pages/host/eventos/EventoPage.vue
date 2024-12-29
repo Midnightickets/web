@@ -11,7 +11,7 @@
                     color="secondary">
                 </q-btn>
             </div>
-            <div id="title" class="text-white q-pl-md">{{ evento.title }}</div>
+            <div id="title" class="text-primary q-pl-md">{{ evento.title }}</div>
             <div class="text-bold q-pb-sm q-pl-md">{{ evento.status }}</div>
             <div class="text-bold q-pl-md">🕑 {{ evento.date.replaceAll("-", "/") }} {{ (evento.initial_time ? ' às ' +
                 evento.initial_time : '') +
@@ -115,7 +115,7 @@
                 </q-card>
                 <q-card class="w100 q-mx-md q-mt-md">
                     <div id="title-menu" class="text-primary w100 q-pt-md text-center">
-                        Tipos de Ingressos
+                        Ingressos
                     </div>
                     <div class="w100 q-ml-md q-mt-md" v-if="evento.status.includes('andamento')">
                         <q-btn @click="modalPackage = !modalPackage" label="Adicionar Ingressos" glossy icon-right="add_circle" color="primary"></q-btn>
@@ -480,10 +480,6 @@ function confirmChangeStatusEvento(status) {
 onBeforeMount(async () => {
     loading.value = true;
     await getEvento();
-});
-
-onBeforeUnmount(() => {
-    sessionStorage.removeItem('evento');
 });
 
 </script>

@@ -3,7 +3,7 @@
         <div class="w100 q-pt-sm q-pl-sm" >
             <q-btn @click="returnBack()" icon="keyboard_return" color="secondary" glossy></q-btn>
         </div>
-        <div v-if="!loading" class="animate__animated animate__fadeInRight w100 text-white text-center q-mt-sm" id="title">
+        <div v-if="!loading" class="animate__animated animate__fadeInRight w100 text-primary text-center q-mt-sm" id="title">
             {{ event.title }}
         </div>
         <div  v-if="!loading" class="text-secondary text-bold w100 text-center q-mb-md">{{ event.host }}</div>

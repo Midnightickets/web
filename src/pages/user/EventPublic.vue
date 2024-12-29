@@ -3,27 +3,35 @@
         <div class="w100 q-pt-sm q-pl-sm" >
             <q-btn @click="returnBack()" icon="keyboard_return" color="secondary" glossy></q-btn>
         </div>
-        <div v-if="!loading" class="animate__animated animate__fadeInRight w100 text-primary text-center q-mt-sm" id="title">
+        <div class="w100 row justify-center q-mt-md q-px-md">
+            <q-card v-if="eventoIndisponivel">
+                <q-card-section>
+                    <div id="title-2" class="text-center  text-secondary text-bold q-py-md">Evento Indisponível<br>( ˘︹˘ )</div>
+                </q-card-section>
+            </q-card>
+        </div>
+        <div v-if="!loading && !eventoIndisponivel" class="animate__animated animate__fadeInRight w100 text-primary text-center " id="title">
             {{ event.title }}
         </div>
-        <div  v-if="!loading" class="text-secondary text-bold w100 text-center q-mb-md">{{ event.host }}</div>
-        <div v-if="isMobile" class="w100 q-mb-lg row justify-center">
+        <q-btn  v-if="!loading && !eventoIndisponivel" :to="'/' + event.host_login" class="text-secondary text-bold w100 text-center q-mb-md text-" flat :label="event.host"></q-btn>
+        <div v-if="isMobile && !loading && !eventoIndisponivel" class="w100 q-mb-lg row justify-center">
             <a class="text-white bg-green-14 q-pa-md rounded-borders text-bold shadow-1" style="text-decoration: none;" href="#ingressos">Comprar Ingressos <q-icon size="sm" name="add_shopping_cart"></q-icon></a>
         </div>
-        <div v-if="!loading" id="cards-wrapper" class="w100 row items-start q-gutter-y-md">
+        <div v-if="!loading && !eventoIndisponivel" id="cards-wrapper" class="w100 row items-start q-gutter-y-md">
             <q-card class="card-event q-mx-md bg-grey-4 q-mt-md">
                 <q-card-section >
                     <q-item >
                         <q-item-section class="text-black">
                             <q-item-label id="title-2"  class="text-primary">INFORMAÇÕES</q-item-label>
                             <q-item-label class="text-bold text-grey-14 q-py-sm">{{ event.desc }}</q-item-label>
-                            <q-item-label class="text-bold text-secondary w100 column text-bold" >📆 {{ event.date.replaceAll('-', '/') }} ⏱️ {{ event.initial_time ? event.initial_time : 'xx:xx' }}{{ event.final_time ? (' - ' + event.final_time) : ''}}</q-item-label>
+                            <q-item-label class="text-bold text-primary w100 column text-bold" >📆 {{ event.date.replaceAll('-', '/') }} ⏱️ {{ event.initial_time ? event.initial_time : 'xx:xx' }}{{ event.final_time ? (' - ' + event.final_time) : ''}}</q-item-label>
                             <img id="img-events" :src="event.img_url" class="q-mt-md" alt="🎇 Banner do Evento"/>
                             <div id="ingressos"></div>
                         </q-item-section>
                     </q-item>
                 </q-card-section>
             </q-card>
+
             <q-card class="card-event q-mx-md bg-grey-4 q-mt-md">
                 <q-card-section>
                     <q-item >
@@ -93,12 +101,15 @@ const event = ref(null);
 const loading = ref(false);
 const modalBuyTicket = ref(false);
 const $q = useQuasar();
-
+const eventoIndisponivel = ref(false);
 onBeforeMount(async () => {
     loading.value = true;
     
     await api.get('/events?event=' + route.params.event).then((res) => {
         event.value = res.data;
+    })
+    .catch((err) => {
+        eventoIndisponivel.value = true;
     })
     .finally(() => {
         loading.value = false;

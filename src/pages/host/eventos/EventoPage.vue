@@ -1,24 +1,24 @@
 <template>
-    <q-page class="animate__animated animate__fadeIn">
+    <q-page class="q-pb-xl animate__animated animate__fadeIn">
         <div v-if="loading" class="row w100 q-pt-xl justify-center">
             <q-spinner-ball color="secondary" size="lg" />
             <q-spinner-ball color="secondary" size="lg" />
             <q-spinner-ball color="secondary" size="lg" />
         </div>
-        <div v-if="evento != null" class="text-secondary q-pt-xs">
+        <div v-if="evento != null" class="text-secondary">
             <div class="w100">
-                <q-btn @click="goTo('/host')" dense class="q-ml-sm" flat icon="keyboard_return" label="voltar"
-                    color="secondary">
+                <q-btn @click="goTo('/host')" dense glossy flat icon="keyboard_return" label="voltar"
+                    color="primary">
                 </q-btn>
             </div>
             <div id="title" class="text-primary q-pl-md">{{ evento.title }}</div>
-            <div class="text-bold q-pb-sm q-pl-md">{{ evento.status }}</div>
-            <div class="text-bold q-pl-md">🕑 {{ evento.date.replaceAll("-", "/") }} {{ (evento.initial_time ? ' às ' +
+            <div class="text-primary text-bold q-pb-sm q-pl-md">{{ evento.status }}</div>
+            <div class="text-primary text-bold q-pl-md">🕑 {{ evento.date.replaceAll("-", "/") }} {{ (evento.initial_time ? ' às ' +
                 evento.initial_time : '') +
                 (evento.final_time ? (' - ' + evento.final_time) : '' ) }}</div>
                 <q-btn v-if="!editando && evento.img_url.trim() != ''" @click="dialogImg = !dialogImg" label="Ver Banner"  glossy icon-right="image"
                 class="q-px-md q-ml-md q-mt-md" dense color="blue-14"></q-btn>
-                <q-btn @click="previewPublicEvent(evento.id)" label="Evento Preview"  glossy icon-right="event"
+                <q-btn v-if="evento.status.includes('andamento')" @click="previewPublicEvent(evento.id)" label="Evento Preview"  glossy icon-right="event"
                 class="q-px-md q-ml-md q-mt-md" dense color="primary"></q-btn>
             <div v-if="!loading" class="q-card-wrapper row justify-center ">
                 <q-card class="w100 q-mt-md" :class="editando ? 'bg-orangy' : ''">
@@ -43,19 +43,19 @@
                         <div class="text-h6 text-primary row items-center">
                             <q-icon class="q-pr-xs" color="primary" name="description" size="sm"/>
                             Descrição</div>
-                        <div style="font-size: 16px;">{{ evento.desc }}</div>
+                        <div class="text-shadow" style="font-size: 16px;">{{ evento.desc }}</div>
                     </q-card-section>
                     <q-card-section v-if="!editando">
                         <div class="text-h6 text-primary row items-center">
                             <q-icon class="q-pr-xs" color="primary" name="location_city" size="sm"/>
                             Endereço</div>
-                        <div style="font-size: 16px;">{{ evento.address }}</div>
+                        <div class="text-shadow" style="font-size: 16px;">{{ evento.address }}</div>
                     </q-card-section>
                     <q-card-section v-if="!editando">
                         <div class="text-h6 text-primary row items-center">
                             <q-icon class="q-pr-xs" color="primary" name="phone" size="sm"/>
                             Contato</div>
-                        <div style="font-size: 16px;">{{ evento.contact }}</div>
+                        <div class="text-shadow" style="font-size: 16px;">{{ evento.contact }}</div>
                     </q-card-section>
                     <q-card-section v-if="evento.maps_loc && !editando">
                         <div class="text-h6 text-primary q-mb-sm row items-center">
@@ -148,14 +148,14 @@
                                 <div class="w100 row q-gutter-x-sm" v-if="evento.status.includes('andamento')">
                                     <q-btn @click="copyCredentials(subhost)"  icon="file_copy" icon-right="key" label="Copiar Credenciais" color="blue-14" glossy class=" q-mt-sm"></q-btn>
                                 </div>
-                                <q-btn color="secondary" flat @click="removeSubhost(subhost)" icon-right="delete" class="q-mt-md absolute-top-right"></q-btn>
+                                <q-btn v-if="evento.status.includes('andamento')" color="secondary"  flat @click="removeSubhost(subhost)" icon-right="delete" class="q-mt-md absolute-top-right"></q-btn>
                             </div>
                         </div>
                     </q-card-section>
                 </q-card>
             </div>
             <div class="w100 q-mt-xl q-px-sm" v-if="!loading">
-                <q-btn class="w100 q-py-xl" label="Painel de Vendas" color="primary" glossy
+                <q-btn class="w100 q-py-xl" label="Painel de Vendas" color="green-14" glossy
                     icon-right="payments"></q-btn>
                 <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-md" label="Encerrar Evento" @click="confirmChangeStatusEvento('FINALIZADO')" color="green" glossy
                     icon-right="event_available"></q-btn>
@@ -499,7 +499,7 @@ onBeforeMount(async () => {
 
 #ticket, #subhost {
     padding: 10px;
-    background-color: #efe4ff;
+    background-color: #eeeeee;
 }
 
 #ticket:nth-child(odd){
@@ -509,7 +509,7 @@ onBeforeMount(async () => {
 @media (min-width: 1024px) {
     .q-page {
         width: 100%;
-        padding: 0 38px;
+        padding: 0 38px 24px 38px;
     }
 
     .q-card-wrapper {

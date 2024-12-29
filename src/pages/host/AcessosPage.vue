@@ -45,7 +45,7 @@
             </q-card>                
         </div>
         <div class="w100" v-if="subhosts.length == 0">
-            <div class="text-bold text-center text-white q-pt-xl">Nenhum acesso cadastrado</div>
+            <div class="text-bold text-h5 text-center text-primary q-pt-xl">Nenhum acesso cadastrado<br></div>
         </div>
         <div v-if="loading" class="row w100 q-py-sm justify-center">
             <q-spinner-ball color="primary" size="lg" />

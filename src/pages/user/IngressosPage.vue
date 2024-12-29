@@ -20,6 +20,18 @@
                         <q-btn @click="generateQRCode(ingresso)" label="Ver Ingresso" icon-right="confirmation_number" class="w100 q-py-md" color="green-14" glossy></q-btn>
                     </div>
                 </q-card>                
+                <q-card v-if="ingressos.length == 0" class="w100 q-pb-md bg-grey-3">
+                    <q-card-section>
+                        <div class="text-secondary text-center" id="title-menu">
+                            Você ainda <strong class="text-primary">não</strong> possui ingressos<br>(˘･_･˘)<br>
+                            <div class="w100 q-pt-xs bg-secondary q-mt-md"></div>
+                            <br><strong class="text-primary">Encontre eventos</strong> pelo menu ou pela página inicial e <strong class="text-primary">adquira já</strong> o seu ingresso!<br>╰(*°▽°*)╯
+                        </div>
+                        <div class="w100 q-mt-md">
+                            <q-btn to="/" color="primary" glossy class="w100" label="Encontrar Eventos" icon-right="search"></q-btn>
+                        </div>
+                    </q-card-section>
+                </q-card>                
             </q-list>
         </div>
         <q-dialog v-model="dialogQrIngresso" persistent >

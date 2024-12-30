@@ -505,7 +505,7 @@ async function searchPublicEventsOrHost(isByHostName) {
                 hostsResults.value = response.data
                 eventsResults.value = []
             } else {
-                eventsResults.value = response.data
+                eventsResults.value = response.data.events
                 hostsResults.value = []
             }
         }

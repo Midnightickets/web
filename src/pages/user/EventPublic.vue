@@ -192,7 +192,7 @@ function formatStringValue(str){
 
 function stringTaxes() {
     let value = ingressoHandle.value.price
-    return 'R$ ' + value.toFixed(2).toString().replace('.', ',')+ ' + ' + 'R$ ' + (value * 0.05).toFixed(2).toString().replace('.', ',') + ' (5% de taxa)';
+    return 'R$ ' + value.toFixed(2).toString().replace('.', ',')+ ' + ' + 'R$ ' + (value * 0.08).toFixed(2).toString().replace('.', ',') + ' (8% de taxa)';
 }
 
 function openModalBuyTicket(ticket) {
@@ -205,8 +205,8 @@ function openModalBuyTicket(ticket) {
             event_id: event.value.id,
             title: ticket.title,
             price: ticket.price,
-            taxes: 0.05, // taxa de 5% pela venda do ingresso
-            totalValue: ticket.price + (ticket.price * 0.05),
+            taxes: 0.08, // taxa de 5% pela venda do ingresso
+            totalValue: ticket.price + (ticket.price * 0.08),
         }
         ingressoHandle.value = ticketConfigs;
         sessionStorage.setItem('ticketConfigs', JSON.stringify(ticketConfigs));

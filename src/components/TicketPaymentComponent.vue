@@ -38,7 +38,7 @@ const preferenceId = ref('');
 onBeforeMount(async () => {
     const user = JSON.parse(sessionStorage.getItem('user'));
     $q.notify({
-        message: 'Confirmando a compra do Ingresso, você concorda com a taxa de 5% sobre o valor da transação.',
+        message: 'Confirmando a compra do Ingresso, você concorda com a taxa de 8% sobre o valor da transação.',
         color: 'blue',
         position: 'top',
         icon: 'request_quote',
@@ -65,7 +65,7 @@ onBeforeMount(async () => {
                 auto_return: "approved",
                 items: [
                     {
-                        title: 'Compra do Ingresso ' + ticketConfigs.title,
+                        title: '🎫 Compra do Ingresso ' + ticketConfigs.title,
                         quantity: 1,
                         unit_price: ticketConfigs.price,
                         event_id: ticketConfigs.event_id,

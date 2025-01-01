@@ -1,5 +1,5 @@
 <template>
-    <q-page class=" w100 animate__animated animate__fadeIn relative">
+    <q-page class=" w100 animate__animated animate__fadeIn bg-grey-4 relative q-pb-xl">
         <div class="w100">
             <q-btn @click="voltar()" dense class="q-pr-sm rounded-borders" flat  icon="keyboard_return" label="voltar" color="primary" glossy>
             </q-btn>
@@ -29,11 +29,11 @@
             <q-btn  label="Adicionar" @click="adicionarSubhost()" :disabled="!subhostHandler.name || !subhostHandler.login || !subhostHandler.password" glossy icon-right="add" color="primary" class="shadow-2 q-mt-md"></q-btn>
             <q-btn class="w100" flat @click="editing = !editing; clearSubhostHandler()" label="fechar" color="secondary"></q-btn>
         </div>
-        <div id="title-menu" class="text-secondary q-pl-md">
-            Subhosts
+        <div id="title-menu" class="text-primary q-pl-md">
+            Subhosts Cadastrados
         </div>
-        <div id="subhosts" class="row q-mt-md" v-if="subhosts && !loading">
-            <q-card v-for="subhost in subhosts" :key="subhost.name" class="w100 q-mx-md q-pb-sm">
+        <div id="subhosts" class="row q-mt-sm" v-if="subhosts && !loading">
+            <q-card v-for="subhost in subhosts" :key="subhost.name" class="w100 q-mx-md q-mt-md q-pb-sm">
                 <q-card-section class="text-bold">
                     <div class="w100 row items-center justify-between">
                         <div id="title-layout" class="text-primary">{{ subhost.name }}</div>

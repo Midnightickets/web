@@ -71,6 +71,7 @@
                 <div class="w100 q-mt-md text-white bg-grad-2 q-py-md text-center" id="title-layout">COMPRAR INGRESSO</div>
                 <div class="text-center q-pt-lg text-black text-h6 q-px-xs">Deseja realmente comprar o ingresso <strong class="text-primary">{{ ingressoHandle.title }}</strong> por<br><strong class="text-primary"> {{ Utils.formatCurrency(ingressoHandle.totalValue, 'brl') }}</strong>?</div>
                 <div class="q-pt-md mid-opacity text-center text-bold text-primary">{{ stringTaxes() }}</div>
+                <BuyTicketComponent />
                 <TicketPaymentComponent />
                 <div class="w100 row justify-center">
                     <q-btn label="voltar" flat color="secondary" @click="modalBuyTicket = false" />
@@ -89,6 +90,7 @@
 import { onBeforeMount, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import TicketPaymentComponent from 'src/components/TicketPaymentComponent.vue'
+import BuyTicketComponent from 'src/components/BuyTicketComponent.vue'
 
 import { api } from 'src/boot/axios';
 import { SessionStorage, useQuasar } from "quasar";

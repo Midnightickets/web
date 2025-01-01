@@ -105,7 +105,7 @@ const menuOptions = ref({
         // USER MENUS
         { label: 'Meus Ingressos', icon: 'confirmation_number', to: '/me', role: 'user' },
         { label: 'Buscar Eventos', icon: 'travel_explore', to: '/', role: 'user' },
-        { label: 'Favoritos', icon: 'star', to: '#', role: 'user' },
+        { label: 'Suporte', icon: 'help', to: '#', role: 'user' },
     ]
 })
 function goTo(item) {

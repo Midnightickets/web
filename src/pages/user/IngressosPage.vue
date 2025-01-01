@@ -14,7 +14,7 @@
                         </div>
                         <div class="text-h6 text-secondary text-bold">{{ ingresso.event }}</div>
                         <div class="text-grey-8 text-bold q-pt-md" style="font-size: 16px">{{ !ingresso.isExpired ? '🟢 Disponível' : '🟡  Utilizado' }}</div>
-                        <div class="text-h6 text-blue-14 text-bold mid-opacity text-right">R$ {{ ingresso.ticket_type.price ? formatCurrency(ingresso.ticket_type.price) : formatCurrency(ingresso.ticket_type.totalValue) }}</div>
+                        <div class="text-h6 text-blue-14 text-bold mid-opacity text-right">R$ {{ ingresso.ticket_type.price ? Utils.formatCurrency(ingresso.ticket_type.price) : formatCurrency(ingresso.ticket_type.totalValue) }}</div>
                     </q-card-section>
                     <div class="w100 q-px-md" v-if="!ingresso.isExpired">
                         <q-btn @click="generateQRCode(ingresso)" label="Ver Ingresso" icon-right="confirmation_number" class="w100 q-py-md" color="green-14" glossy></q-btn>
@@ -26,9 +26,6 @@
                             Você ainda <strong class="text-primary">não</strong> possui ingressos<br>(˘･_･˘)<br>
                             <div class="w100 q-pt-xs bg-secondary q-mt-md"></div>
                             <br><strong class="text-primary">Encontre eventos</strong> pelo menu ou pela página inicial e <strong class="text-primary">adquira já</strong> o seu ingresso!<br>╰(*°▽°*)╯
-                        </div>
-                        <div class="w100 q-mt-md">
-                            <q-btn to="/" color="primary" glossy class="w100" label="Encontrar Eventos" icon-right="search"></q-btn>
                         </div>
                     </q-card-section>
                 </q-card>                
@@ -59,6 +56,7 @@
 import { onBeforeMount, ref } from 'vue';
 import { api } from 'src/boot/axios';
 import QRCode from 'qrcode';
+import { Utils } from 'src/utils/Utils';
 
 const dialogQrIngresso = ref(false)
 const ingressos = ref([])

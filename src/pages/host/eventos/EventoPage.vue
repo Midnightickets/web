@@ -1,5 +1,5 @@
 <template>
-    <q-page class="q-pb-xl animate__animated animate__fadeIn">
+    <q-page class="q-pb-xl bg-grey-4 animate__animated animate__fadeIn">
         <div v-if="loading" class="row w100 q-pt-xl justify-center">
             <q-spinner-ball color="secondary" size="lg" />
             <q-spinner-ball color="secondary" size="lg" />
@@ -23,11 +23,11 @@
             <div v-if="!loading" class="q-card-wrapper row justify-center ">
                 <q-card class="w100 q-mt-md" :class="editando ? 'bg-orangy' : ''">
                     <div id="title-menu" class="text-primary w100 q-pt-md text-center">
-                        Informações
+                        {{ editando ? 'Editando Informações' : 'Informações' }}
                     </div>
                     <div class="q-ml-md">
                         <q-btn v-if="evento.status.includes('andamento')" @click="alternarEdicao()" :label="!editando ? 'Editar Evento' : 'cancelar'" :icon-right="!editando ? 'edit' : 'cancel'" :flat="editando"
-                            class="q-mt-md q-px-md " dense color="primary" glossy></q-btn>
+                            class="q-mt-md q-px-md " dense :color=" !editando ? 'orange-14' : 'primary'" glossy></q-btn>
                     </div>
                     <q-dialog v-model="dialogImg">
                         <q-card>
@@ -43,19 +43,19 @@
                         <div class="text-h6 text-primary row items-center">
                             <q-icon class="q-pr-xs" color="primary" name="description" size="sm"/>
                             Descrição</div>
-                        <div class="text-shadow" style="font-size: 16px;">{{ evento.desc }}</div>
+                        <div class="text-grey-7 text-bold" style="font-size: 16px;">{{ evento.desc }}</div>
                     </q-card-section>
                     <q-card-section v-if="!editando">
                         <div class="text-h6 text-primary row items-center">
                             <q-icon class="q-pr-xs" color="primary" name="location_city" size="sm"/>
                             Endereço</div>
-                        <div class="text-shadow" style="font-size: 16px;">{{ evento.address }}</div>
+                        <div class="text-grey-7 text-bold" style="font-size: 16px;">{{ evento.address }}</div>
                     </q-card-section>
                     <q-card-section v-if="!editando">
                         <div class="text-h6 text-primary row items-center">
                             <q-icon class="q-pr-xs" color="primary" name="phone" size="sm"/>
                             Contato</div>
-                        <div class="text-shadow" style="font-size: 16px;">{{ evento.contact }}</div>
+                        <div class="text-grey-7 text-bold" style="font-size: 16px;">{{ evento.contact }}</div>
                     </q-card-section>
                     <q-card-section v-if="evento.maps_loc && !editando">
                         <div class="text-h6 text-primary q-mb-sm row items-center">
@@ -66,11 +66,31 @@
                     </q-card-section>
                     <!-- MODO EDITANDO -->
                     <div v-if="editando" class="editando w100 q-py-md q-px-md q-gutter-y-md">
-                        <q-input :inputStyle="{ fontWeight: 'bold' }" filled v-model="evento.title" label="Título*" color="primary"/>
-                        <q-input :inputStyle="{ fontWeight: 'bold' }" type="textarea" filled v-model="evento.desc" label="Descrição" color="primary"/>
-                        <q-input :inputStyle="{ fontWeight: 'bold' }" type="textarea" filled v-model="evento.address" label="Endereço*" color="primary" />
-                        <q-input :inputStyle="{ fontWeight: 'bold' }" type="textarea" filled v-model="evento.contact" label="Contato*" color="primary" />
-                        <q-input :inputStyle="{ fontWeight: 'bold' }" filled v-model="evento.img_url" label="Banner Url" color="primary" />
+                        <q-input class="bg-grey-2" :inputStyle="{ fontWeight: 'bold' }" outlined v-model="evento.title" label="Título*" color="primary">
+                            <template v-slot:append>
+                                <q-icon name="title" color="primary" size="xs" />
+                            </template>
+                        </q-input>
+                        <q-input class="bg-grey-2" :inputStyle="{ fontWeight: 'bold' }" type="textarea" outlined v-model="evento.desc" label="Descrição" color="primary">
+                            <template v-slot:append>
+                                <q-icon name="description" color="primary" size="xs" />
+                            </template>
+                        </q-input>
+                        <q-input class="bg-grey-2" :inputStyle="{ fontWeight: 'bold' }" type="textarea" outlined v-model="evento.address" label="Endereço*" color="primary">
+                            <template v-slot:append>
+                                <q-icon name="location_city" color="primary" size="xs" />
+                            </template>
+                        </q-input>
+                        <q-input class="bg-grey-2" :inputStyle="{ fontWeight: 'bold' }" type="textarea" outlined v-model="evento.contact" label="Contato*" color="primary">
+                            <template v-slot:append>
+                                <q-icon name="phone" color="primary" size="xs" />
+                            </template>
+                        </q-input>
+                        <q-input class="bg-grey-2" :inputStyle="{ fontWeight: 'bold' }" outlined v-model="evento.img_url" label="Banner Url" color="primary">
+                            <template v-slot:append>
+                                <q-icon name="image" color="primary" size="xs" />
+                            </template>
+                        </q-input>
                         <div class="text-secondary" id="title-layout">Data do Evento é Obrigatória*</div>
                         <q-date id="date-picker" class="w100" v-model="evento.date" mask="DD-MM-YYYY" :options="(date) => {
                             const today = new Date();
@@ -81,7 +101,7 @@
                             return mydate >= new Date(minDate);
                         }" color="primary" />
                         <div class="w100 row no-wrap q-gutter-x-sm justify-center items-center">
-                            <q-input  id="times" label="Início" filled v-model="evento.initial_time" mask="time" :rules="['time']">
+                            <q-input  id="times" label="Início" class="bg-grey-2" outlined v-model="evento.initial_time" mask="time" :rules="['time']">
                                 <template v-slot:append>
                                     <q-icon name="access_time" color="primary" class="cursor-pointer">
                                         <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -94,7 +114,7 @@
                                     </q-icon>
                                 </template>
                             </q-input>
-                            <q-input label="Final" filled v-model="evento.final_time" mask="time" :rules="['time']">
+                            <q-input label="Final" class="bg-grey-2" outlined v-model="evento.final_time" mask="time" :rules="['time']">
                                 <template v-slot:append>
                                     <q-icon name="access_time" color="primary" class="cursor-pointer">
                                         <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -108,7 +128,7 @@
                                 </template>
                             </q-input>
                         </div>
-                        <q-input :inputStyle="{ fontWeight: 'bold' }" filled v-model="evento.maps_loc" label="Localização Google Maps" color="primary" />
+                        <q-input :inputStyle="{ fontWeight: 'bold' }" outlined class="bg-grey-2" v-model="evento.maps_loc" label="Localização Google Maps" color="primary" />
                         <q-btn @click="updateEventInfo()" label="salvar alterações" color="orange-14" :disabled="checkEdit()" icon-right="save" class="w100 q-py-md" glossy></q-btn>
                     </div>
                     
@@ -125,7 +145,7 @@
                             <div class="text-bold text-primary"  :class="ticket.status ? '' : 'mid-opacity'"><q-icon name="local_activity" color="primary" size="xs" ></q-icon> {{ ticket.title }}</div>
                             <div class="text-bold text-secondary"  :class="ticket.status ? '' : 'mid-opacity'"><q-icon name="confirmation_number" color="secondary" size="xs" ></q-icon> {{ ticket.sales ? ticket.sales : 0  }} vendidos</div>
                             <div class="row items-center justify-between q-mt-sm">
-                                <div  :class="ticket.status ? '' : 'mid-opacity'" class="text-bold bg-secondary q-pa-xs rounded-borders text-white">{{ 'R$ ' + ticket.price }}</div>
+                                <div  :class="ticket.status ? '' : 'mid-opacity'" class="text-bold bg-secondary q-pa-xs rounded-borders text-white">{{ 'R$ ' + Utils.formatCurrency(ticket.price) }}</div>
                                 <q-toggle v-if="evento.status.includes('andamento')" :class="ticket.status ? 'text-green' : 'text-orange-14'" class="text-bold" v-model="ticket.status" @update:model-value="updateStatusTickets()" left-label :label="ticket.status ? 'Ativo' : 'Inativo'" color="green"></q-toggle>
                             </div>
                             <div class="w100 bg-secondary q-pt-xs q-my-sm rounded-borders"></div>
@@ -155,9 +175,9 @@
                 </q-card>
             </div>
             <div class="w100 q-mt-xl q-px-sm" v-if="!loading">
-                <q-btn class="w100 q-py-xl" label="Painel de Vendas" color="green-14" glossy
+                <q-btn class="w100 q-py-xl" label="Painel de Vendas" color="primary" glossy
                     icon-right="payments"></q-btn>
-                <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-md" label="Encerrar Evento" @click="confirmChangeStatusEvento('FINALIZADO')" color="green" glossy
+                <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-md" label="Encerrar Evento" @click="confirmChangeStatusEvento('FINALIZADO')" color="blue-14" glossy
                     icon-right="event_available"></q-btn>
                 <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-sm" label="Cancelar Evento" @click="confirmChangeStatusEvento('CANCELADO')" color="red-4" flat></q-btn>
             </div>
@@ -185,13 +205,13 @@
             <q-dialog v-model="modalSubhosts">
                 <q-card>
                     <q-card-section class="q-gutter-y-sm">
-                        <div id="title-menu" class="text-primary">Subhosts</div>
-                        <q-btn label="gerenciar acessos"  class="q-px-md" icon-right="sensor_occupied" color="green" glossy to="/host/acessos" dense></q-btn>
+                        <div id="title-menu" class="text-primary">Subhosts Disponíveis</div>
+                        <q-btn label="gerenciar acessos"  class="q-px-md" icon-right="sensor_occupied" color="primary" glossy to="/host/acessos" dense></q-btn>
                         <div id="subhost" v-for="subhost in subhostOptions" :key="subhost.login" class="q-mt-md rounded-borders shadow-2">
-                            <div class="text-bold text-primary">{{ subhost.name }}</div>
-                            <div class="text-bold text-secondary">👨🏼‍💼{{ subhost.login.toLowerCase() }}</div>
+                            <div class="text-bold text-primary">🟢 {{ subhost.name }}</div>
+                            <div class="text-bold text-secondary">🔓 {{ subhost.login.toLowerCase() }}</div>
                             <div class="w100 row q-gutter-x-sm">
-                                <q-btn @click="permitirSubhost(subhost)" label="permitir acesso" icon-right="person_add" color="green-14" glossy class=" q-mt-sm"></q-btn>
+                                <q-btn @click="permitirSubhost(subhost)" label="permitir" icon-right="person_add" color="green-14" glossy class=" q-mt-sm"></q-btn>
                             </div>
                         </div>
                     </q-card-section>
@@ -480,6 +500,7 @@ function confirmChangeStatusEvento(status) {
 onBeforeMount(async () => {
     loading.value = true;
     await getEvento();
+    sessionStorage.setItem('lastEventVisited', evento.value.id);
 });
 
 </script>

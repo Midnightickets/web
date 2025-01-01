@@ -1,12 +1,4 @@
 const Utils = {
-    formatCurrency: (num, currency) => {
-        switch (currency) {
-            case 'brl':
-                return 'R$ ' + num.toFixed(2).toString().replace('.', ',')
-            default:
-                return num
-        }
-    },
     formatBigString: (str) => {
         if (str.length > 8) {
             return str.slice(0, 8) + '...'
@@ -39,6 +31,17 @@ const Utils = {
             window.location.href = '/';
         }
     },
+    formatCurrency: (valor) => {
+        if(typeof valor === 'number') {
+            return valor.toFixed(2).toString().replace('.', ',')
+        } else {
+            if(valor.includes(',')) {
+                valor = valor.replace(',', '.')
+            }
+            valor = Number(valor).toFixed(2)        
+            return valor.toString().replace('.', ',')
+        }
+    }
 }
 
 export { Utils }

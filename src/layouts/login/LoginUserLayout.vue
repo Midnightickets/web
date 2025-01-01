@@ -162,7 +162,7 @@ function goBack(){
             sessionStorage.removeItem('comeFromTicketIntention')
             router.push('/events/' + rota)
         }
-    else router.push('/')
+    else window.history.back()
 }
 
 async function registrar () {

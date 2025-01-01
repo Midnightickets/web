@@ -1,5 +1,5 @@
 <template>
-    <q-page class="q-pb-xl animate__animated animate__fadeInLeft ">
+    <q-page class="q-pb-xl bg-roxo-light animate__animated animate__fadeInLeft ">
         <div class="w100 q-pt-sm q-pl-sm" >
             <q-btn @click="returnBack()" icon="keyboard_return" color="secondary" glossy></q-btn>
         </div>
@@ -10,7 +10,7 @@
                 </q-card-section>
             </q-card>
         </div>
-        <div v-if="!loading && !eventoIndisponivel" class="animate__animated animate__fadeInRight w100 text-primary text-center q-px-xs " id="title">
+        <div v-if="!loading && !eventoIndisponivel" class="animate__animated animate__fadeInRight w100 text-primary text-center q-px-sm " id="title">
             {{ event.title }}
         </div>
         <q-btn  v-if="!loading && !eventoIndisponivel" :to="'/' + event.host_login" class="text-secondary text-bold w100 text-center q-mb-md text-" flat :label="event.host"></q-btn>
@@ -18,7 +18,7 @@
             <a class="text-white bg-green-14 q-pa-md rounded-borders text-bold shadow-1" style="text-decoration: none;" href="#ingressos">Comprar Ingressos <q-icon size="sm" name="add_shopping_cart"></q-icon></a>
         </div>
         <div v-if="!loading && !eventoIndisponivel" id="cards-wrapper" class="w100 row items-start q-gutter-y-md">
-            <q-card class="card-event q-mx-md bg-grey-4 q-mt-md">
+            <q-card class="card-event q-mx-md bg-grey-3 q-mt-md">
                 <q-card-section >
                     <q-item >
                         <q-item-section class="text-black">
@@ -32,7 +32,7 @@
                 </q-card-section>
             </q-card>
 
-            <q-card class="card-event q-mx-md bg-grey-4 q-mt-md">
+            <q-card class="card-event q-mx-md bg-grey-3 q-mt-md">
                 <q-card-section>
                     <q-item >
                         <q-item-section class="text-black">
@@ -49,7 +49,7 @@
                     </q-item>
                 </q-card-section>
             </q-card>
-            <q-card class="card-event q-mx-md bg-grey-4 q-mt-md">
+            <q-card class="card-event q-mx-md bg-grey-3 q-mt-md">
                 <q-card-section>
                     <q-item >
                         <q-item-section class="text-black">
@@ -69,8 +69,37 @@
                 <div class="w100 q-mt-md text-white bg-grad-2 q-py-md text-center" id="title-layout">COMPRAR INGRESSO</div>
                 <div class="text-center q-pt-lg text-black text-h6 q-px-xs">Deseja realmente comprar o ingresso <strong class="text-primary">{{ ingressoHandle.title }}</strong> por<br><strong class="text-primary"> {{ Utils.formatCurrency(ingressoHandle.totalValue, 'brl') }}</strong>?</div>
                 <div class="q-pt-md mid-opacity text-center text-bold text-primary">{{ stringTaxes() }}</div>
-                <BuyTicketComponent />
-                <TicketPaymentComponent />
+                <div id="person-ticket-info" v-if="buyTicketHandler.open" class="q-mt-md q-pb-md">
+                    <q-input v-model="buyTicketHandler.ticket_person_name" label="Nome Completo" outlined dense>
+                        <template v-slot:prepend>
+                            <q-icon name="person" :color="isCampoValid('name', buyTicketHandler.ticket_person_name) ? 'primary' : 'grey-8'" />
+                        </template>
+                    </q-input>
+                    <q-input class="q-mt-sm" v-model="buyTicketHandler.ticket_person_cpf" mask="###.###.###-##" maxlength="14" label="CPF do Comprador" outlined reverse-fill-mask dense>
+                        <template v-slot:prepend>
+                            <q-icon name="badge"  :color="isCampoValid('cpf', buyTicketHandler.ticket_person_cpf) ? 'primary' : 'grey-8'" />
+                        </template>
+                    </q-input>
+                    <q-input class="q-mt-sm" v-model="buyTicketHandler.ticket_person_email" label="E-mail" type="email"  outlined dense>
+                        <template v-slot:prepend>
+                            <q-icon name="email"  :color="isCampoValid('email', buyTicketHandler.ticket_person_email) ? 'primary' : 'grey-8'" />
+                        </template>
+                    </q-input>
+                    <q-input class="q-mt-sm" v-model="buyTicketHandler.ticket_person_phone" mask="(##) #####-####" maxlength="15" label="Telefone" outlined dense>
+                        <template v-slot:prepend>
+                            <q-icon name="phone"  :color="isCampoValid('phone', buyTicketHandler.ticket_person_phone) ? 'primary' : 'grey-8'" />
+                        </template>
+                    </q-input>
+                    <q-input class="q-mt-sm" v-model="buyTicketHandler.ticket_person_birthday" mask="##/##/####" maxlength="10" label="Data de Nascimento" outlined  dense>
+                        <template v-slot:prepend>
+                            <q-icon name="cake" :color="isCampoValid('birthday', buyTicketHandler.ticket_person_birthday) ? 'primary' : 'grey-8'" />
+                        </template>
+                    </q-input>
+                </div>
+                <TicketPaymentComponent v-if="isCampoValid('checkMPbtn', 'checkMPbtn')" />
+                <div v-else>
+                    <q-btn color="primary" disabled icon-right="paid" label="Realizar Pagamento" class="w100 q-mb-md q-py-md"></q-btn>
+                </div>
                 <div class="w100 row justify-center">
                     <q-btn label="voltar" flat color="secondary" @click="modalBuyTicket = false" />
                 </div>
@@ -88,7 +117,6 @@
 import { onBeforeMount, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import TicketPaymentComponent from 'src/components/TicketPaymentComponent.vue'
-import BuyTicketComponent from 'src/components/BuyTicketComponent.vue'
 
 import { api } from 'src/boot/axios';
 import { SessionStorage, useQuasar } from "quasar";
@@ -102,6 +130,17 @@ const loading = ref(false);
 const modalBuyTicket = ref(false);
 const $q = useQuasar();
 const eventoIndisponivel = ref(false);
+const ticketPaymentButton = ref(false);
+const buyTicketHandler = ref({
+    open: true,
+    ticket_person_name: '',
+    ticket_person_email: '',
+    ticket_person_cpf: '',
+    ticket_person_phone: '',
+    ticket_person_birthday: '',
+});
+
+
 onBeforeMount(async () => {
     loading.value = true;
     
@@ -163,6 +202,62 @@ function openModalBuyTicket(ticket) {
         });
         sessionStorage.setItem('comeFromTicketIntention', event.value.id);
         router.push('/login')
+    }
+}
+
+const ok = ref({
+    name: false,
+    email: false,
+    cpf: false,
+    phone: false,
+    birthday: false,
+})
+
+function isCampoValid(campo, valor) {
+    switch (campo) {
+        case 'name':
+            if(valor.length < 3) {
+                ok.value.name = false;
+                return false;
+            }
+            ok.value.name = true;
+            return true;
+        case 'email':
+            if(valor.length < 3) {
+                ok.value.email = false;
+                return false;
+            } else if(!valor.includes('@') || !valor.includes('.')) {
+                ok.value.email = false;
+                return false;
+            }
+            ok.value.email = true;
+            return true;
+        case 'cpf':
+            if(valor.length < 14) {
+                ok.value.cpf = false;
+                return false;
+            }
+            ok.value.cpf = true;
+            return true;
+        case 'phone':
+            if(valor.length < 15) {
+                ok.value.phone = false;
+                return false;
+            }
+            ok.value.phone = true;
+            return true;
+        case 'birthday':
+            if(valor.length < 10) {
+                ok.value.birthday = false;
+                return false;
+            }
+            ok.value.birthday = true;
+            return true;
+        case 'checkMPbtn':
+            if(ok.value.name && ok.value.email && ok.value.cpf && ok.value.phone && ok.value.birthday) {
+                return true;
+            }
+            return false;
     }
 }
 

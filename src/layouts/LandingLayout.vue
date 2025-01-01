@@ -34,7 +34,7 @@
                 </div>
             </div>
         </q-header>
-        <q-page-container class="bg-grey-4">
+        <q-page-container class="bg-roxo-light">
             <div  class="rounded-borders w100 row justify-center q-mt-md relative" style="overflow: hidden ">
                 <div v-if="userInfo == ''" class="animate__animated animate__zoomInDown animate__delay-1s animate__slower row no-wrap rounded-borders justify-center q-px-sm  w100"
                     style="overflow: hidden ;z-index: 9;">

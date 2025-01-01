@@ -1,6 +1,6 @@
 <template>
     <div id="login-host" class="animate__animated animate__fadeIn bg-grad-3 w100 flex flex-center q-pt-md q-pb-xl">
-        <div id="login-card" class="bg-white animate__animated animate__zoomIn rounded-borders">
+        <div id="login-card" class="bg-roxo-light animate__animated animate__zoomIn rounded-borders">
             <div id="title-menu" class="text-primary text-center q-mt-md row q-px-md justify-center items-center"><q-icon name="diamond" size="md" color="primary" class="q-mr-xs"></q-icon>{{ editando ? 'CADASTRO' :'LOGIN'}} PRODUTOR(A)</div>
             <div class="q-pa-md">
                 <q-input

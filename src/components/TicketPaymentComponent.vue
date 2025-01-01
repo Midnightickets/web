@@ -39,16 +39,20 @@ onBeforeMount(async () => {
     const user = JSON.parse(sessionStorage.getItem('user'));
     $q.notify({
         message: 'Confirmando a compra do Ingresso, você concorda com a taxa de 5% sobre o valor da transação.',
-        color: 'secondary',
+        color: 'blue',
         position: 'top',
         icon: 'request_quote',
         timeout: 6000
     });
     try {
         const ticketConfigs = JSON.parse(sessionStorage.getItem('ticketConfigs'));
-
+        const ticketPerson = JSON.parse(sessionStorage.getItem('ticketPerson'));
         await loadScript('https://sdk.mercadopago.com/js/v2');
         const mp = new MercadoPago(process.env.MIDNIGHTICKETS_MERCADO_PAGO_PK, { locale: 'pt-BR' });
+        const ticketObject = {
+            ...ticketConfigs,
+            ...ticketPerson,
+        }
         const createPreference = async () => {
             await api.post('/create_preference', {
                 back_urls: {
@@ -57,7 +61,7 @@ onBeforeMount(async () => {
                     "pending": baseURL + '/me',
                 },
                 user: user.id,
-                ticket_type: ticketConfigs,
+                ticket_type: ticketObject,
                 auto_return: "approved",
                 items: [
                     {
@@ -67,7 +71,6 @@ onBeforeMount(async () => {
                         event_id: ticketConfigs.event_id,
                     }
                 ],
-
             }).then(response => {
                 preferenceId.value = response.data.id;
             }).catch(() => {

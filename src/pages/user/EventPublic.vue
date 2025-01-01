@@ -69,13 +69,14 @@
                 <div class="w100 q-mt-md text-white bg-grad-2 q-py-md text-center" id="title-layout">COMPRAR INGRESSO</div>
                 <div class="text-center q-pt-lg text-black text-h6 q-px-xs">Deseja realmente comprar o ingresso <strong class="text-primary">{{ ingressoHandle.title }}</strong> por<br><strong class="text-primary"> {{ Utils.formatCurrency(ingressoHandle.totalValue, 'brl') }}</strong>?</div>
                 <div class="q-pt-md mid-opacity text-center text-bold text-primary">{{ stringTaxes() }}</div>
-                <div id="person-ticket-info" v-if="buyTicketHandler.open" class="q-mt-md q-pb-md">
+                <div id="person-ticket-info" class="q-mt-md q-pb-md">
+                    <q-toggle color="primary" v-model="buyTicketHandler.toMe" :label="!buyTicketHandler.toMe ? 'Comprar Pra Outro' : 'Comprar Pra Mim'" @update:model-value="buyToMe()" class="q-mt-xs q-mb-md text-bold text-secondary" />
                     <q-input v-model="buyTicketHandler.ticket_person_name" label="Nome Completo" outlined dense>
                         <template v-slot:prepend>
                             <q-icon name="person" :color="isCampoValid('name', buyTicketHandler.ticket_person_name) ? 'primary' : 'grey-8'" />
                         </template>
                     </q-input>
-                    <q-input class="q-mt-sm" v-model="buyTicketHandler.ticket_person_cpf" mask="###.###.###-##" maxlength="14" label="CPF do Comprador" outlined reverse-fill-mask dense>
+                    <q-input class="q-mt-sm" v-model="buyTicketHandler.ticket_person_cpf" mask="###.###.###-##" maxlength="14" label="CPF do Responsável" outlined reverse-fill-mask dense>
                         <template v-slot:prepend>
                             <q-icon name="badge"  :color="isCampoValid('cpf', buyTicketHandler.ticket_person_cpf) ? 'primary' : 'grey-8'" />
                         </template>
@@ -90,11 +91,11 @@
                             <q-icon name="phone"  :color="isCampoValid('phone', buyTicketHandler.ticket_person_phone) ? 'primary' : 'grey-8'" />
                         </template>
                     </q-input>
-                    <q-input class="q-mt-sm" v-model="buyTicketHandler.ticket_person_birthday" mask="##/##/####" maxlength="10" label="Data de Nascimento" outlined  dense>
+                    <!-- <q-input class="q-mt-sm" v-model="buyTicketHandler.ticket_person_birthday" mask="##/##/####" maxlength="10" label="Data de Nascimento" outlined  dense>
                         <template v-slot:prepend>
                             <q-icon name="cake" :color="isCampoValid('birthday', buyTicketHandler.ticket_person_birthday) ? 'primary' : 'grey-8'" />
                         </template>
-                    </q-input>
+                    </q-input> -->
                 </div>
                 <TicketPaymentComponent v-if="isCampoValid('checkMPbtn', 'checkMPbtn')" />
                 <div v-else>
@@ -131,15 +132,33 @@ const modalBuyTicket = ref(false);
 const $q = useQuasar();
 const eventoIndisponivel = ref(false);
 const ticketPaymentButton = ref(false);
+
 const buyTicketHandler = ref({
-    open: true,
+    toMe: false,
     ticket_person_name: '',
     ticket_person_email: '',
     ticket_person_cpf: '',
     ticket_person_phone: '',
-    ticket_person_birthday: '',
+    // ticket_person_birthday: '',
 });
 
+const userSession = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')) : null
+function buyToMe(){
+    if(userSession == null) return
+    if(buyTicketHandler.value.toMe){
+        buyTicketHandler.value.ticket_person_name = userSession.name;
+        buyTicketHandler.value.ticket_person_email = userSession.email;
+        buyTicketHandler.value.ticket_person_cpf = userSession.cpf;
+        buyTicketHandler.value.ticket_person_phone = userSession.phone;
+        // buyTicketHandler.value.ticket_person_birthday = userSession.birthday;
+    } else {
+        buyTicketHandler.value.ticket_person_name = '';
+        buyTicketHandler.value.ticket_person_email = '';
+        buyTicketHandler.value.ticket_person_cpf = '';
+        buyTicketHandler.value.ticket_person_phone = '';
+        // buyTicketHandler.value.ticket_person_birthday = '';
+    }
+}
 
 onBeforeMount(async () => {
     loading.value = true;
@@ -210,7 +229,7 @@ const ok = ref({
     email: false,
     cpf: false,
     phone: false,
-    birthday: false,
+    // birthday: false,
 })
 
 function isCampoValid(campo, valor) {
@@ -246,15 +265,17 @@ function isCampoValid(campo, valor) {
             }
             ok.value.phone = true;
             return true;
-        case 'birthday':
-            if(valor.length < 10) {
-                ok.value.birthday = false;
-                return false;
-            }
-            ok.value.birthday = true;
-            return true;
+        // case 'birthday':
+        //     if(valor.length < 10) {
+        //         ok.value.birthday = false;
+        //         return false;
+        //     }
+        //     ok.value.birthday = true;
+        //     return true;
         case 'checkMPbtn':
-            if(ok.value.name && ok.value.email && ok.value.cpf && ok.value.phone && ok.value.birthday) {
+            if(ok.value.name && ok.value.email && ok.value.cpf && ok.value.phone) {
+            // if(ok.value.name && ok.value.email && ok.value.cpf && ok.value.phone && ok.value.birthday) {
+            sessionStorage.setItem('ticketPerson', JSON.stringify(buyTicketHandler.value));
                 return true;
             }
             return false;

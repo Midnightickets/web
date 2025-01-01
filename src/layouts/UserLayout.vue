@@ -35,7 +35,7 @@
                 <div id="title-menu" class="text-center text-bold text-purple-1 q-pt-xl">
                     {{ Utils.convertStringToFirstAndLast(userInfo.name).toUpperCase() }}</div>
                 <div class="text-center text-purple-1 mid-opacity text-bold q-mb-md q-pb-lg "><q-btn
-                        @click="goTo({ to: '/me' })" label="Perfil" flat></q-btn></div>
+                        @click="goTo({ to: '/me' })" label="Perfil Usuário" flat></q-btn></div>
                 <q-list class="text-bold text-white">
                     <q-item v-for="item in menuOptions.items" :key="item.label" clickable @click="goTo(item)"
                         style="border-radius: 8px;"

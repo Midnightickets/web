@@ -1,11 +1,11 @@
 <template>
-    <q-page class="q-pb-xl bg-twitch animate__animated animate__fadeInRight">
+    <q-page class="q-pb-xl bg-grad-1 animate__animated animate__fadeInRight">
         <div class="w100 q-pt-sm q-pl-sm" >
             <q-btn to="/" icon="travel_explore" color="secondary" glossy class="shadow-1"></q-btn>
         </div>
         <div v-if="!loading" class="w100 row justify-center">
-            <q-avatar style="width:125px;height:110px;" class="shadow-2">
-                <img :src="hostImgUrl" alt="">
+            <q-avatar style="width:200px;height:180px" class="shadow-2">
+                <img style="border-bottom: 4px solid #8E2DE2" :src="hostImgUrl" alt="">
             </q-avatar>
         </div>
         <div v-if="!loading" class="animate__animated animate__fadeInLeft w100 text-white text-center q-pb-lg q-mt-sm q-px-md" id="title-2">

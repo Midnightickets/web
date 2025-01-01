@@ -23,7 +23,7 @@
                         <q-btn icon="contact_support" color="secondary"></q-btn>
                     </a>
                     <q-btn v-if="userInfo == ''" glossy dense class="menu-item text-bold bg-green-14 q-pa-md text-purple-1 row items-center"
-                        style="border-radius:8px" @click="navigateTo('/login')">
+                        style="border-radius:12px" @click="navigateTo('/login')">
                         Entrar
                         <q-icon name="login" size="md" />
                     </q-btn>
@@ -34,7 +34,7 @@
                 </div>
             </div>
         </q-header>
-        <q-page-container class="bg-roxo-light">
+        <q-page-container class="bg-grey-4">
             <div  class="rounded-borders w100 row justify-center q-mt-md relative" style="overflow: hidden ">
                 <div v-if="userInfo == ''" class="animate__animated animate__zoomInDown animate__delay-1s animate__slower row no-wrap rounded-borders justify-center q-px-sm  w100"
                     style="overflow: hidden ;z-index: 9;">

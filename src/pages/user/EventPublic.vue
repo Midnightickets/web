@@ -10,7 +10,7 @@
                 </q-card-section>
             </q-card>
         </div>
-        <div v-if="!loading && !eventoIndisponivel" class="animate__animated animate__fadeInRight w100 text-primary text-center " id="title">
+        <div v-if="!loading && !eventoIndisponivel" class="animate__animated animate__fadeInRight w100 text-primary text-center q-px-xs " id="title">
             {{ event.title }}
         </div>
         <q-btn  v-if="!loading && !eventoIndisponivel" :to="'/' + event.host_login" class="text-secondary text-bold w100 text-center q-mb-md text-" flat :label="event.host"></q-btn>
@@ -41,9 +41,7 @@
                                 <q-item id="ticket" v-for="(ticket, index) in event.ticket_types" :key="index" style="border-left: 6px solid #9573f3;" class="shadow-1 q-mt-md">
                                     <q-item-section class="text-bold text-primary q-py-sm" id="title-layout">
                                         <q-icon name="confirmation_number"></q-icon>{{ ticket.title }}<br><strong class="text-secondary q-pt-xs">R$ {{ formatStringValue(ticket.price) }}</strong>
-                                    </q-item-section>
-                                    <q-item-section side>
-                                        <q-btn @click="openModalBuyTicket(ticket)" class="q-py-md" icon="add_shopping_cart" color="green-14" glossy></q-btn>
+                                        <q-btn @click="openModalBuyTicket(ticket)" class="q-mt-sm q-py-lg" icon="add_shopping_cart" label="Comprar" color="green-14" glossy></q-btn>
                                     </q-item-section>
                                 </q-item>
                             </div>

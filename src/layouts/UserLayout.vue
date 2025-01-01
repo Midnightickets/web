@@ -70,8 +70,8 @@
             </div>
         </q-drawer>
 
-        <q-page-container class="relative">
-            <div v-if="!userInfo" class="w100 text-white text-bold row items-center wrap q-px-md justify-center q-gutter-y-sm q-gutter-x-md  q-pt-lg">
+        <q-page-container class="relative w100 bg-dark">
+            <div v-if="!userInfo" class="w100 text-white text-bold row items-center wrap w100 justify-center q-gutter-y-sm q-gutter-x-md  q-pt-lg">
                 <a href="/" style="text-decoration: none;" id="title-2"
                 class="text-primary  text-shadow text-bold row items-center q-mb-sm">
                 <q-icon size="md" class="q-pr-xs" color="primary" name="local_activity" />

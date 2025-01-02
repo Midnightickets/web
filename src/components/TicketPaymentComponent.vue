@@ -77,8 +77,8 @@ onBeforeMount(async () => {
                 $q.notify({
                     message: error.response.data.error,
                     color: 'orange-14',
-                    position: 'confirmation_number',
-                    icon: 'error',
+                    position: 'top',
+                    icon: 'confirmation_number',
                     timeout: 3000
                 });
             });

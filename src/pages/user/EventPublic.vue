@@ -19,7 +19,7 @@
         </div>
         <div v-if="!loading && !eventoIndisponivel" id="cards-wrapper" class="w100 row items-start q-gutter-y-md">
             <q-card class="card-event q-mx-md bg-grey-3 q-mt-md">
-                <q-card-section >
+                <q-card-section>
                     <q-item >
                         <q-item-section class="text-black">
                             <q-item-label id="title-2"  class="text-primary">INFORMAÇÕES</q-item-label>

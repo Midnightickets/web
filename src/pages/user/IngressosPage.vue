@@ -1,5 +1,5 @@
 <template>
-    <q-page class="bg-grad-1 text-white q-px-md animate__animated animate__fadeIn q-pb-xl" id="title">
+    <q-page class="bg-grad-2 text-white q-px-md animate__animated animate__fadeIn q-pb-xl" id="title">
         <div class="w100" >
             <q-btn @click="retornar()" icon="keyboard_return" color="secondary" glossy></q-btn>
         </div>

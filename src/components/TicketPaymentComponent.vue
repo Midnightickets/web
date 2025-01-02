@@ -75,7 +75,7 @@ onBeforeMount(async () => {
                 preferenceId.value = response.data.id;
             }).catch((error) => {
                 $q.notify({
-                    message: error.response.data,
+                    message: error.response.data.error,
                     color: 'orange-14',
                     position: 'confirmation_number',
                     icon: 'error',

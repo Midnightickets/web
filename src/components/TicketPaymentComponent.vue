@@ -73,11 +73,11 @@ onBeforeMount(async () => {
                 ],
             }).then(response => {
                 preferenceId.value = response.data.id;
-            }).catch(() => {
+            }).catch((error) => {
                 $q.notify({
-                    message: 'Erro ao criar preferência de pagamento',
+                    message: error.response.data,
                     color: 'orange-14',
-                    position: 'top',
+                    position: 'confirmation_number',
                     icon: 'error',
                     timeout: 3000
                 });

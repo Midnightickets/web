@@ -145,6 +145,7 @@ const buyTicketHandler = ref({
 const userSession = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')) : null
 function buyToMe(){
     if(userSession == null) return
+    buyTicketHandler.value.ticket_person_cpf = '';
     if(buyTicketHandler.value.toMe){
         buyTicketHandler.value.ticket_person_name = userSession.name;
         buyTicketHandler.value.ticket_person_email = userSession.email;
@@ -154,7 +155,6 @@ function buyToMe(){
     } else {
         buyTicketHandler.value.ticket_person_name = '';
         buyTicketHandler.value.ticket_person_email = '';
-        buyTicketHandler.value.ticket_person_cpf = '';
         buyTicketHandler.value.ticket_person_phone = '';
         // buyTicketHandler.value.ticket_person_birthday = '';
     }

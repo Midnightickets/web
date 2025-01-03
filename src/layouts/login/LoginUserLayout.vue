@@ -11,6 +11,7 @@
                             placeholder="CPF*"
                             mask="###.###.###-##"
                             reverse-fill-mask
+                            maxlength="14"
                             type="text"
                             outlined
                         />
@@ -18,17 +19,21 @@
                         v-if="editing"
                         v-model="user.name"
                             placeholder="Nome Completo*"
-                            maxlength="100"
+                            maxlength="80"
                             type="text"
                             outlined
                             />
                             <q-input
                             v-model="user.login"
                             placeholder="Login*"
-                            maxlength="40"
+                            maxlength="20"
                             type="text"
                             outlined
                         />
+                        <div v-if="editing" class="w100 row justify-center">
+                            <div id="title-2" class="text-primary q-mb-sm">Data de Nascimento:</div>
+                            <q-date id="date-picker" class="w100 row" v-model="user.birthday" mask="DD-MM-YYYY" color="primary" />
+                        </div>
                         <q-input
                             v-if="editing"
                             v-model="user.phone"
@@ -133,11 +138,8 @@ const user = ref({
     name: '',
     phone: '',
     email: '',
+    birthday: '',
 })
-
-function isLoginFormValid() {
-    return user.value.login.trim().length < 3 || user.value.password.trim().length < 3
-}
 
 const isLoginFormInvalid = () => {
     if (user.value.login.trim().length < 3 || user.value.password.trim().length < 3) {
@@ -147,7 +149,10 @@ const isLoginFormInvalid = () => {
 }
 
 const isRegisterFormInvalid = () => {
-    if (user.value.login.trim().length < 3 || user.value.password.trim().length < 3 || user.value.cpf.trim().length < 14 || user.value.name.trim().length < 3 || user.value.phone.trim().length < 15 || user.value.email.trim().length < 3) {
+    if (user.value.login.trim().length < 3 || user.value.password.trim().length < 3 || user.value.cpf.trim().length < 14
+        || user.value.name.trim().length < 3 || user.value.phone.trim().length < 15 || user.value.email.trim().length < 3
+        || user.value.birthday.trim().length < 10
+    ) {
         return true
     }
     return false
@@ -173,7 +178,8 @@ async function registrar () {
         cpf: user.value.cpf,
         name: user.value.name,
         phone: user.value.phone,
-        email: user.value.email
+        email: user.value.email,
+        birthday: user.value.birthday
     }
     await api.post(formConfig.value.userCreateRoute, req)
     .then(response => {

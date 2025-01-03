@@ -67,26 +67,27 @@
         <q-dialog  v-model="modalBuyTicket" persistent>
             <div class="q-px-md q-pb-md bg-grey-4">
                 <div class="w100 q-mt-md text-white bg-grad-2 q-py-md text-center" id="title-layout">COMPRAR INGRESSO</div>
-                <div class="text-center q-pt-lg text-black text-h6 q-px-xs">Deseja realmente comprar o ingresso <strong class="text-primary">{{ ingressoHandle.title }}</strong> por<br><strong class="text-primary"> {{ Utils.formatCurrency(ingressoHandle.totalValue, 'brl') }}</strong>?</div>
+                <div class="text-center q-pt-lg text-black text-h6 q-px-xs">Deseja realmente comprar o ingresso<br><strong class="text-primary">{{ ingressoHandle.title }}</strong><br>por<strong class="text-primary"> R$ {{ Utils.formatCurrency(ingressoHandle.totalValue, 'brl') }}</strong> ?</div>
                 <div class="q-pt-md mid-opacity text-center text-bold text-primary">{{ stringTaxes() }}</div>
                 <div id="person-ticket-info" class="q-mt-md q-pb-md">
                     <q-toggle color="primary" v-model="buyTicketHandler.toMe" :label="!buyTicketHandler.toMe ? 'Comprar Pra Outro' : 'Comprar Pra Mim'" @update:model-value="buyToMe()" class="q-mt-xs q-mb-md text-bold text-secondary" />
-                    <q-input v-model="buyTicketHandler.ticket_person_name" label="Nome Completo" outlined dense>
+                    <q-input v-model="buyTicketHandler.ticket_person_name" label="Nome Completo*" outlined dense>
                         <template v-slot:prepend>
                             <q-icon name="person" :color="isCampoValid('name', buyTicketHandler.ticket_person_name) ? 'primary' : 'grey-8'" />
                         </template>
                     </q-input>
-                    <q-input class="q-mt-sm" v-model="buyTicketHandler.ticket_person_cpf" mask="###.###.###-##" maxlength="14" label="CPF do Responsável" outlined reverse-fill-mask dense>
+                    <q-input class="q-mt-sm" v-model="buyTicketHandler.ticket_person_cpf" @update:model-value="updateCpf()" mask="###.###.###-##" maxlength="14" label="CPF do Responsável*" 
+                        outlined reverse-fill-mask dense>
                         <template v-slot:prepend>
                             <q-icon name="badge"  :color="isCampoValid('cpf', buyTicketHandler.ticket_person_cpf) ? 'primary' : 'grey-8'" />
                         </template>
                     </q-input>
-                    <q-input class="q-mt-sm" v-model="buyTicketHandler.ticket_person_email" label="E-mail" type="email"  outlined dense>
+                    <q-input class="q-mt-sm" v-model="buyTicketHandler.ticket_person_email" label="E-mail*" type="email"  outlined dense>
                         <template v-slot:prepend>
                             <q-icon name="email"  :color="isCampoValid('email', buyTicketHandler.ticket_person_email) ? 'primary' : 'grey-8'" />
                         </template>
                     </q-input>
-                    <q-input class="q-mt-sm" v-model="buyTicketHandler.ticket_person_phone" mask="(##) #####-####" maxlength="15" label="Telefone" outlined dense>
+                    <q-input class="q-mt-sm" v-model="buyTicketHandler.ticket_person_phone" mask="(##) #####-####" maxlength="15" label="Telefone*" outlined dense>
                         <template v-slot:prepend>
                             <q-icon name="phone"  :color="isCampoValid('phone', buyTicketHandler.ticket_person_phone) ? 'primary' : 'grey-8'" />
                         </template>
@@ -221,6 +222,31 @@ function openModalBuyTicket(ticket) {
         });
         sessionStorage.setItem('comeFromTicketIntention', event.value.id);
         router.push('/login')
+    }
+}
+
+async function updateCpf() {
+    if(buyTicketHandler.value.ticket_person_cpf.length === 14) {
+        await Utils.validaCPF(buyTicketHandler.value.ticket_person_cpf)
+        .then((res) => {
+            $q.notify({
+                message: 'CPF Válido',
+                color: 'green',
+                position: 'top',
+                icon: 'badge',
+                timeout: 4000
+            });
+        })
+        .catch((err) => {
+            $q.notify({
+                message: err.message,
+                color: 'secondary',
+                position: 'top',
+                icon: 'badge',
+                timeout: 4000
+            });
+            ok.value.cpf = false;
+        });
     }
 }
 

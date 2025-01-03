@@ -8,7 +8,7 @@
                     {{ Utils.formatCurrency(hostInfo.balance ? hostInfo.balance : 0, 'brl') }}
                 </div>
                 <div class="row no-wrap items-center" v-if="hostInfo.balance" >
-                        <q-btn to="/host/me" v-if="hostInfo.balance > 0" color="blue-14" label="sacar" glossy icon-right="currency_exchange"  />
+                        <q-btn v-if="hostInfo.balance > 0" @click="window.location.reload()" color="blue-14" label="atualizar" glossy icon-right="currency_exchange"  />
                 </div>
             </div>
         </div>

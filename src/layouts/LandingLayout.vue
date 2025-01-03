@@ -40,10 +40,10 @@
                     style="overflow: hidden ;z-index: 9;">
                     <q-btn glossy to="/login-host" color="primary"
                         class="shadow animate__animated text-primary animate__fadeInLeft  animate__delay-3s animate__slower q-pa-xl rounded-borders"
-                        icon-right="diamond" label="Sou Produtor!" />
+                        icon-right="diamond" label="Quero criar eventos" />
                     <q-btn glossy @click="searchPublic.opened = !searchPublic.opened"
                         class="shadow-1 animate__animated animate__fadeInRight  text-bold bg-blue-14 q-ml-sm text-white animate__delay-3s animate__slower q-pa-xl rounded-borders"
-                        icon-right="confirmation_number" label="Quero Ingressos!" />
+                        icon-right="confirmation_number" label="Quero comprar Ingressos" />
                 </div>
             </div>
             <div v-if="searchPublic.opened" id="search-public" class="w100 rounded-borders row justify-center">
@@ -163,13 +163,11 @@
                         acontece o seu evento<br>
                         🟣 <strong class="text-primary">AJUSTES DE LOTES GRATUITOS<br></strong>
                         Realize <strong>reajustes</strong> de ingressos dos seus ingressos <strong>sem custo
-                        adicional</strong> de forma intuitiva na palma da sua mão.
+                        adicional</strong> de forma intuitiva na palma da sua mão
                         <br>
-                        🟣 <strong class="text-primary">NOVAS FUNCIONALIDADES PERIODICAMENTE<br></strong>
-                        Estamos sempre <strong>inovando</strong> e <strong>adicionando novas funcionalidades</strong>
-                        para
-                        <strong>otimizar</strong> a <strong>experiência</strong> dos nossos <strong>usuários</strong> e
-                        <strong>produtores</strong>
+                        🟣 <strong class="text-primary">VALIDAÇÃO DE INGRESSOS<br></strong>
+                        Disponibilizamos um perfil de <strong>subhost</strong>, que são perfis cadastrados pelos produtores de eventos para <strong>validar ingressos</strong>
+                        de forma segura e rápida com <strong>QR Code</strong> na entrada de seus eventos. Utilizando apenas uma câmera e acesso à navegador
                     </div>
                     <div id="title"
                         class="w100 text-h4 text-bold bg-white text-primary text-center q-px-md rounded-borders q-py-sm border-bottom"

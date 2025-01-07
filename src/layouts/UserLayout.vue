@@ -103,9 +103,9 @@ const route = router.currentRoute
 const menuOptions = ref({
     items: [
         // USER MENUS
-        { label: 'Meus Ingressos', icon: 'confirmation_number', to: '/me', role: 'user' },
         { label: 'Buscar Eventos', icon: 'travel_explore', to: '/', role: 'user' },
-        { label: 'Suporte', icon: 'help', to: '#', role: 'user' },
+        { label: 'Meus Ingressos', icon: 'confirmation_number', to: '/me', role: 'user' },
+        { label: 'Ingressos Comprados', icon: 'paid', to: '/me/tickets', role: 'user' },
     ]
 })
 function goTo(item) {

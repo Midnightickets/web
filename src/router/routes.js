@@ -61,6 +61,7 @@ const routes = [
     children: [
       { path: '', component: () => import('src/pages/user/IngressosPage.vue') },
       { path: 'perfil', component: () => import('src/pages/user/UserPage.vue') },
+      { path: 'tickets', component: () => import('src/pages/user/TodosIngressosPage.vue') },
     ]
   },
   {

@@ -33,8 +33,59 @@
                     </q-btn>
                 </div>
             </div>
+            <q-dialog v-model="dialogResults">
+                <div v-if="loading" class="row w100 q-py-sm q-mt-xs justify-center">
+                    <q-spinner-ball color="secondary" size="lg" />
+                    <q-spinner-ball color="secondary" size="lg" />
+                    <q-spinner-ball color="secondary" size="lg" />
+                </div>
+                <q-card v-if="!loading">
+                    <div class="w100 q-px-md text-primary q-pt-sm" id="title">{{ searchPublic.isByHostName ? `Produtores` : 'EVENTOS' }}</div>
+                    <q-card-section>
+                        <q-list class="column q-gutter-y-md">
+                            <q-item class="card-search rounded-borders shadow-1  q-pb-md" v-for="host in hostsResults" :key="host.id" clickable>
+                                <q-item-section>
+                                        <img v-if="host.img_url && host.img_url.trim() !== ''" :src="host.img_url" class="rounded-borders shadow-1 q-mb-md q-mt-sm" alt="banner do Evento">
+                                        <q-item-label class="text-bold text-primary" id="title-layout">
+                                            {{ host.name.toUpperCase() }}
+                                        </q-item-label>
+                                        <q-item-label class="text-secondary text-bold">
+                                            <q-icon name="person" class="q-pr-xs"/>
+                                            {{ host.login.toLowerCase() }}
+                                        </q-item-label>
+                                        <q-item-section class="w100 q-mt-md">
+                                            <q-btn @click="goToPublicHostPage(host.login)" label="ver produtor" icon="person_search" color="primary" glossy class="shadow-2"></q-btn>
+                                        </q-item-section>
+                                    </q-item-section>
+                            </q-item>
+                            <q-item class="card-search q-py-md shadow-1 rounded-borders" v-for="event in eventsResults" :key="event.id" clickable>
+                                <q-item-section>
+                                    <img v-if="event.img_url && event.img_url.trim() !== ''"  :src="event.img_url" class="rounded-borders shadow-1 q-mb-md" alt="banner do Evento">
+                                    <q-item-label class="text-bold text-primary" id="title-layout">
+                                        {{ event.title.toUpperCase() }}
+                                    </q-item-label>
+                                    <div class="text-secondary row items-center q-mt-sm">
+                                        <q-icon name="event" class="q-pr-xs" />
+                                        {{ event.date.replaceAll('-', '/') }}
+                                    </div>
+                                    <q-item-label class="text-secondary">
+                                        <q-icon name="person" class="q-pr-xs"/>
+                                        {{ event.host.toLowerCase() }}
+                                    </q-item-label>
+                                    <q-item-section class="w100 q-mt-md">
+                                        <q-btn  @click="goToPublicEventPage(event.id)" label="ver evento"  icon="travel_explore" color="primary" glossy class="w100 shadow-2"></q-btn>
+                                    </q-item-section>
+                                </q-item-section>
+                            </q-item>
+                        </q-list>
+                    </q-card-section>
+                    <div class="w100 row justify-center close dialog q-pb-md">
+                        <q-btn @click="dialogResults = false" color="secondary" flat label="Fechar" />
+                    </div>
+                </q-card>
+            </q-dialog>
         </q-header>
-        <q-page-container class="bg-roxo-light">
+        <q-page-container v-if="userInfo === ''" class="">
             <div  class="rounded-borders w100 row justify-center q-mt-md relative" style="overflow: hidden ">
                 <div v-if="userInfo == ''" class="animate__animated animate__zoomInDown animate__delay-1s animate__slower row no-wrap rounded-borders justify-center q-px-sm  w100"
                     style="overflow: hidden ;z-index: 9;">
@@ -176,12 +227,12 @@
                     <div style="font-size:1.1rem"
                         class="text-shadow q-px-md bg-grey-4 q-py-md rounded-borders border-bottom">
                         💸 <strong style="font-size:1.2rem" class="text-primary text-bold">LIBERTE-SE das
-                            TAXAS<br></strong>
+                        TAXAS EXCESSIVAS<br></strong>
                         Estamos
                         integrados ao <strong>Mercado Pago</strong> com segurança
                         e confidencialidade. Integrado a todos os métodos de pagamentos
                         <br>
-                        <br>
+                        <br>    
                         🤳🏼 <strong style="font-size:1.2rem" class="text-primary text-bold">SEM INSTALAÇÃO
                             <br></strong> Gerencie seus
                         eventos, vendas e ingressos na palma da sua mão <strong>sem
@@ -356,58 +407,28 @@
                     acompanhe o nosso desenvolvimento!
                 </div>
             </q-page>
-            <q-dialog v-model="dialogResults">
-                <div v-if="loading" class="row w100 q-py-sm q-mt-xs justify-center">
-                    <q-spinner-ball color="secondary" size="lg" />
-                    <q-spinner-ball color="secondary" size="lg" />
-                    <q-spinner-ball color="secondary" size="lg" />
-                </div>
-                <q-card v-if="!loading">
-                    <div class="w100 q-px-md text-primary q-pt-sm" id="title">{{ searchPublic.isByHostName ? `Produtores` : 'EVENTOS' }}</div>
-                    <q-card-section>
-                        <q-list class="column q-gutter-y-md">
-                            <q-item class="card-search rounded-borders shadow-1  q-pb-md" v-for="host in hostsResults" :key="host.id" clickable>
-                                <q-item-section>
-                                        <img v-if="host.img_url && host.img_url.trim() !== ''" :src="host.img_url" class="rounded-borders shadow-1 q-mb-md q-mt-sm" alt="banner do Evento">
-                                        <q-item-label class="text-bold text-primary" id="title-layout">
-                                            {{ host.name.toUpperCase() }}
-                                        </q-item-label>
-                                        <q-item-label class="text-secondary text-bold">
-                                            <q-icon name="person" class="q-pr-xs"/>
-                                            {{ host.login.toLowerCase() }}
-                                        </q-item-label>
-                                        <q-item-section class="w100 q-mt-md">
-                                            <q-btn @click="goToPublicHostPage(host.login)" label="ver produtor" icon="person_search" color="primary" glossy class="shadow-2"></q-btn>
-                                        </q-item-section>
-                                    </q-item-section>
-                            </q-item>
-                            <q-item class="card-search q-py-md shadow-1 rounded-borders" v-for="event in eventsResults" :key="event.id" clickable>
-                                <q-item-section>
-                                    <img v-if="event.img_url && event.img_url.trim() !== ''"  :src="event.img_url" class="rounded-borders shadow-1 q-mb-md" alt="banner do Evento">
-                                    <q-item-label class="text-bold text-primary" id="title-layout">
-                                        {{ event.title.toUpperCase() }}
-                                    </q-item-label>
-                                    <div class="text-secondary row items-center q-mt-sm">
-                                        <q-icon name="event" class="q-pr-xs" />
-                                        {{ event.date.replaceAll('-', '/') }}
-                                    </div>
-                                    <q-item-label class="text-secondary">
-                                        <q-icon name="person" class="q-pr-xs"/>
-                                        {{ event.host.toLowerCase() }}
-                                    </q-item-label>
-                                    <q-item-section class="w100 q-mt-md">
-                                        <q-btn  @click="goToPublicEventPage(event.id)" label="ver evento"  icon="travel_explore" color="primary" glossy class="w100 shadow-2"></q-btn>
-                                    </q-item-section>
-                                </q-item-section>
-
-                            </q-item>
-                        </q-list>
+        </q-page-container>
+        <q-page-container v-else>
+            <div id="search-public" class="w100 rounded-borders row justify-center">
+                <q-card id="search-card" class="q-mt-md q-mb-md q-mx-md animate__animated rounded-borders animate__fadeInDown animate__slower">
+                    <q-card-section class="bg-grad-4 text-white text-bold text-center q-pa-md ">
+                        <q-icon name="nightlife" size="lg" color="white" />
+                        <div class="text-center">Encontre Produtores e Eventos em Andamento</div>
                     </q-card-section>
-                    <div class="w100 row justify-center close dialog q-pb-md">
-                        <q-btn @click="dialogResults = false" color="secondary" flat label="Fechar" />
-                    </div>
+                    <q-card-section class="rounded-borders q-pa-md column q-gutter-y-md">
+                        <q-input maxlength="100" v-model="searchPublic.titleEventOrHostName" outlined label="Nome do Evento ou Produtor(a)*"
+                            placeholder="Digite o nome do Evento ou Produtor">
+                            <template v-slot:prepend>
+                                <q-icon name="search" color="primary" />
+                            </template>
+                        </q-input>
+                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(false)" color="blue-14" glossy class="shadow-1 q-py-md" label="Buscar por Evento"
+                            icon="event" />
+                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(true)" color="primary" glossy class="shadow-1 q-py-md" label="Buscar por Produtor"
+                                icon="person_search" />
+                    </q-card-section>
                 </q-card>
-            </q-dialog>
+            </div>
         </q-page-container>
     </q-layout>
 </template>

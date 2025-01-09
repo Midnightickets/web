@@ -5,9 +5,9 @@
         </div>
         <div class="w100 text-white animate__animated animate__zoomIn text-center q-mb-md" id="title">Meus Ingressos</div>
         <div v-if="loading" class="row w100 q-py-sm q-mt-md justify-center">
-            <q-spinner-ball color="blue" size="lg" />
-            <q-spinner-ball color="blue" size="lg" />
-            <q-spinner-ball color="blue" size="lg" />
+            <q-spinner-ball color="secondary" size="xl" />
+            <q-spinner-ball color="secondary" size="xl" />
+            <q-spinner-ball color="secondary" size="xl" />
         </div>
         <div id="meus-ingressos">
             <q-list class="row q-gutter-x-md q-gutter-y-md">

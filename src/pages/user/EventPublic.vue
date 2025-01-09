@@ -41,7 +41,8 @@
                                 <q-item id="ticket" v-for="(ticket, index) in event.ticket_types" :key="index" style="border-left: 6px solid #9573f3;" class="shadow-1 q-mt-md">
                                     <q-item-section class="text-bold text-primary q-py-sm" id="title-layout">
                                         <q-icon name="confirmation_number"></q-icon>{{ ticket.title }}<br><strong class="text-secondary q-pt-xs">R$ {{ formatStringValue(ticket.price) }}</strong>
-                                        <q-btn @click="openModalBuyTicket(ticket)" class="q-mt-sm q-py-lg" icon="add_shopping_cart" label="Comprar" color="green-14" glossy></q-btn>
+                                        <q-btn v-if="ticket.price != '0,00'" @click="openModalBuyTicket(ticket)" class="q-mt-sm q-py-lg" icon="add_shopping_cart" label="Comprar" color="green-14" glossy></q-btn>
+                                        <q-btn v-else @click="openModalBuyTicket(ticket)" class="q-mt-sm q-py-lg" icon="touch_app" label="Resgatar Cortesia" color="blue-14" glossy></q-btn>
                                     </q-item-section>
                                 </q-item>
                             </div>
@@ -67,10 +68,12 @@
         <q-dialog  v-model="modalBuyTicket" persistent>
             <div class="q-px-md q-pb-md bg-grey-4">
                 <div class="w100 q-mt-md text-white bg-grad-2 q-py-md text-center" id="title-layout">COMPRAR INGRESSO</div>
-                <div class="text-center q-pt-lg text-black text-h6 q-px-xs">Deseja realmente comprar o ingresso<br><strong class="text-primary">{{ ingressoHandle.title }}</strong><br>por<strong class="text-primary"> R$ {{ Utils.formatCurrency(ingressoHandle.totalValue, 'brl') }}</strong> ?</div>
-                <div class="q-pt-md mid-opacity text-center text-bold text-primary">{{ stringTaxes() }}</div>
+                <div v-if="!isCortesia" class="text-center q-pt-lg text-black text-h6 q-px-xs">Deseja realmente comprar o ingresso<br><strong class="text-primary">{{ ingressoHandle.title }}</strong><br>por<strong class="text-primary"> R$ {{ Utils.formatCurrency(ingressoHandle.totalValue, 'brl') }}</strong> ?</div>
+                <div v-else class="text-center q-pt-lg text-black text-h6 q-px-xs">Complete o formulário abaixo com suas informações para receber <strong class="text-primary">SUA CORTESIA</strong></div>
+                <div v-if="!isCortesia" class="q-pt-md mid-opacity text-center text-bold text-primary">{{ stringTaxes() }}</div>
                 <div id="person-ticket-info" class="q-mt-md q-pb-md">
-                    <q-toggle color="primary" v-model="buyTicketHandler.toMe" :label="!buyTicketHandler.toMe ? 'Comprar Pra Outro' : 'Comprar Pra Mim'" @update:model-value="buyToMe()" class="q-mt-xs q-mb-md text-bold text-secondary" />
+                    <q-radio color="primary" v-model="buyTicketHandler.toMe" :val="false" :label=" isCortesia ? 'Resgatar para outra pessoa' : 'Comprar pra outra pessoa'" @update:model-value="buyToMe()" class="q-mt-xs q-mb-md text-bold text-secondary" />
+                    <q-radio color="primary" v-model="buyTicketHandler.toMe" :val="true" :label=" isCortesia ? 'Resgatar pra mim' : 'Comprar pra mim'" @update:model-value="buyToMe()" class="q-mt-xs q-mb-md text-bold text-secondary" />
                     <q-input v-model="buyTicketHandler.ticket_person_name" label="Nome Completo*" outlined dense>
                         <template v-slot:prepend>
                             <q-icon name="person" :color="isCampoValid('name', buyTicketHandler.ticket_person_name) ? 'primary' : 'grey-8'" />
@@ -98,9 +101,10 @@
                         </template>
                     </q-input> -->
                 </div>
-                <TicketPaymentComponent v-if="isCampoValid('checkMPbtn', 'checkMPbtn')" />
+                <TicketPaymentComponent v-if="isCampoValid('checkMPbtn', 'checkMPbtn') && !isCortesia" />
                 <div v-else>
-                    <q-btn color="primary" disabled icon-right="paid" label="Realizar Pagamento" class="w100 q-mb-md q-py-md"></q-btn>
+                    <q-btn v-if="!isCortesia" color="primary" disabled icon-right="paid" label="Realizar Pagamento" class="w100 q-mb-md q-py-md"></q-btn>
+                    <q-btn v-else color="primary" disabled icon-right="local_activity" label="Receber Cortesia" class="w100 q-mb-md q-py-md"></q-btn>
                 </div>
                 <div class="w100 row justify-center">
                     <q-btn label="voltar" flat color="secondary" @click="modalBuyTicket = false" />
@@ -133,6 +137,7 @@ const modalBuyTicket = ref(false);
 const $q = useQuasar();
 const eventoIndisponivel = ref(false);
 const ticketPaymentButton = ref(false);
+const isCortesia = ref(false);
 
 const buyTicketHandler = ref({
     toMe: false,
@@ -201,6 +206,9 @@ function openModalBuyTicket(ticket) {
         if(typeof ticket.price === 'string') {
             ticket.price = ticket.price.includes(',') ? ticket.price.replace(',', '.') : ticket.price;
             ticket.price = Number(ticket.price);
+        }
+        if(ticket.price === 0) {
+            isCortesia.value = true;
         }
         const ticketConfigs = {
             event_id: event.value.id,

@@ -1,6 +1,6 @@
 <template>
     <q-layout class="relative animate__animated animate__fadeIn">
-        <q-header class="fixed bg-glass-2 text-white animate__animated animate__backInDown animate__slow shadow-1"
+        <q-header class="fixed bg-glass-2 text-white animate__animated animate__fadeInDown animate__slow shadow-1"
             height-hint="98">
             <div style="font-size: 1rem;" class=" q-py-md w100 row no-wrap items-center  justify-evenly">
                 <a v-if="!isMobile" @click="scrollTop()" class="menu-item row items-center" id="title-menu">
@@ -10,17 +10,17 @@
                     <q-icon name="local_activity" size="65px" />
                 </a>
                 <div class="row items-center no-wrap q-gutter-x-sm">
-                    <a v-if="!isMobile" class="menu-item q-mr-md q-px-md" href="#vantagens">
+                    <a v-if="!isMobile & userInfo == ''" class="menu-item q-mr-md q-px-md" href="#vantagens">
                         Vantagens
                     </a>
-                    <a v-if="isMobile" class="menu-item" @click="scrollToVantagem()">
+                    <a v-if="isMobile  & userInfo == ''" class="menu-item" @click="scrollToVantagem()">
                         <q-btn icon="redeem" color="secondary"></q-btn>
                     </a>
-                    <a v-if="!isMobile" class="menu-item q-mr-md q-px-md" href="#contato">
+                    <a v-if="!isMobile & userInfo == ''" class="menu-item q-mr-md q-px-md" href="#contato">
                         Contato
                     </a>
-                    <a v-if="isMobile" class="menu-item" @click="scrollToBottom()">
-                        <q-btn icon="contact_support" color="secondary"></q-btn>
+                    <a v-if="isMobile & userInfo == ''" class="menu-item" @click="scrollToBottom()">
+                        <q-btn icon="phone_callback" color="secondary"></q-btn>
                     </a>
                     <q-btn v-if="userInfo == ''" glossy dense class="menu-item text-bold bg-green-14 q-pa-md text-purple-1 row items-center"
                         style="border-radius:12px" @click="navigateTo('/login')">
@@ -129,10 +129,9 @@
                             <q-icon v-if="!isMobile" size="xl" color="white" name="local_activity" />
                         </q-toolbar-title>
                     </q-toolbar>
-                    <div class="text-shadow-2 space bg-grad-2 w100 text-center text-grey-2 q-py-md text-bold q-px-md "
+                    <div class="text-shadow-2 space bg-grad-2 w100 text-center text-grey-11 q-py-md text-bold q-px-md "
                         style="font-size:1rem">
-                        REALIZE seus EVENTOS com A MENOR TAXA do mercado e PARE de PAGAR TRIBUTOS excessivos na VENDA de SEUS
-                        INGRESSOS!!
+                        REALIZE EVENTOS com A MENOR TAXA do mercado e PARE de PAGAR TRIBUTOS excessivos na VENDA DE INGRESSOS
                     </div>
                     <div v-if="userInfo == ''" class="rounded-borders row justify-center  q-mx-md">
                         <q-card  id="email-card"
@@ -293,9 +292,8 @@
                   </q-carousel-slide>
               </q-carousel> -->
                 <div class=" relative">
-                    <div class="text-h4 text-bold q-py-md text-white text-center bg-grad-4 border-bottom q-mt-md">🚀
-                        Fale
-                        Conosco</div>
+                    <div class="text-h4 text-bold q-py-md text-white text-center bg-grad-4 border-bottom q-mt-md">
+                        Fale Conosco</div>
 
                     <div class="space rounded-borders q-my-md  "
                         style="border-radius: 20px;border-bottom: 8px solid #3C0783;z-index: -10">
@@ -311,8 +309,14 @@
                                         <q-icon name="mail" color="primary" />
                                     </template>
                                 </q-input>
+                                <q-input :inputStyle="{ fontWeight: 'bold', color: '#6310E1' }" maxlength="200" outlined
+                                v-model="contato.email" label="Email*">
+                                <template v-slot:append>
+                                    <q-icon name="email" color="primary" />
+                                </template>
+                            </q-input>
                             <div class="mid-opacity text-blue-6 text-center w100 text-bold">
-                                Todos campos abaixos são opcionais
+                                Os campos abaixos são opcionais
                             </div>
                             <q-input :inputStyle="{ fontWeight: 'bold', color: '#6310E1' }" maxlength="200" filled
                                 v-model="contato.form.name" label="1.Qual é o seu nome?">

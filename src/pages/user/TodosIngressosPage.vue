@@ -5,9 +5,9 @@
         </div>
         <div class="w100 text-white animate__animated animate__zoomIn text-center q-mb-md" id="title">Todos Ingressos</div>
         <div v-if="loading" class="row w100 q-py-sm q-mt-md justify-center">
-            <q-spinner-ball color="blue" size="lg" />
-            <q-spinner-ball color="blue" size="lg" />
-            <q-spinner-ball color="blue" size="lg" />
+            <q-spinner-ball color="blue" size="xl" />
+            <q-spinner-ball color="blue" size="xl" />
+            <q-spinner-ball color="blue" size="xl" />
         </div>
         <div id="meus-ingressos">
             <q-list class="row q-gutter-x-md q-gutter-y-md">
@@ -24,7 +24,7 @@
                         <div class="text-h6 text-grey-5 text-right text-bold">{{ ingresso.createdAt }}</div>
                     </q-card-section>
                     <div class="w100 q-px-md" v-if="!ingresso.isExpired">
-                        <q-btn @click="generateQRCode(ingresso)" label="Ver Ingresso" icon-right="confirmation_number" class="w100 q-py-md" color="green-14" glossy></q-btn>
+                        <q-btn @click="generateQRCode(ingresso)" label="Ver Ingresso" icon-right="confirmation_number" class="w100 q-py-md" color="primary" glossy></q-btn>
                     </div>
                 </q-card>                
                 <q-card v-if="ingressos.length == 0 && !loading" class="w100 q-pb-md bg-grey-3">

@@ -23,9 +23,9 @@
                 <q-card-section  class="w100 bg-dark text-right">
                     {{ user.created_at }}
                </q-card-section>
-                <q-card-section class="w100">
+                <!-- <q-card-section class="w100">
                     <q-btn  label="ver usuário" color="primary" glossy class="w100 q-py-md" icon-right="visibility"></q-btn>
-                </q-card-section>
+                </q-card-section> -->
             </q-card>
         </q-list>
     </div>

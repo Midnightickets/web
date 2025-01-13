@@ -2,8 +2,7 @@
     <div class="w100 bg-grey-4  rounded-borders shadow-4 relative">
         <div
             class="title-1 w100 text-h6 row items-center text-primary shadow-1 q-mt-xl q-py-sm justify-center text-bold">
-            <q-icon size="md" color="primary" name="date_range" class="q-pr-sm" />
-            Novo Evento
+            Criar novo Evento
             <q-icon size="md" color="primary" name="add_circle" class="q-pl-sm" />
         </div>
         <div class="q-mx-md column q-gutter-y-md q-mb-xl">

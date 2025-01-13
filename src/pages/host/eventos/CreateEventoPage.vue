@@ -1,6 +1,6 @@
 <template>
-  <q-page class="bg-grad-7 w100 animate__animated animate__fadeIn relative">
-      <div class="steps w100  row justify-center bg-grad-7 q-py-sm">
+  <q-page class="bg-dark w100 animate__animated animate__fadeIn relative">
+      <div class="steps w100  row justify-center bg-grey-14 q-py-sm">
           <div  id="step-1" :class=" step == 1 ?  'bg-secondary' : 'bg-secondary mid-opacity'"></div>
           <div  id="step-2" :class=" step == 2 ? 'bg-secondary' : 'bg-secondary mid-opacity'"></div>
       </div>

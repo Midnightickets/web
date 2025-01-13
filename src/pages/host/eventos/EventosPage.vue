@@ -42,7 +42,7 @@
                                 Gerenciar Evento
                             </q-tooltip>
                         </q-btn>
-                        <q-btn glossy icon="payments" color="orange">
+                        <q-btn glossy @click="verVendas(props.row.id, props.row.title)" icon="payments" color="orange">
                             <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
                                 Painel de Vendas
                             </q-tooltip>
@@ -61,7 +61,7 @@
                 </template>
                 <template v-slot:body-cell-profit="props">
                     <q-td :props="props">
-                            {{ Utils.formatCurrency(props.row.profit, 'brl') }} 
+                           R$ {{ Utils.formatCurrency(props.row.profit, 'brl') }} 
                     </q-td>
                 </template>
             </q-table>
@@ -132,6 +132,11 @@ function openMeuEventoPage(evento_id) {
     router.push('/host/evento');
 }
 
+function verVendas(evento_id, event_title) {
+    sessionStorage.setItem('evento_title', event_title);
+    sessionStorage.setItem('evento_venda', evento_id);
+    router.push('/host/vendas-evento');
+}
 
 async function getEventos() {
     const reqObject = {
@@ -191,6 +196,8 @@ onBeforeMount(async () => {
 .q-table {
     position: relative;
 }
+
+
 
 @media (min-width: 1100px) {
     .es1 {

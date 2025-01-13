@@ -41,7 +41,7 @@
             <q-card class="q-mb-md animate__animated animate__fadeInLeft" style="border-right: 4px solid #9573f3;">
                 <q-card-section class="q-pa-md">
                     <div class="text-h5 text-primary">Saldo</div>
-                    <div class="text-h6 ">R$ {{ host.balance }}</div>
+                    <div class="text-h6 ">R$ {{ Utils.formatCurrency(host.balance) }}</div>
                 </q-card-section>
                 <q-card-section class="q-pa-md">
                     <div class="text-h6 text-primary">Chave PIX - {{ host.pix_key.type != 'xxx' ?
@@ -90,6 +90,7 @@
 import { onMounted, ref } from "vue";
 import { api } from 'src/boot/axios';
 import { useQuasar } from "quasar";
+import { Utils } from "src/utils/Utils";
 
 const editing = ref(false);
 

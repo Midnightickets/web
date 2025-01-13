@@ -45,6 +45,8 @@ const routes = [
       { path: 'criar-evento', component: () => import('src/pages/host/eventos/CreateEventoPage.vue') },
       { path: 'evento', component: () => import('src/pages/host/eventos/EventoPage.vue') },
       { path: 'acessos', component: () => import('src/pages/host/AcessosPage.vue') },
+      { path: 'vendas-evento', component: () => import('src/pages/host/eventos/PainelVendasPage.vue') },
+      { path: 'andamento-evento', component: () => import('src/pages/host/eventos/AndamentoEventoPage.vue') },
       { path: 'me', component: () => import('src/pages/host/HostPerfilPage.vue') },
     ]
   },
@@ -73,6 +75,7 @@ const routes = [
       { path: 'buscar-pagamento', component: () => import('src/pages/admin/BuscarPagamentoPage.vue') },
       { path: 'users', component: () => import('src/pages/admin/UsersPage.vue') },
       { path: 'hosts', component: () => import('src/pages/admin/HostsPage.vue') },
+      
     ]
   },
 

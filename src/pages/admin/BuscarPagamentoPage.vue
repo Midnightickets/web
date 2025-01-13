@@ -43,7 +43,7 @@ function pasteIdPagamento() {
 }
 
 async function buscarPagamento() {
-    await api.post('/admin/getPagamento', { idPagamento: idPagamento.value })
+    await api.post('/admin/getPagamento', { pagamento_mercadopago_id: idPagamento.value })
         .then((response) => {
             const formattedJson = JSON.stringify(response.data, null, 2);
             $q.dialog({

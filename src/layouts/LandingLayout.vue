@@ -426,6 +426,21 @@
                 </q-card>
             </div>
         </q-page-container>
+        <footer class="w100 row wrap justify-center items-center q-py-xl bg-primary q-px-xl q-mt-lg">
+            <div class=" column q-py-md">
+                <q-btn label="Encontre eventos" class="text-grey-5" flat></q-btn>
+                <q-btn label="Compre ingressos" class="text-grey-5" flat></q-btn>
+                <q-btn label="Crie seu evento" class="text-grey-5" flat></q-btn>
+                <q-btn label="termos de uso" class="text-grey-5" flat></q-btn>
+            </div>
+            <div class="w100 q-pt-xs bg-secondary rounded-borders"></div>
+            <div class="column q-py-md items-center">
+                <q-btn label="instagram" class="text-grey-5" flat></q-btn>
+                <q-btn label="email" class="text-grey-5" flat></q-btn>
+                <q-btn label="suporte" class="text-grey-5" flat></q-btn>
+                <q-btn label="desenvolvedor" class="text-grey-5" flat></q-btn>
+            </div>
+        </footer>
     </q-layout>
 </template>
 <script setup>
@@ -471,18 +486,6 @@ const contato = ref({
         mercadopago: false,
         percentAvista: '',
         localizacao: '',
-        perguntas: [
-            '1.Qual é o seu nome?',
-            '2.Nome da Empresa',
-            '3.Telefone/WhatsApp',
-            '4.Tipos de Eventos',
-            '5.Capacidade máxima de público',
-            '6.Média de público por evento',
-            '7.Quantidade de Ingressos Digitais',
-            '8.Percentual de Vendas à Vista',
-            '9.Lucro por evento em Ingressos Digitais',
-            '10.Localização'
-        ]
     },
     dispositivo: window.innerWidth < 900 ? 'Mobile' : 'Desktop'
 })
@@ -599,10 +602,10 @@ async function sendForm(msg) {
             icon: 'local_activity',
             timeout: 6000
         });
-    }).catch(() => {
+    }).catch((err) => {
         $q.notify({
-            message: 'Erro ao enviar formulário',
-            color: 'red',
+            message: err.response.data.error ,
+            color: 'dark',
             position: 'top',
             icon: 'email',
         });
@@ -698,6 +701,10 @@ a {
 
 .q-carousel {
     height: 400px;
+}
+
+.w40 {
+    width: 40%;
 }
 
 @media(min-width: 1300px) {

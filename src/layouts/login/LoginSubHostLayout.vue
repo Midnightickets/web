@@ -97,9 +97,9 @@ const formConfig = ref({
 })
 
 const subhost = ref({
-    login: 'ENTRADA',
-    password: '2321',
-    event: '676b31c281bc5b6d03613723',
+    login: 'PORT2',
+    password: '5454',
+    event: '677406012465472e1a29667a',
 })
 
 const isLoginFormInvalid = () => {

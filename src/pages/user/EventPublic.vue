@@ -42,7 +42,7 @@
                                     <q-item-section class="text-bold text-primary q-py-sm" id="title-layout">
                                         <q-icon name="confirmation_number"></q-icon>{{ ticket.title }}<br><strong class="text-secondary q-pt-xs">R$ {{ formatStringValue(ticket.price) }}</strong>
                                         <q-btn v-if="ticket.price != '0,00'" @click="openModalBuyTicket(ticket)" class="q-mt-sm q-py-lg" icon="add_shopping_cart" label="Comprar" color="green-14" glossy></q-btn>
-                                        <q-btn v-else @click="openModalBuyTicket(ticket)" class="q-mt-sm q-py-lg" icon="touch_app" label="Resgatar Cortesia" color="blue-14" glossy></q-btn>
+                                        <q-btn v-if="ticket.price == '0,00'" @click="openModalBuyTicket(ticket)" class="q-mt-sm q-py-lg" icon="touch_app" label="Resgatar Cortesia" color="blue-14" glossy></q-btn>
                                     </q-item-section>
                                 </q-item>
                             </div>
@@ -69,7 +69,7 @@
             <div class="q-px-md q-pb-md bg-grey-4">
                 <div class="w100 q-mt-md text-white bg-grad-2 q-py-md text-center" id="title-layout">COMPRAR INGRESSO</div>
                 <div v-if="!isCortesia" class="text-center q-pt-lg text-black text-h6 q-px-xs">Deseja realmente comprar o ingresso<br><strong class="text-primary">{{ ingressoHandle.title }}</strong><br>por<strong class="text-primary"> R$ {{ Utils.formatCurrency(ingressoHandle.totalValue, 'brl') }}</strong> ?</div>
-                <div v-else class="text-center q-pt-lg text-black text-h6 q-px-xs">Complete o formulário abaixo com suas informações para receber <strong class="text-primary">SUA CORTESIA</strong></div>
+                <div v-else class="text-center q-pt-lg text-black text-h6 q-px-xs">Complete o formulário abaixo com suas informações para receber <strong class="text-primary">SUA CORTESIA: {{ ingressoHandle.title }}</strong></div>
                 <div v-if="!isCortesia" class="q-pt-md mid-opacity text-center text-bold text-primary">{{ stringTaxes() }}</div>
                 <div id="person-ticket-info" class="q-mt-md q-pb-md">
                     <q-radio color="primary" v-model="buyTicketHandler.toMe" :val="false" :label=" isCortesia ? 'Resgatar para outra pessoa' : 'Comprar pra outra pessoa'" @update:model-value="buyToMe()" class="q-mt-xs q-mb-md text-bold text-secondary" />
@@ -104,10 +104,10 @@
                 <TicketPaymentComponent v-if="isCampoValid('checkMPbtn', 'checkMPbtn') && !isCortesia" />
                 <div v-else>
                     <q-btn v-if="!isCortesia" color="primary" disabled icon-right="paid" label="Realizar Pagamento" class="w100 q-mb-md q-py-md"></q-btn>
-                    <q-btn v-else color="primary" disabled icon-right="local_activity" label="Receber Cortesia" class="w100 q-mb-md q-py-md"></q-btn>
+                    <q-btn v-else color="primary" @click="receberCortesia()" :disabled="disableCortesiaBtn()" icon-right="local_activity" label="Receber Cortesia" class="w100 q-mb-md q-py-md"></q-btn>
                 </div>
                 <div class="w100 row justify-center">
-                    <q-btn label="voltar" flat color="secondary" @click="modalBuyTicket = false" />
+                    <q-btn label="voltar" flat color="secondary" @click="closeDialog()" />
                 </div>
             </div>
         </q-dialog>
@@ -180,6 +180,21 @@ onBeforeMount(async () => {
     });
 });
 
+function disableCortesiaBtn() {
+    if(buyTicketHandler.value.ticket_person_name.trim() === '' || buyTicketHandler.value.ticket_person_email.trim() === '' || buyTicketHandler.value.ticket_person_cpf.trim() === '' || buyTicketHandler.value.ticket_person_phone.trim() === '') {
+        return true;
+    } else if(buyTicketHandler.value.ticket_person_email.length < 3) {
+        return true;
+    } else if(!buyTicketHandler.value.ticket_person_email.includes('@') || !buyTicketHandler.value.ticket_person_email.includes('.')) {
+        return true;
+    } else if(buyTicketHandler.value.ticket_person_cpf.length < 14) {
+        return true;
+    } else if(buyTicketHandler.value.ticket_person_phone.length < 15) {
+        return true;
+    }
+    return false;
+}
+
 function returnBack() {
     if (window.location.href.includes('ingressos')) {
         window.history.back();
@@ -199,6 +214,45 @@ function formatStringValue(str){
 function stringTaxes() {
     let value = ingressoHandle.value.price
     return 'R$ ' + value.toFixed(2).toString().replace('.', ',')+ ' + ' + 'R$ ' + (value * 0.08).toFixed(2).toString().replace('.', ',') + ' (8% de taxa)';
+}
+
+async function receberCortesia() {
+    const ticketConfigs = JSON.parse(sessionStorage.getItem('ticketConfigs'));
+    const reqObj = {
+        ticket_type: {
+            ...ticketConfigs,
+            ticket_person_name: buyTicketHandler.value.ticket_person_name,
+            ticket_person_cpf: buyTicketHandler.value.ticket_person_cpf,
+            ticket_person_email: buyTicketHandler.value.ticket_person_email,
+            ticket_person_phone: buyTicketHandler.value.ticket_person_phone,
+        },
+        user_id: userSession.id,
+        event_id: event.value.id,
+        ticket_person_name: buyTicketHandler.value.ticket_person_name,
+        ticket_person_email: buyTicketHandler.value.ticket_person_email,
+        ticket_person_cpf: buyTicketHandler.value.ticket_person_cpf,
+        ticket_person_phone: buyTicketHandler.value.ticket_person_phone,
+    }
+    await api.post('/event/get_cortesia', reqObj).
+    then((res) => {
+        $q.notify({
+            message: 'Cortesia retirada com sucesso!',
+            color: 'blue-14',
+            position: 'top',
+            icon: 'local_activity',
+            timeout: 4000
+        });
+        router.push('/me');
+    })
+    .catch((err) => {
+        $q.notify({
+            message: err.response.data.error,
+            color: 'dark',
+            position: 'top',
+            icon: 'local_activity',
+            timeout: 4000
+        });
+    });
 }
 
 function openModalBuyTicket(ticket) {
@@ -231,6 +285,11 @@ function openModalBuyTicket(ticket) {
         sessionStorage.setItem('comeFromTicketIntention', event.value.id);
         router.push('/login')
     }
+}
+
+function closeDialog() {
+    isCortesia.value = false;
+    modalBuyTicket.value = false;
 }
 
 async function updateCpf() {

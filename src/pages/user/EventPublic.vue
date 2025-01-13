@@ -42,7 +42,7 @@
                                     <q-item-section class="text-bold text-primary q-py-sm" id="title-layout">
                                         <q-icon name="confirmation_number"></q-icon>{{ ticket.title }}<br><strong class="text-secondary q-pt-xs">R$ {{ formatStringValue(ticket.price) }}</strong>
                                         <q-btn v-if="ticket.price != '0,00'" @click="openModalBuyTicket(ticket)" class="q-mt-sm q-py-lg" icon="add_shopping_cart" label="Comprar" color="green-14" glossy></q-btn>
-                                        <q-btn v-if="ticket.price == '0,00'" @click="openModalBuyTicket(ticket)" class="q-mt-sm q-py-lg" icon="touch_app" label="Resgatar Cortesia" color="blue-14" glossy></q-btn>
+                                        <q-btn v-if="ticket.price == '0,00'" @click="openModalBuyTicket(ticket)" class="q-mt-sm q-py-lg" icon="touch_app" label="Retirar Cortesia" color="blue-14" glossy></q-btn>
                                     </q-item-section>
                                 </q-item>
                             </div>

@@ -123,33 +123,19 @@ import { onBeforeMount, ref } from 'vue';
 const $q = useQuasar()
 
 const typeOptions = [
-    {value: 1, label: 'Solicitação de Saque', index_enum: 'REQUEST_SAKE', icon: 'currency_exchange'},
-    {value: 2, label: 'Novo Host Criado', index_enum: 'HOST_CREATED', icon: 'diamond'},
-    {value: 3, label: 'Novo Evento Criado', index_enum: 'NEW_EVENT', icon: 'event'},
-    {value: 4, label: 'Novo Usuário Criado', index_enum: 'NEW_USER', icon: 'person_add'},
-    {value: 5, label: 'Ingressos Atualizados', index_enum: 'UPDATE_TICKET_TYPES', icon: 'confirmation_number'},
-    {value: 7, label: 'Pagamento de Ingresso Bem Sucedido', index_enum: 'INGRESSO_PAYMENT_SUCESSFULLY', icon: 'confirmation_number'},
-    {value: 8, label: 'Ingresso Gerado com Sucesso', index_enum: 'INGRESSO_GENERATED_SUCESSFULLY', icon: 'local_activity'},
-    {value: 9, label: 'Formulário de Landing Criado', index_enum: 'LANDING_FORM_CREATED', icon: 'flight'},
-    {value: 10, label: 'Informações de Evento Atualizadas', index_enum: 'UPDATE_EVENT', icon: 'date_range'},
-    {value: 11, label: 'Evento Finalizado', index_enum: 'UPDATE_EVENT_FINISHED', icon: 'event_available'},
-    {value: 12, label: 'Evento Cancelado', index_enum: 'UPDATE_EVENT_CANCELED', icon: 'event_busy'},
+    {value: 1, label: 'Novo Host Criado', icon: 'diamond'},
+    {value: 2, label: 'Novo Evento Criado', icon: 'event'},
+    {value: 3, label: 'Novo Usuário Criado', icon: 'person'},
+    {value: 4, label: 'Ingressos Atualizados', icon: 'confirmation_number'},
+    {value: 5, label: 'Solicitação de Saque', icon: 'attach_money'},
+    {value: 7, label: 'Pagamento de Ingresso Bem Sucedido', icon: 'payments'},
+    {value: 8, label: 'Ingresso Gerado com Sucesso', icon: 'confirmation_number'},
+    {value: 9, label: 'Formulário de Landing Criado', icon: 'description'},
+    {value: 10, label: 'Informações de Evento Atualizadas', icon: 'event'},
+    {value: 11, label: 'Evento Finalizado', icon: 'event'},
+    {value: 12, label: 'Evento Cancelado', icon: 'event'},
+    {value: 13, label: 'Nova Cortesia Criada', icon: 'confirmation_number'},
 ]
-
-// const LogEnum = {
-//     HOST_CREATED: 'Novo Host Criado',
-//     NEW_EVENT: 'Novo Evento Criado',
-//     NEW_USER: 'Novo Usuário Criado',
-//     UPDATE_TICKET_TYPES: 'Ingressos Atualizados',
-//     REQUEST_SAKE: 'Solicitação de Saque',
-//     SAKE_STATUS_REQUESTED: 'Aguardando Saque',
-//     INGRESSO_PAYMENT_SUCESSFULLY: 'Pagamento de Ingresso Bem Sucedido',
-//     INGRESSO_GENERATED_SUCESSFULLY: 'Ingresso Gerado com Sucesso',
-//     LANDING_FORM_CREATED: 'Formulário de Landing Criado',
-//     UPDATE_EVENT: 'Informações de Evento Atualizadas',
-//     UPDATE_EVENT_FINISHED: 'Evento Finalizado',
-//     UPDATE_EVENT_CANCELED: 'Evento Cancelado',
-// }
 
 const sakeStatusOptions = [
     {value: 1, label: 'Aguardando Saque', index_enum: 'SAKE_STATUS_REQUESTED'},
@@ -180,17 +166,21 @@ async function showLogJson(log) {
 const logs = ref([])
 
 // const LogEnum = {
+//     HOST_CREATED: 'Novo Host Criado',
 //     NEW_EVENT: 'Novo Evento Criado',
-//     UPDATE_EVENT: 'Informações de Evento Atualizadas',
+//     NEW_USER: 'Novo Usuário Criado',
 //     UPDATE_TICKET_TYPES: 'Ingressos Atualizados',
-//     UPDATE_EVENT_CANCELED: 'Evento Cancelado',
-//     UPDATE_EVENT_FINISHED: 'Evento Finalizado',
 //     REQUEST_SAKE: 'Solicitação de Saque',
 //     SAKE_STATUS_REQUESTED: 'Aguardando Saque',
-//     HOST_CREATED: 'Novo Host Criado',
+//     INGRESSO_PAYMENT_SUCESSFULLY: 'Pagamento de Ingresso Bem Sucedido',
+//     INGRESSO_GENERATED_SUCESSFULLY: 'Ingresso Gerado com Sucesso',
 //     LANDING_FORM_CREATED: 'Formulário de Landing Criado',
-//     NEW_USER: 'Novo Usuário Criado',
+//     UPDATE_EVENT: 'Informações de Evento Atualizadas',
+//     UPDATE_EVENT_FINISHED: 'Evento Finalizado',
+//     UPDATE_EVENT_CANCELED: 'Evento Cancelado',
+//     NEW_CORTESIA: 'Nova Cortesia Criada',
 // }
+
 
 const filter = ref({
     _id: '',

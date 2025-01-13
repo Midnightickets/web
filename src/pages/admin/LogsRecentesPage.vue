@@ -91,7 +91,8 @@ const buscarLogs = async () => {
         admin: {
             token: admin.token,
             login: admin.login,
-        }
+        },
+        recentsOnly: true,
     }
     if(filter.value._id.trim() !== '') req._id = filter.value._id.trim()
     if(filter.value.payment.trim() !== '') req.payment = filter.value.payment.trim()
@@ -111,7 +112,7 @@ const buscarLogs = async () => {
             })
             return
         }
-        logs.value = response.data.reverse()
+        logs.value = response.data
     }).catch((error) => {
         $q.notify({
             color: 'orange-14',

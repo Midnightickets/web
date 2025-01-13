@@ -22,7 +22,7 @@
                     <a v-if="isMobile & userInfo == ''" class="menu-item" @click="scrollToBottom()">
                         <q-btn icon="phone_callback" color="secondary"></q-btn>
                     </a>
-                    <q-btn v-if="userInfo == ''" glossy dense class="menu-item text-bold bg-green-14 q-pa-md text-purple-1 row items-center"
+                    <q-btn v-if="userInfo == ''" glossy dense class="menu-item text-bold bg-primary q-pa-md text-purple-1 row items-center"
                         style="border-radius:12px" @click="navigateTo('/login')">
                         Entrar
                         <q-icon name="login" size="md" />
@@ -157,23 +157,19 @@
                         Quem
                         Somos ?</div>
                     <div style="font-size:1.1rem"
-                        class=" bg-grad-2 text-white high-opacity text-bold q-px-sm q-py-md text-left text-shadow">
+                        class=" bg-grad-2 text-white high-opacity text-bold q-px-sm q-py-md text-center text-shadow">
                         Somos
-                        um
-                        Aplicativo Web de Bilheteria Online e Monitoramento de Eventos focados na Escalabilidade
-                        de seus Lucros em Venda de Ingressos Digitais.</div>
+                        um aplicativo web de Bilheteria e Monitoramento de Eventos focados na escalabilidade
+                        de seus lucros em venda de ingressos digitais</div>
                     <div class="w100 img-wrapper bg-grad-3">
                         <img class="img"
                             src="https://images.blush.design/UKjlMI8EIiiOMVntZau4?w=920&auto=compress&cs=srgb" alt="">
                     </div>
                     <div style="font-size:1.3rem" class=" bg-grad-4 text-white text-bold q-px-sm q-py-md text-right">O que Fazemos ?</div>
                     <div style="font-size:1.1rem"
-                        class="text-shadow q-mb-md bg-grad-2 text-white high-opacity text-bold q-px-sm q-py-md text-left">
-                        Maximizamos seus lucros na venda de ingressos de forma escalável com serviços personalizados,
-                        transparência, suporte e uma
-                        interface amigável. Seus ingressos mais caros são os que mais pagam taxas abusivas, mas pra nós
-                        o ingresso é apenas
-                        um dado e por isso não devem ser taxados mais do que outros.
+                        class="text-shadow q-mb-md bg-grad-2 text-white high-opacity text-bold q-px-sm q-py-md text-center">
+                        Maximizamos o faturamento na venda de seus ingressos de forma escalável com serviços personalizados,
+                        transparência, suporte e uma interface amigável sem a necessidade de instalação
                         <br>
                     </div>
                     <div class="w100 img-wrapper column">
@@ -183,20 +179,16 @@
                         fazemos isso ?
                     </div>
                     <div id="vantagens" style="font-size:1.1rem;"
-                        class="text-shadow bg-grad-2 text-white high-opacity  text-bold q-px-sm  q-py-md text-left">
-                        Desde
-                        pequenos encontros a grandes festivais, nossa plataforma se adapta às suas necessidades e
-                        POTENCIALIZA seus ganhos.
-                        Oferecemos opções flexíveis que se
-                        ajustam ao porte do seu evento, permitindo que você personalize sua experiência de acordo com
-                        sua demanda.
+                        class="text-shadow bg-grad-2 text-white high-opacity  text-bold q-px-sm  q-py-md text-center">
+                        Utilizamos tecnologias de ponta com criptografia de dados para garantir a redução do tráfego de dados e a segurança de suas informações
+                        na nuvem, diminuindo custos de operação e aumentando a eficiência de seus eventos
                     </div>
                 </div>
                 <div class="rounded-borders" style="border: 4px solid #692EDD;">
                     <!-- <div style="letter-spacing:1px"
-                      class="text-shadow text-h6 w100 text-bold text-blue-4 text-center q-px-md q-py-sm border-bottom">
-                      Veja como
-                      nossa Plataforma pode aumentar o Faturamento do seu Evento!!</div> -->
+                        class="text-shadow text-h6 w100 text-bold text-blue-4 text-center q-px-md q-py-sm border-bottom">
+                        Veja como
+                        nossa Plataforma pode aumentar o Faturamento do seu Evento!!</div> -->
                     <div id="title"
                         class="text-h4 bg-white text-primary text-center w100 border-bottom text-bold q-pt-md q-pb-md">
                         Vantagens</div>
@@ -229,14 +221,14 @@
                         TAXAS EXCESSIVAS<br></strong>
                         Estamos
                         integrados ao <strong>Mercado Pago</strong> com segurança
-                        e confidencialidade. Integrado a todos os métodos de pagamentos
+                        e confidencialidade realizando pagamentos em ambientes com fontes confiáveis
                         <br>
                         <br>    
                         🤳🏼 <strong style="font-size:1.2rem" class="text-primary text-bold">SEM INSTALAÇÃO
                             <br></strong> Gerencie seus
                         eventos, vendas e ingressos na palma da sua mão <strong>sem
                             necessidade de
-                            instalação</strong> de aplicativos. Nosso webapp é adaptativo para todos os dispositivos
+                            instalação</strong> de aplicativos. Nosso webapp é adaptativo para todos os dispositivos inclusive o navegador do próprio instagram
                         <br>
                         <br>
                         🧑🏼‍💻 <strong style="font-size:1.2rem" class="text-primary text-bold">SUPORTE HUMANIZADO<br>

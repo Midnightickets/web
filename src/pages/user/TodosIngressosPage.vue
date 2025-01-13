@@ -51,7 +51,7 @@
                         <canvas class="shadow-1 rounded-borders" ref="qrcodeCanvas"></canvas>
                     </div>
                     <div class="text-grey-7 text-center bg-dark q-pa-md shadow-1" id="title-layout">
-                        Apresente este QRCode na entrada do Evento junto com seu Documento de Identidade
+                        Apresente este QRCode e seu Documento de Identidade na entrada do evento
                     </div>
                 <div v-if="loading" class="row w100 q-py-sm q-mt-xs justify-center">
                     <q-spinner-ball color="secondary" size="lg" />

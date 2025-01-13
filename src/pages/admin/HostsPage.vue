@@ -29,9 +29,9 @@
                 <q-card-section  class="w100 bg-dark text-right">
                     {{ host.created_at }}
                </q-card-section>
-                <q-card-section class="w100">
+                <!-- <q-card-section class="w100">
                     <q-btn  label="ver produtor" color="primary" glossy class="w100 q-py-md" icon-right="visibility"></q-btn>
-                </q-card-section>
+                </q-card-section> -->
             </q-card>
         </q-list>
     </div>
@@ -71,7 +71,7 @@ const buscarHosts = async () => {
             })
             return
         }
-        hosts.value = response.data.reverse()
+        hosts.value = response.data
     }).catch((error) => {
         $q.notify({
             color: 'orange-14',

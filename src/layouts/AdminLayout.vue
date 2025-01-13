@@ -56,8 +56,8 @@
             </div>
         </q-drawer>
 
-        <q-page-container class="relative">
-            <div v-if="!adminInfo" class="w100 text-white text-bold row items-center wrap q-px-md justify-center q-gutter-y-sm q-gutter-x-md  q-pt-lg">
+        <q-page-container class="relative bg-dark">
+            <div style="height:100vh;overflow:hidden" v-if="!adminInfo" class="w100 text-white text-bold row items-center wrap q-px-md justify-center q-gutter-y-sm q-gutter-x-md ">
                 <a href="/admin-auth" style="text-decoration: none;" id="title-2"
                 class="text-grey-4 text-bold row items-center q-mb-sm">
                 <q-icon size="md" class="q-pr-xs" color="secondary" name="local_activity" />
@@ -65,7 +65,6 @@
                  </a>
                 <q-btn class=" q-pa-lg shadow-2" to="/admin-auth" color="primary" glossy label="Iniciar Sessão" />
                 <div class="w100 q-pt-xs q-my-md mid-opacity bg-secondary rounded-borders">
-
                 </div>
             </div>
             <router-view v-if="adminInfo"  />
@@ -91,8 +90,9 @@ const menuOptions = ref({
         // USER MENUS
         { label: 'Logs Recentes', icon: 'notifications', to: '/admidnightickets', role: 'admin' },
         { label: 'Buscar Logs', icon: 'search', to: '/admidnightickets/buscar-logs', role: 'admin' },
-        { label: 'Usuários', icon: 'groups', to: '/admidnightickets/users', role: 'admin' },
+        { label: 'Buscar Pagamento', icon: 'account_balance', to: '/admidnightickets/buscar-pagamento', role: 'admin' },
         { label: 'Produtores', icon: 'diamond', to: '/admidnightickets/hosts', role: 'admin' },
+        { label: 'Usuários', icon: 'groups', to: '/admidnightickets/users', role: 'admin' },
     ]
 })
 function goTo(item) {

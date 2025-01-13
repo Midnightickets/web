@@ -70,6 +70,7 @@ const routes = [
     children: [
       { path: '', component: () => import('src/pages/admin/LogsRecentesPage.vue') },
       { path: 'buscar-logs', component: () => import('src/pages/admin/AdminPage.vue') },
+      { path: 'buscar-pagamento', component: () => import('src/pages/admin/BuscarPagamentoPage.vue') },
       { path: 'users', component: () => import('src/pages/admin/UsersPage.vue') },
       { path: 'hosts', component: () => import('src/pages/admin/HostsPage.vue') },
     ]

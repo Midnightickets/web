@@ -6,52 +6,18 @@
             <div class="q-pa-md">
                 <q-input
                     class="q-mb-md"
-                    v-model="subhost.event"
-                    placeholder="ID Evento*"
-                    maxlength="100"
+                    v-model="subhostCodigo"
+                    placeholder="Código Evento*"
+                    maxlength="200"
                     type="text"
                     outlined
                     color="dark"
                 >
                     <template v-slot:prepend>
-                        <q-icon name="event" color="dark" />
-                    </template>
-                </q-input>
-                <q-input
-                    v-model="subhost.login"
-                    placeholder="Login*"
-                    maxlength="40"
-                    type="text"
-                    outlined
-                    color="dark"
-                >
-                    <template v-slot:prepend>
-                        <q-icon name="account_circle" color="dark" />
-                    </template> 
-                </q-input>
-                <q-input
-                    v-model="subhost.password"
-                    placeholder="Senha*"
-                    :type="formConfig.showPassword ? 'text' : 'password'"
-                    maxlength="4"
-                    mask="####"
-                    outlined
-                    color="dark"
-                    class="q-mt-md"
-                    @keyup.enter="login"
-                >
-                    <template v-slot:prepend>
-                        <q-icon
-                            name="lock"
-                            color="dark"
-                        />
+                        <q-icon name="lock" color="dark" />
                     </template>
                     <template v-slot:append>
-                        <q-icon
-                            :name="formConfig.showPassword ? 'visibility' : 'visibility_off'"
-                            class="cursor-pointer"
-                            @click="formConfig.showPassword = !formConfig.showPassword"
-                        />
+                        <q-icon name="content_paste" color="primary" @click="pasteCode()"/>
                     </template>
                 </q-input>
                 <div v-if="loading" class="row w100 q-py-sm q-mt-xs justify-center">
@@ -95,6 +61,7 @@ const formConfig = ref({
     showPassword: false,
     subhostLoginRouter: '/login_subhost',
 })
+const subhostCodigo = ref('')
 
 const subhost = ref({
     login: 'PORT2',
@@ -102,21 +69,31 @@ const subhost = ref({
     event: '677406012465472e1a29667a',
 })
 
+function pasteCode() {
+    navigator.clipboard.readText().then(text => {
+        subhostCodigo.value = text
+    })
+}
+
 const isLoginFormInvalid = () => {
-    if (subhost.value.login.trim().length < 3 || subhost.value.password.trim().length < 3 || subhost.value.event.trim() == '') {
+    if (subhostCodigo.value.trim().length < 10 || subhostCodigo.value.trim() == '') {
         return true
     }
     return false
 }
 
+function parseStringToReqObject(inputString) {
+    const [login, password, event] = inputString.split('#');
+    return {
+        login,
+        password,
+        event,
+    };
+}
+
 async function login() {
     loading.value = true
-    const req = {
-        login: subhost.value.login.toLocaleLowerCase(),
-        password: subhost.value.password.toLocaleLowerCase(),
-        event: subhost.value.event
-    }
-    await api.post(formConfig.value.subhostLoginRouter, req)
+    await api.post(formConfig.value.subhostLoginRouter, parseStringToReqObject(subhostCodigo.value))
     .then(response => {
         sessionStorage.setItem('subhostInfo', JSON.stringify(response.data))
         sessionStorage.setItem('isSubhost', true)

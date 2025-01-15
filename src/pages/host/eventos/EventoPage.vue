@@ -293,7 +293,8 @@ async function getSubhosts() {
 
 function copyCredentials (subhost) {
     showSubhostsPassword.value = true
-    navigator.clipboard.writeText(`🎫 MIDNIGHT TICKETS\nSuas credenciais para o evento: ${evento.value.title}\nID do Evento: ${evento.value.id}\nNome: ${subhost.name}\nLogin: ${subhost.login}\nSenha: ${subhost.password}\n\nMANTENHA AS CREDENCIAIS SEGURAS POIS ELAS O DARÃO ACESSO PARA VALIDAR OS INGRESSOS`);
+    navigator.clipboard.writeText(`🎫 MIDNIGHT TICKETS\n\nSegue abaixo seu código de acesso para validar ingressos no evento ${evento.value.title}:\n\n${subhost.login}#${subhost.password}#${evento.value.id}
+    \nMANTENHA AS CREDENCIAIS SEGURAS E NÃO COMPARTILHE COM TERCEIROS\n\n🎟️ Acesse: https://midnightickets.com/login-subhost`);
     $q.notify({
         color: 'blue-14',
         textColor: 'white',

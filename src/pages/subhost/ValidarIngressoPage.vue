@@ -1,10 +1,10 @@
 <template>
-  <q-page class="bg-grey-3">
-    <div id="title" class="w100 text-center text-secondary q-pt-md q-px-sm">
+  <q-page class="bg-blue-1">
+    <div id="title" class="w100 text-center text-secondary q-pt-xl q-px-sm">
       Validar Ingresso
     </div>
     <div class="w100 q-px-md row justify-center">
-      <q-btn class="q-py-md q-mt-md shadow-2" icon-right="qr_code_scanner" label="Scanear Ingresso" @click="startScanning" glossy color="primary" />
+      <q-btn class="q-py-lg q-mt-md shadow-2" icon-right="qr_code_scanner" label="Scanear Ingresso" @click="startScanning" glossy color="blue-14" />
     </div>
     <q-dialog v-model="cameraOpen" class="w100" persistent>
       <div class="w100 rounded-borders column justify-center items-center">
@@ -95,6 +95,7 @@ async function validarCheckin() {
   const ingressoData = {
     id: ingresso.value.id,
     subhost: subhost.login,
+    token: subhost.token,
   }
   await api.post('/event/checkin', ingressoData).then((res) => {
     $q.notify({
@@ -122,7 +123,8 @@ async function validarCheckin() {
 const validateTicket = async () => {
   try {
     cameraOpen.value = false;
-    const response = await api.post('/event/check_valid_ticket', { id: ingresso_id.value });
+    const subhostInfo = JSON.parse(SessionStorage.getItem('subhostInfo'));
+    const response = await api.post('/event/check_valid_ticket', { id: ingresso_id.value, subhost: subhostInfo.login, token: subhostInfo.token });
     ingresso.value = response.data;
     $q.notify({
       color: 'blue-14',

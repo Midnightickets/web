@@ -135,6 +135,7 @@ const typeOptions = [
     {value: 11, label: 'Evento Finalizado', icon: 'event'},
     {value: 12, label: 'Evento Cancelado', icon: 'event'},
     {value: 13, label: 'Nova Cortesia Criada', icon: 'confirmation_number'},
+    {value: 14, label: 'Check-in Realizado', icon: 'qr_code_scanner'},
 ]
 
 const sakeStatusOptions = [
@@ -179,6 +180,8 @@ const logs = ref([])
 //     UPDATE_EVENT_FINISHED: 'Evento Finalizado',
 //     UPDATE_EVENT_CANCELED: 'Evento Cancelado',
 //     NEW_CORTESIA: 'Nova Cortesia Criada',
+//     EVENT_CHECKIN: 'Check-in Realizado',
+
 // }
 
 

@@ -22,7 +22,7 @@
                     <a v-if="isMobile & userInfo == ''" class="menu-item" @click="scrollToBottom()">
                         <q-btn icon="phone_callback" color="secondary"></q-btn>
                     </a>
-                    <q-btn v-if="userInfo == ''" glossy dense class="menu-item text-bold bg-primary q-pa-md text-purple-1 row items-center"
+                    <q-btn v-if="userInfo == ''" glossy dense flat class="menu-item text-bold bg-primary q-pa-md text-purple-1 row items-center"
                         style="border-radius:12px" @click="navigateTo('/login')">
                         Entrar
                         <q-icon name="login" size="md" />
@@ -85,16 +85,16 @@
                 </q-card>
             </q-dialog>
         </q-header>
-        <q-page-container v-if="userInfo === ''" class="">
+        <q-page-container v-if="userInfo === ''" class="bg-grey-3">
             <div  class="rounded-borders w100 row justify-center q-mt-md relative" style="overflow: hidden ">
                 <div v-if="userInfo == ''" class="animate__animated animate__zoomInDown animate__delay-1s animate__slower row no-wrap rounded-borders justify-center q-px-sm  w100"
                     style="overflow: hidden ;z-index: 9;">
-                    <q-btn glossy to="/login-host" color="secondary"
-                        class="shadow animate__animated text-primary animate__fadeInLeft  animate__delay-3s animate__slower q-pa-xl rounded-borders"
-                        icon-right="diamond" label="Quero criar eventos" />
-                    <q-btn glossy @click="searchPublic.opened = !searchPublic.opened"
-                        class="shadow-1 animate__animated animate__fadeInRight  text-bold q-ml-sm text-white animate__delay-3s animate__slower q-pa-xl rounded-borders"
-                        icon-right="confirmation_number"  color="primary" label="Quero comprar Ingressos" />
+                    <q-btn to="/login-host" color="blue-14"
+                        class="shadow-6 animate__animated text-primary animate__fadeInLeft  animate__delay-3s animate__slower q-pa-xl rounded-borders"
+                        icon-right="event" label="Quero criar eventos" />
+                    <q-btn @click="searchPublic.opened = !searchPublic.opened"
+                        class="shadow-6 animate__animated animate__fadeInRight  text-bold q-ml-sm text-white animate__delay-3s animate__slower q-pa-xl rounded-borders"
+                        icon-right="confirmation_number"  color="blue-14" label="Quero comprar Ingressos" />
                 </div>
             </div>
             <div v-if="searchPublic.opened" id="search-public" class="w100 rounded-borders row justify-center">
@@ -129,7 +129,7 @@
                             <q-icon v-if="!isMobile" size="xl" color="white" name="local_activity" />
                         </q-toolbar-title>
                     </q-toolbar>
-                    <div class="text-shadow-2 space bg-grad-2 w100 text-center text-grey-11 q-py-md text-bold q-px-md "
+                    <div class="w100 text-center text-grey-1 text-shadow bg-secondary q-py-md text-bold q-px-md"
                         style="font-size:1rem">
                         REALIZE EVENTOS com A MENOR TAXA do mercado e PARE de PAGAR TRIBUTOS excessivos na VENDA DE INGRESSOS
                     </div>
@@ -168,8 +168,8 @@
                     <div style="font-size:1.3rem" class=" bg-grad-4 text-white text-bold q-px-sm q-py-md text-right">O que Fazemos ?</div>
                     <div style="font-size:1.1rem"
                         class="text-shadow q-mb-md bg-grad-2 text-white high-opacity text-bold q-px-sm q-py-md text-center">
-                        Maximizamos o faturamento na venda de seus ingressos de forma escalável com serviços personalizados,
-                        transparência, suporte e uma interface amigável sem a necessidade de instalação
+                        Maximizamos o faturamento na venda de seus ingressos de forma escalável além de gerenciar eventos em tempo real, temos 
+                        suporte humanizado e uma interface amigável sem a necessidade de instalação
                         <br>
                     </div>
                     <div class="w100 img-wrapper column">
@@ -404,7 +404,7 @@
                 </div>
             </q-page>
         </q-page-container>
-        <q-page-container v-else>
+        <q-page-container style="min-height: 80vh" v-else>
             <div id="search-public" class="w100 rounded-borders row justify-center">
                 <q-card id="search-card" class="q-mt-md q-mb-md q-mx-md animate__animated rounded-borders animate__fadeInDown animate__slower">
                     <q-card-section class="bg-grad-4 text-white text-bold text-center q-pa-md ">
@@ -426,20 +426,22 @@
                 </q-card>
             </div>
         </q-page-container>
-        <footer class="w100 row wrap justify-center items-center q-py-xl bg-primary q-px-xl q-mt-lg">
+        <footer class="w100 row wrap justify-center items-center q-py-xl bg-primary q-px-xl">
             <div class=" column q-py-md">
-                <q-btn label="Encontre eventos" @click="findEvents()" class="text-grey-5" flat></q-btn>
-                <q-btn label="Compre ingressos" to="/login" class="text-grey-5" flat></q-btn>
                 <q-btn label="Crie seu evento" to="/login-host" class="text-grey-5" flat></q-btn>
                 <q-btn label="Valide ingressos" to="/login-subhost" class="text-grey-5" flat></q-btn>
-                <q-btn label="termos de uso" class="text-grey-5" flat></q-btn>
+                <q-btn label="Compre ingressos" to="/login" class="text-grey-5" flat></q-btn>
+                <q-btn label="Encontre eventos" @click="findEvents()" class="text-grey-5" flat></q-btn>
             </div>
             <div class="w100 q-pt-xs bg-secondary rounded-borders"></div>
             <div class="column q-py-md items-center">
+                <q-btn label="Suporte" class="text-grey-5" flat></q-btn>
+                <q-btn label="termos de uso" class="text-grey-5" flat></q-btn>
                 <q-btn label="instagram" @click="goTo('https://www.instagram.com/midnightickets')" class="text-grey-5" flat></q-btn>
-                <q-btn label="suporte" class="text-grey-5" flat></q-btn>
                 <q-btn label="desenvolvedor" @click="goTo('https://samuelvictorol.github.io/portfolio')" class="text-grey-5" flat></q-btn>
-                <q-btn label="midnightickets@gmail.com" class="text-grey-5" flat></q-btn>
+            </div>
+            <div class="w100 row q-pt-xl items-center justify-start text-secondary" id="title-layout">
+                Midnight Tickets Software midnightickets@gmail.com
             </div>
         </footer>
     </q-layout>

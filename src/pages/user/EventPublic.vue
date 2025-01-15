@@ -1,5 +1,5 @@
 <template>
-    <q-page class="q-pb-xl bg-roxo-light animate__animated animate__fadeInLeft ">
+    <q-page class="q-pb-xl bg-blue-1 animate__animated animate__fadeInLeft ">
         <div class="w100 q-pt-sm q-pl-sm" >
             <q-btn @click="returnBack()" icon="keyboard_return" color="secondary" glossy></q-btn>
         </div>
@@ -41,8 +41,8 @@
                                 <q-item id="ticket" v-for="(ticket, index) in event.ticket_types" :key="index" style="border-left: 6px solid #9573f3;" class="shadow-1 q-mt-md">
                                     <q-item-section class="text-bold text-primary q-py-sm" id="title-layout">
                                         <q-icon name="confirmation_number"></q-icon>{{ ticket.title }}<br><strong class="text-secondary q-pt-xs">R$ {{ formatStringValue(ticket.price) }}</strong>
-                                        <q-btn v-if="ticket.price != '0,00'" @click="openModalBuyTicket(ticket)" class="q-mt-sm q-py-lg" icon="add_shopping_cart" label="Comprar" color="green-14" glossy></q-btn>
-                                        <q-btn v-if="ticket.price == '0,00'" @click="openModalBuyTicket(ticket)" class="q-mt-sm q-py-lg" icon="touch_app" label="Retirar Cortesia" color="blue-14" glossy></q-btn>
+                                        <q-btn v-if="ticket.price != '0,00' && ticket.price != '0' && ticket.price != '0,0'" @click="openModalBuyTicket(ticket)" class="q-mt-sm q-py-lg" icon="add_shopping_cart" label="Comprar" color="green-14" glossy></q-btn>
+                                        <q-btn v-else @click="openModalBuyTicket(ticket)" class="q-mt-sm q-py-lg" icon="touch_app" label="Retirar Cortesia" color="blue-14" glossy></q-btn>
                                     </q-item-section>
                                 </q-item>
                             </div>

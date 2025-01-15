@@ -11,7 +11,7 @@
         <div v-if="!loading" class="animate__animated animate__fadeInLeft w100 text-white text-center q-pb-lg q-mt-sm q-px-md" id="title-2">
             Eventos de<br>{{ hostName.toUpperCase() }}
         </div>
-        <div v-if="!loading" class="w100 row items-center q-gutter-y-md">
+        <div v-if="!loading" class="w100 row items-start q-gutter-y-md">
             <q-card v-for="(event, index) in events" :key="index" class="card-event q-mx-md bg-grey-4 q-mt-md">
                 <q-card-section>
                     <q-item >

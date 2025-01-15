@@ -94,6 +94,12 @@
                 <q-card-section v-if="log.event" class="w100 bg-grey-6">
                     [evento] {{ log.event }}
                 </q-card-section>
+                <q-card-section v-if="log.ingresso" class="w100 bg-grey-6">
+                    [ingresso] {{ log.ingresso }}
+                </q-card-section>
+                <q-card-section v-if="log.landing" class="w100 bg-grey-6">
+                    [landing] {{ log.landing }}
+                </q-card-section>
                 <q-card-section v-if="log.payment" class="w100 bg-grey-6">
                     [pagamento] {{ log.payment }}
                 </q-card-section>

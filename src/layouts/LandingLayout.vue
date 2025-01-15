@@ -3,10 +3,10 @@
         <q-header class="fixed bg-glass-2 text-white animate__animated animate__fadeInDown animate__slow shadow-1"
             height-hint="98">
             <div style="font-size: 1rem;" class=" q-py-md w100 row no-wrap items-center  justify-evenly">
-                <a v-if="!isMobile" @click="scrollTop()" class="menu-item row items-center" id="title-menu">
+                <a v-if="!isMobile" @click="scrollBot()" class="menu-item row items-center" id="title-menu">
                     <q-icon class="q-pr-xs" name="local_activity" size="xl" /> Midnight Tickets
                 </a>
-                <a v-else @click="scrollTop()" class="menu-item row items-center">
+                <a v-else @click="scrollBot()" class="menu-item row items-center">
                     <q-icon name="local_activity" size="65px" />
                 </a>
                 <div class="row items-center no-wrap q-gutter-x-sm">
@@ -631,7 +631,7 @@ async function sendForm(msg) {
 
 
 function scrollBot() {
-    window.scrollTo(0, document.body.scrollHeight - 830);
+    window.scrollTo(0, document.body.scrollHeight);
 }
 
 function scrollToBottom() {

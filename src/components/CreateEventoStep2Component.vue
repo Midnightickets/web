@@ -39,7 +39,7 @@
                     <div class="row w100 items-center justify-center ">
                         <q-btn class="absolute" style="top:-5px;left:-15px" color="secondary" flat icon="close"
                             @click="removeIngresso(index)" />
-                        <div class="text-bold text-secondary text-shadow q-py-xs text-h6">R$ {{ ingresso.price }}</div>
+                        <div class="text-bold text-secondary text-shadow q-py-xs text-h6">R$ {{ Utils.formatCurrency(ingresso.price) }}</div>
                     </div>
                 </div>
                 <div v-if="ingressos.length == 0" class="text-center text-bold text-secondary">No momento não há ingressos cadastrados</div>

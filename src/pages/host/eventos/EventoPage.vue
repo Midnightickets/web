@@ -177,9 +177,9 @@
             <div class="w100 q-mt-xl q-px-sm" v-if="!loading">
                 <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-xl" to="/host/andamento-evento" label="Andamento do Evento" color="primary" glossy
                     icon-right="visibility"></q-btn>
-                <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-md" label="Encerrar Evento" @click="confirmChangeStatusEvento('FINALIZADO')" color="blue-14" glossy
+                <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-md" label="Finalizar Evento" @click="confirmChangeStatusEvento('FINALIZADO')" color="red-14" glossy
                     icon-right="event_available"></q-btn>
-                <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-sm" label="Cancelar Evento" @click="confirmChangeStatusEvento('CANCELADO')" color="red-4" flat></q-btn>
+                <!-- <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-sm" label="Cancelar Evento" @click="confirmChangeStatusEvento('CANCELADO')" color="red-4" flat></q-btn> -->
             </div>
             <q-dialog v-model="modalPackage">
                 <q-card>

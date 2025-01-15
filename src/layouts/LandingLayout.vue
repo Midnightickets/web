@@ -89,12 +89,12 @@
             <div  class="rounded-borders w100 row justify-center q-mt-md relative" style="overflow: hidden ">
                 <div v-if="userInfo == ''" class="animate__animated animate__zoomInDown animate__delay-1s animate__slower row no-wrap rounded-borders justify-center q-px-sm  w100"
                     style="overflow: hidden ;z-index: 9;">
-                    <q-btn glossy to="/login-host" color="primary"
+                    <q-btn glossy to="/login-host" color="secondary"
                         class="shadow animate__animated text-primary animate__fadeInLeft  animate__delay-3s animate__slower q-pa-xl rounded-borders"
                         icon-right="diamond" label="Quero criar eventos" />
                     <q-btn glossy @click="searchPublic.opened = !searchPublic.opened"
-                        class="shadow-1 animate__animated animate__fadeInRight  text-bold bg-blue-14 q-ml-sm text-white animate__delay-3s animate__slower q-pa-xl rounded-borders"
-                        icon-right="confirmation_number" label="Quero comprar Ingressos" />
+                        class="shadow-1 animate__animated animate__fadeInRight  text-bold q-ml-sm text-white animate__delay-3s animate__slower q-pa-xl rounded-borders"
+                        icon-right="confirmation_number"  color="primary" label="Quero comprar Ingressos" />
                 </div>
             </div>
             <div v-if="searchPublic.opened" id="search-public" class="w100 rounded-borders row justify-center">
@@ -384,10 +384,10 @@
                             </div>
                         </q-card>
                     </div>
-                    <div class="space rounded-borders q-my-md ">
+                    <!-- <div class="space rounded-borders q-my-md ">
                         <q-btn @click="wppConsultor()" class="q-pa-md w100" color="green" icon-right="sms"
                             label="Fale Agora Com um de nossos Consultores" glossy />
-                    </div>
+                    </div> -->
                     <div v-if="userInfo == ''"
                         class="w100 text-bold rounded-borders column bg-primary items-center justify-center text-white q-pa-md text-center q-mt-md ">
                         <div class="column text-h5 text-white text-bold">Validar Ingressos</div>
@@ -428,17 +428,18 @@
         </q-page-container>
         <footer class="w100 row wrap justify-center items-center q-py-xl bg-primary q-px-xl q-mt-lg">
             <div class=" column q-py-md">
-                <q-btn label="Encontre eventos" class="text-grey-5" flat></q-btn>
-                <q-btn label="Compre ingressos" class="text-grey-5" flat></q-btn>
-                <q-btn label="Crie seu evento" class="text-grey-5" flat></q-btn>
+                <q-btn label="Encontre eventos" @click="findEvents()" class="text-grey-5" flat></q-btn>
+                <q-btn label="Compre ingressos" to="/login" class="text-grey-5" flat></q-btn>
+                <q-btn label="Crie seu evento" to="/login-host" class="text-grey-5" flat></q-btn>
+                <q-btn label="Valide ingressos" to="/login-subhost" class="text-grey-5" flat></q-btn>
                 <q-btn label="termos de uso" class="text-grey-5" flat></q-btn>
             </div>
             <div class="w100 q-pt-xs bg-secondary rounded-borders"></div>
             <div class="column q-py-md items-center">
-                <q-btn label="instagram" class="text-grey-5" flat></q-btn>
-                <q-btn label="email" class="text-grey-5" flat></q-btn>
+                <q-btn label="instagram" @click="goTo('https://www.instagram.com/midnightickets')" class="text-grey-5" flat></q-btn>
                 <q-btn label="suporte" class="text-grey-5" flat></q-btn>
-                <q-btn label="desenvolvedor" class="text-grey-5" flat></q-btn>
+                <q-btn label="desenvolvedor" @click="goTo('https://samuelvictorol.github.io/portfolio')" class="text-grey-5" flat></q-btn>
+                <q-btn label="midnightickets@gmail.com" class="text-grey-5" flat></q-btn>
             </div>
         </footer>
     </q-layout>
@@ -455,6 +456,15 @@ const searchPublic = ref({
     isByHostName: false,
     titleEventOrHostName: ''
 })
+
+function goTo(url) {
+    window.open(url, '_blank');
+}
+
+function findEvents() {
+    searchPublic.value.opened = true
+    window.scrollTo(0, 0);
+}
 
 const loading = ref(false)
 

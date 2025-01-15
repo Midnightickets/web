@@ -77,7 +77,7 @@
                 <q-icon size="md" class="q-pr-xs" color="secondary" name="local_activity" />
                 Midnight Tickets
                  </a>
-                <q-btn class=" q-pa-lg shadow-2" to="/login" color="secondary" glossy label="Iniciar Sessão" />
+                <q-btn class=" q-pa-lg shadow-2" to="/login" color="secondary" glossy label="Entrar" icon-right="login" />
                 <div class="w100 q-pt-xs q-my-md mid-opacity bg-secondary rounded-borders">
 
                 </div>

@@ -1,5 +1,5 @@
 <template>
-    <q-page class="q-pb-xl bg-blue-1 animate__animated animate__fadeInLeft ">
+    <q-page class="q-pb-xl bg-grey-4 animate__animated animate__fadeInLeft ">
         <div class="w100 q-pt-sm q-pl-sm" >
             <q-btn @click="returnBack()" icon="keyboard_return" color="secondary" glossy></q-btn>
         </div>
@@ -10,22 +10,24 @@
                 </q-card-section>
             </q-card>
         </div>
-        <div v-if="!loading && !eventoIndisponivel" class="animate__animated animate__fadeInRight w100 text-primary text-center q-px-sm " id="title">
+        <div v-if="!loading && !eventoIndisponivel" class="animate__animated animate__fadeInRight w100 text-primary text-shadow-2 text-center q-px-sm " id="title">
             {{ event.title }}
         </div>
-        <q-btn  v-if="!loading && !eventoIndisponivel" :to="'/' + event.host_login" class="text-secondary text-bold w100 text-center q-mb-md text-" flat :label="event.host"></q-btn>
-        <div v-if="isMobile && !loading && !eventoIndisponivel" class="w100 q-mb-lg row justify-center">
-            <a class="text-white bg-green-14 q-pa-md rounded-borders text-bold shadow-1" style="text-decoration: none;" href="#ingressos">Comprar Ingressos <q-icon size="sm" name="add_shopping_cart"></q-icon></a>
+        <div class="w100 row justify-center">
+            <q-btn glossy v-if="!loading && !eventoIndisponivel" :to="'/' + event.host_login" class="text-bold w50 text-center q-my-md " color="secondary" :label="event.host"></q-btn>
         </div>
-        <div v-if="!loading && !eventoIndisponivel" id="cards-wrapper" class="w100 row items-start q-gutter-y-md">
+        <div v-if="isMobile && !loading && !eventoIndisponivel" class="w100 q-mb-lg row justify-center">
+            <a class="text-white bg-green-14 q-pa-md rounded-borders text-bold shadow-1" style="text-decoration: none;font-size:1rem" href="#ingressos">Comprar Ingressos <q-icon size="sm" name="add_shopping_cart"></q-icon></a>
+        </div>
+        <div v-if="!loading && !eventoIndisponivel" id="cards-wrapper" class="w100 row items-start q-gutter-y-md q-mt-lg">
             <q-card class="card-event q-mx-md bg-grey-3 q-mt-md">
                 <q-card-section>
                     <q-item >
                         <q-item-section class="text-black">
                             <q-item-label id="title-2"  class="text-primary">INFORMAÇÕES</q-item-label>
-                            <q-item-label class="text-bold text-grey-14 q-py-sm">{{ event.desc }}</q-item-label>
-                            <q-item-label class="text-bold text-primary w100 column text-bold" >📆 {{ event.date.replaceAll('-', '/') }} ⏱️ {{ event.initial_time ? event.initial_time : 'xx:xx' }}{{ event.final_time ? (' - ' + event.final_time) : ''}}</q-item-label>
-                            <img id="img-events" :src="event.img_url" class="q-mt-md" alt="🎇 Banner do Evento"/>
+                            <img id="img-events" :src="event.img_url" class="q-my-md" alt="🎇 Banner do Evento"/>
+                            <q-item-label style="font-size:1rem" class="text-bold text-primary w100 column text-bold" >📆 {{ event.date.replaceAll('-', '/') }} ⏱️ {{ event.initial_time ? event.initial_time : 'xx:xx' }}{{ event.final_time ? (' - ' + event.final_time) : ''}}</q-item-label>
+                            <q-item-label style="font-size:1.15rem;white-space: pre-wrap" class="text-bold text-grey-14 q-py-sm">{{ event.desc }}</q-item-label>
                             <div id="ingressos"></div>
                         </q-item-section>
                     </q-item>
@@ -39,10 +41,11 @@
                             <q-item-label id="title-2"  class="text-primary" >INGRESSOS</q-item-label>
                             <div id="ticket-types" >
                                 <q-item id="ticket" v-for="(ticket, index) in event.ticket_types" :key="index" style="border-left: 6px solid #9573f3;" class="shadow-1 q-mt-md">
-                                    <q-item-section class="text-bold text-primary q-py-sm" id="title-layout">
-                                        <q-icon name="confirmation_number"></q-icon>{{ ticket.title }}<br><strong class="text-secondary q-pt-xs">R$ {{ formatStringValue(ticket.price) }}</strong>
-                                        <q-btn v-if="ticket.price != '0,00' && ticket.price != '0' && ticket.price != '0,0'" @click="openModalBuyTicket(ticket)" class="q-mt-sm q-py-lg" icon="add_shopping_cart" label="Comprar" color="green-14" glossy></q-btn>
-                                        <q-btn v-else @click="openModalBuyTicket(ticket)" class="q-mt-sm q-py-lg" icon="touch_app" label="Retirar Cortesia" color="blue-14" glossy></q-btn>
+                                    <q-item-section class="text-bold text-primary q-py-sm"  id="title-2">
+                                        <q-icon name="confirmation_number" size="md"></q-icon>{{ ticket.title }}<br><strong class="text-secondary q-pt-xs">R$ {{ formatStringValue(ticket.price) }}</strong>
+                                        <q-btn v-if="ticket.price != '0,00' && ticket.price != '0' && ticket.price != '0,0'" @click="openModalBuyTicket(ticket)" class="q-mt-sm q-py-lg" icon="add_shopping_cart"
+                                        label="Comprar" color="green-14" style="font-size:1rem" glossy></q-btn>
+                                        <q-btn  style="font-size:1rem" v-else @click="openModalBuyTicket(ticket)" class="q-mt-sm q-py-lg" icon="touch_app" label="Retirar Cortesia" color="blue-14" glossy></q-btn>
                                     </q-item-section>
                                 </q-item>
                             </div>

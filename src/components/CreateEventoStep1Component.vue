@@ -14,7 +14,7 @@
                     <q-btn flat icon="nightlife" color="primary" />
                 </template>
             </q-input>
-            <q-input maxlength="500" filled type="textarea" v-model="evento.desc" label="Descrição">
+            <q-input maxlength="1000" autogrow filled type="textarea" v-model="evento.desc" label="Descrição">
                 <template v-slot:append>
                     <q-btn flat icon="info" color="primary" />
                 </template>

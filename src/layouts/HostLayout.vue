@@ -64,6 +64,24 @@
 
         <q-page-container>
             <router-view />
+            <footer class="w100 row wrap justify-center items-center q-py-xl bg-primary q-px-xl">
+                <div class=" column q-py-md">
+                    <q-btn label="Crie seu evento" to="/login-host" class="text-grey-5" flat></q-btn>
+                    <q-btn label="Valide ingressos" to="/login-subhost" class="text-grey-5" flat></q-btn>
+                    <q-btn label="Encontre eventos" to="/" class="text-grey-5" flat></q-btn>
+                    <q-btn label="Suporte ao produtor" class="text-grey-5" flat></q-btn>
+                </div>
+                <div class="w100 q-pt-xs bg-secondary rounded-borders"></div>
+                <div class="column q-py-md items-center">
+                    <q-btn label="termos de uso" class="text-grey-5" flat></q-btn>
+                    <q-btn label="email" @click="alertar('midnightickets@gmail.com')" class="text-grey-5" flat></q-btn>
+                    <q-btn label="instagram" @click="goTo('https://www.instagram.com/midnightickets')" class="text-grey-5" flat></q-btn>
+                    <q-btn label="desenvolvedor" @click="goTo('https://samuelvictorol.github.io/portfolio')" class="text-grey-5" flat></q-btn>
+                </div>
+                <div class="w100 row q-pt-xl items-center justify-start text-secondary" id="title-layout">
+                    Midnight Tickets Software
+                </div>
+            </footer>
         </q-page-container>
 
     </q-layout>
@@ -96,6 +114,10 @@ const menuOptions = ref({
 })
 function goTo(item) {
     router.push(item.to)
+}
+
+function alertar(msg) {
+    alert(msg)
 }
 
 function cleanSessionStorage() {

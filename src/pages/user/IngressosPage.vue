@@ -1,7 +1,8 @@
 <template>
     <q-page class="bg-grad-2 text-white q-px-md animate__animated animate__fadeIn q-pb-xl" id="title">
         <div class="w100" >
-            <q-btn @click="retornar()" icon="keyboard_return" color="secondary" glossy></q-btn>
+            <q-btn @click="retornar()" icon="keyboard_return" color="secondary" class="q-mr-sm" glossy></q-btn>
+            <q-btn to="/" icon="event" color="secondary" glossy></q-btn>
         </div>
         <div class="w100 text-white animate__animated animate__zoomIn text-center q-mb-md" id="title">Meus Ingressos</div>
         <div v-if="loading" class="row w100 q-py-sm q-mt-md justify-center">

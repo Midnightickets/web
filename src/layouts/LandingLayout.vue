@@ -27,6 +27,9 @@
                         Entrar
                         <q-icon name="login" size="md" />
                     </q-btn>
+                    <q-btn v-if="userInfo != ''" dense class="menu-item text-purple-1 text-bold q-pa-md row items-center" label="sair" flat
+                        style="border-radius:8px" @click="Utils.logout()">
+                    </q-btn>
                     <q-btn v-if="userInfo != ''" glossy dense class="menu-item text-bold bg-secondary q-pa-md text-purple-1 row items-center"
                         style="border-radius:8px" @click="navigateTo('/me')">
                         <q-icon name="person" size="md" />
@@ -85,7 +88,7 @@
                 </q-card>
             </q-dialog>
         </q-header>
-        <q-page-container v-if="userInfo === ''" class="bg-grey-3">
+        <q-page-container v-if="userInfo === ''" class="bg-grey-4">
             <div  class="rounded-borders w100 row justify-center q-mt-md relative" style="overflow: hidden ">
                 <div v-if="userInfo == ''" class="animate__animated animate__zoomInDown animate__delay-1s animate__slower row no-wrap rounded-borders justify-center q-px-sm  w100"
                     style="overflow: hidden ;z-index: 9;">
@@ -451,7 +454,7 @@ import { useQuasar } from "quasar";
 import { onBeforeMount, onMounted, ref } from "vue";
 import { api } from 'src/boot/axios';
 import { useRouter } from "vue-router";
-
+import { Utils } from 'src/utils/Utils';
 const userInfo = ref('')
 const searchPublic = ref({
     opened: false,

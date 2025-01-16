@@ -18,7 +18,6 @@ import { useQuasar } from "quasar";
 
 const loading = ref(true)
 const $q = useQuasar();
-
 const loadScript = (src) => {
     return new Promise((resolve, reject) => {
         const script = document.createElement('script');
@@ -76,10 +75,10 @@ onBeforeMount(async () => {
             }).catch((error) => {
                 $q.notify({
                     message: error.response.data.error,
-                    color: 'orange-14',
+                    color: 'secondary-14',
                     position: 'top',
                     icon: 'confirmation_number',
-                    timeout: 3000
+                    timeout: 4000,
                 });
             });
         }

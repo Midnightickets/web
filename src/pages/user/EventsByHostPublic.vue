@@ -1,6 +1,7 @@
 <template>
     <q-page class="q-pb-xl bg-grad-1 animate__animated animate__fadeInRight">
         <div class="w100 q-pt-sm q-pl-sm" >
+            <q-btn @click="returnRout()" icon="keyboard_return" color="secondary" glossy class="shadow-1 q-mr-sm"></q-btn>
             <q-btn to="/" icon="travel_explore" color="secondary" glossy class="shadow-1"></q-btn>
         </div>
         <div v-if="!loading" class="w100 row justify-center">
@@ -50,6 +51,10 @@ const events = ref([]);
 const loading = ref(true);
 const hostName = ref(route.params.events_host);
 const hostImgUrl = ref('');
+
+function returnRout() {
+    window.history.back();
+}
 
 onBeforeMount(async () => {
     loading.value = true;

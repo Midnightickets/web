@@ -43,7 +43,7 @@
                         <div class="text-h6 text-primary row items-center">
                             <q-icon class="q-pr-xs" color="primary" name="description" size="sm"/>
                             Descrição</div>
-                        <div class="text-grey-7 text-bold" style="font-size: 16px;">{{ evento.desc }}</div>
+                        <div class="text-grey-7 text-bold" style="font-size: 16px;white-space: pre-wrap">{{ evento.desc }}</div>
                     </q-card-section>
                     <q-card-section v-if="!editando">
                         <div class="text-h6 text-primary row items-center">

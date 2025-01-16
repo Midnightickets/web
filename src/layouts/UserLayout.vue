@@ -12,8 +12,8 @@
                         {{ userInfo.login }}
                     </a>
                     <a  v-else style="text-decoration: none;" id="title-layout"
-                        class="text-purple-1 q-pl-xs text-bold">
-                        {{ route.params.events_host }}
+                        href="/me" class="text-purple-1 q-pl-xs text-bold">
+                        Midnight Tickets
                     </a>
                 </q-toolbar-title>
 
@@ -63,26 +63,40 @@
                 Midnight Tickets
                  </a>
                 <div class="text-center text-grey-4 q-mb-md q-mx-md">
-                    Faça Login para Comprar Ingressos e Acompanhar seus Eventos
+                    Faça Login para comprar ingressos e encontrar eventos
                 </div>
                 <q-btn class="q-my-lg q-pa-lg shadow-2" to="/login" color="secondary" glossy label="Iniciar Sessão" icon-right="login" />
                 <q-btn class="q-mt-xl" to="/" flat label="Página Inicial" color="secondary" icon="home" />
             </div>
         </q-drawer>
 
-        <q-page-container class="relative w100 bg-dark">
+        <q-page-container class="relative w100 bg-grey-dark ">
             <div v-if="!userInfo" class="w100 text-white text-bold row items-center wrap w100 justify-center q-gutter-y-sm q-gutter-x-md  q-pt-lg">
                 <a href="/" style="text-decoration: none;" id="title-2"
-                class="text-secondary  text-shadow text-bold row items-center q-mb-sm">
-                <q-icon size="md" class="q-pr-xs" color="secondary" name="local_activity" />
-                Midnight Tickets
-                 </a>
-                <q-btn class=" q-pa-lg shadow-2" to="/login" color="secondary" glossy label="Entrar" icon-right="login" />
+                class="text-white  text-shadow text-bold row items-center q-mb-sm">
+            </a>
+                <q-btn class=" q-pa-lg shadow-2" to="/login" color="green-14" glossy label="Entre ou cadastre-se agora!" icon-right="login" />
                 <div class="w100 q-pt-xs q-my-md mid-opacity bg-secondary rounded-borders">
 
                 </div>
             </div>
             <router-view />
+            <footer class="w100 row wrap justify-center items-center q-py-xl bg-primary q-px-xl">
+                <div class=" column q-py-md">
+                    <q-btn label="Encontre eventos" to="/" class="text-grey-5" flat></q-btn>
+                    <q-btn label="Suporte ao usuário" class="text-grey-5" flat></q-btn>
+                </div>
+                <div class="w100 q-pt-xs bg-secondary rounded-borders"></div>
+                <div class="column q-py-md items-center">
+                    <q-btn label="termos de uso" class="text-grey-5" flat></q-btn>
+                    <q-btn label="email" @click="alertar('midnightickets@gmail.com')" class="text-grey-5" flat></q-btn>
+                    <q-btn label="instagram" @click="goTo('https://www.instagram.com/midnightickets')" class="text-grey-5" flat></q-btn>
+                    <q-btn label="desenvolvedor" @click="goTo('https://samuelvictorol.github.io/portfolio')" class="text-grey-5" flat></q-btn>
+                </div>
+                <div class="w100 row q-pt-xl items-center justify-start text-secondary" id="title-layout">
+                    Midnight Tickets Software
+                </div>
+            </footer>
         </q-page-container>
 
     </q-layout>
@@ -98,7 +112,11 @@ const isMobile = window.innerWidth < 800
 const rightDrawerOpen = ref(false)
 const router = useRouter()
 // const isMobile = window.innerWidth < 800
-const route = router.currentRoute
+const route = ref('')
+
+function alertar(msg) {
+    alert(msg)
+}
 
 const menuOptions = ref({
     items: [

@@ -49,10 +49,9 @@
                 Midnight Tickets
                  </a>
                 <div class="text-center text-grey-4 q-mb-md q-mx-md">
-                    Faça Login para Comprar Ingressos e Acompanhar seus Eventos
+                    Faça Login para gerenciar o Midnight Tickets Software
                 </div>
-                <q-btn class="q-my-lg q-pa-lg shadow-2" to="/login" color="secondary" glossy label="Iniciar Sessão" icon-right="login" />
-                <q-btn class="q-mt-xl" to="/" flat label="Página Inicial" color="secondary" icon="home" />
+                <q-btn class="q-mt-xl" to="/admin-auth" flat label="Página Inicial" color="dark" icon="login" />
             </div>
         </q-drawer>
 
@@ -68,6 +67,7 @@
                 </div>
             </div>
             <router-view v-if="adminInfo"  />
+            
         </q-page-container>
 
     </q-layout>

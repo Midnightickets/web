@@ -3,12 +3,13 @@
         <div class="relative bg-grey-4">
             <div
                 class="title-1 w100 q-px-sm row items-center text-primary shadow-1 q-py-md justify-between no-wrap text-bold">
-                <div class="row no-wrap items-center">
-                    <q-icon size="sm" color="primary" name="paid" class="q-pr-sm" />
-                    {{ Utils.formatCurrency(hostInfo.balance ? hostInfo.balance : 0, 'brl') }}
+                <div class="row no-wrap items-center text-blue-14">
+                    <q-icon size="sm" color="blue-14" name="payments" class="q-pr-sm" />
+                    R$ {{ Utils.formatCurrency(hostInfo.balance ? hostInfo.balance : 0, 'brl') }}
                 </div>
-                <div class="row no-wrap items-center" v-if="hostInfo.balance" >
-                        <q-btn v-if="hostInfo.balance > 0" @click="window.location.reload()" color="blue-14" label="atualizar" glossy icon-right="currency_exchange"  />
+                <div class="row no-wrap items-center">
+                    R$ {{ Utils.formatCurrency(hostInfo.balance ? hostInfo.balance : 0, 'brl') }}
+                    <q-icon size="sm" color="primary" name="paid" class="q-pl-sm" />
                 </div>
             </div>
         </div>

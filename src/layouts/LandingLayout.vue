@@ -162,7 +162,7 @@
                     <div style="font-size:1.1rem"
                         class=" bg-grad-2 text-white high-opacity text-bold q-px-sm q-py-md text-center text-shadow">
                         Somos
-                        um aplicativo web de Bilheteria e Monitoramento de Eventos focados na escalabilidade
+                        um aplicativo de Bilheteria Online e Gerenciamento de Eventos focados na escalabilidade
                         de seus lucros em venda de ingressos digitais</div>
                     <div class="w100 img-wrapper bg-grad-3">
                         <img class="img"
@@ -171,7 +171,7 @@
                     <div style="font-size:1.3rem" class=" bg-grad-4 text-white text-bold q-px-sm q-py-md text-right">O que Fazemos ?</div>
                     <div style="font-size:1.1rem"
                         class="text-shadow q-mb-md bg-grad-2 text-white high-opacity text-bold q-px-sm q-py-md text-center">
-                        Maximizamos o faturamento na venda de seus ingressos de forma escalável além de gerenciar eventos em tempo real, temos 
+                        Maximizamos o faturamento na venda de seus ingressos de forma escalável. Além de gerenciar eventos em tempo real temos 
                         suporte humanizado e uma interface amigável sem a necessidade de instalação
                         <br>
                     </div>
@@ -439,12 +439,13 @@
             <div class="w100 q-pt-xs bg-secondary rounded-borders"></div>
             <div class="column q-py-md items-center">
                 <q-btn label="Suporte" class="text-grey-5" flat></q-btn>
+                <q-btn label="email" @click="alertar('midnightickets@gmail.com')" class="text-grey-5" flat></q-btn>
                 <q-btn label="termos de uso" class="text-grey-5" flat></q-btn>
                 <q-btn label="instagram" @click="goTo('https://www.instagram.com/midnightickets')" class="text-grey-5" flat></q-btn>
                 <q-btn label="desenvolvedor" @click="goTo('https://samuelvictorol.github.io/portfolio')" class="text-grey-5" flat></q-btn>
             </div>
             <div class="w100 row q-pt-xl items-center justify-start text-secondary" id="title-layout">
-                Midnight Tickets Software midnightickets@gmail.com
+                Midnight Tickets Software
             </div>
         </footer>
     </q-layout>
@@ -464,6 +465,10 @@ const searchPublic = ref({
 
 function goTo(url) {
     window.open(url, '_blank');
+}
+
+function alertar(msg) {
+    alert(msg)
 }
 
 function findEvents() {

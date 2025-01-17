@@ -25,7 +25,7 @@ const Utils = {
         }
     },
     logout: () => {
-        const confirm = window.confirm('Deseja realmente Sair ?\n (づ￣ 3￣)づ \n');
+        const confirm = window.confirm('Deseja realmente finalizar sua sessão no Midnight Tickets ?\n');
         if (confirm) {
             sessionStorage.clear();
             window.location.href = '/';
@@ -63,6 +63,9 @@ const Utils = {
         if (digit2 !== parseInt(cpfClean[10])) throw new Error('CPF INVÁLIDO');
         return true;
     },
+    goBack: () => {
+        window.history.back()
+    }
 }
 
 export { Utils }

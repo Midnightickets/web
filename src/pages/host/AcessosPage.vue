@@ -11,22 +11,22 @@
             <q-btn @click="editing = !editing" label="Criar Acesso" color="primary" glossy icon-right="add_circle"></q-btn>
         </div>
         <div v-if="editing"  class="add-subhost bg-grad-1 q-px-xl q-py-md q-gutter-y-sm text-bold row justify-center q-mb-xl  q-mt-sm animate__animated animate__fadeIn shadow-2">
-            <q-input v-model="subhostHandler.name" dense maxlenght="20" class="rounded-borders w80 bg-grey-4 q-px-sm text-white" color="primary" placeholder="Título*">
+            <q-input maxlength="15" v-model="subhostHandler.name" dense  class="rounded-borders w80 bg-grey-4 q-px-sm text-white" color="primary" placeholder="Título*">
                 <template v-slot:prepend>
                     <q-icon name="list_alt" color="primary" />
                 </template>
             </q-input>
-            <q-input v-model="subhostHandler.login" dense maxlenght="20" class="rounded-borders w80 bg-grey-4 q-px-sm text-white" color="primary" placeholder="Login*">
+            <q-input v-model="subhostHandler.login" dense maxlength="20" class="rounded-borders w80 bg-grey-4 q-px-sm text-white" color="primary" placeholder="Login*">
                 <template v-slot:prepend>
                     <q-icon name="account_circle" color="primary" />
                 </template>
             </q-input>
-            <q-input v-model="subhostHandler.password" dense maxlenght="4" mask="####" class="rounded-borders w80 bg-grey-4 q-px-sm text-white" color="primary" placeholder="Senha*">
+            <q-input v-model="subhostHandler.password" dense maxlength="4" mask="####" class="rounded-borders w80 bg-grey-4 q-px-sm text-white" color="primary" placeholder="Senha*">
                 <template v-slot:prepend>
                     <q-icon name="lock" color="primary" />
                 </template>
             </q-input>
-            <q-btn  label="Adicionar" @click="adicionarSubhost()" :disabled="!subhostHandler.name || !subhostHandler.login || !subhostHandler.password" glossy icon-right="add" color="primary" class="shadow-2 q-mt-md"></q-btn>
+            <q-btn  label="Adicionar" @click="adicionarSubhost()" :disabled="!subhostHandler.name || !subhostHandler.login || !subhostHandler.password || subhostHandler.password.length != 4" glossy icon-right="add" color="primary" class="shadow-2 q-mt-md"></q-btn>
             <q-btn class="w100" flat @click="editing = !editing; clearSubhostHandler()" label="fechar" color="secondary"></q-btn>
         </div>
         <div id="title-menu" class="text-primary q-pl-md">
@@ -35,9 +35,9 @@
         <div id="subhosts" class="row q-mt-sm" v-if="subhosts && !loading">
             <q-card v-for="subhost in subhosts" :key="subhost.name" class="w100 q-mx-md q-mt-md q-pb-sm">
                 <q-card-section class="text-bold">
+                    <q-btn @click="removerSubhost(subhost.login)"  icon-right="close" class="absolute-right" flat color="red"></q-btn>
                     <div class="w100 row items-center justify-between">
                         <div id="title-layout" class="text-primary">{{ subhost.name }}</div>
-                        <q-btn @click="removerSubhost(subhost.login)"  icon-right="remove" flat color="red"></q-btn>
                     </div>
                     <div class="text-primary text-h6">👨🏼‍💼 {{ subhost.login.toLowerCase() }}</div>
                     <div class="text-secondary">🔑 {{ subhost.password }}</div>
@@ -80,6 +80,8 @@ const clearSubhostHandler = () => {
 }
 
 async function removerSubhost(login) {
+    const confirm = window.confirm('Deseja realmente remover o subhost '+  login + ' ?')
+    if(!confirm) return
     subhosts.value = subhosts.value.filter(subhost => subhost.login != login);
     await updateSubhosts();
 }
@@ -121,6 +123,13 @@ async function updateSubhosts() {
                 message: response.data.message,
             });
             subhosts.value = response.data.subhosts;
+            $q.notify({
+                position: 'top',
+                color: 'secondary',
+                icon: 'account_circle',
+                message: 'Lembre-se também de atualizar o acessos nos eventos em andamentos para este login subhost',
+                timeout: '5000',
+            })
         })
         .catch(error => {
             $q.notify({

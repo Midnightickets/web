@@ -30,37 +30,72 @@
                 <q-card v-if="ingressos.length == 0 && !loading" class="w100 q-pb-md bg-grey-3">
                     <q-card-section>
                         <div class="text-secondary text-center" id="title-menu">
-                            Você ainda <strong class="text-primary">não</strong> possui ingressos<br>(˘･_･˘)<br>
+                            Você ainda <strong class="text-primary">não</strong> possui ingressos<br>
                             <div class="w100 q-pt-xs bg-secondary q-mt-md"></div>
-                            <br><strong class="text-primary">Encontre eventos</strong> pelo menu ou pela página inicial e <strong class="text-primary">adquira já</strong> o seu ingresso!<br>╰(*°▽°*)╯
+                            <br><strong class="text-primary">Encontre eventos</strong> pelo menu ou<br>pelo botão acima <q-btn size="sm" icon="calendar_month" glossy color="secondary"></q-btn> e <strong class="text-primary">adquira já</strong> o seu ingresso<br>
                         </div>
                     </q-card-section>
                 </q-card>                
             </q-list>
         </div>
         <q-dialog v-model="dialogQrIngresso" persistent >
-            <div class="text-secondary text-center text-shadow bg-dark q-pa-md shadow-2" id="title-2">
+            <div class="flex flex-center">
                 <q-icon class="q-pb-xs" size="lg" name="local_activity" color="secondary"></q-icon>
-                {{ ingressoHandler.ingresso }}<br>
-                <div class="text-blue-14 text-center q-mt-sm">
-                    {{ ingressoHandler.event }}</div>
-                    <div class="text-secondary text-center bg-black q-mt-md q-pb-lg rounded-borders shadow-1" id="title-layout">
-                        <br>{{ ingressoHandler.ticket_person_name.toUpperCase() }}<br>{{ ingressoHandler.ticket_person_cpf }}
+                <div class="text-white w100 text-center text-shadow bg-dark q-pa-md shadow-2" id="title-2">
+                    {{ ingressoHandler.ingresso }}<br>
+                    <div class="text-blue-14 text-center q-mt-sm">
+                        {{ ingressoHandler.event }}</div>
+                        <div class="text-secondary text-center bg-black q-mt-md q-pb-lg rounded-borders shadow-1" id="title-layout">
+                            <br>{{ ingressoHandler.ticket_person_name.toUpperCase() }}<br>{{ ingressoHandler.ticket_person_cpf }}
+                        </div>
+                        <div class="column q-mt-md items-center justify-center">
+                            <canvas class="shadow-1 rounded-borders" ref="qrcodeCanvas"></canvas>
+                        </div>
+                        <div class="text-grey-7 text-center column bg-dark q-pa-md shadow-3 q-mt-md" id="title-layout">
+                            <q-btn label="Baixar Ingresso" icon="download" v-if="btnDownloadShow" class="q-py-md q-mb-md" color="primary" glossy @click="downloadQDialogAsPng()"></q-btn>
+                            <div class="text-white" v-else>{{ ingressoHandler.id }}</div>
+                            <q-btn v-if="btnDownloadShow" label="abrir código ID" color="dark" glossy @click="alertIdIngresso(ingressoHandler.id)"></q-btn>
+                        </div>
+                        <div class="text-grey-7 text-center bg-dark q-pa-md shadow-2 q-mt-md" id="title-layout">
+                            Apresente este QRCode e seu Documento de Identidade na entrada do evento
+                        </div>
+                    <div v-if="loading" class="row w100 q-py-sm q-mt-xs justify-center">
+                        <q-spinner-ball color="secondary" size="lg" />
+                        <q-spinner-ball color="secondary" size="lg" />
+                        <q-spinner-ball color="secondary" size="lg" />
                     </div>
-                    <div class="column q-mt-md items-center justify-center">
-                        <canvas class="shadow-1 rounded-borders" ref="qrcodeCanvas"></canvas>
-                    </div>
-                    <div class="text-grey-7 text-center bg-dark q-pa-md shadow-1" id="title-layout">
-                        Apresente este QRCode e seu Documento de Identidade na entrada do evento
-                    </div>
-                <div v-if="loading" class="row w100 q-py-sm q-mt-xs justify-center">
-                    <q-spinner-ball color="secondary" size="lg" />
-                    <q-spinner-ball color="secondary" size="lg" />
-                    <q-spinner-ball color="secondary" size="lg" />
-                </div>
-                <q-btn @click="dialogQrIngresso = false" label="Fechar" color="secondary" class="w100 q-mt-md" flat></q-btn>
+                    <q-btn @click="dialogQrIngresso = false" label="Fechar" color="secondary" class="w100 q-mt-md" flat></q-btn>
             </div>
-        </q-dialog>
+            </div>
+    </q-dialog>
+        <div id="ingresso-png" v-if="dialogQrIngresso" style="z-index: -999999!important;position:absolute;top:-9999px">
+            <div id="dialog-ingresso" class="flex flex-center" style="overflow-x: hidden;">
+                <q-icon class="q-pb-xs" size="lg" name="local_activity" color="secondary"></q-icon>
+                <div class="text-white w100 text-center text-shadow bg-dark q-pa-md shadow-2" id="title-2">
+                    {{ ingressoHandler.ingresso }}<br>
+                    <div class="text-blue-14 text-center q-mt-sm">
+                        {{ ingressoHandler.event }}</div>
+                        <div class="text-secondary text-center bg-black q-mt-md q-pb-lg rounded-borders shadow-1" id="title-layout">
+                            <br>{{ ingressoHandler.ticket_person_name.toUpperCase() }}<br>{{ ingressoHandler.ticket_person_cpf }}
+                        </div>
+                        <div id="canvas-clone" class="w100 q-mt-md items-center justify-center">
+                        
+                        </div>
+                        <div class="text-grey-7 text-center bg-dark q-pa-md shadow-3 q-mt-md" id="title-layout">
+                            <div class="text-white">{{ ingressoHandler.id }}</div>
+                        </div>
+                        <div class="text-grey-7 text-center bg-dark q-pa-md shadow-2 q-mt-md" id="title-layout">
+                            Apresente este QRCode e seu Documento de Identidade na entrada do evento
+                        </div>
+                    <div v-if="loading" class="row w100 q-py-sm q-mt-xs justify-center">
+                        <q-spinner-ball color="secondary" size="lg" />
+                        <q-spinner-ball color="secondary" size="lg" />
+                        <q-spinner-ball color="secondary" size="lg" />
+                    </div>
+                    <q-btn @click="dialogQrIngresso = false" label="Fechar" color="secondary" class="w100 q-mt-md" flat></q-btn>
+                </div>
+            </div>
+        </div>
     </q-page>
 </template>
 
@@ -88,6 +123,43 @@ onBeforeMount(async () => {
         })
 })
 
+async function downloadQDialogAsPng() {
+    // Aguardar para garantir que o QR Code está renderizado
+    setTimeout(async () => {
+        const dialog = document.querySelector('#ingresso-png'); // Seleciona o elemento do diálogo
+        if (!dialog) {
+            console.error("Elemento do diálogo não encontrado.");
+            btnDownloadShow.value = true; // Restaura o botão em caso de erro
+            return;
+        }
+
+        try {
+            // Captura o elemento usando html2canvas
+            const canvas = await html2canvas(dialog, {
+                backgroundColor: null, // Mantém o fundo transparente
+                useCORS: true, // Garante carregamento de recursos externos
+                windowHeight: dialog.scrollHeight, // Altura total do conteúdo
+            });
+
+            // Converte o canvas para URL de imagem
+            const image = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.href = image;
+            link.download = ingressoHandler.value.ingresso + '.png';
+            link.click(); // Inicia o download
+        } catch (error) {
+            console.error('Erro ao capturar o diálogo:', error);
+        } finally {
+            console.log(ingressoHandler.value.id)
+            btnDownloadShow.value = true; // Restaura o botão
+        }
+    }, 1000); // Tempo para garantir que o QR Code foi renderizado
+}
+
+function alertIdIngresso(id) {
+    alert(id)
+}
+
 function formatCurrency(valor) {
     if(typeof valor === 'number') {
         return valor.toFixed(2).toString().replace('.', ',')
@@ -107,17 +179,35 @@ function retornar() {
 const qrcodeCanvas = ref(null);
 
 const generateQRCode = (ingresso) => {
-    loading.value = true
-    ingressoHandler.value = ingresso
-    dialogQrIngresso.value = true
-    setTimeout(() => {
-        QRCode.toCanvas(qrcodeCanvas.value, ingresso.id, (error) => {
-            if (error) console.error(error);
-        });
-        loading.value = false
-    }, 1000)
-};
+      loading.value = true;
+      ingressoHandler.value = ingresso;
+      dialogQrIngresso.value = true;
 
+      setTimeout(() => {
+        QRCode.toCanvas(qrcodeCanvas.value, ingresso.id, (error) => {
+          if (error) {
+            console.error(error);
+            loading.value = false;
+            return;
+          }
+
+          // Clone do QRCode gerado
+          const originalCanvas = qrcodeCanvas.value;
+          const cloneCanvas = document.createElement("canvas");
+          cloneCanvas.width = originalCanvas.width;
+          cloneCanvas.height = originalCanvas.height;
+          const ctx = cloneCanvas.getContext("2d");
+          ctx.drawImage(originalCanvas, 0, 0);
+
+          // Adiciona o clone na div #canvas-clone
+          const cloneDiv = document.getElementById("canvas-clone");
+          cloneDiv.innerHTML = ""; // Limpa qualquer conteúdo anterior
+          cloneDiv.appendChild(cloneCanvas);
+
+          loading.value = false;
+        });
+      }, 500);
+    };
 </script>
 
 <style scoped>

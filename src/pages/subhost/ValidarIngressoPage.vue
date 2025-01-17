@@ -1,10 +1,15 @@
 <template>
-  <q-page class="bg-blue-1">
-    <div id="title" class="w100 text-center text-secondary q-pt-xl q-px-sm">
+  <q-page class="bg-grad-2">
+    <div id="title" class="w100 text-center text-white text-shadow q-pt-xl q-px-sm">
       Validar Ingresso
     </div>
-    <div class="w100 q-px-md row justify-center">
-      <q-btn class="q-py-lg q-mt-md shadow-2" icon-right="qr_code_scanner" label="Scanear Ingresso" @click="startScanning" glossy color="blue-14" />
+    <div class="w100 q-px-md column justify-center items-center">
+      <q-btn class="q-mt-md shadow-2 q-pa-xl" icon-right="qr_code_scanner" label="Scanear Ingresso" @click="startScanning" glossy color="blue-14" />
+      <div class="w80 bg-secondary rounded-borders q-mt-xl q-pa-md shadow-2">
+        <q-input v-model="ingresso_id" outlined class="bg-grey-3 q-mt-md w100 rounded-borders" label="Inserir Manualmente">
+        </q-input>
+        <q-btn class="q-py-lg q-mt-md w100 shadow-2" icon-right="sensor_occupied" label="Validar manualmente" @click="validateTicket()" glossy color="blue-14" />
+      </div>
     </div>
     <q-dialog v-model="cameraOpen" class="w100" persistent>
       <div class="w100 rounded-borders column justify-center items-center">
@@ -33,7 +38,7 @@
                     </div>
                     <div class="w100 text-grey-14 text-h6 q-mb-md text-bold text-center">{{ ingresso.isExpired ? "🟡 Checkin já realizado" : "🟢 Ingresso Disponível"}}</div>
                     <q-btn v-if="!ingresso.isExpired" label="Validar Ingresso" glossy @click="validarCheckin()" color="blue-14" icon-right="sensor_occupied" class="q-pa-md" />
-                    <q-btn label="voltar" class="q-mt-sm" @click="recarregar()" color="secondary" flat />
+                    <q-btn label="voltar" class="q-mt-sm" @click="stopScanning()" color="secondary" flat />
           </div>
         </q-card>
         <q-btn v-if="!ingresso" label="Consultar QR" icon-right="sensor_occupied" @click="validateTicket()" color="primary" glossy class="q-pa-xl q-mt-md" />

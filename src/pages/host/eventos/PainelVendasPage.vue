@@ -1,7 +1,7 @@
 <template>
     <q-page class="animate__animated animate__fadeIn bg-grey-4 q-pb-xl">
         <div class="w100">
-            <q-btn to="/host" dense glossy flat icon="keyboard_return" label="voltar"
+            <q-btn @click="Utils.goBack()" dense glossy flat icon="keyboard_return" label="voltar"
                 color="primary">
             </q-btn>
         </div>

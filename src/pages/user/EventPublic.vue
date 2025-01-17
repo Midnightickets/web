@@ -43,9 +43,9 @@
                                 <q-item id="ticket" v-for="(ticket, index) in event.ticket_types" :key="index" style="border-left: 6px solid #9573f3;" class="shadow-1 q-mt-md">
                                     <q-item-section class="text-bold text-primary q-py-sm"  id="title-2">
                                         <q-icon name="confirmation_number" size="md"></q-icon>{{ ticket.title }}<br><strong class="text-secondary q-pt-xs">R$ {{ formatStringValue(ticket.price) }}</strong>
-                                        <q-btn v-if="ticket.price != '0,00' && ticket.price != '0' && ticket.price != '0,0'" @click="openModalBuyTicket(ticket)" class="q-mt-sm q-py-lg" icon="add_shopping_cart"
+                                        <q-btn v-if="ticket.price != '0,00' && ticket.price != '0' && ticket.price != '0,0'" @click="openModalBuyTicket(ticket)" class="q-mt-md q-py-lg" icon="add_shopping_cart"
                                         label="Comprar" color="green-14" style="font-size:1rem" glossy></q-btn>
-                                        <q-btn  style="font-size:1rem" v-else @click="openModalBuyTicket(ticket)" class="q-mt-sm q-py-lg" icon="touch_app" label="Retirar Cortesia" color="blue-14" glossy></q-btn>
+                                        <q-btn  style="font-size:1rem" v-else @click="openModalBuyTicket(ticket)" class="q-mt-md q-py-lg" icon="touch_app" label="Receber Grátis" color="blue-14" glossy></q-btn>
                                     </q-item-section>
                                 </q-item>
                             </div>
@@ -141,7 +141,7 @@ const $q = useQuasar();
 const eventoIndisponivel = ref(false);
 const ticketPaymentButton = ref(false);
 const isCortesia = ref(false);
-
+sessionStorage.setItem('lastEvent', route.params.event);
 const buyTicketHandler = ref({
     toMe: false,
     ticket_person_name: '',

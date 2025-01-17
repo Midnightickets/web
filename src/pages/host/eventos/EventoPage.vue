@@ -161,7 +161,7 @@
                     <q-card-section>
                         <div v-if="evento.subhosts.length > 0" class="text-h6 text-primary">Subhosts Cadastrados: {{ evento.subhosts.length }}</div>
                         <div id="evento-subhosts" class="relative">
-                            <div v-for="subhost in evento.subhosts" :key="subhost" id="subhost" class="rounded-borders shadow-2 q-mt-md">
+                            <div v-for="subhost in evento.subhosts" :key="subhost" id="subhost" class="relative rounded-borders shadow-2 q-mt-md">
                                 <div class="text-bold text-primary">{{ subhost.name }}</div>
                                 <div class="text-bold text-secondary">{{ subhost.login.toLowerCase() }}</div>
                                 <div v-if="showSubhostsPassword" class="text-bold text-primary">🔑{{ subhost.password }}</div>
@@ -175,8 +175,10 @@
                 </q-card>
             </div>
             <div class="w100 q-mt-xl q-px-sm" v-if="!loading">
-                <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-xl" to="/host/andamento-evento" label="Andamento do Evento" color="primary" glossy
-                    icon-right="visibility"></q-btn>
+                <q-btn class="w100 q-py-xl" to="/host/andamento-evento" :label="evento.status.includes('andamento') ? 'Andamento do Evento' : 'Histórico do Evento'" color="primary" glossy
+                :icon-right="evento.status.includes('andamento') ? 'visibility' : 'history'"></q-btn>
+                <q-btn class="w100 q-py-xl q-mt-md" @click="goToVendas()" label="Painel de Vendas" color="blue-14" glossy
+                    icon-right="payments"></q-btn>
                 <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-md" label="Finalizar Evento" @click="confirmChangeStatusEvento('FINALIZADO')" color="red-14" glossy
                     icon-right="event_available"></q-btn>
                 <!-- <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-sm" label="Cancelar Evento" @click="confirmChangeStatusEvento('CANCELADO')" color="red-4" flat></q-btn> -->
@@ -255,6 +257,12 @@ async function permitirSubhost(subhost) {
     .then(() => {
             modalSubhosts.value = false;
     })
+}
+
+function goToVendas(){
+    sessionStorage.setItem('evento_title', evento.value.title);
+    sessionStorage.setItem('evento_venda', evento.value.id);
+    router.push('/host/vendas-evento');
 }
 
 function previewPublicEvent(eventId) {

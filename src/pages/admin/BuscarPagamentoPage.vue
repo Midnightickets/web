@@ -13,7 +13,7 @@
                         </q-input>
                     </q-card-section>
                 </q-card>
-                <q-card style="border-left: 6px solid #1D1D1D;"
+                <q-card style="border-left: 6px solid blue;"
                     class="bg-grey-4 rounded-borders text-bold">
                     <q-card-section class="w100">
                         <q-btn @click="buscarPagamento()" label="buscar pagamento" color="primary" glossy class="w100 q-py-md"

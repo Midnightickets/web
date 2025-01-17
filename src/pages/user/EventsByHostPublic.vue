@@ -10,7 +10,7 @@
             </q-avatar>
         </div>
         <div v-if="!loading" class="animate__animated animate__fadeInLeft w100 text-white text-center q-pb-lg q-mt-sm q-px-md" id="title-2">
-            Eventos de<br>{{ hostName.toUpperCase() }}
+            Eventos de<br>{{hostName.toUpperCase() }}
         </div>
         <div v-if="!loading" class="w100 row items-start q-gutter-y-md">
             <q-card v-for="(event, index) in events" :key="index" class="card-event q-mx-md bg-grey-4 q-mt-md">
@@ -49,7 +49,7 @@ const route = useRoute();
 const router = useRouter();
 const events = ref([]);
 const loading = ref(true);
-const hostName = ref(route.params.events_host);
+const hostName = ref('');
 const hostImgUrl = ref('');
 
 function returnRout() {
@@ -62,7 +62,7 @@ onBeforeMount(async () => {
         if (res.data.events.length > 0){
             events.value = res.data.events;
             hostImgUrl.value = res.data.host_img_url;
-            hostName.value = res.data[0].host_name;
+            hostName.value = res.data.events[0].host;
         }
     })
     .finally(() => {

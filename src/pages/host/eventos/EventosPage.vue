@@ -4,12 +4,21 @@
             <div
                 class="title-1 w100 q-px-sm row items-center text-primary shadow-1 q-py-md justify-between no-wrap text-bold">
                 <div class="row no-wrap items-center text-blue-14">
-                    <q-icon size="sm" color="blue-14" name="payments" class="q-pr-sm" />
-                    R$ {{ Utils.formatCurrency(hostInfo.balance ? hostInfo.balance : 0, 'brl') }}
+                    <q-icon size="sm" color="blue-14" name="payments" class="q-pr-sm">
+                        <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                            Faturamento Total
+                        </q-tooltip>
+                    </q-icon>
+                    R$ {{ Utils.formatCurrency(hostInfo.total_profit ? hostInfo.total_profit : 0, 'brl') }}
+
                 </div>
                 <div class="row no-wrap items-center">
                     R$ {{ Utils.formatCurrency(hostInfo.balance ? hostInfo.balance : 0, 'brl') }}
-                    <q-icon size="sm" color="primary" name="paid" class="q-pl-sm" />
+                    <q-icon size="sm" color="primary" name="paid" class="q-pl-sm">
+                        <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                            Faturamento Total
+                        </q-tooltip>
+                    </q-icon>
                 </div>
             </div>
         </div>
@@ -170,7 +179,8 @@ async function getSaldo() {
             id: hostInfo.value.id,
     }
     await api.post('/host/get_saldo', reqObject).then((response) => {
-        hostInfo.value.balance = response.data;
+        hostInfo.value.balance = response.data.balance;
+        hostInfo.value.total_profit = response.data.total_profit;
         sessionStorage.setItem('host', JSON.stringify(hostInfo.value));
     }).catch((error) => {
         console.log(error.data);

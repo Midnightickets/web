@@ -96,6 +96,8 @@ const menuOptions = ref({
         { label: 'Suporte', icon: 'support', to: '#', role: 'admin' },
     ]
 })
+
+
 function goTo(item) {
     router.push(item.to)
 }

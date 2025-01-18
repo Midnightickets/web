@@ -90,8 +90,8 @@
                 <div class="column q-py-md items-center">
                     <q-btn label="termos de uso" class="text-grey-5" flat></q-btn>
                     <q-btn label="email" @click="alertar('midnightickets@gmail.com')" class="text-grey-5" flat></q-btn>
-                    <q-btn label="instagram" @click="goTo('https://www.instagram.com/midnightickets')" class="text-grey-5" flat></q-btn>
-                    <q-btn label="desenvolvedor" @click="goTo('https://samuelvictorol.github.io/portfolio')" class="text-grey-5" flat></q-btn>
+                    <q-btn label="instagram" @click="goToBlank('https://www.instagram.com/midnightickets')" class="text-grey-5" flat></q-btn>
+                    <q-btn label="desenvolvedor" @click="goToBlank('https://samuelvictorol.github.io/portfolio')" class="text-grey-5" flat></q-btn>
                 </div>
                 <div class="w100 row q-pt-xl items-center justify-start text-secondary" id="title-layout">
                     Midnight Tickets Software
@@ -116,6 +116,10 @@ const route = ref('')
 
 function alertar(msg) {
     alert(msg)
+}
+
+function goToBlank(url) {
+    window.open(url, '_blank');
 }
 
 const menuOptions = ref({

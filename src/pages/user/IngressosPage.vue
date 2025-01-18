@@ -116,6 +116,8 @@ const loading = ref(true)
 const lastEvent = sessionStorage.getItem('lastEvent') || null
 const router = useRouter()
 const btnDownloadShow = ref(true)
+const val = ref(true)
+
 onBeforeMount(async () => {
     const user = JSON.parse(sessionStorage.getItem('user'))
     if(!user) {
@@ -123,7 +125,19 @@ onBeforeMount(async () => {
     }
     await api.post('/user/ingressos', {user: { id: user.id , token: user.token}})
         .then(response => {
-            ingressos.value = response.data
+            const ordenarIngressosNotExpiredPrimeiro = () =>{
+                return ingressos.value.sort((a, b) => {
+                    if(a.isExpired && !b.isExpired) {
+                        return 1
+                    } else if(!a.isExpired && b.isExpired) {
+                        return -1
+                    } else {
+                        return 0
+                    }
+                })
+            }
+            ingressos.value =   response.data
+            ingressos.value = ordenarIngressosNotExpiredPrimeiro()
         })
         .catch(error => {
             console.log(error)

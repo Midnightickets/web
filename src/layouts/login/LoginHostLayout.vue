@@ -1,24 +1,36 @@
 <template>
-    <div id="login-host" class="animate__animated animate__fadeIn bg-grad-3 w100 flex flex-center q-pt-md q-pb-xl">
-        <div id="login-card" class="bg-roxo-light animate__animated animate__zoomIn rounded-borders">
+    <div id="login-host" class="animate__animated animate__fadeIn bg-grad-3 w100 flex flex-center q-pt-xl">
+        <div class="w100 q-py-lg"></div>
+        <div style="position: fixed; top: 16px; left: 0;z-index: 9999!important" class="w100  q-pl-sm" >
+            <q-btn to="/" icon="home" color="secondary" glossy></q-btn>
+        </div>
+        <div id="login-card" class="bg-grey-2 animate__animated animate__zoomIn rounded-borders">
             <div id="title-menu" class="text-primary text-center q-mt-md row q-px-md justify-center items-center"><q-icon name="diamond" size="md" color="primary" class="q-mr-xs"></q-icon>{{ editando ? 'CADASTRO' :'LOGIN'}} PRODUTOR(A)</div>
             <div class="q-pa-md">
                 <q-input
                     v-if="editando"
                     v-model="host.name"
-                    placeholder="Nome*"
+                    placeholder="Nome Produtor(a)*"
                     maxlength="40"
                     type="text"
                     class="q-mb-md"
                     outlined
-                />
+                >
+                <template v-slot:prepend>
+                    <q-icon color="primary" name="person" />
+                </template>
+                </q-input>
                 <q-input
                     v-model="host.login"
                     placeholder="Login*"
                     maxlength="40"
                     type="text"
                     outlined
-                />
+                >
+                    <template v-slot:prepend>
+                        <q-icon color="primary" name="account_circle" />
+                    </template>
+                </q-input>
                 <q-input
                     v-if="editando"
                     v-model="host.email"
@@ -27,7 +39,11 @@
                     class="q-mt-md"
                     type="email"
                     outlined
-                />
+                >
+                    <template v-slot:prepend>
+                        <q-icon color="primary" name="email" />
+                    </template>
+                </q-input>
                 <q-input
                 v-model="host.password"
                     placeholder="Senha*"
@@ -36,6 +52,11 @@
                     outlined
                     class="q-mt-md"
                 >
+                    <template v-slot:prepend>
+                        <q-icon color="primary"
+                            name="lock"
+                        />
+                    </template>
                     <template v-slot:append>
                         <q-icon
                             :name="formConfig.showPassword ? 'visibility' : 'visibility_off'"
@@ -53,7 +74,11 @@
                     type="text"
                     mask="####################"
                     outlined
-                />
+                >
+                    <template v-slot:prepend>
+                        <q-icon name="fingerprint" color="primary" />
+                    </template>
+                </q-input>
                 <q-input
                     v-if="editando"
                     class="q-mt-md"
@@ -62,7 +87,11 @@
                     type="text"
                     mask="(##) #####-####"
                     outlined
-                />
+                >
+                    <template v-slot:prepend>
+                        <q-icon name="phone" color="primary" />
+                    </template>
+                </q-input>
                 <div v-if="loading" class="row w100 q-py-sm q-mt-xs justify-center">
                     <q-spinner-ball color="secondary" size="lg" />
                     <q-spinner-ball color="secondary" size="lg" />
@@ -95,9 +124,35 @@
                     color="primary"
                     class="full-width q-mt-md q-py-xs"
                 />
-                <q-btn class="full-width q-mt-md" color="secondary" flat v-if="!editando && !loading" to="/" label="página inicial" ></q-btn>
+                <q-btn
+                    v-if="!editando && !loading"
+                    label="Esqueci minha senha"
+                    @click="modalEsqueciSenha = true"
+                    color="blue-14"
+                    class="full-width q-mt-md q-py-xs"
+                />
             </div>
+            <EsqueciSenhaModal v-model="modalEsqueciSenha" />
         </div>
+        <footer class="w100 row wrap justify-center q-mt-xl items-center q-py-xl bg-primary q-px-xl">
+            <div class=" column q-py-md">
+                <q-btn label="Crie seu evento" to="/login-host" class="text-grey-5" flat></q-btn>
+                <q-btn label="Valide ingressos" to="/login-subhost" class="text-grey-5" flat></q-btn>
+                <q-btn label="Compre ingressos" to="/login" class="text-grey-5" flat></q-btn>
+                <q-btn label="Encontre eventos" to="/" class="text-grey-5" flat></q-btn>
+            </div>
+            <div class="w100 q-pt-xs bg-secondary rounded-borders"></div>
+            <div class="column q-py-md items-center">
+                <q-btn label="Suporte" class="text-grey-5" flat></q-btn>
+                <q-btn label="email" @click="alertar('midnightickets@gmail.com')" class="text-grey-5" flat></q-btn>
+                <q-btn label="termos de uso" class="text-grey-5" flat></q-btn>
+                <q-btn label="instagram" @click="goTo('https://www.instagram.com/midnightickets')" class="text-grey-5" flat></q-btn>
+                <q-btn label="desenvolvedor" @click="goTo('https://samuelvictorol.github.io/portfolio')" class="text-grey-5" flat></q-btn>
+            </div>
+            <div class="w100 row q-pt-xl items-center justify-start text-secondary" id="title-layout">
+                Midnight Tickets Software
+            </div>
+        </footer>
     </div>
 </template>
 
@@ -106,11 +161,13 @@ import { useQuasar } from 'quasar';
 import { api } from 'src/boot/axios';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import EsqueciSenhaModal from 'src/components/EsqueciSenhaModal.vue';
 
 const $q = useQuasar()
 const router = useRouter()
 const editando = ref(false)
 const loading = ref(false)
+const modalEsqueciSenha = ref(false)
 
 const formConfig = ref({
     showPassword: false,
@@ -126,8 +183,16 @@ const host = ref({
     phone: '',
 })
 
+function goTo(url) {
+    window.open(url, '_blank')
+}
+
 function isLoginFormValid() {
     return host.value.login.trim().length < 3 || host.value.password.trim().length < 6
+}
+
+function alertar(msg) {
+    alert(msg)
 }
 
 const makeReqObject = () => {

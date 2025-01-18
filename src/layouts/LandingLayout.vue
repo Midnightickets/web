@@ -616,12 +616,13 @@ async function sendForm(msg) {
             timeout: 1000
         });
         $q.notify({
-            message: msg,
+            message: 'Redirecionando para a página de login e cadastro de produtores',
             color: 'primary',
             position: 'bottom',
             icon: 'local_activity',
             timeout: 6000
         });
+        router.push('/login-host')
     }).catch((err) => {
         $q.notify({
             message: err.response.data.error ,

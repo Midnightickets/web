@@ -17,6 +17,11 @@ html,body {
     background: linear-gradient(to top, #4A00E0, #670bb8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     
 }
+
+.border-left-roxo{
+    border-left: 5px solid #4A00E0;
+}
+
 .bg-grey-dark  {
     background: #282828;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to top, #4A00E0, #670bb8);  /* Chrome 10-25, Safari 5.1-6 */

@@ -1,7 +1,13 @@
 <template>
     <q-layout>
         <q-page-container>
-            <q-page id="login-user" class="animate__animated animate__fadeIn bg-grad-2 w100 q-pt-md q-pb-xl flex flex-center">
+            <q-page id="login-user" class="animate__animated animate__fadeIn bg-grad-2 w100  q-pt-xl column justify-center items-center">
+        <div class="w100 q-py-lg"></div>
+                <div style="position: fixed; top: 16px; left: 0;z-index: 9999!important" class="w100  q-pl-sm" >
+                    <q-btn @click="goBack()" class="q-mr-sm" icon="keyboard_return" color="secondary" glossy></q-btn>
+                    <q-btn to="/" icon="home" color="secondary" glossy></q-btn>
+                    <q-btn to="/login-host" class="q-ml-sm" label="Crie seu evento" color="secondary" glossy></q-btn>
+                </div>
                 <div id="login-card" class="bg-white animate__animated animate__zoomIn rounded-borders">
                     <div id="title-menu" class="text-primary text-center q-mt-md row justify-center items-center"><q-icon name="account_circle" size="md" color="primary" class="q-mr-xs"></q-icon>INICIAR SESSÃO</div>
                     <div class="q-pa-md column q-gutter-y-md">
@@ -14,7 +20,11 @@
                             maxlength="14"
                             type="text"
                             outlined
-                        />
+                        >
+                            <template v-slot:prepend>
+                                <q-icon name="fingerprint" color="primary"/>
+                            </template>
+                        </q-input>
                         <q-input
                         v-if="editing"
                         v-model="user.name"
@@ -22,14 +32,22 @@
                             maxlength="80"
                             type="text"
                             outlined
-                            />
+                            >
+                            <template v-slot:prepend>
+                                <q-icon name="person" color="primary"/>
+                            </template>
+                        </q-input>
                             <q-input
                             v-model="user.login"
                             placeholder="Login*"
                             maxlength="20"
                             type="text"
                             outlined
-                        />
+                        >
+                            <template v-slot:prepend>
+                                <q-icon name="account_circle" color="primary"/>
+                            </template>
+                        </q-input>
                         <div v-if="editing" class="w100 row justify-center">
                             <div id="title-2" class="text-primary q-mb-sm">Data de Nascimento:</div>
                             <q-date id="date-picker" class="w100 row" v-model="user.birthday" mask="DD-MM-YYYY" color="primary" />
@@ -41,7 +59,11 @@
                             mask="(##) #####-####"
                             type="text"
                             outlined
-                        />
+                        >
+                            <template v-slot:prepend>
+                                <q-icon name="phone" color="primary"/>
+                            </template>
+                        </q-input>
                         <q-input
                             v-if="editing"
                             v-model="user.email"
@@ -49,7 +71,11 @@
                             maxlength="100"
                             type="email"
                             outlined
-                        />
+                        >
+                            <template v-slot:prepend>
+                                <q-icon name="email" color="primary"/>
+                            </template>
+                        </q-input>
                         <q-input
                         v-model="user.password"
                             placeholder="Senha*"
@@ -58,6 +84,11 @@
                             outlined
                             class="q-mt-md"
                         >
+                        <template v-slot:prepend>
+                            <q-icon color="primary"
+                                name="lock"
+                            />
+                        </template>
                             <template v-slot:append>
                                 <q-icon
                                     :name="formConfig.showPassword ? 'visibility' : 'visibility_off'"
@@ -76,7 +107,7 @@
                             :color="isLoginFormInvalid() ? 'primary' : 'green-14'"
                             :disabled="isLoginFormInvalid()"
                             @click="login"
-                            label="Fazer login"
+                            label="Entrar"
                             glossy
                             icon-right="login"
                             class="full-width q-mt-md q-py-lg"
@@ -100,15 +131,34 @@
                             class="full-width q-mt-md q-py-sm"
                         />
                         <q-btn
-                            v-if="!loading"
-                            class="full-width q-mt-sm"
-                            label="Voltar"
-                            color="secondary"
-                            flat
-                            @click="goBack()"
-                        />
+                        v-if="!editando && !loading"
+                        label="Esqueci minha senha"
+                        @click="modalEsqueciSenha = true"
+                        color="blue-14"
+                        class="full-width q-mt-md q-py-xs"
+                    />
                     </div>
+                    <EsqueciSenhaModal v-model="modalEsqueciSenha" />
                 </div>
+                <footer class="w100 row wrap justify-center q-mt-xl items-center q-py-xl bg-primary q-px-xl">
+                    <div class=" column q-py-md">
+                        <q-btn label="Crie seu evento" to="/login-host" class="text-grey-5" flat></q-btn>
+                        <q-btn label="Valide ingressos" to="/login-subhost" class="text-grey-5" flat></q-btn>
+                        <q-btn label="Compre ingressos" to="/login" class="text-grey-5" flat></q-btn>
+                        <q-btn label="Encontre eventos" to="/" class="text-grey-5" flat></q-btn>
+                    </div>
+                    <div class="w100 q-pt-xs bg-secondary rounded-borders"></div>
+                    <div class="column q-py-md items-center">
+                        <q-btn label="Suporte" class="text-grey-5" flat></q-btn>
+                        <q-btn label="email" @click="alertar('midnightickets@gmail.com')" class="text-grey-5" flat></q-btn>
+                        <q-btn label="termos de uso" class="text-grey-5" flat></q-btn>
+                        <q-btn label="instagram" @click="goTo('https://www.instagram.com/midnightickets')" class="text-grey-5" flat></q-btn>
+                        <q-btn label="desenvolvedor" @click="goTo('https://samuelvictorol.github.io/portfolio')" class="text-grey-5" flat></q-btn>
+                    </div>
+                    <div class="w100 row q-pt-xl items-center justify-start text-secondary" id="title-layout">
+                        Midnight Tickets Software
+                    </div>
+                </footer>
             </q-page>
         </q-page-container>
     </q-layout>
@@ -119,17 +169,27 @@ import { useQuasar } from 'quasar';
 import { api } from 'src/boot/axios';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import EsqueciSenhaModal from 'src/components/EsqueciSenhaModal.vue';
 
 const $q = useQuasar()
 const router = useRouter()
 const loading = ref(false)
 const editing = ref(false)
+const modalEsqueciSenha = ref(false)
 
 const formConfig = ref({
     showPassword: false,
     userLoginRoute: '/login_user',
     userCreateRoute: '/create_user',
 })
+
+function goTo(url) {
+    window.open(url, '_blank')
+}
+
+function alertar(msg) {
+    alert(msg)
+}
 
 const user = ref({
     login: '',

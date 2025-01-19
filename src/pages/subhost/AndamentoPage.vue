@@ -14,7 +14,7 @@
                     <q-spinner-ball color="secondary" size="lg" />
                 </div>
             <div class="w100 row wrap items-center justify-center q-gutter-md" v-if="checkins.length > 0">
-                <q-card v-for="checkin in checkins" :key="checkin.id" class="q-mb-md">
+                <q-card v-for="checkin in checkins" :key="checkin.id" class="q-mb-md border-left-roxo">
                     <q-card-section>
                           <div class="text-primary text-bold text-h6">{{checkin.person_name}}</div>
                           <div class="text-grey-14 text-h6">{{checkin.person_cpf}}</div>
@@ -46,7 +46,7 @@
       const host = JSON.parse(sessionStorage.getItem('host'))
       const evento_andamento = sessionStorage.getItem('evento_andamento')
       await api.post('/event/andamento_evento', {host:{token: host.token, id: host.id}, event_id: evento_andamento}).then(response => {
-          checkins.value = response.data.checkins
+          checkins.value = response.data
       })
       .catch(error => {
           $q.notify({

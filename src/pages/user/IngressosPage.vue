@@ -2,8 +2,8 @@
     <q-page class="bg-grad-2 text-white q-px-md animate__animated animate__fadeIn q-pb-xl" id="title">
         <div class="w100" >
             <q-btn @click="retornar()" icon="keyboard_return" color="secondary" class="q-mr-sm" glossy></q-btn>
-            <q-btn to="/" icon="calendar_month" color="secondary" glossy></q-btn>
-            <q-btn v-if="lastEvent" :to="'/events/' + lastEvent" class="q-ml-sm" icon="event" color="secondary" glossy></q-btn>
+            <q-btn to="/" icon="search" color="secondary" glossy></q-btn>
+            <q-btn v-if="lastEvent" :to="'/events/' + lastEvent" class="q-ml-sm" icon="history" color="secondary" glossy></q-btn>
         </div>
         <div class="w100 text-white animate__animated animate__zoomIn text-center q-mb-md" id="title">Meus Ingressos</div>
         <div v-if="loading" class="row w100 q-py-sm q-mt-md justify-center">
@@ -33,7 +33,7 @@
                         <div class="text-secondary text-center" id="title-menu">
                             Você ainda <strong class="text-primary">não</strong> possui ingressos<br>
                             <div class="w100 q-pt-xs bg-secondary q-mt-md"></div>
-                            <br><strong class="text-primary">Encontre eventos</strong> pelo menu ou<br>pelo botão acima <q-btn size="sm" icon="calendar_month" glossy color="secondary"></q-btn> e <strong class="text-primary">adquira já</strong> o seu ingresso<br>
+                            <br><strong class="text-primary">Encontre eventos</strong> pelo menu ou<br>pelo botão <q-btn size="sm" icon="search" glossy color="secondary"></q-btn> acima e <strong class="text-primary">adquira já</strong> o seu ingresso<br>
                         </div>
                     </q-card-section>
                 </q-card>                

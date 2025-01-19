@@ -1,8 +1,8 @@
 <template>
-    <div id="login-user" class="animate__animated animate__fadeIn bg-dark w100 flex flex-center">
+    <div id="login-user" class="animate__animated animate__fadeIn bg-grad-2 w100 flex flex-center">
         <div id="login-card" class="bg-white animate__animated animate__zoomIn rounded-borders">
-            <div id="title-menu" class="text-dark text-center q-mt-md row justify-center items-center">
-                <q-icon name="sensor_occupied" size="md" color="dark" class="q-mr-sm"></q-icon>LOGIN SUBHOST</div>
+            <div id="title-menu" class="text-primary text-center q-mt-md row justify-center items-center">
+                <q-icon name="sensor_occupied" size="md" color="primary" class="q-mr-md"></q-icon>Validar Ingressos</div>
             <div class="q-pa-md">
                 <q-input
                     class="q-mb-md"
@@ -14,10 +14,10 @@
                     color="dark"
                 >
                     <template v-slot:prepend>
-                        <q-icon name="lock" color="dark" />
+                        <q-icon name="lock" color="primary" />
                     </template>
                     <template v-slot:append>
-                        <q-icon name="content_paste" color="primary" @click="pasteCode()"/>
+                        <q-icon name="content_paste" color="secondary" @click="pasteCode()"/>
                     </template>
                 </q-input>
                 <div v-if="loading" class="row w100 q-py-sm q-mt-xs justify-center">
@@ -30,7 +30,7 @@
                     :disabled="isLoginFormInvalid()"
                     @click="login"
                     label="Login"
-                    color="dark"
+                    color="primary"
                     glossy
                     icon-right="login"
                     class="full-width q-mt-md q-py-lg"
@@ -64,9 +64,9 @@ const formConfig = ref({
 const subhostCodigo = ref('')
 
 const subhost = ref({
-    login: 'PORT2',
-    password: '5454',
-    event: '677406012465472e1a29667a',
+    login: '',
+    password: '',
+    event: '',
 })
 
 function pasteCode() {
@@ -97,10 +97,12 @@ async function login() {
     .then(response => {
         sessionStorage.setItem('subhostInfo', JSON.stringify(response.data))
         sessionStorage.setItem('isSubhost', true)
+        sessionStorage.setItem('evento_andamento', response.data.event.id)
+        sessionStorage.setItem('host', JSON.stringify(response.data.event.host))
         $q.notify({
             color: 'dark',
             position: 'top',
-            message: 'Bem vindo, '+ response.data.login + '!',
+            message: 'Bem vindo, '+ response.data.login,
             icon: 'sensor_occupied',
         })
         router.push('/subhost')

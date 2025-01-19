@@ -6,7 +6,7 @@
         </div>
         <div v-if="!loading" class="w100 row justify-center">
             <q-avatar style="width:200px;height:180px" class="shadow-2">
-                <img style="border-bottom: 4px solid #8E2DE2" :src="hostImgUrl" alt="">
+                <img style="border-bottom: 4px solid #8E2DE2" :src="hostImgUrl ? hostImgUrl : '/favicon.svg'" alt="">
             </q-avatar>
         </div>
         <div v-if="!loading" class="animate__animated animate__fadeInLeft w100 text-white text-center q-pb-lg q-mt-sm q-px-md" id="title-2">

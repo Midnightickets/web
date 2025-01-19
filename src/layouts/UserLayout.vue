@@ -104,7 +104,7 @@
 
 <script setup>
 import { Utils } from 'src/utils/Utils';
-import { onMounted, ref } from 'vue'
+import { onBeforeMount, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const userInfo = JSON.parse(sessionStorage.getItem('user'));
@@ -113,6 +113,11 @@ const rightDrawerOpen = ref(false)
 const router = useRouter()
 // const isMobile = window.innerWidth < 800
 const route = ref('')
+
+onBeforeMount(() => {
+    sessionStorage.removeItem('isHost')
+    
+})
 
 function alertar(msg) {
     alert(msg)

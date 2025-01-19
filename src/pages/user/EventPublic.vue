@@ -1,7 +1,11 @@
 <template>
     <q-page class="q-pb-xl bg-grey-4 animate__animated animate__fadeInLeft ">
-        <div class="w100 q-pt-sm q-pl-sm" >
-            <q-btn @click="returnBack()" icon="keyboard_return" color="secondary" glossy></q-btn>
+        <div class="w100 q-pt-sm q-px-sm row justify-between" >
+            <div>
+                <q-btn @click="returnBack()" icon="keyboard_return" color="secondary" glossy></q-btn>
+                <q-btn to="/" icon="home" color="secondary"  class="q-ml-sm" glossy></q-btn>
+            </div>
+            <q-btn @click="returnBack()" icon="share" color="blue-14" glossy></q-btn>
         </div>
         <div class="w100 row justify-center q-mt-md q-px-md">
             <q-card v-if="eventoIndisponivel">
@@ -14,7 +18,7 @@
             {{ event.title }}
         </div>
         <div class="w100 row justify-center">
-            <q-btn glossy v-if="!loading && !eventoIndisponivel" :to="'/' + event.host_login" class="text-bold w50 text-center q-my-md " color="secondary" :label="event.host"></q-btn>
+            <q-btn glossy v-if="!loading && !eventoIndisponivel" :to="'/' + event.host_login" class="text-bold w50 text-center q-my-md " color="primary" flat :label="event.host_login"></q-btn>
         </div>
         <div v-if="isMobile && !loading && !eventoIndisponivel" class="w100 q-mb-lg row justify-center">
             <a class="text-white bg-green-14 q-pa-md rounded-borders text-bold shadow-1" style="text-decoration: none;font-size:1rem" href="#ingressos">Comprar Ingressos <q-icon size="sm" name="add_shopping_cart"></q-icon></a>
@@ -58,15 +62,18 @@
                     <q-item >
                         <q-item-section class="text-black">
                             <q-item-label id="title-2"  class="q-pt-sm text-primary">CONTATO</q-item-label>
-                            <q-item-label class="text-bold text-grey-14 q-py-sm">{{ event.contact }}<br><br><strong class="text-secondary">Hospedado por {{ event.host }}</strong></q-item-label>
+                            <q-item-label style="white-space: pre-wrap" class="text-bold text-grey-14 q-py-sm">{{ event.contact }}<br><br><strong class="text-secondary">Hospedado por {{ event.host }}</strong></q-item-label>
                             <q-item-label id="title-2"  class="text-primary q-pt-md">LOCALIZAÇÃO</q-item-label>
-                            <q-item-label class="text-bold text-grey-14 q-py-sm">{{ event.address }}</q-item-label>
+                            <q-item-label style="white-space: pre-wrap"  class="text-bold text-grey-14 q-py-sm">{{ event.address }}</q-item-label>
                             <iframe v-if="event.maps_loc" :src="event.maps_loc" class="q-mt-md w100" height="450" style="border:0;" loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </q-item-section>
                     </q-item>
                 </q-card-section>
             </q-card>
+        </div>
+        <div class="w100 row justify-center items-center q-mt-xl" v-if="event">
+            <div class="text-center">{{ event.host.toUpperCase() }} <q-btn label="ver perfil" flat :to="'/' + event.host_login" icon-right="account_circle" color="primary"></q-btn></div>
         </div>
         <q-dialog  v-model="modalBuyTicket" persistent>
             <div class="q-px-md q-pb-md bg-grey-4">

@@ -48,10 +48,20 @@
                                 <q-icon name="account_circle" color="primary"/>
                             </template>
                         </q-input>
-                        <div v-if="editing" class="w100 row justify-center">
-                            <div id="title-2" class="text-primary q-mb-sm">Data de Nascimento:</div>
+                        <q-input
+                        v-if="editing"
+                        v-model="user.birthday"
+                        placeholder="Data de nascimento*"
+                        mask="##/##/####"
+                        outlined
+                    >
+                        <template v-slot:prepend>
+                            <q-icon name="today" color="primary"/>
+                        </template>
+                    </q-input>
+                        <!-- <div v-if="editing" class="w100 row justify-center">
                             <q-date id="date-picker" class="w100 row" v-model="user.birthday" mask="DD-MM-YYYY" color="primary" />
-                        </div>
+                        </div> -->
                         <q-input
                             v-if="editing"
                             v-model="user.phone"
@@ -248,7 +258,7 @@ async function registrar () {
         $q.notify({
             color: 'secondary',
             position: 'top',
-            message: 'Bem vindo, '+ response.data.login + '!',
+            message: 'Bem vindo, '+ response.data.login,
             icon: 'local_activity'
         })
         if(sessionStorage.getItem('comeFromTicketIntention')) {
@@ -285,7 +295,7 @@ async function login() {
         $q.notify({
             color: 'secondary',
             position: 'top',
-            message: 'Bem vindo, '+ response.data.login + '!',
+            message: 'Bem vindo, '+ response.data.login,
             icon: 'local_activity'
         })
         if(sessionStorage.getItem('comeFromTicketIntention')) {

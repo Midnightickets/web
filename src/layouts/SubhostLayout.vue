@@ -65,7 +65,7 @@
             </div>
         </q-drawer>
 
-        <q-page-container class="relative">
+        <q-page-container class="relative bg-grad-2">
             <div v-if="!subhostInfo" class="w100 text-white text-bold row items-center wrap q-px-md justify-center q-gutter-y-sm q-gutter-x-md  q-pt-lg">
                 <a href="/login-subhost" style="text-decoration: none;" id="title-2"
                 class="text-grey-4 text-bold row items-center q-mb-sm">
@@ -98,8 +98,8 @@ const router = useRouter()
 const menuOptions = ref({
     items: [
         // USER MENUS
-        { label: 'Validar', icon: 'qr_code_scanner', to: '/subhost', role: 'subhost' },
-        { label: 'Ingressos Validados', icon: 'confirmation_number', to: '#', role: 'subhost' },
+        { label: 'Validar Ingressos', icon: 'qr_code_scanner', to: '/subhost', role: 'subhost' },
+        { label: 'Andamento do Evento', icon: 'celebration', to: '/subhost/andamento', role: 'subhost' },
     ]
 })
 function goTo(item) {

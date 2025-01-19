@@ -13,7 +13,7 @@
                     </a>
                 </q-toolbar-title>
 
-                <q-btn class="rounded-borders" size="md" label="menu" color="secondary" glossy icon-right="menu"
+                <q-btn class="rounded-borders" size="md" label="menu" color="primary" glossy icon-right="menu"
                     @click="toggleRightDrawer" />
             </q-toolbar>
 

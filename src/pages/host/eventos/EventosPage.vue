@@ -5,27 +5,26 @@
                 class="title-1 w100 q-px-sm row items-center text-primary shadow-1 q-py-md justify-between no-wrap text-bold">
                 <div class="row no-wrap items-center text-blue-14">
                     <q-icon size="sm" color="blue-14" name="payments" class="q-pr-sm">
-                        <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
-                            Faturamento Total
-                        </q-tooltip>
                     </q-icon>
                     R$ {{ Utils.formatCurrency(hostInfo.total_profit ? hostInfo.total_profit : 0, 'brl') }}
+                    <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                        Faturamento Total
+                    </q-tooltip>
 
                 </div>
                 <div class="row no-wrap items-center">
                     R$ {{ Utils.formatCurrency(hostInfo.balance ? hostInfo.balance : 0, 'brl') }}
                     <q-icon size="sm" color="primary" name="paid" class="q-pl-sm">
-                        <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
-                            Faturamento Total
-                        </q-tooltip>
                     </q-icon>
+                    <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                        Saldo Atual
+                    </q-tooltip>
                 </div>
             </div>
         </div>
         <div class="w100 q-pt-lg"></div>
-        <div id="title" class=" text-primary q-pt-xl w100 text-center text-bold">Meus Eventos</div>
-        <div class="w100 q-my-md q-pl-md">
-            <q-btn class="q-pa-md text-bold" label="Novo Evento" glossy color="green-14"
+        <div class="w100 q-my-md q-pt-xl q-pl-md">
+            <q-btn class="q-pa-md text-bold" label="criar Evento" glossy color="primary"
                 to="/host/criar-evento" icon="event" icon-right="add" />
         </div>
         <div class="q-ma-md">
@@ -36,23 +35,25 @@
                     </template>
                 </q-input>
             </div>
-            <q-toggle color="secondary" v-model="filter.inProgress" :label="filter.inProgress ? 'Em Andamento' : 'Todos'" @update:model-value="getEventos()" class="q-mt-xs q-mb-md text-bold text-secondary" />
             <div v-if="loading" class="row w100 q-pb-xl justify-center">
                 <q-spinner-ball color="secondary" size="lg" />
                 <q-spinner-ball color="secondary" size="lg" />
                 <q-spinner-ball color="secondary" size="lg" />
             </div>
+            <div class="w100 bg-secondary q-mt-lg rounded-borders q-pt-xs"></div>
+            <div id="title" class=" text-primary w100 q-mt-md text-bold">Meus Eventos</div>
+            <q-toggle color="secondary" v-model="filter.inProgress" :label="filter.inProgress ? 'Em Andamento' : 'Todos'" @update:model-value="getEventos()" class="text-bold text-secondary" />
             <q-table v-if="!loading" no-data-label="Nenhum Evento Encontrado" separator="cell"
                 class="my-sticky-column-table text-primary q-mb-md w100 text-bold" :rows="rows"
                 :columns="columns">
                 <template v-slot:body-cell-acoes="props">
                     <div class="column items-center justify-center q-gutter-y-xs q-py-sm">
-                        <q-btn glossy :icon="props.row.status.includes('andamento')? 'edit' : 'visibility'" color="primary"  @click="openMeuEventoPage(props.row.id)">
+                        <q-btn glossy icon="visibility" color="primary"  @click="openMeuEventoPage(props.row.id)">
                             <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
                                 Gerenciar Evento
                             </q-tooltip>
                         </q-btn>
-                        <q-btn glossy @click="verVendas(props.row.id, props.row.title)" icon="payments" color="orange">
+                        <q-btn glossy @click="verVendas(props.row.id, props.row.title)" icon="payments" color="green">
                             <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
                                 Painel de Vendas
                             </q-tooltip>

@@ -124,7 +124,7 @@ async function updateSubhosts() {
             });
             subhosts.value = response.data.subhosts;
             $q.notify({
-                position: 'top',
+                position: 'bottom',
                 color: 'secondary',
                 icon: 'account_circle',
                 message: 'Lembre-se também de atualizar o acessos nos eventos em andamentos para este login subhost',

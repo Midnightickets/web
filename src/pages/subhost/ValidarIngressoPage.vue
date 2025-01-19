@@ -7,6 +7,9 @@
       <q-btn class="q-mt-md shadow-2 q-pa-xl" icon-right="qr_code_scanner" label="Scanear Ingresso" @click="startScanning" glossy color="blue-14" />
       <div class="w80 bg-secondary rounded-borders q-mt-xl q-pa-md shadow-2">
         <q-input v-model="ingresso_id" outlined class="bg-grey-3 q-mt-md w100 rounded-borders" label="Inserir Manualmente">
+          <template v-slot:prepend>
+            <q-icon name="fingerprint" color="primary" />
+          </template>
         </q-input>
         <q-btn class="q-py-lg q-mt-md w100 shadow-2" icon-right="sensor_occupied" label="Validar manualmente" @click="validateTicket()" glossy color="blue-14" />
       </div>

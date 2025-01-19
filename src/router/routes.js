@@ -55,6 +55,7 @@ const routes = [
     component: () => import('src/layouts/SubhostLayout.vue'),
     children: [
       { path: '', component: () => import('src/pages/subhost/ValidarIngressoPage.vue') },
+      { path: 'andamento', component: () => import('src/pages/subhost/AndamentoPage.vue') },
     ]
   },
   {

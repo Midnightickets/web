@@ -40,6 +40,8 @@ import { onBeforeMount, ref } from 'vue';
 
 const evento_title = sessionStorage.getItem('evento_title')
 const ingressos = ref([])
+const loading = ref(false)
+
 const profit = ref(0)
 // const response = ingressos.map((ingresso) => {
 //             return {
@@ -49,12 +51,14 @@ const profit = ref(0)
 //             };
 //         })
 onBeforeMount( async () => {
+    loading.value = true
     const host = JSON.parse(sessionStorage.getItem('host'))
     const evento_venda = sessionStorage.getItem('evento_venda')
     await api.post('/event/painel_vendas', {host:{token: host.token, id: host.id}, event_id: evento_venda}).then(response => {
         ingressos.value = response.data.ingressos
         profit.value = response.data.profit
     })
+    loading.value = false
 })
 
 </script>

@@ -222,7 +222,7 @@ async function login() {
         $q.notify({
             color: 'dark',
             position: 'top',
-            message: 'Bem vindo, '+ response.data.login + '!',
+            message: 'Bem vindo, '+ response.data.login,
             icon: 'diamond'
         })
         router.push('/host')

@@ -102,7 +102,7 @@ async function login() {
         $q.notify({
             color: 'dark',
             position: 'top',
-            message: 'Bem vindo, '+ response.data.login + '!',
+            message: 'Bem vindo, '+ response.data.login,
             icon: 'admin_panel_settings'
         })
         router.push('/admidnightickets')

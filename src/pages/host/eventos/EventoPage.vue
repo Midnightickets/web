@@ -6,10 +6,16 @@
             <q-spinner-ball color="secondary" size="lg" />
         </div>
         <div v-if="evento != null" class="text-secondary">
-            <div class="w100">
-                <q-btn @click="goTo('/host')" dense glossy flat icon="keyboard_return" label="voltar"
+            <div class="w100 no-wrap row justify-between q-pt-sm q-mb-sm">
+                <q-btn @click="goTo('/host')" dense glossy flat icon="keyboard_return" class="shadow-1 q-pa-sm q-ml-sm"
                     color="primary">
                 </q-btn>
+                <div>
+                    <q-btn @click="goToSetting('/andamento-evento')" class="q-pa-sm  rounded-borders shadow-1 q-ml-sm" dense glossy flat icon="celebration"
+                    color="primary"></q-btn>
+                    <q-btn @click="goToSetting('/vendas-evento')" class="q-pa-sm  rounded-borders shadow-1 q-mx-sm" dense glossy flat icon="payments"
+                    color="primary"></q-btn>
+                </div>
             </div>
             <div id="title" class="text-primary q-pl-md">{{ evento.title }}</div>
             <div class="text-primary text-bold q-pb-sm q-pl-md">{{ evento.status }}</div>
@@ -49,13 +55,13 @@
                         <div class="text-h6 text-primary row items-center">
                             <q-icon class="q-pr-xs" color="primary" name="location_city" size="sm"/>
                             Endereço</div>
-                        <div class="text-grey-7 text-bold" style="font-size: 16px;">{{ evento.address }}</div>
+                        <div class="text-grey-7 text-bold" style="font-size: 16px;white-space: pre-wrap">{{ evento.address }}</div>
                     </q-card-section>
                     <q-card-section v-if="!editando">
                         <div class="text-h6 text-primary row items-center">
                             <q-icon class="q-pr-xs" color="primary" name="phone" size="sm"/>
                             Contato</div>
-                        <div class="text-grey-7 text-bold" style="font-size: 16px;">{{ evento.contact }}</div>
+                        <div class="text-grey-7 text-bold" style="font-size: 16px;white-space: pre-wrap">{{ evento.contact }}</div>
                     </q-card-section>
                     <q-card-section v-if="evento.maps_loc && !editando">
                         <div class="text-h6 text-primary q-mb-sm row items-center">
@@ -177,9 +183,9 @@
             <div class="w100 q-mt-xl q-px-sm" v-if="!loading">
                 <q-btn class="w100 q-py-xl" to="/host/andamento-evento" :label="evento.status.includes('andamento') ? 'Andamento do Evento' : 'Histórico do Evento'" color="primary" glossy
                 :icon-right="evento.status.includes('andamento') ? 'visibility' : 'history'"></q-btn>
-                <q-btn class="w100 q-py-xl q-mt-md" @click="goToVendas()" label="Painel de Vendas" color="blue-14" glossy
+                <q-btn class="w100 q-py-xl q-mt-md" @click="goToVendas()" label="Painel de Vendas" color="green" glossy
                     icon-right="payments"></q-btn>
-                <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-md" label="Finalizar Evento" @click="confirmChangeStatusEvento('FINALIZADO')" color="red-14" glossy
+                <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-md" label="Finalizar Evento" @click="confirmChangeStatusEvento('FINALIZADO')" color="dark" glossy
                     icon-right="event_available"></q-btn>
                 <!-- <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-sm" label="Cancelar Evento" @click="confirmChangeStatusEvento('CANCELADO')" color="red-4" flat></q-btn> -->
             </div>
@@ -278,6 +284,18 @@ async function removeSubhost(subhost) {
 async function openSubhostModal() {
     await getSubhosts();
     modalSubhosts.value = true;
+}
+
+function goToSetting(path) {
+    switch (path) {
+        case '/vendas-evento':
+            sessionStorage.setItem('evento_venda', evento.value.id);
+            break;
+        case'/andamento-evento':
+            sessionStorage.setItem('evento_andamento', evento.value.id);
+            break;
+    }
+    router.push('/host' + path);
 }
 
 async function getSubhosts() {

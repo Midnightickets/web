@@ -407,12 +407,15 @@
                 </div>
             </q-page>
         </q-page-container>
-        <q-page-container style="min-height: 80vh" v-else>
+        <q-page-container style="min-height: 90vh" v-else>
+            <div class="q-mt-xl q-px-md w100 row justify-center animate__animated rounded-borders animate__fadeInDown animate__slower" v-if="hostInfo != ''">
+                <q-btn to="/me" id="ver-ingressos" icon="local_activity" glossy color="primary" class="shadow-2 q-py-lg w100" label="ver meus ingressos"></q-btn>
+            </div>
             <div id="search-public" class="w100 rounded-borders row justify-center">
                 <q-card id="search-card" class="q-mt-md q-mb-md q-mx-md animate__animated rounded-borders animate__fadeInDown animate__slower">
                     <q-card-section class="bg-grad-4 text-white text-bold text-center q-pa-md ">
                         <q-icon name="nightlife" size="lg" color="white" />
-                        <div class="text-center">Encontre Produtores e Eventos em Andamento</div>
+                        <div class="text-center" style="font-size:1rem">Encontre Produtores e Eventos em Andamento</div>
                     </q-card-section>
                     <q-card-section class="rounded-borders q-pa-md column q-gutter-y-md">
                         <q-input maxlength="100" v-model="searchPublic.titleEventOrHostName" outlined label="Nome do Evento ou Produtor(a)*"
@@ -752,7 +755,7 @@ a {
 }
 
 @media (min-width: 800px) {
-    #search-card {
+    #search-card, #ver-ingressos {
         width: 50%;
     }
 }

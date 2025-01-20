@@ -5,7 +5,7 @@
                 <q-btn @click="returnBack()" icon="keyboard_return" color="secondary" glossy></q-btn>
                 <q-btn to="/" icon="home" color="secondary"  class="q-ml-sm" glossy></q-btn>
             </div>
-            <q-btn @click="returnBack()" icon="share" color="blue-14" glossy></q-btn>
+            <q-btn @click="shareEvent()" icon="share" color="blue-14" glossy></q-btn>
         </div>
         <div class="w100 row justify-center q-mt-md q-px-md">
             <q-card v-if="eventoIndisponivel">
@@ -157,6 +157,18 @@ const buyTicketHandler = ref({
     ticket_person_phone: '',
     // ticket_person_birthday: '',
 });
+
+async function shareEvent() {
+    const shareData = {
+        title: event.value.title,
+        url: 'https://midnightickets.com/events/' + event.value.event_url,
+    }
+    navigator.share(shareData)
+    .then(() => console.log('Successful share'))
+    .catch((error) => console.log('Error sharing', error));
+    await navigator.clipboard.writeText(shareData.url)
+
+}
 
 const userSession = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')) : null
 function buyToMe(){

@@ -24,7 +24,7 @@
                         </q-item-section>
                     </q-item>
                     <q-item-section class="q-px-md">
-                        <q-btn @click="goToEvent(event.id)" label="Visualizar evento" icon-right="event" class="shadow-1 q-py-md" color="primary" glossy style="height: 100%;width: 100%;"></q-btn>
+                        <q-btn @click="goToEvent(event.event_url)" label="Visualizar evento" icon-right="event" class="shadow-1 q-py-md" color="primary" glossy style="height: 100%;width: 100%;"></q-btn>
                     </q-item-section>
                 </q-card-section>
             </q-card>

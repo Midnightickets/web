@@ -16,12 +16,13 @@
                 <q-card v-for="ingresso in ingressos" :key="ingresso.id" class="w100 q-pb-md bg-grey-3">
                     <q-card-section>
                         <div :class="!ingresso.isExpired ? 'text-primary' : 'text-secondary'" id="title-menu">
-                            <q-icon class="q-pb-xs" name="local_activity" color="primary"></q-icon>
+                            <q-icon class="q-pb-xs" name="local_activity"></q-icon>
                             {{ ingresso.ingresso }}
                         </div>
                         <div class="text-h6 text-blue-14 text-bold">{{ ingresso.event }}</div>
+                        <div class="text-h6 text-green-14 text-bold">{{ ingresso.host }}</div>
                         <div class="bg-grey-9 rounded-borders q-pa-sm q-mt-sm text-h6 text-secondary text-bold">{{ ingresso.ticket_person_name.toUpperCase() }}</div>
-                        <div class="text-grey-8 text-bold q-pt-md" style="font-size: 16px">{{ !ingresso.isExpired ? '🟢 Disponível' : '🟡  Utilizado' }}</div>
+                        <div class="text-grey-8 text-bold q-pt-md" style="font-size: 16px">{{ !ingresso.isExpired ? '🟢 Disponível' : '🔵  Utilizado' }}</div>
                         <!-- <div class="text-h6 text-grey-5 text-right text-bold">{{ ingresso.payer }}</div> -->
                     </q-card-section>
                     <div class="w100 q-px-md" v-if="!ingresso.isExpired">

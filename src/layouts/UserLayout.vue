@@ -84,7 +84,7 @@
             <footer class="w100 row wrap justify-center items-center q-py-xl bg-primary q-px-xl">
                 <div class=" column q-py-md">
                     <q-btn label="Encontre eventos" to="/" class="text-grey-5" flat></q-btn>
-                    <q-btn label="Suporte ao usuário" class="text-grey-5" flat></q-btn>
+                    <!-- <q-btn label="Suporte ao usuário" class="text-grey-5" flat></q-btn> -->
                 </div>
                 <div class="w100 q-pt-xs bg-secondary rounded-borders"></div>
                 <div class="column q-py-md items-center">

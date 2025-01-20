@@ -441,7 +441,7 @@
             </div>
             <div class="w100 q-pt-xs bg-secondary rounded-borders"></div>
             <div class="column q-py-md items-center">
-                <q-btn label="Suporte" to="/suporte" class="text-grey-5" flat></q-btn>
+                <q-btn label="Suporte" @click="goTo('/Manual-do-Produtor.pdf')" class="text-grey-5" flat></q-btn>
                 <q-btn label="termos de uso" to="/termos-de-uso"  class="text-grey-5" flat></q-btn>
                 <q-btn label="Mercado Pago" @click="goTo('https://www.mercadopago.com.br/developers/pt/docs/checkout-pro/landing')" class="text-grey-5" flat></q-btn>
                 <q-btn label="instagram" @click="goTo('https://www.instagram.com/midnightickets')" class="text-grey-5" flat></q-btn>

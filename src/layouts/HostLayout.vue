@@ -69,7 +69,7 @@
                     <q-btn label="Crie seu evento" to="/login-host" class="text-grey-5" flat></q-btn>
                     <q-btn label="Valide ingressos" to="/login-subhost" class="text-grey-5" flat></q-btn>
                     <q-btn label="Encontre eventos" to="/" class="text-grey-5" flat></q-btn>
-                    <q-btn label="Suporte ao produtor" class="text-grey-5" flat></q-btn>
+                    <q-btn label="Suporte ao produtor" @click="goToBlank('/Manual-do-Produtor.pdf')" class="text-grey-5" flat></q-btn>
                 </div>
                 <div class="w100 q-pt-xs bg-secondary rounded-borders"></div>
                 <div class="column q-py-md items-center">

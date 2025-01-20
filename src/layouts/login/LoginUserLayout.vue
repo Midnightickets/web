@@ -11,11 +11,11 @@
                 <div id="login-card" class="bg-white animate__animated animate__zoomIn rounded-borders">
                     <div id="title-menu" class="text-primary text-center q-mt-md row justify-center items-center"><q-icon name="account_circle" size="md" color="primary" class="q-mr-xs"></q-icon>INICIAR SESSÃO</div>
                     <div class="q-pa-md column q-gutter-y-md">
-                        <q-checkbox v-model="loginByCpf">
+                        <q-checkbox v-if="!editing" v-model="loginByCpf">
                             <span class="text-primary">Entrar com CPF</span>
                         </q-checkbox>
                     <q-input
-                        v-if="loginByCpf"
+                        v-if="loginByCpf && !editing"
                         v-model="user.login"
                         placeholder="CPF*"
                         mask="###.###.###-##"

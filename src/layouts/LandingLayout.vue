@@ -156,7 +156,7 @@
                         <img class="img"
                             src="https://images.blush.design/PJcHFUF4pMy6BXPLEFnD?w=500&auto=compress&cs=srgb" alt="">
                     </div>
-                    <div style="font-size:1.3rem" class=" bg-grad-4 text-white text-bold q-px-sm q-py-md text-right">
+                    <div style="font-size:1.3rem" class=" bg-grad-4 text-white text-bold q-px-sm q-py-md text-center">
                         Quem
                         Somos ?</div>
                     <div style="font-size:1.1rem"
@@ -168,7 +168,7 @@
                         <img class="img"
                             src="https://images.blush.design/UKjlMI8EIiiOMVntZau4?w=920&auto=compress&cs=srgb" alt="">
                     </div>
-                    <div style="font-size:1.3rem" class=" bg-grad-4 text-white text-bold q-px-sm q-py-md text-right">O que Fazemos ?</div>
+                    <div style="font-size:1.3rem" class=" bg-grad-4 text-white text-bold q-px-sm q-py-md text-center">O que Fazemos ?</div>
                     <div style="font-size:1.1rem"
                         class="text-shadow q-mb-md bg-grad-2 text-white high-opacity text-bold q-px-sm q-py-md text-center">
                         Maximizamos o faturamento na venda de seus ingressos de forma escalável. Além de gerenciar eventos em tempo real temos 
@@ -178,7 +178,7 @@
                     <div class="w100 img-wrapper column">
                         <img class="img" src="~/assets/landing-images/drawn1.png" alt="">
                     </div>
-                    <div style="font-size:1.3rem" class="bg-grad-4 text-white text-bold q-px-sm q-py-md text-right">Como
+                    <div style="font-size:1.3rem" class="bg-grad-4 text-white text-bold q-px-sm q-py-md text-center">Como
                         fazemos isso ?
                     </div>
                     <div id="vantagens" style="font-size:1.1rem;"
@@ -441,10 +441,10 @@
             </div>
             <div class="w100 q-pt-xs bg-secondary rounded-borders"></div>
             <div class="column q-py-md items-center">
-                <q-btn label="Suporte" class="text-grey-5" flat></q-btn>
-                <q-btn label="email" @click="alertar('midnightickets@gmail.com')" class="text-grey-5" flat></q-btn>
-                <q-btn label="termos de uso" class="text-grey-5" flat></q-btn>
+                <q-btn label="Suporte" to="/suporte" class="text-grey-5" flat></q-btn>
+                <q-btn label="termos de uso" to="/termos-de-uso"  class="text-grey-5" flat></q-btn>
                 <q-btn label="instagram" @click="goTo('https://www.instagram.com/midnightickets')" class="text-grey-5" flat></q-btn>
+                <q-btn label="email" @click="alertar('midnightickets@gmail.com')" class="text-grey-5" flat></q-btn>
                 <q-btn label="desenvolvedor" @click="goTo('https://samuelvictorol.github.io/portfolio')" class="text-grey-5" flat></q-btn>
             </div>
             <div class="w100 row q-pt-xl items-center justify-start text-secondary" id="title-layout">

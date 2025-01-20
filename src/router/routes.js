@@ -22,6 +22,14 @@ const routes = [
     ]
   },
   {
+    path: '/termos-de-uso',
+    component: () => import('layouts/TermosUsoLayout.vue'),
+  },
+  {
+    path: '/suporte',
+    component: () => import('layouts/SuporteLayout.vue'),
+  },
+  {
     path: '/login-host',
     component: () => import('layouts/login/LoginHostLayout.vue'),
   },

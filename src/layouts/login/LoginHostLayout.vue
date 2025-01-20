@@ -127,6 +127,7 @@
                 <q-btn
                     v-if="!editando && !loading"
                     label="Esqueci minha senha"
+                    glossy
                     @click="modalEsqueciSenha = true"
                     color="blue-14"
                     class="full-width q-mt-md q-py-xs"

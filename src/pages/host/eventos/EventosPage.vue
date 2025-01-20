@@ -35,14 +35,14 @@
                     </template>
                 </q-input>
             </div>
-            <div v-if="loading" class="row w100 q-pb-xl justify-center">
+            <div class="w100 bg-secondary q-mt-lg rounded-borders q-pt-xs"></div>
+            <div id="title" class=" text-primary w100 q-mt-md text-bold">Meus Eventos</div>
+            <q-toggle color="secondary" v-model="filter.inProgress" :label="filter.inProgress ? 'Em Andamento' : 'Todos'" @update:model-value="getEventos()" class="text-bold text-secondary" />
+            <div v-if="loading" class="row w100 q-pb-xl q-mt-md justify-center">
                 <q-spinner-ball color="secondary" size="lg" />
                 <q-spinner-ball color="secondary" size="lg" />
                 <q-spinner-ball color="secondary" size="lg" />
             </div>
-            <div class="w100 bg-secondary q-mt-lg rounded-borders q-pt-xs"></div>
-            <div id="title" class=" text-primary w100 q-mt-md text-bold">Meus Eventos</div>
-            <q-toggle color="secondary" v-model="filter.inProgress" :label="filter.inProgress ? 'Em Andamento' : 'Todos'" @update:model-value="getEventos()" class="text-bold text-secondary" />
             <q-table v-if="!loading" no-data-label="Nenhum Evento Encontrado" separator="cell"
                 class="my-sticky-column-table text-primary q-mb-md w100 text-bold" :rows="rows"
                 :columns="columns">

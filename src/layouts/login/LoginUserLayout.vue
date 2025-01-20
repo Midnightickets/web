@@ -11,6 +11,33 @@
                 <div id="login-card" class="bg-white animate__animated animate__zoomIn rounded-borders">
                     <div id="title-menu" class="text-primary text-center q-mt-md row justify-center items-center"><q-icon name="account_circle" size="md" color="primary" class="q-mr-xs"></q-icon>INICIAR SESSÃO</div>
                     <div class="q-pa-md column q-gutter-y-md">
+                        <q-checkbox v-model="loginByCpf">
+                            <span class="text-primary">Entrar com CPF</span>
+                        </q-checkbox>
+                    <q-input
+                        v-if="loginByCpf"
+                        v-model="user.login"
+                        placeholder="CPF*"
+                        mask="###.###.###-##"
+                        type="text"
+                        outlined
+                    >
+                        <template v-slot:prepend>
+                            <q-icon name="fingerprint" color="primary"/>
+                        </template>
+                    </q-input>
+                    <q-input
+                    v-if="!editing && !loginByCpf"
+                    v-model="user.login"
+                    placeholder="Login*"
+                    maxlength="20"
+                    type="text"
+                    outlined
+                >
+                    <template v-slot:prepend>
+                        <q-icon name="account_circle" color="primary"/>
+                    </template>
+                </q-input>
                         <q-input
                             v-if="editing"
                             v-model="user.cpf"
@@ -38,6 +65,7 @@
                             </template>
                         </q-input>
                             <q-input
+                            v-if="editing"
                             v-model="user.login"
                             placeholder="Login*"
                             maxlength="20"
@@ -134,7 +162,7 @@
                         />
                         <q-btn
                             v-if="!loading"
-                            :label="editing ? 'fazer login' : 'Registre-se'"
+                            :label="editing ? 'já possui uma conta ?' : 'Crie uma conta'"
                             @click="editing = !editing"
                             color="primary"
                             glossy
@@ -143,6 +171,7 @@
                         <q-btn
                         v-if="!editando && !loading"
                         label="Esqueci minha senha"
+                        glossy
                         @click="modalEsqueciSenha = true"
                         color="blue-14"
                         class="full-width q-mt-md q-py-xs"
@@ -184,6 +213,7 @@ import EsqueciSenhaModal from 'src/components/EsqueciSenhaModal.vue';
 const $q = useQuasar()
 const router = useRouter()
 const loading = ref(false)
+const loginByCpf = ref(false)
 const editing = ref(false)
 const modalEsqueciSenha = ref(false)
 
@@ -323,7 +353,7 @@ async function login() {
 
 <style scoped>
 #login-user{
-    min-height: 100vh;
+    min-height: 90vh;
 }
 #login-card{
     width: 45vw

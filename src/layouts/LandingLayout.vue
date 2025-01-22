@@ -76,7 +76,7 @@
                                         {{ event.host.toLowerCase() }}
                                     </q-item-label>
                                     <q-item-section class="w100 q-mt-md">
-                                        <q-btn  @click="goToPublicEventPage(event.id)" label="ver evento"  icon="travel_explore" color="primary" glossy class="w100 shadow-2"></q-btn>
+                                        <q-btn  @click="goToPublicEventPage(event.event_url)" label="ver evento"  icon="travel_explore" color="primary" glossy class="w100 shadow-2"></q-btn>
                                     </q-item-section>
                                 </q-item-section>
                             </q-item>
@@ -407,8 +407,8 @@
                 </div>
             </q-page>
         </q-page-container>
-        <q-page-container style="min-height: 90vh" v-else>
-            <div class="q-mt-xl q-px-md w100 row justify-center animate__animated rounded-borders animate__fadeInDown animate__slower" v-if="hostInfo != ''">
+        <q-page-container v-else class="q-mb-xl">
+            <div class="q-mt-xl q-px-md w100 row justify-center animate__animated rounded-borders animate__fadeInDown animate__slower" >
                 <q-btn to="/me" id="ver-ingressos" icon="local_activity" glossy color="primary" class="shadow-2 q-py-lg w100" label="ver meus ingressos"></q-btn>
             </div>
             <div id="search-public" class="w100 rounded-borders row justify-center">

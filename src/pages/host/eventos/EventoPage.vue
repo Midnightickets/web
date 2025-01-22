@@ -24,7 +24,7 @@
                 (evento.final_time ? (' - ' + evento.final_time) : '' ) }}</div>
                 <q-btn v-if="!editando && evento.img_url.trim() != ''" @click="dialogImg = !dialogImg" label="Ver Banner"  glossy icon-right="image"
                 class="q-px-md q-ml-md q-mt-md" dense color="blue-14"></q-btn>
-                <q-btn v-if="evento.status.includes('andamento')" @click="previewPublicEvent(evento.id)" label="Evento Preview"  glossy icon-right="event"
+                <q-btn v-if="evento.status.includes('andamento')" @click="previewPublicEvent(evento.event_url)" label="Evento Preview"  glossy icon-right="event"
                 class="q-px-md q-ml-md q-mt-md" dense color="primary"></q-btn>
             <div v-if="!loading" class="q-card-wrapper row justify-center ">
                 <q-card class="w100 q-mt-md" :class="editando ? 'bg-orangy' : ''">

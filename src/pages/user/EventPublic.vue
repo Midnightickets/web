@@ -148,7 +148,7 @@ const $q = useQuasar();
 const eventoIndisponivel = ref(false);
 const ticketPaymentButton = ref(false);
 const isCortesia = ref(false);
-sessionStorage.setItem('lastEvent', route.params.event);
+
 const buyTicketHandler = ref({
     toMe: false,
     ticket_person_name: '',
@@ -193,6 +193,7 @@ onBeforeMount(async () => {
     
     await api.get('/events?event=' + route.params.event).then((res) => {
         event.value = res.data;
+        sessionStorage.setItem('comeFromTicketIntention', event.value.event_url);
     })
     .catch((err) => {
         eventoIndisponivel.value = true;

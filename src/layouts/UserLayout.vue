@@ -88,7 +88,7 @@
                 </div>
                 <div class="w100 q-pt-xs bg-secondary rounded-borders"></div>
                 <div class="column q-py-md items-center">
-                    <q-btn label="termos de uso" class="text-grey-5" flat></q-btn>
+                    <q-btn label="termos de uso" to="/termos-de-uso" class="text-grey-5" flat></q-btn>
                     <q-btn label="email" @click="alertar('midnightickets@gmail.com')" class="text-grey-5" flat></q-btn>
                     <q-btn label="instagram" @click="goToBlank('https://www.instagram.com/midnightickets')" class="text-grey-5" flat></q-btn>
                     <q-btn label="desenvolvedor" @click="goToBlank('https://samuelvictorol.github.io/portfolio')" class="text-grey-5" flat></q-btn>

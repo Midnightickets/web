@@ -58,6 +58,7 @@
                 </q-input>
             </div>
             <div class="w100 row justify-center">
+                <div class="w100 text-center text-secondary" id="title-layout">Data do Evento é Obrigatória*</div>
                 <q-date id="date-picker" class="w100 row" v-model="evento.date" mask="DD-MM-YYYY HH:mm" :options="(date) => {
                     const today = new Date();
                     const yesterday = new Date(today);
@@ -67,13 +68,6 @@
                     return mydate >= new Date(minDate);
                 }" color="primary" />
             </div>
-            <div class="w100 text-center text-secondary" id="title-layout">Data do Evento é Obrigatória*</div>
-            <q-input maxlength="300" placeholder="Insira a url do banner" filled v-model="evento.img_url"
-                label="Link da Imagem do Evento">
-                <template v-slot:append>
-                    <q-btn flat icon="image" @click="openImgur()" color="primary" />
-                </template>
-            </q-input>
             <q-input placeholder="Clique no ícone ao lado para ajuda" maxlength="800" filled v-model="evento.maps_loc"
                 label="Localização Google Maps">
                 <template v-slot:append>
@@ -159,13 +153,20 @@ function verImg(url) {
 
 const helpLocGoogle = () => {
     $q.notify({
-        message: 'Para buscar a localização do seu evento acesse o Google Maps, pesquise o local do seu evento, clique em "Compartilhar" e depois em "Incorporar um mapa". Copie e cole o html(iframe) no campo localização.',
-        color: 'blue-8',
-        position: 'top',
-        icon: 'pin_drop',
-        timeout: 10000
-    })
+  message: `
+    Para buscar a localização do seu evento, acesse o Google Maps, pesquise o local do seu evento, clique em "Compartilhar" e depois em "Incorporar um mapa". Copie e cole o HTML (iframe) no campo localização.
+    <br>
+    <a target="_blank" href="/Manual-do-Produtor.pdf" class="q-btn q-btn-item q-btn--dense text-white q-px-md w100 q-my-md bg-primary">Ajuda</a>
+    
+  `,
+  color: 'blue-8',
+  position: 'top',
+  icon: 'map',
+  timeout: 5000,
+  html: true // Permite inserir HTML no `message`
+});
 }
+
 
 onMounted(() => {
     const es1Storage = sessionStorage.getItem('eventoStep1')

@@ -65,14 +65,14 @@
                             <q-item-label style="white-space: pre-wrap" class="text-bold text-grey-14 q-py-sm">{{ event.contact }}<br><br><strong class="text-secondary">Hospedado por {{ event.host }}</strong></q-item-label>
                             <q-item-label id="title-2"  class="text-primary q-pt-md">LOCALIZAÇÃO</q-item-label>
                             <q-item-label style="white-space: pre-wrap"  class="text-bold text-grey-14 q-py-sm">{{ event.address }}</q-item-label>
-                            <iframe v-if="event.maps_loc" :src="event.maps_loc" class="q-mt-md w100" height="450" style="border:0;" loading="lazy"
+                            <iframe v-if="event.maps_loc" :src="event.maps_loc" class="rounded-borders shadow-2 q-mt-md w100" height="450" style="border:0;" loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </q-item-section>
                     </q-item>
                 </q-card-section>
             </q-card>
         </div>
-        <div class="w100 row justify-center items-center q-mt-xl" v-if="event">
+        <div class="w100 row justify-center items-center q-mt-xl q-px-md" v-if="event">
             <div class="text-center">{{ event.host.toUpperCase() }} <q-btn label="ver perfil" flat :to="'/' + event.host_login" icon-right="account_circle" color="primary"></q-btn></div>
         </div>
         <q-dialog  v-model="modalBuyTicket" persistent>
@@ -89,7 +89,7 @@
                             <q-icon name="person" :color="isCampoValid('name', buyTicketHandler.ticket_person_name) ? 'primary' : 'grey-8'" />
                         </template>
                     </q-input>
-                    <q-input class="q-mt-sm" v-model="buyTicketHandler.ticket_person_cpf" @update:model-value="updateCpf()" mask="###.###.###-##" maxlength="14" label="CPF do Responsável*" 
+                    <q-input class="q-mt-sm" v-model="buyTicketHandler.ticket_person_cpf" @update:model-value="updateCpf()" mask="###.###.###-##" maxlength="14" label="CPF*" 
                         outlined reverse-fill-mask dense>
                         <template v-slot:prepend>
                             <q-icon name="badge"  :color="isCampoValid('cpf', buyTicketHandler.ticket_person_cpf) ? 'primary' : 'grey-8'" />
@@ -305,7 +305,6 @@ function openModalBuyTicket(ticket) {
             icon: 'local_activity',
             timeout: 4000
         });
-        sessionStorage.setItem('comeFromTicketIntention', event.value.id);
         router.push('/login')
     }
 }

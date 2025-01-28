@@ -44,16 +44,19 @@
                     evento.initial_time : '') +
                 (evento.final_time ? (' - ' + evento.final_time) : '' ) }}</div>
             <q-btn @click="dialogImg = !dialogImg" label="Banner do Evento"
-                glossy icon-right="image" class="q-px-md q-ml-md q-mt-md" dense color="blue-14"></q-btn>
+                glossy icon-right="image" class="q-pa-md q-ml-md q-mt-md" dense color="blue-14"></q-btn>
             <q-btn v-if="evento.status.includes('andamento')" @click="previewPublicEvent(evento.event_url)"
-                label="Evento Preview" glossy icon-right="event" class="q-px-md q-ml-md q-mt-md" dense
+                label="Evento Preview" glossy icon-right="event" class="q-pa-md q-ml-md q-mt-md" dense
                 color="primary"></q-btn>
             <div v-if="!loading" class="q-card-wrapper row justify-center ">
                 <q-card class="w100 q-mt-md" :class="editando ? 'bg-orangy' : ''">
                     <div id="title-menu" class="text-primary w100 q-pt-md text-center">
                         {{ editando ? 'Editando Informações' : 'Informações' }}
                     </div>
-                    <div class="q-ml-md">
+                    <div class="w100 row justify-between q-px-md">
+                        <q-btn v-if="evento.status.includes('andamento') && editando" class="w100 q-pa-md q-mt-md" label="salvar alterações"
+                        :disabled="checkEdit()" @click="updateEventInfo()"
+                        icon-right="save" color="orange-14" glossy></q-btn>
                         <q-btn v-if="evento.status.includes('andamento')" @click="alternarEdicao()"
                             :label="!editando ? 'Editar Evento' : 'cancelar'"
                             :icon-right="!editando ? 'edit' : 'cancel'" :flat="editando" class="q-mt-md q-px-md " dense
@@ -149,7 +152,7 @@
                             const mydate = new Date(date);
                             return mydate >= new Date(minDate);
                         }" color="primary" />
-                        <div class="w100 row no-wrap q-gutter-x-sm justify-center items-center">
+                        <div class="w100 row no-wrap q-gutter-x-sm bg justify-center items-center">
                             <q-input id="times" label="Início" class="bg-grey-2" outlined v-model="evento.initial_time"
                                 mask="time" :rules="['time']">
                                 <template v-slot:append>
@@ -185,8 +188,8 @@
                                 <q-icon name="location_on" color="primary" size="xs" />
                             </template>
                         </q-input>
-                        <q-btn @click="updateEventInfo()" label="salvar alterações" color="orange-14"
-                            :disabled="checkEdit()" icon-right="save" class="w100 q-py-md" glossy></q-btn>
+                        <q-btn :disabled="checkEdit()" @click="updateEventInfo()" label="salvar alterações" color="orange-14"
+                             icon-right="save" class="w100 q-py-md" glossy></q-btn>
                     </div>
 
                 </q-card>
@@ -640,7 +643,7 @@ function confirmChangeStatusEvento(status) {
 onBeforeMount(async () => {
     loading.value = true;
     await getEvento();
-    sessionStorage.setItem('lastEventVisited', evento.value.id);
+    sessionStorage.setItem('lastEventVisited', evento.value.event_url);
 });
 
 </script>

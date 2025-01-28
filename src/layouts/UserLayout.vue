@@ -66,11 +66,11 @@
                     Faça Login para comprar ingressos e encontrar eventos
                 </div>
                 <q-btn class="q-my-lg q-pa-lg shadow-2" to="/login" color="secondary" glossy label="Iniciar Sessão" icon-right="login" />
-                <q-btn class="q-mt-xl" to="/" flat label="Página Inicial" color="secondary" icon="home" />
+                <q-btn class="q-mt-xl" to="/" flat label="Página Inicial" glossy icon="home" />
             </div>
         </q-drawer>
 
-        <q-page-container class="relative w100 bg-grey-dark ">
+        <q-page-container class="relative w100 bg-grad-4 ">
             <div v-if="!userInfo" class="w100 text-white text-bold row items-center wrap w100 justify-center q-gutter-y-sm q-gutter-x-md  q-pt-lg">
                 <a href="/" style="text-decoration: none;" id="title-2"
                 class="text-white  text-shadow text-bold row items-center q-mb-sm">

@@ -19,7 +19,7 @@
                     <q-card-section>
                         <div id="title-2" class="text-primary text-bold row items-center justify-center"> {{ ingresso.ticket_type.title }}</div>
                         <div id="title-layout" class="text-green-14 text-bold row items-center justify-end">+ R$ {{ Utils.formatCurrency(ingresso.ticket_type.price) }}<q-icon name="paid" color="primary" size="sm" class="q-pl-sm"></q-icon></div>
-                        <div class="text-primary q-mt-sm"><strong>Responsável Ingresso:</strong><br>{{ ingresso.ticket_type.ticket_person_name.toUpperCase() + ' - ' + ingresso.ticket_type.ticket_person_cpf }}</div>
+                        <div class="text-primary q-mt-sm"><strong>Responsável Ingresso:</strong><br>{{ ingresso.ticket_type.ticket_person_name.toUpperCase() + ' [' + ingresso.ticket_type.ticket_person_cpf + ']'}}</div>
                         <div class="text-primary q-mt-sm"><strong>Contato Responsável:</strong><br>{{ ingresso.ticket_type.ticket_person_email.toLowerCase() }} <br>{{ ingresso.ticket_type.ticket_person_phone }}</div>
                         <div class="text-primary q-mt-sm"><strong>Comprado por:</strong><br>{{ ingresso.payer.toUpperCase() }}</div>
                         <div class="text-grey-14 text-bold text-right w100 q-mt-md">{{ingresso.createdAt}}</div>

@@ -7,7 +7,7 @@
       </div>
       <div class="q-pa-md">
           <div id="title" class="text-primary">Andamento do Evento</div>
-          <div class="text-bold text-h6 text-blue-14 q-mb-lg">Checkins: {{ checkins.length }}</div>
+          <div class="text-bold text-h6 text-green q-mb-lg">Checkins: {{ checkins.length }}</div>
               <div v-if="loading" class="row w100 q-pb-xl justify-center">
                   <q-spinner-ball color="secondary" size="lg" />
                   <q-spinner-ball color="secondary" size="lg" />
@@ -16,9 +16,9 @@
           <div class="w100 row wrap items-center justify-center q-gutter-md" v-if="checkins.length > 0">
               <q-card v-for="checkin in checkins" :key="checkin.id" class="q-mb-md border-left-roxo">
                   <q-card-section>
-                        <div class="text-primary text-bold text-h6">{{checkin.person_name.toUpperCase()}}</div>
+                        <div class="text-primary text-bold text-h6">{{checkin.person_name.toUpper()}}</div>
                         <div class="text-blue-14 text-bold text-h6">{{checkin.validated_by.toLowerCase()}}</div>
-                        <div class="text-grey-14 text-h6">{{checkin.createdAt}}</div>
+                        <div class="text-grey-14 text-h6">{{checkin.person_cpf}}</div>
                         <div class="text-grey-14 text-h6">{{checkin.createdAt}}</div>
                   </q-card-section>
               </q-card>

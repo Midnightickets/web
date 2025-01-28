@@ -153,7 +153,7 @@ const criarEvento = async () => {
     await api.post('/create_event', reqObject)
         .then(response => {
             $q.notify({
-                color: 'green-14',
+                color: 'primary',
                 position: 'top',
                 message: response.data.message,
                 icon: 'event'

@@ -8,7 +8,7 @@
         <div class="q-pa-md">
             <div id="title" class="text-primary">Painel de Vendas</div>
             <div class="text-bold text-h6 text-grey-14">{{evento_title}}</div>
-            <div class="text-bold text-h6 text-blue-14 q-mb-lg">Faturamento: R$ {{Utils.formatCurrency(profit)}}<br>{{ ingressos.length}} vendas</div>
+            <div class="text-bold text-h6 text-green-14 q-mb-lg">Faturamento: R$ {{Utils.formatCurrency(profit)}}<br>{{ ingressos.length}} vendas</div>
                 <div v-if="loading" class="row w100 q-pb-xl justify-center">
                     <q-spinner-ball color="secondary" size="lg" />
                     <q-spinner-ball color="secondary" size="lg" />

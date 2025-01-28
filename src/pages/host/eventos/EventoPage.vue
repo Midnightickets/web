@@ -43,7 +43,7 @@
                 (evento.initial_time ? ' às ' +
                     evento.initial_time : '') +
                 (evento.final_time ? (' - ' + evento.final_time) : '' ) }}</div>
-            <q-btn v-if="evento.img_url.trim() != ''" @click="dialogImg = !dialogImg" label="Banner do Evento"
+            <q-btn @click="dialogImg = !dialogImg" label="Banner do Evento"
                 glossy icon-right="image" class="q-px-md q-ml-md q-mt-md" dense color="blue-14"></q-btn>
             <q-btn v-if="evento.status.includes('andamento')" @click="previewPublicEvent(evento.event_url)"
                 label="Evento Preview" glossy icon-right="event" class="q-px-md q-ml-md q-mt-md" dense
@@ -225,7 +225,7 @@
                         Acesso
                     </div>
                     <q-btn v-if="evento.status.includes('andamento')" @click="openSubhostModal()"
-                        label="Adicionar Subhost" icon-right="person_add" color="primary" glossy
+                        label="Adicionar permissão" icon-right="person_add" color="primary" glossy
                         class="q-mt-md q-ml-md"></q-btn>
                     <q-card-section>
                         <div v-if="evento.subhosts.length > 0" class="text-h6 text-primary">Subhosts Cadastrados: {{

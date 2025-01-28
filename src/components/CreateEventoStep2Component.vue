@@ -160,7 +160,7 @@ const criarEvento = async () => {
             })
             sessionStorage.removeItem('eventoStep1')
             sessionStorage.removeItem('eventoStep2')
-            sessionStorage.setItem('evento', JSON.stringify(response.data.event_id))
+            sessionStorage.setItem('evento', response.data.event_id)
             router.push('/host/evento')
         })
         .catch(error => {

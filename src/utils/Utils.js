@@ -42,6 +42,10 @@ const Utils = {
             return valor.toString().replace('.', ',')
         }
     },
+    toCamelCase: (str) => {
+        // essa função serve para transformar a primeira letra de cada palavra em maiúscula
+        return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+    },
     verificaArraySemEspacos: (array) => {
         return array.every(str => !/\s/.test(str));
     },

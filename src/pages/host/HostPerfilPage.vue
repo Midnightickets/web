@@ -7,23 +7,24 @@
         <div id="title" class="text-primary q-px-sm q-pb-sm text-center">
             Meu Perfil
         </div>
-        <div v-if="!editing" class="w100 row justify-center q-mb-md q-gutter-x-md q-gutter-y-md">
-            <q-btn @click="editing = !editing" label="Editar Pefil" color="orange-14" glossy
+        <div class="w100 row justify-center items-start relative q-mb-md">
+            <q-avatar style="width:160px;height:160px;" class="shadow-2">
+                <img style="border-bottom: 4px solid #9573f3;" v-if="host.img_url" :src="host.img_url" alt="">
+                <q-icon style="border-bottom: 4px solid #9573f3;" v-else name="account_circle" size="200px" color="purple-1" />
+            </q-avatar>
+        </div>
+        <div class="w100 row justify-center q-mb-md q-gutter-x-md q-gutter-y-md">
+            <q-btn v-if="!editando" @click="editando = !editando" label="Editar Pefil" color="orange-14" glossy
                 icon-right="account_circle"></q-btn>
-            <q-btn @click="openPerfilPublico()" label="Perfil Público" color="secondary" glossy
+            <q-btn @click="openPerfilPublico()" label="Perfil Público" color="primary" glossy
                 icon-right="public"></q-btn>
         </div>
         <div v-if="host" class="row wrap w100 q-pl-md q-mt-md cards-wrapper justify-center q-gutter-x-md items-start">
-            <q-card class="q-mb-md animate__animated animate__fadeInRight" style="border-left: 4px solid #9573f3;">
-                <q-card-section class="q-pa-md row justify-center items-center">
-                    <q-avatar style="width:110px;height:110px;" class="shadow-2">
-                        <img style="border-bottom: 4px solid #9573f3;" v-if="host.img_url" :src="host.img_url" alt="">
-                        <q-icon style="border-bottom: 4px solid #9573f3;" v-else name="account_circle" size="100px" color="purple-1" />
-                    </q-avatar>
-                </q-card-section>
+            <q-card v-if="!editando" class="q-mb-md animate__animated animate__fadeInRight" style="border-left: 4px solid #9573f3;">
+                
                 <q-card-section class="q-pa-md">
                     <div class="text-h6 text-primary">Nome</div>
-                    <div class="text-h6">{{ host.name }}</div>
+                    <div class="text-h6">{{ Utils.toCamelCase(host.name) }}</div>
                 </q-card-section>
                 <q-card-section class="q-pa-md">
                     <div class="text-h6 text-primary">Login</div>
@@ -33,12 +34,72 @@
                     <div class="text-h6 text-primary">Email</div>
                     <div class="text-h6">{{ host.email }}</div>
                 </q-card-section>
+            </q-card>
+            <q-card v-else class="q-mb-md animate__animated animate__fadeInRight" style="border-left: 4px solid orange;">
+                <div id="title-layout" class="text-orange-14 q-mt-md row justify-center items-center">
+                    Editando Informações do Perfil
+                </div>
+                <div class="w100 q-px-md q-mt-md column justify-center items-center">
+                    <q-btn @click="openPerfilPublico()" label="Alterar Foto" color="blue-14" glossy
+                    icon-right="image"></q-btn>
+                    <q-btn @click="editando = !editando" class="q-mt-md" label="Cancelar" flat color="primary" glossy></q-btn>
+                </div>
                 <q-card-section class="q-pa-md">
-                    <div class="text-h6 text-primary">Senha</div>
-                    <div class="text-h6">**********</div>
+                    <q-input v-model="host.name" outlined label="Nome">
+                        <template v-slot:prepend>
+                            <q-icon name="person"  color="orange-14"/>
+                        </template>
+                    </q-input>
+                </q-card-section>
+                <q-card-section class="q-pa-md">
+                    <q-input v-model="host.login" outlined label="Login">
+                        <template v-slot:prepend>
+                            <q-icon name="account_circle"  color="orange-14"/>
+                        </template>
+                    </q-input>
+                </q-card-section>
+                <q-card-section class="q-pa-md">
+                    <q-input v-model="host.cpf_cnpj" outlined label="CPF ou CNPJ" type="number">
+                        <template v-slot:prepend>
+                            <q-icon name="fingerprint"  color="orange-14"/>
+                        </template>
+                    </q-input>
+                </q-card-section>
+                <q-card-section class="q-pa-md">
+                    <q-input v-model="host.email" outlined label="Email">
+                        <template v-slot:prepend>
+                            <q-icon name="email"  color="orange-14"/>
+                        </template>
+                    </q-input>
+                </q-card-section>
+                <q-card-section class="q-pa-md">
+                    <q-input v-model="host.newPassword" outlined label="Nova Senha">
+                        <template v-slot:prepend>
+                            <q-icon name="lock"  color="orange-14"/>
+                        </template>
+                    </q-input>
+                </q-card-section>
+                <q-card-section class="q-pa-md">
+                    <q-select v-model="host.pix_key.type" class="q-mb-md" outlined label="Tipo de Chave Pix" :options="['CPF', 'CNPJ', 'Telefone', 'Email', 'Aleatório']">
+                        <template v-slot:prepend>
+                            <q-icon name="account_balance"  color="orange-14"/>
+                        </template>
+                    </q-select>
+                    <q-input v-model="host.pix_key.key" outlined label="Chave Pix">
+                        <template v-slot:prepend>
+                            <q-icon name="paid"  color="orange-14"/>
+                        </template>
+                        <template v-slot:append>
+                            <q-icon name="content_paste" @click="pasteCode()" color="orange-14"/>
+                        </template>
+                    </q-input>
+                </q-card-section>
+                <q-card-section class="w100 row justify-between">
+                    <q-btn @click="editando = !editando" label="Cancelar" flat color="primary" glossy></q-btn>
+                    <q-btn @click="salvarEdicao()" :disabled="!host.email.includes('@') || !host.email.includes('.')" label="Salvar" class="q-pa-md" icon-right="save" color="orange-14" glossy></q-btn>
                 </q-card-section>
             </q-card>
-            <q-card class="q-mb-md animate__animated animate__fadeInLeft" style="border-right: 4px solid #9573f3;">
+            <q-card v-if="!editando" class="q-mb-md animate__animated animate__fadeInLeft" style="border-right: 4px solid #9573f3;">
                 <q-card-section class="q-pa-md">
                     <div class="text-h5 text-primary">Saldo</div>
                     <div class="text-h6 ">R$ {{ Utils.formatCurrency(host.balance) }}</div>
@@ -92,9 +153,9 @@ import { api } from 'src/boot/axios';
 import { useQuasar } from "quasar";
 import { Utils } from "src/utils/Utils";
 
-const editing = ref(false);
+const editando = ref(false);
 
-const host = JSON.parse(sessionStorage.getItem('host'));
+const host = ref(JSON.parse(sessionStorage.getItem('host')) || null);
 const $q = useQuasar()
 const passwordModal = ref(false);
 const passwordOptions = ref({
@@ -108,10 +169,32 @@ function confirmPassword(type) {
     passwordOptions.value.type = type;
 }
 
+async function salvarEdicao() {
+    await api.put('/host/edit', host.value)
+        .then(response => {
+            sessionStorage.setItem('host', JSON.stringify(response.data))
+            $q.notify({
+                color: 'positive',
+                position: 'top',
+                message: 'Perfil atualizado com sucesso!',
+                icon: 'check_circle'
+            })
+            editando.value = false
+        })
+        .catch(err => {
+            $q.notify({
+                color: 'negative',
+                position: 'top',
+                message: err.response.data.error,
+                icon: 'report_problem',
+            })
+        })
+}
+
 async function solicitar() {
     await updateLogin().then(() => {
         if (passwordOptions.value.type == 'request_saque') {
-            api.get('/midnightickets?host=' + host.id )
+            api.get('/midnightickets?host=' + host.value.id )
                 .then(response => {
                     $q.notify({
                         color: 'secondary',
@@ -141,8 +224,14 @@ async function solicitar() {
         })
 }
 
+function pasteCode() {
+    navigator.clipboard.readText().then(text => {
+        host.value.pix_key.key = text
+    })
+}
+
 function cancelar() {
-    editing.value = false
+    editando.value = false
     passwordOptions.value.password = ''
     passwordOptions.value.visibility = false
     passwordOptions.value.type = ''
@@ -150,11 +239,11 @@ function cancelar() {
 }
 
 function openPerfilPublico() {
-    window.open('/' + host.login, '_blank')
+    window.open('/' + host.value.login, '_blank')
 }
 
 async function updateLogin() {
-    await api.post('/login/host', { login: host.login, password: passwordOptions.value.password.trim() })
+    await api.post('/login/host', { login: host.value.login, password: passwordOptions.value.password.trim() })
         .then(response => {
             sessionStorage.setItem('host', JSON.stringify(response.data))
             sessionStorage.setItem('isHost', true)

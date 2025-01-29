@@ -18,7 +18,7 @@
                     <q-item >
                         <q-item-section class="text-black">
                             <q-item-label id="title-2"  class="text-primary">{{ (index + 1) + '. ' + event.title }}</q-item-label>
-                            <q-item-label class="text-bold text-grey-14 q-py-sm">{{ event.desc }}</q-item-label>
+                            <q-item-label class="text-bold text-grey-14 q-py-sm" style="white-space: pre-wrap">{{ event.desc }}</q-item-label>
                             <q-item-label class="text-bold text-primary">📆 {{ event.date.replaceAll('-', '/') }}</q-item-label>
                             <img id="img-events" :src="event.img_url" class="q-mt-md" alt="🎇 Banner do Evento"/>
                         </q-item-section>

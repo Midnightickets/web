@@ -238,8 +238,12 @@
                                 class="relative rounded-borders shadow-2 q-mt-md">
                                 <div class="text-bold text-primary">{{ subhost.name }}</div>
                                 <div class="text-bold text-secondary">{{ subhost.login.toLowerCase() }}</div>
-                                <div v-if="showSubhostsPassword" class="text-bold text-primary">🔑{{ subhost.password }}
-                                </div>
+                                <q-dialog v-model="showSubhostsPassword" class="text-bold  text-primary">
+                                    <div class="w100 bg-white q-pa-xl">
+                                        {{subhost.login}}#{{subhost.password}}#{{evento.id}}
+                                    </div>
+                                    <q-btn label="ok" glossy @click="showSubhostsPassword = false" color="primary"></q-btn>
+                                </q-dialog>
                                 <div class="w100 row q-gutter-x-sm" v-if="evento.status.includes('andamento')">
                                     <q-btn @click="copyCredentials(subhost)" icon="file_copy" icon-right="key"
                                         label="Copiar Credenciais" color="blue-14" glossy class=" q-mt-sm"></q-btn>
@@ -444,9 +448,6 @@ function copyCredentials(subhost) {
         position: 'top',
         message: 'Credenciais copiadas para a área de transferência',
     });
-    setTimeout(() => {
-        showSubhostsPassword.value = false;
-    }, 2000);
 }
 
 function alternarEdicao() {

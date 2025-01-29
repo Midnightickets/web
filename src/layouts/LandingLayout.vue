@@ -89,17 +89,12 @@
             </q-dialog>
         </q-header>
         <q-page-container v-if="userInfo === ''" class="bg-grey-4">
-            <div  class="rounded-borders w100 row justify-center q-mt-md relative" style="overflow: hidden ">
-                <div v-if="userInfo == ''" class="animate__animated animate__zoomInDown animate__delay-1s animate__slower row no-wrap rounded-borders justify-center q-px-sm  w100"
+            <!-- <div  class="rounded-borders w100 row justify-center q-mt-md relative" style="overflow: hidden ">
+                <div v-if="userInfo == ''" class="animate__animated animate__zoomInDown animate__delay-1s animate__slower column rounded-borders justify-center q-px-sm  w100"
                     style="overflow: hidden ;z-index: 9;">
-                    <q-btn to="/login-host" color="blue-14"
-                        class="shadow-6 animate__animated text-primary animate__fadeInLeft  animate__delay-3s animate__slower q-pa-xl rounded-borders"
-                        icon-right="event" label="Quero criar eventos" />
-                    <q-btn @click="searchPublic.opened = !searchPublic.opened"
-                        class="shadow-6 animate__animated animate__fadeInRight  text-bold q-ml-sm text-white animate__delay-3s animate__slower q-pa-xl rounded-borders"
-                        icon-right="confirmation_number"  color="blue-14" label="Quero comprar Ingressos" />
+                    calculadora de economia de taxas
                 </div>
-            </div>
+            </div> -->
             <div v-if="searchPublic.opened" id="search-public" class="w100 rounded-borders row justify-center">
                 <q-card id="search-card" class="q-mt-md q-mb-md q-mx-md animate__animated rounded-borders animate__fadeInDown animate__slower">
                     <q-card-section class="bg-grad-4 text-white text-bold text-center q-pa-md ">
@@ -192,6 +187,9 @@
                         class="text-shadow text-h6 w100 text-bold text-blue-4 text-center q-px-md q-py-sm border-bottom">
                         Veja como
                         nossa Plataforma pode aumentar o Faturamento do seu Evento!!</div> -->
+                        <q-btn to="/login-host" color="primary" flat
+                        class="text-primary q-pa-xl rounded-borders w100"
+                        icon="add_circle" icon-right="event" label="Crie seu evento" glossy />
                     <div id="title"
                         class="text-h4 bg-white text-primary text-center w100 border-bottom text-bold q-pt-md q-pb-md">
                         Vantagens</div>
@@ -462,7 +460,7 @@ import { useRouter } from "vue-router";
 import { Utils } from 'src/utils/Utils';
 const userInfo = ref('')
 const searchPublic = ref({
-    opened: false,
+    opened: true,
     isByHostName: false,
     titleEventOrHostName: ''
 })

@@ -1,5 +1,5 @@
 <template>
-    <div id="login-host" class="animate__animated animate__fadeIn bg-grad-3 w100 flex flex-center q-pt-xl">
+    <div id="login-host" class="animate__animated animate__fadeIn bg-grad-dark-purple w100 flex flex-center q-pt-xl">
         <div class="w100 q-py-lg"></div>
         <div style="position: fixed; top: 16px; left: 0;z-index: 9999!important" class="w100  q-pl-sm" >
             <q-btn to="/" icon="home" color="secondary" glossy></q-btn>
@@ -121,7 +121,7 @@
                     v-if="!loading"
                     @click="editando = !editando"
                     :label="editando ? 'Voltar' : 'Registre-se'"
-                    color="primary"
+                    color="purple-14"
                     class="full-width q-mt-md q-py-xs"
                 />
                 <q-btn
@@ -281,6 +281,10 @@ async function registrar(){
 <style scoped>
 #login-host{
     min-height: 100vh;
+}
+
+.bg-grad-dark-purple{
+    background: linear-gradient(90deg, #1a1a1a 0%, #2d0037 100%);
 }
 
 @media (max-width: 600px) {

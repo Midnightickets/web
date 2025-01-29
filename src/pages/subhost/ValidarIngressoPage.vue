@@ -44,8 +44,8 @@
                     <q-btn label="voltar" class="q-mt-sm" @click="stopScanning()" color="secondary" flat />
           </div>
         </q-card>
-        <q-btn v-if="!ingresso" label="Consultar QR" icon-right="sensor_occupied" @click="validateTicket()" color="primary" glossy class="q-pa-xl q-mt-md" />
-        <q-btn v-if="!ingresso"  label="Cancelar" @click="recarregar()" color="primary" flat class="q-py-xs q-mt-xl" />
+        <q-btn v-if="!ingresso" label="Consultar Dados do Ingresso" icon-right="sensor_occupied" @click="validateTicket()" color="primary" glossy class="q-pa-xl q-mt-md" />
+        <q-btn v-if="!ingresso"  label="Cancelar" @click="recarregar()" color="secondary" flat class="q-py-xs q-mt-xl" />
       </div>
     </q-dialog>
   </q-page>

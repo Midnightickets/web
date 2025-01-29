@@ -49,7 +49,7 @@
                 Midnight Tickets
                  </a>
                 <div class="text-center text-grey-4 q-mb-md q-mx-md">
-                    Faça Login para gerenciar o Midnight Tickets Software
+                    Faça Login para gerenciar o Midnight Tickets 
                 </div>
                 <q-btn class="q-mt-xl" to="/admin-auth" flat label="Página Inicial" color="dark" icon="login" />
             </div>

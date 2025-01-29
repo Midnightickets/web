@@ -1,8 +1,9 @@
 <template>
-    <div id="login-host" class="animate__animated animate__fadeIn bg-grad-dark-purple w100 flex flex-center q-pt-xl">
+    <div id="login-host" class="animate__animated animate__fadeIn bg-grad-3 w100 flex flex-center q-pt-xl">
         <div class="w100 q-py-lg"></div>
-        <div style="position: fixed; top: 16px; left: 0;z-index: 9999!important" class="w100  q-pl-sm" >
+        <div style="position: fixed; top: 16px; left: 0;z-index: 9999!important" class="w100 row items-center justify-between  q-px-md" >
             <q-btn to="/" icon="home" color="secondary" glossy></q-btn>
+            <div class="q-pl-md text-secondary" id="title-layout">Área do Produtor</div>
         </div>
         <div id="login-card" class="bg-grey-2 animate__animated animate__zoomIn rounded-borders">
             <div id="title-menu" class="text-primary text-center q-mt-md row q-px-md justify-center items-center"><q-icon name="diamond" size="md" color="primary" class="q-mr-xs"></q-icon>{{ editando ? 'CADASTRO' :'LOGIN'}} PRODUTOR(A)</div>
@@ -115,13 +116,13 @@
                     color="green"
                     glossy
                     icon-right="person_add"
-                    class="full-width q-mt-md q-py-md"
+                    class="full-width q-mt-md q-py-lg"
                 />
                 <q-btn
                     v-if="!loading"
                     @click="editando = !editando"
                     :label="editando ? 'Voltar' : 'Registre-se'"
-                    color="purple-14"
+                    color="primary"
                     class="full-width q-mt-md q-py-xs"
                 />
                 <q-btn
@@ -151,7 +152,7 @@
                 <q-btn label="desenvolvedor" @click="goTo('https://samuelvictorol.github.io/portfolio')" class="text-grey-5" flat></q-btn>
             </div>
             <div class="w100 row q-pt-xl items-center justify-start text-secondary" id="title-layout">
-                Midnight Tickets Software
+                Midnight Tickets 
             </div>
         </footer>
     </div>

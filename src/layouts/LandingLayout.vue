@@ -2,35 +2,27 @@
     <q-layout class="relative animate__animated animate__fadeIn">
         <q-header class="fixed bg-glass-2 text-white animate__animated animate__fadeInDown animate__slow shadow-1"
             height-hint="98">
-            <div style="font-size: 1rem;" class=" q-py-md w100 row no-wrap items-center  justify-evenly">
-                <a v-if="!isMobile" @click="scrollBot()" class="menu-item row items-center" id="title-menu">
-                    <q-icon class="q-pr-xs" name="local_activity" size="xl" /> Midnight Tickets
-                </a>
-                <a v-else @click="scrollBot()" class="menu-item row items-center">
-                    <q-icon name="local_activity" size="65px" />
-                </a>
-                <div class="row items-center no-wrap q-gutter-x-sm">
+            <a @click="scrollBot()" class="menu-item q-pa-sm animate__animated animate__fadeInLeft animate__slow animate__delay-1s row no-wrap items-center" id="title-menu">
+                <q-icon class="q-pr-xs" name="local_activity" size="xl" /> Midnight Tickets
+            </a>
+            <div style="font-size: .8rem;" class=" relative w100 row no-wrap items-center q-py-sm">
+                
+                <div class="row items-center no-wrap justify-evenly w100 q-px-md">
+                    <q-btn style="border-radius: 20px;" dense color="primary" label="área do produtor" glossy class="text-bold bg-primary rounded-borders  q-px-md q-py-sm text-purple-1 row items-center" v-if=" userInfo == ''" to="/login-host">
+                    </q-btn>
                     <a v-if="!isMobile & userInfo == ''" class="menu-item q-mr-md q-px-md" href="#vantagens">
                         Vantagens
-                    </a>
-                    <a v-if="isMobile  & userInfo == ''" class="menu-item" @click="scrollToVantagem()">
-                        <q-btn icon="redeem" color="secondary"></q-btn>
                     </a>
                     <a v-if="!isMobile & userInfo == ''" class="menu-item q-mr-md q-px-md" href="#contato">
                         Contato
                     </a>
-                    <a v-if="isMobile & userInfo == ''" class="menu-item" @click="scrollToBottom()">
-                        <q-btn icon="phone_callback" color="secondary"></q-btn>
-                    </a>
-                    <q-btn v-if="userInfo == ''" glossy dense flat class="menu-item text-bold bg-primary q-pa-md text-purple-1 row items-center"
-                        style="border-radius:12px" @click="navigateTo('/login')">
-                        Entrar
-                        <q-icon name="login" size="md" />
+                    <q-btn style="border-radius: 20px;" v-if="userInfo == ''" glossy dense flat label="entrar" icon-right="login" class="text-bold bg-primary q-px-md q-py-sm text-purple-1 row items-center"
+                        @click="navigateTo('/login')">
                     </q-btn>
                     <q-btn v-if="userInfo != ''" dense class="menu-item text-purple-1 text-bold q-pa-md row items-center" label="sair" flat
                         style="border-radius:8px" @click="Utils.logout()">
                     </q-btn>
-                    <q-btn v-if="userInfo != ''" glossy dense class="menu-item text-bold bg-secondary q-pa-md text-purple-1 row items-center"
+                    <q-btn v-if="userInfo != ''" glossy dense class="text-bold bg-secondary q-pa-md text-purple-1 row items-center"
                         style="border-radius:8px" @click="navigateTo('/me')">
                         <q-icon name="person" size="md" />
                     </q-btn>
@@ -76,7 +68,7 @@
                                         {{ event.host.toLowerCase() }}
                                     </q-item-label>
                                     <q-item-section class="w100 q-mt-md">
-                                        <q-btn  @click="goToPublicEventPage(event.event_url)" label="ver evento"  icon="travel_explore" color="primary" glossy class="w100 shadow-2"></q-btn>
+                                        <q-btn  @click="goToPublicEventPage(event.event_url)" label="ver evento"  icon="travel_explore" color="primary" glossy class="w100 q-pa-md shadow-2"></q-btn>
                                     </q-item-section>
                                 </q-item-section>
                             </q-item>
@@ -108,10 +100,18 @@
                                 <q-icon name="search" color="primary" />
                             </template>
                         </q-input>
-                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(false)" color="blue-14" glossy class="shadow-1 q-py-md" label="Buscar por Evento"
+                        <div v-if="isMobile" class="w100 column justify-center q-gutter-x-md">
+                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(false)" color="blue-14" glossy class="shadow-1 w100 q-py-sm q-mb-md" label="Buscar por Evento"
                             icon="event" />
-                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(true)" color="primary" glossy class="shadow-1 q-py-md" label="Buscar por Produtor"
+                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(true)" color="primary" glossy class="shadow-1 w100 q-py-sm" label="Buscar por Produtor"
                                 icon="person_search" />
+                        </div>
+                        <div v-else class="w100 row no-wrap justify-center q-gutter-x-md">
+                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(false)" color="blue-14" glossy class="shadow-1 w100 q-py-xl" label="Buscar por Evento"
+                            icon="event" />
+                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(true)" color="primary" glossy class="shadow-1 w100 q-py-xl" label="Buscar por Produtor"
+                                icon="person_search" />
+                        </div>
                     </q-card-section>
                 </q-card>
             </div>
@@ -187,11 +187,8 @@
                         class="text-shadow text-h6 w100 text-bold text-blue-4 text-center q-px-md q-py-sm border-bottom">
                         Veja como
                         nossa Plataforma pode aumentar o Faturamento do seu Evento!!</div> -->
-                        <q-btn to="/login-host" color="primary" flat
-                        class="text-primary q-pa-xl rounded-borders w100"
-                        icon="add_circle" icon-right="event" label="Crie seu evento" glossy />
                     <div id="title"
-                        class="text-h4 bg-white text-primary text-center w100 border-bottom text-bold q-pt-md q-pb-md">
+                        class="text-h4 bg-white rounded-borders text-primary text-center w100 border-bottom text-bold q-pt-md q-pb-md">
                         Vantagens</div>
                     <div style="font-size:1.1rem"
                         class="text-shadow q-px-md bg-grey-4 text-left q-py-md rounded-borders">
@@ -199,21 +196,21 @@
                         permite realizar <strong>Eventos</strong> com <strong>5% de taxa</strong> em ingressos
                         vendidos. Obtenha
                         o <strong>máximo do seu
-                            lucro</strong>
+                            lucro</strong><br>
                         <br>🟣 <strong class="text-primary">LUCRO EM TEMPO REAL<br></strong> Disponibilizamos a
                         visualização do andamento do 
                         <strong>lucro de suas vendas atualizadas automaticamente em tempo real na sua conta</strong> enquanto
-                        acontece o seu evento<br>
+                        acontece o seu evento<br><br>
                         🟣 <strong class="text-primary">AJUSTES DE LOTES GRATUITOS<br></strong>
                         Realize <strong>reajustes</strong> de ingressos dos seus ingressos <strong>sem custo
                         adicional</strong> de forma intuitiva na palma da sua mão
-                        <br>
+                        <br><br>
                         🟣 <strong class="text-primary">VALIDAÇÃO DE INGRESSOS<br></strong>
                         Disponibilizamos um perfil de <strong>subhost</strong>, que são perfis cadastrados pelos produtores de eventos para <strong>validar ingressos</strong>
                         de forma segura e rápida com <strong>QR Code</strong> na entrada de seus eventos. Utilizando apenas uma câmera e acesso à navegador
                     </div>
                     <div id="title"
-                        class="w100 text-h4 text-bold bg-white text-primary text-center q-px-md rounded-borders q-py-sm border-bottom"
+                        class="w100 text-h4 text-bold bg-white text-primary text-center q-px-md q-mt-md rounded-borders q-py-sm border-bottom"
                         style="border:4px solid #692EDD">
                         Benefícios</div>
                     <div style="font-size:1.1rem"
@@ -285,7 +282,7 @@
                   </q-carousel-slide>
               </q-carousel> -->
                 <div class=" relative">
-                    <div class="text-h4 text-bold q-py-md text-white text-center bg-grad-4 border-bottom q-mt-md">
+                    <div class="text-h4 rounded-borders text-bold q-py-md text-white text-center bg-grad-4 border-bottom q-mt-md">
                         Fale Conosco</div>
 
                     <div class="space rounded-borders q-my-md  "
@@ -447,7 +444,7 @@
                 <q-btn label="desenvolvedor" @click="goTo('https://samuelvictorol.github.io/portfolio')" class="text-grey-5" flat></q-btn>
             </div>
             <div class="w100 row q-pt-xl items-center justify-start text-secondary" id="title-layout">
-                Midnight Tickets Software
+                Midnight Tickets 
             </div>
         </footer>
     </q-layout>

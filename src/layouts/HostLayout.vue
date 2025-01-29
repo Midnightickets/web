@@ -79,7 +79,7 @@
                     <q-btn label="desenvolvedor" @click="goToBlank('https://samuelvictorol.github.io/portfolio')" class="text-grey-5" flat></q-btn>
                 </div>
                 <div class="w100 row q-pt-xl items-center justify-start text-secondary" id="title-layout">
-                    Midnight Tickets Software
+                    Midnight Tickets 
                 </div>
             </footer>
         </q-page-container>

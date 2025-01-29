@@ -5,7 +5,7 @@
             <q-btn to="/" icon="search" color="secondary" glossy></q-btn>
             <q-btn v-if="lastEvent" :to="'/events/' + lastEvent" class="q-ml-sm" icon="history" color="secondary" glossy></q-btn>
         </div>
-        <div class="w100 text-white animate__animated animate__zoomIn text-center q-mb-md" id="title">Meus Ingressos</div>
+        <div class="w100 text-white animate__animated animate__zoomIn q-mb-md" id="title">Meus Ingressos</div>
         <div v-if="loading" class="row w100 q-py-sm q-mt-md justify-center">
             <q-spinner-ball color="secondary" size="xl" />
             <q-spinner-ball color="secondary" size="xl" />

@@ -7,7 +7,7 @@
             </a>
             <div style="font-size: .8rem;" class=" relative w100 row no-wrap items-center q-py-sm">
                 
-                <div class="row items-center no-wrap justify-evenly w100 q-px-md">
+                <div class="row items-center no-wrap justify-center q-gutter-x-sm w100 q-px-md">
                     <q-btn style="border-radius: 20px;" dense color="primary" label="área do produtor" glossy class="text-bold bg-primary rounded-borders  q-px-md q-py-sm text-purple-1 row items-center" v-if=" userInfo == ''" to="/login-host">
                     </q-btn>
                     <a v-if="!isMobile & userInfo == ''" class="menu-item q-mr-md q-px-md" href="#quem-somos">
@@ -102,14 +102,14 @@
                                 <q-icon name="search" color="primary" />
                             </template>
                         </q-input>
-                        <div v-if="isMobile" class="w100 column justify-center q-gutter-x-md">
+                        <div v-if="isMobile" class="w100 column justify-center ">
                             <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(false)" color="blue-14" glossy class="shadow-1 w100 q-py-sm q-mb-md" label="Buscar por Evento"
                             icon="event" />
                             <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(true)" color="primary" glossy class="shadow-1 w100 q-py-sm" label="Buscar por Produtor"
                                 icon="person_search" />
                         </div>
-                        <div v-else class="w100 row no-wrap justify-center q-gutter-x-md">
-                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(false)" color="blue-14" glossy class="shadow-1 w100 q-py-xl" label="Buscar por Evento"
+                        <div v-else class="w100 row no-wrap justify-between items-center">
+                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(false)" color="blue-14" glossy class="shadow-1 w100 q-mr-md q-py-xl" label="Buscar por Evento"
                             icon="event" />
                             <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(true)" color="primary" glossy class="shadow-1 w100 q-py-xl" label="Buscar por Produtor"
                                 icon="person_search" />

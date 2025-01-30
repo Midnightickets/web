@@ -9,8 +9,11 @@
                     {{ isHost ? 'Produtor(a)' : 'Usuário'}}, insira seu {{ isHost ? 'CNPJ ou CPF' : 'CPF' }} para recuperar sua senha
                 </q-card-section>
             </q-card-section>
+            <div class="w100 q-pl-md row">
+                <q-radio color="primary" class="q-mb-md" v-model="isHost"  :val="false" label="Sou Usuário" />
+                <q-radio color="primary" class="q-mb-md q-ml-md" v-model="isHost" :val="true" label="Sou Produtor" />
+            </div>
             <q-card-section>
-                <q-checkbox color="primary" class="q-mb-md" v-model="isHost">Sou produtor</q-checkbox>
                 <q-input
                     v-model="identity"
                     filled

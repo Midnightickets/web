@@ -16,8 +16,10 @@
         <div class="w100 row justify-center q-mb-md q-gutter-x-md q-gutter-y-md">
             <q-btn v-if="!editando" @click="editando = !editando" label="Editar Pefil" color="orange-14" glossy
                 icon-right="account_circle"></q-btn>
-            <q-btn @click="openPerfilPublico()" label="Perfil Público" color="primary" glossy
+            <q-btn @click="openPerfilPublico()" v-if="!editando" label="Perfil Público" color="primary" glossy
                 icon-right="public"></q-btn>
+            <q-btn v-if="editando" @click="modalUploadImagem = true" label="Alterar Foto" class="q-mb-md" color="blue-14" glossy
+                icon-right="upload"></q-btn>
         </div>
         <div v-if="host" class="row wrap w100 q-pl-md q-mt-md cards-wrapper justify-center q-gutter-x-md items-start">
             <q-card v-if="!editando" class="q-mb-md animate__animated animate__fadeInRight" style="border-left: 4px solid #9573f3;">
@@ -36,13 +38,11 @@
                 </q-card-section>
             </q-card>
             <q-card v-else class="q-mb-md animate__animated animate__fadeInRight" style="border-left: 4px solid orange;">
-                <div id="title-layout" class="text-orange-14 q-mt-md row justify-center items-center">
-                    Editando Informações do Perfil
+                <div id="" class="text-h6 text-orange-14 text-bold q-px-md  q-mt-md row justify-start items-center">
+                    Editando Perfil
                 </div>
-                <div class="w100 q-px-md q-mt-md column justify-center items-center">
-                    <q-btn @click="openPerfilPublico()" label="Alterar Foto" color="blue-14" glossy
-                    icon-right="image"></q-btn>
-                    <q-btn @click="editando = !editando" class="q-mt-md" label="Cancelar" flat color="primary" glossy></q-btn>
+                <div class="w100 q-px-md column justify-center items-center">
+                    <q-btn @click="editando = !editando" class="q-mt-md" label="Cancelar" flat color="primary"></q-btn>
                 </div>
                 <q-card-section class="q-pa-md">
                     <q-input v-model="host.name" outlined label="Nome">
@@ -95,7 +95,7 @@
                     </q-input>
                 </q-card-section>
                 <q-card-section class="w100 row justify-between">
-                    <q-btn @click="editando = !editando" label="Cancelar" flat color="primary" glossy></q-btn>
+                    <q-btn @click="editando = !editando" label="Cancelar" flat color="primary"></q-btn>
                     <q-btn @click="salvarEdicao()" :disabled="!host.email.includes('@') || !host.email.includes('.')" label="Salvar" class="q-pa-md" icon-right="save" color="orange-14" glossy></q-btn>
                 </q-card-section>
             </q-card>
@@ -144,6 +144,32 @@
             </q-card>
 
         </q-dialog>
+        <q-dialog v-model="modalUploadImagem">
+            <div class="bg-white column">
+                <q-card>
+                    <div id="title-2" class="text-primary q-pt-md q-pl-md">
+                        Foto do Perfil
+                    </div>
+                    <q-card-section>
+                        <q-file outlined class="bg-grey-2" v-model="file" label="Selecione uma imagem"
+                            @update:model-value="uploadImage" accept="image/*">
+                            <template v-slot:prepend>
+                                <q-icon name="image" color="primary" />
+                            </template>
+                            <template v-slot:append>
+                                <q-icon name="upload" color="primary" />
+                            </template>
+                        </q-file>
+                    </q-card-section>
+                    <q-card-section>
+                        <q-img :src="host.img_url" />
+                    </q-card-section>
+                    <q-card-actions align="right">
+                        <q-btn @click="modalUploadImagem = false" flat label="ok" color="primary" />
+                    </q-card-actions>
+                </q-card>
+            </div>
+        </q-dialog>
     </q-page>
 </template>
 
@@ -158,6 +184,7 @@ const editando = ref(false);
 const host = ref(JSON.parse(sessionStorage.getItem('host')) || null);
 const $q = useQuasar()
 const passwordModal = ref(false);
+const modalUploadImagem = ref(false);
 const passwordOptions = ref({
     password: '',
     visibility: false,
@@ -190,6 +217,39 @@ async function salvarEdicao() {
             })
         })
 }
+
+const file = ref(null);
+async function uploadImage() {
+    if (!file.value) return;
+
+    const formData = new FormData();
+    formData.append("file", file.value);
+    formData.append(
+        "host",
+        JSON.stringify({ id: host.value.id, token: host.value.token }) // Serializa o host como JSON
+    );
+    formData.append("hostId", host.value.id); // Adiciona o ID do host ao FormData
+
+    try {
+        const response = await api.post("/host/upload_image", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
+
+        $q.notify({
+            color: "primary",
+            textColor: "white",
+            icon: "cloud_upload",
+            position: "top",
+            message: "Imagem enviada com sucesso",
+        });
+        host.value.img_url = response.data.imageUrl; // URL retornada do backend
+        sessionStorage.setItem('host', JSON.stringify(host.value))
+        console.log("Imagem enviada:", response.data);
+    } catch (error) {
+        console.error("Erro ao enviar a imagem:", error);
+    }
+}
+
 
 async function solicitar() {
     await updateLogin().then(() => {

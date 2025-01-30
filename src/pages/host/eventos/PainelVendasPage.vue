@@ -8,16 +8,16 @@
         <div class="q-pa-md">
             <div id="title" class="text-primary">Painel de Vendas</div>
             <div class="text-bold text-h6 text-grey-14">{{evento_title}}</div>
-            <div class="text-bold text-h6 text-green-14 q-mb-lg">Faturamento: R$ {{Utils.formatCurrency(profit)}}<br>{{ ingressos.length}} vendas</div>
+            <div class="text-bold text-h6 text-green q-mb-lg">Faturamento: R$ {{Utils.formatCurrency(profit)}}<br>{{ ingressos.length}} vendas</div>
                 <div v-if="loading" class="row w100 q-pb-xl justify-center">
                     <q-spinner-ball color="secondary" size="lg" />
                     <q-spinner-ball color="secondary" size="lg" />
                     <q-spinner-ball color="secondary" size="lg" />
                 </div>
             <div class="w100 row wrap items-center justify-center q-gutter-md" v-if="ingressos.length > 0">
-                <q-card v-for="ingresso in ingressos" :key="ingresso.id" class="q-mb-md">
+                <q-card v-for="ingresso in ingressos" :key="ingresso.id" class="q-mb-md" style="border-left: 4px solid #6310e1;">
                     <q-card-section>
-                        <div id="title-2" class="text-primary text-bold row items-center justify-center"> {{ ingresso.ticket_type.title }}</div>
+                        <div id="title-2" class="text-white bg-primary rounded-borders q-mb-sm q-pa-sm text-bold row items-center justify-center">💰 {{ ingresso.ticket_type.title }}</div>
                         <div id="title-layout" class="text-green-14 text-bold row items-center justify-end">+ R$ {{ Utils.formatCurrency(ingresso.ticket_type.price) }}<q-icon name="paid" color="primary" size="sm" class="q-pl-sm"></q-icon></div>
                         <div class="text-primary q-mt-sm"><strong>Responsável Ingresso:</strong><br>{{ ingresso.ticket_type.ticket_person_name.toUpperCase() + ' [' + ingresso.ticket_type.ticket_person_cpf + ']'}}</div>
                         <div class="text-primary q-mt-sm"><strong>Contato Responsável:</strong><br>{{ ingresso.ticket_type.ticket_person_email.toLowerCase() }} <br>{{ ingresso.ticket_type.ticket_person_phone }}</div>

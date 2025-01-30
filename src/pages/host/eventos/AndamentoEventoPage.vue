@@ -16,9 +16,8 @@
           <div class="w100 row wrap items-center justify-center q-gutter-md" v-if="checkins.length > 0">
               <q-card v-for="checkin in checkins" :key="checkin.id" class="q-mb-md border-left-roxo">
                   <q-card-section>
-                      <div class="text-blue-14 text-bold text-h6">Subhost: {{checkin.validated_by}}</div>
-                      <div class="text-grey-14 text-h6">CPF: {{checkin.person_cpf}}</div>
-                      <div class="text-primary text-h6">{{Utils.convertStringToFirstAndLast(checkin.person_name.toUpperCase())}}</div>
+                      <div class="text-primary text-bold text-h6">✅ Checkin realizado por {{checkin.validated_by}}</div>
+                      <div class="text-primary text-h6">{{Utils.toCamelCase(checkin.person_name)}}</div>
                       <div class="text-grey-14">{{checkin.createdAt}}</div>
                     </q-card-section>
               </q-card>

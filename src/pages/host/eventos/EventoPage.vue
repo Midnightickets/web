@@ -12,7 +12,7 @@
                       dense 
                       glossy 
                       flat 
-                      icon="celebration" 
+                      icon="sensor_occupied" 
                       color="primary"
                     >
                       <q-tooltip anchor="top" self="bottom">Andamento do Evento</q-tooltip>
@@ -259,7 +259,7 @@
                 <q-btn class="w100 q-py-xl q-mt-md" @click="goToVendas()" label="Painel de Vendas" color="green" glossy
                     icon-right="payments"></q-btn>
                 <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-md" label="Finalizar Evento"
-                    @click="confirmChangeStatusEvento('FINALIZADO')" color="dark" glossy
+                    @click="confirmChangeStatusEvento('FINALIZADO')" color="blue-14" glossy
                     icon-right="event_available"></q-btn>
                 <!-- <q-btn v-if="evento.status.includes('andamento')" class="w100 q-py-md q-mt-sm" label="Cancelar Evento" @click="confirmChangeStatusEvento('CANCELADO')" color="red-4" flat></q-btn> -->
             </div>

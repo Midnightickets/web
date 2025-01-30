@@ -108,6 +108,12 @@
                     icon-right="login"
                     class="full-width q-mt-md q-py-lg"
                 />
+                <q-checkbox
+                    v-if="editando"
+                    label="Li e Concordo com os Termos de Uso*"
+                    v-model="termosUso"
+                    class="q-mt-sm"
+                    />
                 <q-btn
                     v-if="!loading && editando"
                     :disabled="isRegisterFormInvalid()"
@@ -170,7 +176,7 @@ const router = useRouter()
 const editando = ref(false)
 const loading = ref(false)
 const modalEsqueciSenha = ref(false)
-
+const termosUso = ref(false)
 const formConfig = ref({
     showPassword: false,
     hostLoginRoute: '/login/host',
@@ -244,7 +250,8 @@ async function login() {
 }
 
 function isRegisterFormInvalid() {
-    if (host.value.login.trim().length < 3 || host.value.password.trim().length < 6 || host.value.name.trim() == '' || host.value.email.trim() ==  '' || host.value.cpf_cnpj.trim() == '' || host.value.phone.trim() == '') {
+    if (host.value.login.trim().length < 3 || host.value.password.trim().length < 6 || host.value.name.trim() == '' || 
+    host.value.email.trim() ==  '' || host.value.cpf_cnpj.trim() == '' || host.value.phone.trim() == '' || !termosUso.value) {
         return true
     }
     return false

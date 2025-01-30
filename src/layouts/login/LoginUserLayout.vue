@@ -152,6 +152,11 @@
                             icon-right="login"
                             class="full-width q-mt-md q-py-lg"
                         />
+                        <q-checkbox
+                            v-if="editing"
+                            label="Li e Concordo com os Termos de Uso*"
+                            v-model="termosUso"
+                        />
                         <q-btn
                             v-if="!loading && editing"
                             :color="isRegisterFormInvalid() ? 'primary' : 'green-14'"
@@ -219,6 +224,7 @@ const loading = ref(false)
 const loginByCpf = ref(false)
 const editing = ref(false)
 const modalEsqueciSenha = ref(false)
+const termosUso = ref(false)
 
 const formConfig = ref({
     showPassword: false,
@@ -254,7 +260,7 @@ const isLoginFormInvalid = () => {
 const isRegisterFormInvalid = () => {
     if (user.value.login.trim().length < 3 || user.value.password.trim().length < 3 || user.value.cpf.trim().length < 14
         || user.value.name.trim().length < 3 || user.value.phone.trim().length < 15 || user.value.email.trim().length < 3
-        || user.value.birthday.trim().length < 10
+        || user.value.birthday.trim().length < 10 || !termosUso.value
     ) {
         return true
     }

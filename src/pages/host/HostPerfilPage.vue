@@ -79,6 +79,14 @@
                         </template>
                     </q-input>
                 </q-card-section>
+                <!-- telefone -->
+                <q-card-section class="q-pa-md">
+                    <q-input v-model="host.phone" outlined label="Telefone" mask="(##) #####-####" type="tel">
+                        <template v-slot:prepend>
+                            <q-icon name="phone"  color="orange-14"/>
+                        </template>
+                    </q-input>
+                </q-card-section>
                 <q-card-section class="q-pa-md">
                     <q-select v-model="host.pix_key.type" class="q-mb-md" outlined label="Tipo de Chave Pix" :options="['CPF', 'CNPJ', 'Telefone', 'Email', 'Aleatório']">
                         <template v-slot:prepend>
@@ -203,10 +211,13 @@ async function salvarEdicao() {
             $q.notify({
                 color: 'positive',
                 position: 'top',
-                message: 'Perfil atualizado com sucesso!',
+                message: 'Perfil atualizado com sucesso',
                 icon: 'check_circle'
             })
             editando.value = false
+            setTimeout(() => {
+                window.location.reload()
+            }, 500)
         })
         .catch(err => {
             $q.notify({

@@ -10,6 +10,9 @@
                 <div class="row items-center no-wrap justify-evenly w100 q-px-md">
                     <q-btn style="border-radius: 20px;" dense color="primary" label="área do produtor" glossy class="text-bold bg-primary rounded-borders  q-px-md q-py-sm text-purple-1 row items-center" v-if=" userInfo == ''" to="/login-host">
                     </q-btn>
+                    <a v-if="!isMobile & userInfo == ''" class="menu-item q-mr-md q-px-md" href="#quem-somos">
+                        Quem Somos
+                    </a>
                     <a v-if="!isMobile & userInfo == ''" class="menu-item q-mr-md q-px-md" href="#vantagens">
                         Vantagens
                     </a>
@@ -19,13 +22,12 @@
                     <q-btn style="border-radius: 20px;" v-if="userInfo == ''" glossy dense flat label="entrar" icon-right="login" class="text-bold bg-primary q-px-md q-py-sm text-purple-1 row items-center"
                         @click="navigateTo('/login')">
                     </q-btn>
-                    <q-btn v-if="userInfo != ''" dense class="menu-item text-purple-1 text-bold q-pa-md row items-center" label="sair" flat
-                        style="border-radius:8px" @click="Utils.logout()">
-                    </q-btn>
-                    <q-btn v-if="userInfo != ''" glossy dense class="text-bold bg-secondary q-pa-md text-purple-1 row items-center"
-                        style="border-radius:8px" @click="navigateTo('/me')">
-                        <q-icon name="person" size="md" />
-                    </q-btn>
+                    <q-btn label="meu perfil" icon="account_circle" color="primary" v-if="userInfo != ''" glossy dense class="text-bold text-white q-pa-sm row items-center"
+                    style="border-radius:8px" to="/me/perfil">
+                </q-btn>
+                <q-btn v-if="userInfo != ''" dense class="text-white text-bold q-pa-sm row items-center" icon-right="confirmation_number" label="meus ingressos" color="primary" glossy
+                    style="border-radius:8px" to="/me">
+                </q-btn>
                 </div>
             </div>
             <q-dialog v-model="dialogResults">
@@ -91,7 +93,7 @@
                 <q-card id="search-card" class="q-mt-md q-mb-md q-mx-md animate__animated rounded-borders animate__fadeInDown animate__slower">
                     <q-card-section class="bg-grad-4 text-white text-bold text-center q-pa-md ">
                         <q-icon name="nightlife" size="lg" color="white" />
-                        <div class="text-center">Encontre Produtores e Eventos em Andamento</div>
+                        <div class="text-center">Encontre Produtores e<br>Eventos em Andamento</div>
                     </q-card-section>
                     <q-card-section class="rounded-borders q-pa-md column q-gutter-y-md">
                         <q-input maxlength="100" v-model="searchPublic.titleEventOrHostName" outlined label="Nome do Evento ou Produtor(a)*"
@@ -116,7 +118,7 @@
                 </q-card>
             </div>
             <q-page class="">
-                <div id="home" style="border: 8px solid #692EDD;border-radius: 8px;"
+                <div style="border: 8px solid #692EDD;border-radius: 8px;"
                     class="q-mt-md q-mb-md animate__animated animate__zoomIn animate__slower ">
                     <q-toolbar class="bg-grad-4">
                         <q-toolbar-title
@@ -147,10 +149,11 @@
                             </q-input>
                         </q-card>
                     </div>
-                    <div class="w100 img-wrapper">
-                        <img class="img"
+                    <div  class="w100 img-wrapper">
+                        <img  class="img"
                             src="https://images.blush.design/PJcHFUF4pMy6BXPLEFnD?w=500&auto=compress&cs=srgb" alt="">
                     </div>
+                    <div id="quem-somos" class="absolute" style="top:65vh"></div>
                     <div style="font-size:1.3rem" class=" bg-grad-4 text-white text-bold q-px-sm q-py-md text-center">
                         Quem
                         Somos ?</div>
@@ -402,9 +405,10 @@
                 </div>
             </q-page>
         </q-page-container>
-        <q-page-container v-else class="q-mb-xl">
-            <div class="q-mt-xl q-px-md w100 row justify-center animate__animated rounded-borders animate__fadeInDown animate__slower" >
-                <q-btn to="/me" id="ver-ingressos" icon="local_activity" glossy color="primary" class="shadow-2 q-py-lg w100" label="ver meus ingressos"></q-btn>
+        <q-page-container v-else class="q-mb-xl q-mt-md">
+            <div v-if="lastEvent" class="w100 row q-gutter-md justify-center rounded-borders animate__animated animate__fadeInDown animate__slower">
+                <q-btn :to="'/' + hostLastEvent" color="secondary" glossy :label="hostLastEvent" icon="favorite" />
+                <q-btn :to="'/events/' + urlLastEvent" color="secondary" glossy :label="nameLastEvent" icon-right="event" />
             </div>
             <div id="search-public" class="w100 rounded-borders row justify-center">
                 <q-card id="search-card" class="q-mt-md q-mb-md q-mx-md animate__animated rounded-borders animate__fadeInDown animate__slower">
@@ -426,6 +430,7 @@
                     </q-card-section>
                 </q-card>
             </div>
+            <div class="q-py-lg"></div>
         </q-page-container>
         <footer class="w100 row wrap justify-center items-center q-py-xl bg-primary q-px-xl">
             <div class=" column q-py-md">
@@ -461,7 +466,10 @@ const searchPublic = ref({
     isByHostName: false,
     titleEventOrHostName: ''
 })
-
+const lastEvent = ref(sessionStorage.getItem('comeFromTicketIntention') ? true : false)
+const urlLastEvent = ref(sessionStorage.getItem('comeFromTicketIntention') || null) 
+const nameLastEvent = ref(sessionStorage.getItem('comeFromTicketIntentionName') || null)
+const hostLastEvent = ref(sessionStorage.getItem('comeFromTicketIntentionHost') || null)
 function goTo(url) {
     window.open(url, '_blank');
 }

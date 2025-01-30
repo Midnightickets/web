@@ -2,14 +2,16 @@
     <q-layout>
         <q-page-container>
             <q-page id="login-user" class="animate__animated animate__fadeIn bg-grad-2 w100  q-pt-xl column justify-center items-center">
-        <div class="w100 q-py-lg"></div>
-                <div style="position: fixed; top: 16px; left: 0;z-index: 9999!important" class="w100  q-pl-sm" >
-                    <q-btn @click="goBack()" class="q-mr-sm" icon="keyboard_return" color="secondary" glossy></q-btn>
-                    <q-btn to="/" icon="home" color="secondary" glossy></q-btn>
-                    <q-btn to="/login-host" class="q-ml-sm" label="Crie seu evento" color="secondary" glossy></q-btn>
+        <div class="w100 q-py-md"></div>
+                <div style="position: fixed; top: 16px; left: 0;z-index: 9999!important" class="w100 row no-wrap justify-between q-px-md" >
+                    <div class="row q-gutter-sm">
+                        <q-btn @click="goBack()" class="q-mr-sm" icon="keyboard_return" color="secondary" glossy></q-btn>
+                        <q-btn to="/" icon="home" color="secondary" glossy></q-btn>
+                    </div>
+                    <q-btn class="q-ml-sm" flat label="Área do Usuário" color="purple-2"></q-btn>
                 </div>
-                <div id="login-card" class="bg-white animate__animated animate__zoomIn rounded-borders">
-                    <div id="title-menu" class="text-primary text-center q-mt-md row justify-center items-center"><q-icon name="account_circle" size="md" color="primary" class="q-mr-xs"></q-icon>INICIAR SESSÃO</div>
+                <div id="login-card" class="bg-white q-my-lg animate__animated animate__zoomIn rounded-borders">
+                    <div id="title-menu" class="text-primary text-center q-mt-md row justify-center items-center"><q-icon :name="editing ? 'person_add' : 'account_circle'" size="md" color="primary" class="q-mr-md"></q-icon>{{ editing ? 'NOVO USUÁRIO' : 'INICIAR SESSÃO'}}</div>
                     <div class="q-pa-md column q-gutter-y-md">
                         <q-checkbox v-if="!editing" v-model="loginByCpf">
                             <span class="text-primary">Entrar com CPF</span>
@@ -181,6 +183,7 @@
                 </div>
                 <footer class="w100 row wrap justify-center q-mt-xl items-center q-py-xl bg-primary q-px-xl">
                     <div class=" column q-py-md">
+                        <q-btn label="Área do Produtor" to="/login-host" class="text-grey-5" flat></q-btn>
                         <q-btn label="Crie seu evento" to="/login-host" class="text-grey-5" flat></q-btn>
                         <q-btn label="Valide ingressos" to="/login-subhost" class="text-grey-5" flat></q-btn>
                         <q-btn label="Compre ingressos" to="/login" class="text-grey-5" flat></q-btn>

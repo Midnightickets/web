@@ -2,10 +2,11 @@
     <q-page class="bg-grad-2 text-white q-px-md animate__animated animate__fadeIn q-pb-xl" id="title">
         <div class="w100" >
             <q-btn @click="retornar()" icon="keyboard_return" color="secondary" class="q-mr-sm" glossy></q-btn>
-            <q-btn to="/" icon="search" color="secondary" glossy></q-btn>
+            <q-btn to="/" label="buscar eventos" icon-right="travel_explore" color="secondary" glossy></q-btn>
             <q-btn v-if="lastEvent" :to="'/events/' + lastEvent" class="q-ml-sm" icon="history" color="secondary" glossy></q-btn>
         </div>
-        <div class="w100 text-white animate__animated animate__zoomIn q-mb-md" id="title">Meus Ingressos</div>
+        <div class="W100">{{ Utils.toCamelCase(Utils.convertStringToFirstAndLast(userName)) }}</div>
+        <div class="w100 text-white animate__animated animate__fadeInLeft q-mb-md" id="title">Ingressos</div>
         <div v-if="loading" class="row w100 q-py-sm q-mt-md justify-center">
             <q-spinner-ball color="secondary" size="xl" />
             <q-spinner-ball color="secondary" size="xl" />
@@ -13,16 +14,16 @@
         </div>
         <div id="meus-ingressos">
             <q-list class="row q-gutter-x-md q-gutter-y-md">
-                <q-card v-for="ingresso in ingressos" :key="ingresso.id" class="w100 q-pb-md bg-grey-3">
+                <q-card v-for="ingresso in ingressos" :key="ingresso.id" class="w100 q-pb-md bg-grey-3" :style="ingresso.isExpired ? 'border-left: 6px solid #f3a73f' : 'border-left: 6px solid #6310E1'">
                     <q-card-section>
-                        <div :class="!ingresso.isExpired ? 'text-primary' : 'text-secondary'" id="title-menu">
+                        <div :class="!ingresso.isExpired ? 'text-white bg-primary' : 'bg-orange text-white'" class="rounded-borders q-pa-md" id="title-menu">
                             <q-icon class="q-pb-xs" name="local_activity"></q-icon>
                             {{ ingresso.ingresso }}
                         </div>
-                        <div class="text-h6 text-blue-14 text-bold">{{ ingresso.event }}</div>
-                        <div class="text-h6 text-green-14 text-bold">{{ ingresso.host }}</div>
-                        <div class="bg-grey-9 rounded-borders q-pa-sm q-mt-sm text-h6 text-secondary text-bold">{{ ingresso.ticket_person_name.toUpperCase() }}</div>
-                        <div class="text-grey-8 text-bold q-pt-md" style="font-size: 16px">{{ !ingresso.isExpired ? '🟢 Disponível' : '🔵  Utilizado' }}</div>
+                        <div class="text-h6 text-grey-14 text-bold q-mt-md">{{ ingresso.event }}</div>
+                        <!-- <div class="bg-grey-9 rounded-borders text-center q-px-lg q-py-sm q-mt-sm text-h6 text-white text-bold">{{ ingresso.ticket_person_name.toUpperCase() }}</div> -->
+                            <q-btn color="secondary" :label="ingresso.host" :to="'/' + ingresso.host_login"></q-btn>
+                        <div class="text-grey-14 text-bold q-pt-md" style="font-size: 16px">{{ !ingresso.isExpired ? '🟢 Disponível' : '🟡  Utilizado' }}</div>
                         <!-- <div class="text-h6 text-grey-5 text-right text-bold">{{ ingresso.payer }}</div> -->
                     </q-card-section>
                     <div class="w100 q-px-md" v-if="!ingresso.isExpired">
@@ -42,13 +43,13 @@
         </div>
         <q-dialog v-model="dialogQrIngresso" persistent>
             <div class="flex flex-center" style="overflow-x:hidden">
-                <q-icon class="q-pb-xs" size="lg" name="local_activity" color="secondary"></q-icon>
+                <q-icon class="q-pb-xs" size="lg" name="local_activity" color="white"></q-icon>
                 <div class="text-white w100 text-center text-shadow bg-dark q-pa-md shadow-2" id="title-2">
                     {{ ingressoHandler.ingresso }}<br>
-                    <div class="text-blue-14 text-center q-mt-sm">
+                    <div class="text-secondary text-center q-mt-sm">
                         {{ ingressoHandler.event }}</div>
-                        <div class="text-secondary text-center bg-black q-mt-md q-pb-lg rounded-borders shadow-1" id="title-layout">
-                            <br>{{ ingressoHandler.ticket_person_name.toUpperCase() }}<br>{{ ingressoHandler.ticket_person_cpf }}
+                        <div class="text-secondary text-center bg-black q-mt-md q-px-md text-white q-pb-lg rounded-borders shadow-1" id="title-layout">
+                            <br>{{ ingressoHandler.ticket_person_name.toUpperCase() }}<br><br>[{{ ingressoHandler.ticket_person_cpf }}]
                         </div>
                         <div class="column q-mt-md items-center justify-center">
                             <canvas class="shadow-1 rounded-borders" ref="qrcodeCanvas"></canvas>
@@ -116,6 +117,7 @@ const ingressoHandler = ref(null)
 const loading = ref(true)
 const lastEvent = sessionStorage.getItem('lastEvent') || null
 const router = useRouter()
+const userName = JSON.parse(sessionStorage.getItem('user')).name
 const btnDownloadShow = ref(true)
 const val = ref(true)
 
@@ -238,7 +240,6 @@ const generateQRCode = (ingresso) => {
 
 <style scoped>
 .q-card{
-    border-left: 6px solid #9573f3;
     cursor: pointer;
 }
 

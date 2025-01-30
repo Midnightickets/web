@@ -1,8 +1,8 @@
 {
   "name": "midnightickets-web",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Frontend do projeto MIDNIGHTICKETS",
-  "productName": "Midnight Tickets",
+  "productName": "Midnight Tickets - Bilheteria Online",
   "author": "samuelvictorol",
   "private": true,
   "scripts": {

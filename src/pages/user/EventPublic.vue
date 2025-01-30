@@ -158,6 +158,7 @@ const buyTicketHandler = ref({
     // ticket_person_birthday: '',
 });
 
+
 async function shareEvent() {
     const shareData = {
         title: event.value.title,
@@ -194,6 +195,9 @@ onBeforeMount(async () => {
     await api.get('/events?event=' + route.params.event).then((res) => {
         event.value = res.data;
         sessionStorage.setItem('comeFromTicketIntention', event.value.event_url);
+        sessionStorage.setItem('comeFromTicketIntentionName', event.value.title);
+        sessionStorage.setItem('comeFromTicketIntentionHost', event.value.host_login);
+
     })
     .catch((err) => {
         eventoIndisponivel.value = true;

@@ -1,10 +1,5 @@
 <template>
     <q-page class="q-pb-xl bg-grey-4 animate__animated animate__fadeIn">
-        <div v-if="loading" class="row w100 q-pt-xl justify-center">
-            <q-spinner-ball color="secondary" size="lg" />
-            <q-spinner-ball color="secondary" size="lg" />
-            <q-spinner-ball color="secondary" size="lg" />
-        </div>
         <div v-if="evento != null" class="text-secondary">
             <div class="w100 no-wrap row justify-between q-pt-sm q-mb-sm">
                 <q-btn @click="goTo('/host')" dense glossy flat icon="keyboard_return" class="shadow-1 q-pa-sm q-ml-sm"
@@ -314,6 +309,11 @@
                     </div>
                 </q-card>
             </q-dialog>
+        </div>
+        <div v-if="loading" class="row w100 q-pt-xl justify-center">
+            <q-spinner-ball color="secondary" size="lg" />
+            <q-spinner-ball color="secondary" size="lg" />
+            <q-spinner-ball color="secondary" size="lg" />
         </div>
     </q-page>
 </template>

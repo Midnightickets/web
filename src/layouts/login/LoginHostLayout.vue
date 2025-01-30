@@ -138,7 +138,7 @@
         </div>
         <footer class="w100 row wrap justify-center q-mt-xl items-center q-py-xl bg-primary q-px-xl">
             <div class=" column q-py-md">
-                <q-btn label="Crie seu evento" to="/login-host" class="text-grey-5" flat></q-btn>
+                <q-btn label="Área do Usuário" to="/login" class="text-grey-5" flat></q-btn>
                 <q-btn label="Valide ingressos" to="/login-subhost" class="text-grey-5" flat></q-btn>
                 <q-btn label="Compre ingressos" to="/login" class="text-grey-5" flat></q-btn>
                 <q-btn label="Encontre eventos" to="/" class="text-grey-5" flat></q-btn>

@@ -31,6 +31,10 @@ const Utils = {
             window.location.href = '/';
         }
     },
+    validateEmail: (email) => {
+        const re = /\S+@\S+\.\S+/;
+        return re.test(email);
+    },
     formatCurrency: (valor) => {
         if(typeof valor === 'number') {
             return valor.toFixed(2).toString().replace('.', ',')

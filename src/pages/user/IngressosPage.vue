@@ -3,7 +3,6 @@
         <div class="w100" >
             <q-btn @click="retornar()" icon="keyboard_return" color="secondary" class="q-mr-sm" glossy></q-btn>
             <q-btn to="/" label="buscar eventos" icon-right="travel_explore" color="secondary" glossy></q-btn>
-            <q-btn v-if="lastEvent" :to="'/events/' + lastEvent" class="q-ml-sm" icon="history" color="secondary" glossy></q-btn>
         </div>
         <div class="W100">{{ Utils.toCamelCase(Utils.convertStringToFirstAndLast(userName)) }}</div>
         <div class="w100 text-white animate__animated animate__fadeInLeft q-mb-md" id="title">Ingressos</div>

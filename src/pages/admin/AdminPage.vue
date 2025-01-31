@@ -106,7 +106,7 @@
                 <q-card-section v-if="log.user" class="w100 bg-grey-6">
                     [usuário] {{ log.user }}
                 </q-card-section>
-                <q-card-section v-if="log.sake_status" class="w100 bg-grey-6">
+                <q-card-section v-if="log.sake_status" class="w100 bg-grey-6" :class="log.sake_status.includes('Aguardando') ? 'text-orange-2' : 'text-green-2'">
                     {{ log.sake_status.includes('Aguardando') ? '🟡 ' + log.sake_status : '🟢 ' + log.sake_status }}
                 </q-card-section>
                 <q-card-section  class="w100 bg-dark text-right">
@@ -114,10 +114,39 @@
                 </q-card-section>
                 <q-card-section class="w100">
                     <q-btn @click="showLogJson(log)" label="ver log" color="primary" glossy class="w100" icon-right="visibility"></q-btn>
+                    <q-btn v-if="log.type.includes('Saque')" @click="abrirSaqueDialog(log)" label="saque" color="green" glossy class="w100 q-mt-md" icon-right="attach_money"></q-btn>
                 </q-card-section>
             </q-card>
         </q-list>
     </div>
+    <q-dialog v-model="saqueDialog" persistent>
+        <q-card class="bg-grey-4 text-white">
+            <q-card-section>
+                <q-item-label class="text-h6 text-primary text-bold">
+                    Efetivar Saque
+                </q-item-label>
+                <q-item-label class="text-dark q-py-md text-bold">
+                    Deseja efetivar o saque?
+                </q-item-label>
+                <q-file v-if="logHandler.content.comprovante_img_url === 'xxx'" outlined class="bg-grey-2" v-model="file" label="Comprovante Saque"
+                                    @input="uploadImage" accept="image/*">
+                                    <template v-slot:prepend>
+                                        <q-icon name="image" color="primary" />
+                                    </template>
+                                    <template v-slot:append>
+                                        <q-icon name="upload" color="primary" />
+                                    </template>
+                                </q-file>
+            </q-card-section>
+            <div v-if="logHandler.content && logHandler.content.comprovante_img_url" class="w100 row justify-center">
+                <q-img :src="logHandler.content.comprovante_img_url" style="width: 90%; height: 100%"  class="rounded-borders shadow-1"/>
+            </div>
+            <q-card-actions align="right">
+                <q-btn @click="saqueDialog = false" label="voltar" color="grey-14" flat></q-btn>
+                <q-btn @click="uploadImage" v-if="logHandler.content.comprovante_img_url === 'xxx'" label="Efetivar" color="primary" glossy icon-right="currency_exchange"></q-btn>
+            </q-card-actions>
+        </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -126,8 +155,10 @@ import { useQuasar } from 'quasar';
 import { api } from 'src/boot/axios';
 import { onBeforeMount, ref } from 'vue';
 
+const admin = JSON.parse(sessionStorage.getItem('admin'))
 const $q = useQuasar()
-
+const saqueDialog = ref(false)
+const file = ref(null)
 const typeOptions = [
     {value: 1, label: 'Novo Host Criado', icon: 'diamond'},
     {value: 2, label: 'Novo Evento Criado', icon: 'event'},
@@ -149,8 +180,47 @@ const sakeStatusOptions = [
     {value: 2, label: 'Saque Realizado', index_enum: 'SAKE_STATUS_DONE'},
 ]
 
+const logHandler = ref(null)
+function abrirSaqueDialog(log) {
+    logHandler.value = log
+    saqueDialog.value = true
+}
+
+async function uploadImage() {
+    if (!file.value) return;
+
+    const formData = new FormData();
+    formData.append("file", file.value);
+    formData.append(
+        "admin",
+        JSON.stringify({ id: admin.id, token: admin.token }) // Serializa o log como JSON
+    );
+    formData.append("log", logHandler.value.id); // Adiciona o ID do evento ao FormData
+
+    try {
+        const response = await api.post("/saque/upload_image", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
+
+        $q.notify({
+            color: "primary",
+            textColor: "white",
+            icon: "cloud_upload",
+            position: "top",
+            message: "Imagem enviada com sucesso",
+        });
+
+        logHandler.value.content.comprovante_img_url = response.data.imageUrl; // URL retornada do backend
+        console.log("Imagem enviada:", response.data);
+    } catch (error) {
+        console.error("Erro ao enviar a imagem:", error);
+    } finally {
+        file.value = null;
+        saqueDialog.value = false;
+    }
+}
+
 async function showLogJson(log) {
-    const admin = JSON.parse(sessionStorage.getItem('admin'))
     await api.post('/admin/log', { id: log.id, admin: { login: admin.login, token: admin.token } }).then((response) => {
         const formattedJson = JSON.stringify(response.data, null, 2);
         $q.dialog({

@@ -46,6 +46,10 @@ const Utils = {
             return valor.toString().replace('.', ',')
         }
     },
+    emailResumed: (email) => {
+        const emailSplit = email.split('@');
+        return `${emailSplit[0].slice(0, 4)}***@${emailSplit[1]}`
+    },
     toCamelCase: (str) => {
         // essa função serve para transformar a primeira letra de cada palavra em maiúscula
         return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());

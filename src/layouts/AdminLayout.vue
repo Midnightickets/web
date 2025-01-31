@@ -93,7 +93,6 @@ const menuOptions = ref({
         { label: 'Buscar Pagamento', icon: 'account_balance', to: '/admidnightickets/buscar-pagamento', role: 'admin' },
         { label: 'Produtores', icon: 'diamond', to: '/admidnightickets/hosts', role: 'admin' },
         { label: 'Usuários', icon: 'groups', to: '/admidnightickets/users', role: 'admin' },
-        { label: 'Suporte', icon: 'support', to: '#', role: 'admin' },
     ]
 })
 

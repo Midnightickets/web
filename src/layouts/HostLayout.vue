@@ -26,11 +26,11 @@
         <q-drawer v-if="hostInfo" show-if-above v-model="rightDrawerOpen" side="right" class="bg-dark relative">
             <div v-if="isAuthenticated" class="w100 flex q-mb-md flex-center q-mt-lg">
                 <q-avatar style="width:125px;height:110px;" class="shadow-2">
-                    <img v-if="hostInfo.img_url" :src="hostInfo.img_url" alt="">
+                    <img v-if="hostInfo.img_url" :src="hostInfo.img_url" style="border-bottom: 3px solid #802DE0" alt="">
                     <q-icon v-else name="account_circle" size="100px" color="purple-1" />
                 </q-avatar>
             </div>
-            <div id="title-menu" v-if="isHost" class="text-center text-bold text-purple-1">
+            <div id="title-menu" v-if="isHost" class="text-center q-px-sm text-bold text-purple-1">
                 {{ Utils.convertStringToFirstAndLast(hostInfo.name).toUpperCase() }}</div>
             <div v-if="isAuthenticated" class="text-center text-purple-1 mid-opacity text-bold q-mb-md "><q-btn
                     @click="goTo({ to: '/host/me' })" label="Perfil Produtor(a)" flat></q-btn></div>
@@ -109,6 +109,7 @@ const menuOptions = ref({
         // HOST MENUS
         { label: 'Eventos', icon: 'calendar_month', to: '/host', role: 'host' },
         { label: 'Acessos', icon: 'sensor_occupied', to: '/host/acessos', role: 'host' },
+        { label: 'Saques', icon: 'currency_exchange', to: '#', role: 'host' },
         // { label: 'Suporte', icon: 'support_agent', to: 'https://samuelvictorol.github.io/portfolio/contato', selected: false },
     ]
 })

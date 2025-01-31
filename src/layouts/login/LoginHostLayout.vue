@@ -71,7 +71,7 @@
                     class="q-mt-md"
                     v-model="host.cpf_cnpj"
                     maxlength="20"
-                    placeholder="CPF/CNPJ*"
+                    placeholder="CPF ou CNPJ*"
                     type="text"
                     mask="####################"
                     outlined

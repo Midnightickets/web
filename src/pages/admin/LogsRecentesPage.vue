@@ -1,7 +1,7 @@
 <template>
   <q-page class="text-white bg-grey-4 q-pb-xl">
-    <div id="title" class="q-pt-sm w100 text-primary text-center">
-      Logs Recentes
+    <div id="title" class="q-pt-sm w100 text-dark text-left q-pl-md">
+        🔔 Notificações
     </div>
     <div id="logs" v-if="logs.length > 0" class="w100 q-px-md q-mt-md rounded-borders">
         <q-list  class="row justify-center items-center q-gutter-md rounded-borders">

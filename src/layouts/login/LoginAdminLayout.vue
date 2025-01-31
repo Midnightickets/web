@@ -2,7 +2,7 @@
     <div id="login-user" class="animate__animated animate__fadeIn bg-dark w100 flex flex-center">
         <div id="login-card" class="bg-white animate__animated animate__zoomIn rounded-borders">
             <div id="title-menu" class="text-dark text-center q-mt-md row justify-center items-center">
-                <q-icon name="admin_panel_settings" size="md" color="dark" class="q-mr-xs"></q-icon>ADMIN</div>
+                <q-icon name="admin_panel_settings" size="md" color="dark" class="q-mr-xs"></q-icon></div>
             <div class="q-pa-md">
                 <q-input
                     v-model="admin.login"
@@ -12,7 +12,11 @@
                     outlined
                     color="dark"
                     @keyup.enter="login"
-                />
+                >
+                    <template v-slot:prepend>
+                        <q-icon name="account_circle" color="dark" />
+                    </template>
+                </q-input>
                 <q-input
                     v-model="admin.password"
                     placeholder="Senha*"
@@ -23,6 +27,9 @@
                     class="q-mt-md"
                     @keyup.enter="login"
                 >
+                <template v-slot:prepend>
+                    <q-icon name="lock" color="dark" />
+                </template>
                     <template v-slot:append>
                         <q-icon
                             :name="formConfig.showPassword ? 'visibility' : 'visibility_off'"

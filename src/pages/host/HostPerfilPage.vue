@@ -13,7 +13,7 @@
                 <q-icon style="border-bottom: 4px solid #9573f3;" v-else name="account_circle" size="200px" color="purple-1" />
             </q-avatar>
         </div>
-        <div class="w100 row justify-center q-mb-md q-gutter-x-md q-gutter-y-md">
+        <div class="w100 row justify-center q-mb-md q-gutter-x-md q-gutter-y-md q-px-md">
             <q-btn v-if="!editando" @click="editando = !editando" label="Editar Pefil" color="orange-14" glossy
                 icon-right="account_circle"></q-btn>
             <q-btn @click="openPerfilPublico()" v-if="!editando" label="Perfil Público" color="primary" glossy
@@ -34,7 +34,7 @@
                 </q-card-section>
                 <q-card-section class="q-pa-md">
                     <div class="text-h6 text-primary">Email</div>
-                    <div class="text-h6">{{ host.email }}</div>
+                    <div class="text-h6 q-pr-md">{{ Utils.emailResumed(host.email) }}</div>
                 </q-card-section>
             </q-card>
             <q-card v-else class="q-mb-md animate__animated animate__fadeInRight" style="border-left: 4px solid orange;">
@@ -88,7 +88,7 @@
                     </q-input>
                 </q-card-section>
                 <q-card-section class="q-pa-md">
-                    <q-select v-model="host.pix_key.type" class="q-mb-md" outlined label="Tipo de Chave Pix" :options="['CPF', 'CNPJ', 'Telefone', 'Email', 'Aleatório']">
+                    <q-select v-model="host.pix_key.type" class="q-mb-md" outlined label="Tipo de Chave Pix" :options="['CPF', 'CNPJ', 'Telefone', 'Email', 'Aleatória']">
                         <template v-slot:prepend>
                             <q-icon name="account_balance"  color="orange-14"/>
                         </template>
@@ -147,7 +147,7 @@
                 </q-card-section>
                 <q-card-actions align="right" class="q-pb-md">
                     <q-btn @click="cancelar()" label="Cancelar" flat color="secondary" />
-                    <q-btn @click="solicitar()" label="Confirmar" color="primary" />
+                    <q-btn @click.prevent="solicitar()" label="Confirmar" color="primary" />
                 </q-card-actions>
             </q-card>
 
@@ -263,35 +263,28 @@ async function uploadImage() {
 
 
 async function solicitar() {
-    await updateLogin().then(() => {
-        if (passwordOptions.value.type == 'request_saque') {
-            api.get('/midnightickets?host=' + host.value.id )
-                .then(response => {
-                    $q.notify({
-                        color: 'secondary',
-                        position: 'top',
-                        message: response.data.message,
-                        icon: 'currency_exchange'
-                    })
-                    updateLogin()
-                    setTimeout(() => {
-                        window.location.reload()
-                    }, 2000)
-                })
-                .catch(err => {
-                    $q.notify({
-                        color: 'secondary',
-                        icon: 'key',
-                        position: 'top',
-                        message: err.response.data.message,
-                    })
-                    passwordOptions.value.password = ''
-                })
-        }
+    await api.post('/midnightickets', {
+        confirmPassword: passwordOptions.value.password,
+        host: host.value.id,
     })
-
+        .then(response => {
+            $q.notify({
+                color: 'secondary',
+                position: 'top',
+                message: response.data.message,
+                icon: 'currency_exchange'
+            })
+            updateLogin()
+            passwordModal.value = false
+        })
         .catch(err => {
-            console.log('UpdateLogin error:\n' + err)
+            $q.notify({
+                color: 'secondary',
+                icon: 'key',
+                position: 'top',
+                message: err.response.data.message,
+            })
+            passwordOptions.value.password = ''
         })
 }
 
@@ -318,6 +311,7 @@ async function updateLogin() {
         .then(response => {
             sessionStorage.setItem('host', JSON.stringify(response.data))
             sessionStorage.setItem('isHost', true)
+            host.value = response.data
         })
         .catch(err => {
             $q.notify({

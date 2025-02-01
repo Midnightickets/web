@@ -66,6 +66,7 @@ module.exports = configure(function (/* ctx */) {
       env: {
         BACKEND_URL: process.env.BACKEND_URL,
         MIDNIGHTICKETS_MERCADO_PAGO_PK: process.env.MIDNIGHTICKETS_MERCADO_PAGO_PK,
+        MONGO_lINK_ADMIN: process.env.MONGODB_lINK_ADMIN,
       },
       // rawDefine: {}
       // ignorePublicFolder: true,

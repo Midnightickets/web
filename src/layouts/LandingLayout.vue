@@ -10,16 +10,17 @@
                 <div class="row items-center no-wrap justify-center q-gutter-x-sm w100 q-px-md">
                     <q-btn style="border-radius: 10px;" dense color="primary" label="área do produtor" glossy class="text-bold bg-primary rounded-borders  q-px-md q-py-sm text-white row items-center" v-if=" userInfo == ''" to="/login-host">
                     </q-btn>
-                    <a v-if="!isMobile & userInfo == ''" class="menu-item text-grey-4 q-mr-md q-px-md" href="#quem-somos">
+                    <a v-if="!isMobile & userInfo == ''" class="menu-item text-grey-4 text-center q-mr-md q-px-md" href="#quem-somos">
                         Quem Somos
                     </a>
-                    <a v-if="!isMobile & userInfo == ''" class="menu-item text-grey-4 q-mr-md q-px-md" href="#vantagens">
+                    <a v-if="!isMobile & userInfo == ''" class="menu-item text-center text-grey-4 q-mr-md q-px-md" href="#vantagens">
                         Vantagens
                     </a>
-                    <a v-if="!isMobile & userInfo == ''" class="menu-item text-grey-4 q-mr-md q-px-md" href="#contato">
+                    <a v-if="!isMobile & userInfo == ''" class="menu-item text-center text-grey-4 q-mr-md q-px-md" href="#contato">
                         Contato
                     </a>
-                    <q-btn style="border-radius: 10px;" v-if="userInfo == ''" glossy dense flat label="entrar" icon-right="login" class="text-bold bg-primary q-px-md q-py-sm text-white row items-center"
+                    <q-btn  class="text-bold q-px-md q-py-sm text-white row items-center" style="border-radius: 10px;" v-if="userInfo == ''" glossy dense label="entrar"
+                    icon-right="login" color="green-14"
                         @click="navigateTo('/login')">
                     </q-btn>
                     <q-btn label="meu perfil" icon="account_circle" color="primary" v-if="userInfo != ''" glossy dense class="text-bold text-white q-pa-sm row items-center"
@@ -190,77 +191,42 @@
                         class="text-shadow text-h6 w100 text-bold text-blue-4 text-center q-px-md q-py-sm border-bottom">
                         Veja como
                         nossa Plataforma pode aumentar o Faturamento do seu Evento!!</div> -->
-                    <div id="title"
+                        <div id="title"
                         class="text-h4 bg-white rounded-borders text-primary text-center w100 border-bottom text-bold q-pt-md q-pb-md">
-                        Vantagens</div>
-                    <div style="font-size:1.1rem"
-                        class="text-shadow q-px-md bg-grey-4 text-left q-py-md rounded-borders">
-                        🟣 <strong class="text-primary">REDUZA TAXA POR INGRESSO<br></strong> Nosso <strong>modelo de negócio</strong>
-                        permite realizar <strong>Eventos</strong> com <strong>5% de taxa</strong> em ingressos
-                        vendidos. Obtenha
-                        o <strong>máximo do seu
-                            lucro</strong><br>
-                        <br>🟣 <strong class="text-primary">LUCRO EM TEMPO REAL<br></strong> Disponibilizamos a
-                        visualização do andamento do 
-                        <strong>lucro de suas vendas atualizadas automaticamente em tempo real na sua conta</strong> enquanto
-                        acontece o seu evento<br><br>
+                        Vantagens
+                    </div>
+                    <div style="font-size:1.1rem" class="text-shadow q-px-md bg-grey-4 text-left q-py-md rounded-borders">
+                        🟣 <strong class="text-primary">TAXA REDUZIDA, MAIS LUCRO PARA VOCÊ<br></strong>
+                        Nosso <strong>modelo de negócio</strong> é <strong>diferente das plataformas tradicionais</strong>, nossa taxa é de apenas <strong>8% na venda</strong> e <strong>5% no saque</strong>. <strong>Pague menos e lucre mais</strong> com cada ingresso vendido!<br>
+                        <br>🟣 <strong class="text-primary">LUCRO EM TEMPO REAL<br></strong>
+                        Acompanhe suas <strong>vendas ao vivo</strong>, com <strong>atualização automática</strong> e <strong>painel intuitivo</strong>. Saiba exatamente <strong>quanto está faturando</strong> enquanto seu evento acontece!<br><br>
                         🟣 <strong class="text-primary">AJUSTES DE LOTES GRATUITOS<br></strong>
-                        Realize <strong>reajustes</strong> de ingressos dos seus ingressos <strong>sem custo
-                        adicional</strong> de forma intuitiva na palma da sua mão
-                        <br><br>
-                        🟣 <strong class="text-primary">VALIDAÇÃO DE INGRESSOS<br></strong>
-                        Disponibilizamos um perfil de <strong>subhost</strong>, que são perfis cadastrados pelos produtores de eventos para <strong>validar ingressos</strong>
-                        de forma segura e rápida com <strong>QR Code</strong> na entrada de seus eventos. Utilizando apenas uma câmera e acesso à navegador
+                        Precisa <strong>alterar valores</strong> ou <strong>disponibilidade de ingressos</strong>? Edite seus lotes <strong>em tempo real</strong>, <strong>sem taxas adicionais</strong>, garantindo <strong>máxima flexibilidade</strong> na venda.<br><br>
+                        🟣 <strong class="text-primary">VALIDAÇÃO RÁPIDA E SEGURA DE INGRESSOS<br></strong>
+                        Facilite a entrada do público com <strong>check-in via QR Code</strong>! Cadastre <strong>subhosts</strong> para validar ingressos <strong>sem precisar de aplicativos</strong>, utilizando apenas a <strong>câmera do celular</strong> e um <strong>navegador</strong>.
                     </div>
                     <div id="title"
                         class="w100 text-h4 text-bold bg-white text-primary text-center q-px-md q-mt-md rounded-borders q-py-sm border-bottom"
                         style="border:4px solid #692EDD">
-                        Benefícios</div>
-                    <div style="font-size:1.1rem"
-                        class="text-shadow q-px-md bg-grey-4 q-py-md rounded-borders border-bottom">
-                        💸 <strong style="font-size:1.2rem" class="text-primary text-bold">LIBERTE-SE das
-                        TAXAS EXCESSIVAS<br></strong>
-                        Estamos
-                        integrados ao <strong>Mercado Pago</strong> com segurança
-                        e confidencialidade realizando pagamentos em ambientes com fontes confiáveis
-                        <br>
-                        <br>    
-                        🤳🏼 <strong style="font-size:1.2rem" class="text-primary text-bold">SEM INSTALAÇÃO
-                            <br></strong> Gerencie seus
-                        eventos, vendas e ingressos na palma da sua mão <strong>sem
-                            necessidade de
-                            instalação</strong> de aplicativos. Nosso webapp é adaptativo para todos os dispositivos inclusive o navegador do próprio instagram
-                        <br>
-                        <br>
-                        🧑🏼‍💻 <strong style="font-size:1.2rem" class="text-primary text-bold">SUPORTE HUMANIZADO<br>
-                        </strong> Nosso
-                        serviço é monitorado constantemente, focado em <strong>otimizar o tráfego de dados. </strong>
-                        O Suporte é <strong>humanizado</strong> e <strong>ágil</strong> para atender suas necessidades o
-                        quanto antes
-                        <br>
-                        <br>
-                        🖥️ <strong style="font-size:1.2rem" class="text-primary text-bold">CONSULTORIA
-                            INDIVIDUAL<br></strong> Nossos
-                        <strong>desenvolvedores</strong> possuem experiências
-                        profisionais em
-                        diversos <strong>projetos
-                            nacionais e internacionais</strong> em Bancos e Software Houses, e estarão a
-                        disposição para
-                        suporte, <strong>sugestões de melhorias e correções
-                            de bugs</strong>
-                        <br>
-                        <br>
-                        📲 <strong style="font-size:1.2rem" class="text-primary text-bold">TECNOLOGIA DE
-                            PONTA<br></strong>
-                        Nosso App Web é desenvolvido com as <strong id="contato">melhores tecnologias</strong> do
-                        mercado
-                        e hospedada
-                        na nuvem, <strong>garantindo segurança e escalabilidade</strong>. Nosso foco é a
-                        <strong>Usabilidade</strong> de
-                        todos os tipos de usuários: <strong>produtores, organizadores de eventos e compradores de
-                            ingressos
-                            digitais</strong>
+                        Benefícios
                     </div>
+                    <div style="font-size:1.1rem" class="text-shadow q-px-md bg-grey-4 q-py-md rounded-borders border-bottom">
+                        💸 <strong style="font-size:1.2rem" class="text-primary text-bold">DIGA ADEUS ÀS TAXAS ABUSIVAS<br></strong>
+                        Estamos <strong>integrados ao Mercado Pago</strong>, garantindo <strong>segurança</strong>, <strong>rapidez nos pagamentos</strong> e a <strong>menor taxa do mercado</strong> para produtores de eventos.<br>
+                        <br>
+                        🤚🏼 <strong style="font-size:1.2rem" class="text-primary text-bold">100% WEB, SEM NECESSIDADE DE INSTALAÇÃO<br></strong>
+                        Gerencie tudo <strong>direto do navegador</strong>, seja no <strong>celular</strong>, <strong>computador</strong> ou até no <strong>Instagram</strong>!<br>
+                        <br>
+                        🧑🏼‍💻 <strong style="font-size:1.2rem" class="text-primary text-bold">SUPORTE HUMANIZADO, VOCÊ NÃO FICA NA MÃO<br></strong>
+                        Nosso time <strong>acompanha seu evento de perto</strong> e está sempre disponível para <strong>resolver dúvidas</strong> e <strong>otimizar seu faturamento</strong>.<br>
+                        <br>
+                        🖥️ <strong style="font-size:1.2rem" class="text-primary text-bold">INTUITIVO, RÁPIDO E DE QUALQUER LUGAR</strong><br>
+                        Nosso sistema é <strong>fácil de usar</strong>: uma <strong>interface amigável</strong> otimizada para <strong>qualquer dispositivo</strong>, sem a necessidade de instalação. <strong>Além disso, estamos constantemente implementando novas funcionalidades sem custo adicional para você</strong>.<br>
+                        <br>
+                        📲 <strong style="font-size:1.2rem" class="text-primary text-bold">TECNOLOGIA DE PONTA<br></strong>
+                        Nosso sistema é <strong>hospedado na nuvem</strong>, garantindo <strong>estabilidade</strong>, <strong>rapidez</strong> e <strong>segurança</strong> para produtores, organizadores e compradores de ingressos.
+                    </div>
+                    
                 </div>
                 <!-- <q-carousel v-model="slide" transition-prev="scale" transition-next="scale" swipeable animated
                   control-color="white" navigation autoplay="true" infinite padding arrows

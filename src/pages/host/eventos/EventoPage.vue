@@ -48,8 +48,8 @@
                 (evento.initial_time ? ' às ' +
                     evento.initial_time : '') +
                 (evento.final_time ? (' - ' + evento.final_time) : '' ) }}</div>
-            <q-btn @click="dialogImg = !dialogImg" label="Banner do Evento"
-                glossy icon-right="image" class="q-pa-md q-ml-md q-mt-md" dense color="blue-14"></q-btn>
+            <q-btn @click="openImgDialog()" label="Banner do Evento"
+                glossy icon-right="image" class="q-pa-md q-ml-md q-mt-md" dense :color="evento.img_url ? 'green' : 'grey'"></q-btn>
             <q-btn v-if="evento.status.includes('andamento')" @click="previewPublicEvent(evento.event_url)"
                 label="Evento Preview" glossy icon-right="event" class="q-pa-md q-ml-md q-mt-md" dense
                 color="primary"></q-btn>
@@ -80,8 +80,15 @@
                                     </template>
                                 </q-file>
                             </q-card-section>
-                            <q-card-section>
+                            <q-card-section >
                                 <img :src="evento.img_url" class="w100 rounded-borders shadow-2" alt="Banner do Evento">
+                            </q-card-section>
+                            <q-card-section v-if="imgLoading">
+                                <div class="row w100 q-pt-xl justify-center">
+                                    <q-spinner-ball color="secondary" size="lg" />
+                                    <q-spinner-ball color="secondary" size="lg" />
+                                    <q-spinner-ball color="secondary" size="lg" />
+                                </div>    
                             </q-card-section>
                             <q-card-actions align="right">
                                 <q-btn flat label="ok" color="primary" v-close-popup />
@@ -347,7 +354,7 @@ const modalPackage = ref(false);
 const modalSubhosts = ref(false);
 const file = ref(null);
 const $q = useQuasar();
-
+const imgLoading = ref(true);
 const packageHandler = ref({
     title: '',
     price: '',
@@ -378,7 +385,6 @@ async function uploadImage() {
         const response = await api.post("/event/upload_image", formData, {
             headers: { "Content-Type": "multipart/form-data" },
         });
-
         $q.notify({
             color: "primary",
             textColor: "white",
@@ -386,11 +392,13 @@ async function uploadImage() {
             position: "top",
             message: "Imagem enviada com sucesso",
         });
-
         evento.value.img_url = response.data.imageUrl; // URL retornada do backend
         console.log("Imagem enviada:", response.data);
     } catch (error) {
         console.error("Erro ao enviar a imagem:", error);
+    } finally {
+        dialogImg.value = false;
+        imgLoading.value = true;
     }
 }
 
@@ -622,6 +630,13 @@ async function updateEventInfo() {
         .finally(() => {
             editando.value = false;
         });
+}
+
+function openImgDialog () {
+    dialogImg.value = true;
+    setTimeout(() => {
+        imgLoading.value = false;
+    }, 3000);
 }
 
 async function changeStatusEvento(status) {

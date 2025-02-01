@@ -145,7 +145,7 @@
             <div v-if="logHandler.content && logHandler.content.comprovante_img_url" class="w100 row justify-center">
                 <q-img v-if="logHandler.content.comprovante_img_url != 'xxx'" :src="logHandler.content.comprovante_img_url" style="width: 90%; height: 100%"  class="rounded-borders shadow-1"/>
                 <div  v-if="logHandler.content.comprovante_img_url === 'xxx'" class="w100 row justify-center q-my-md rounded-borders">
-                    <q-input label="Confirmar" v-model="confirmar" type="password" outlined class="rounded-borders bg-grey-2" color="primary">
+                    <q-input label="Confirmar" v-model="confirmar" type="password" outlined class="q-mx-md rounded-borders bg-grey-2" color="primary">
                         <template v-slot:prepend>
                             <q-icon name="check" color="primary" />
                         </template>

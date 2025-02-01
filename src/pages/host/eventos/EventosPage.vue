@@ -4,19 +4,19 @@
             <div
                 class="title-1 w100 q-px-sm row items-center text-primary shadow-1 q-py-md justify-between no-wrap text-bold">
                 <div class="row no-wrap items-center text-blue-14">
-                    <q-icon size="sm" color="blue-14" name="payments" class="q-pr-sm">
+                    <q-icon size="sm" color="blue-14" name="paid" class="q-pr-sm">
                     </q-icon>
                     R$ {{ Utils.formatCurrency(hostInfo.total_profit ? hostInfo.total_profit : 0, 'brl') }}
-                    <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                    <q-tooltip anchor="top" self="bottom">
                         Faturamento Total
                     </q-tooltip>
 
                 </div>
                 <div class="row no-wrap items-center">
                     R$ {{ Utils.formatCurrency(hostInfo.balance ? hostInfo.balance : 0, 'brl') }}
-                    <q-icon size="sm" color="primary" name="paid" class="q-pl-sm">
+                    <q-icon size="sm" color="primary" name="savings" class="q-pl-sm">
                     </q-icon>
-                    <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                    <q-tooltip anchor="top" self="bottom">
                         Saldo Atual
                     </q-tooltip>
                 </div>
@@ -37,7 +37,10 @@
             </div>
             <div class="w100 bg-secondary q-mt-lg rounded-borders q-pt-xs"></div>
             <div id="title" class=" text-primary w100 q-mt-md text-bold">Meus Eventos</div>
-            <q-toggle color="secondary" v-model="filter.inProgress" :label="filter.inProgress ? 'Em Andamento' : 'Todos'" @update:model-value="getEventos()" class="text-bold text-secondary" />
+            <div class="row w100 no-wrap q-mt-xs">
+                <q-radio color="secondary" v-model="filter.inProgress" label="Em Andamento" :val="true"  @update:model-value="getEventos()" class="q-mb-md text-bold text-secondary" />
+            <q-radio color="secondary" v-model="filter.inProgress" label="Todos" :val="false"  @update:model-value="getEventos()" class="q-mb-md text-bold text-secondary q-ml-md" />
+            </div>
             <div v-if="loading" class="row w100 q-pb-xl q-mt-md justify-center">
                 <q-spinner-ball color="secondary" size="lg" />
                 <q-spinner-ball color="secondary" size="lg" />
@@ -49,12 +52,12 @@
                 <template v-slot:body-cell-acoes="props">
                     <div class="column items-center justify-center q-gutter-y-xs q-py-sm">
                         <q-btn glossy icon="tune" color="primary"  @click="openMeuEventoPage(props.row.id)">
-                            <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                            <q-tooltip anchor="top" self="bottom">
                                 Gerenciar Evento
                             </q-tooltip>
                         </q-btn>
                         <q-btn glossy @click="verVendas(props.row.id, props.row.title)" icon="payments" color="green">
-                            <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                            <q-tooltip anchor="top middle" self="bottom middle">
                                 Painel de Vendas
                             </q-tooltip>
                         </q-btn>
@@ -65,7 +68,7 @@
                         <div class="q-gutter-y-xs q-py-sm">
                             {{ isMobile ? Utils.formatBigString(props.row.title) : props.row.title }}
                         </div>
-                        <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                        <q-tooltip anchor="top" self="bottom">
                             {{ props.row.title }}
                         </q-tooltip>
                     </q-td>

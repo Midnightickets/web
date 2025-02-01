@@ -11,7 +11,7 @@
             <q-btn @click="editing = !editing" label="Criar Acesso" color="primary" glossy icon-right="add_circle"></q-btn>
         </div>
         <div v-if="editing"  class="add-subhost bg-grad-1 q-px-xl q-py-md q-gutter-y-sm text-bold row justify-center q-mb-xl  q-mt-sm animate__animated animate__fadeIn shadow-2">
-            <q-input maxlength="15" v-model="subhostHandler.name" dense  class="rounded-borders w80 bg-grey-4 q-px-sm text-white" color="primary" placeholder="Título*">
+            <q-input maxlength="30" v-model="subhostHandler.name" dense  class="rounded-borders w80 bg-grey-4 q-px-sm text-white" color="primary" placeholder="Título*">
                 <template v-slot:prepend>
                     <q-icon name="list_alt" color="primary" />
                 </template>
@@ -21,12 +21,12 @@
                     <q-icon name="account_circle" color="primary" />
                 </template>
             </q-input>
-            <q-input v-model="subhostHandler.password" dense maxlength="4" mask="####" class="rounded-borders w80 bg-grey-4 q-px-sm text-white" color="primary" placeholder="Senha*">
+            <!-- <q-input v-model="subhostHandler.password" dense maxlength="4" mask="####" class="rounded-borders w80 bg-grey-4 q-px-sm text-white" color="primary" placeholder="Senha*">
                 <template v-slot:prepend>
                     <q-icon name="lock" color="primary" />
                 </template>
-            </q-input>
-            <q-btn  label="Adicionar" @click="adicionarSubhost()" :disabled="!subhostHandler.name || !subhostHandler.login || !subhostHandler.password || subhostHandler.password.length != 4" glossy icon-right="add" color="primary" class="shadow-2 q-mt-md"></q-btn>
+            </q-input> -->
+            <q-btn  label="Adicionar" @click="adicionarSubhost()" :disabled="!subhostHandler.name || !subhostHandler.login" glossy icon-right="add" color="primary" class="shadow-2 q-mt-md"></q-btn>
             <q-btn class="w100" flat @click="editing = !editing; clearSubhostHandler()" label="fechar" color="secondary"></q-btn>
         </div>
         <div id="title-menu" class="text-primary q-pl-md">
@@ -40,7 +40,7 @@
                         <div id="title-layout" class="text-primary">{{ subhost.name }}</div>
                     </div>
                     <div class="text-primary text-h6">👨🏼‍💼 {{ subhost.login.toLowerCase() }}</div>
-                    <div class="text-secondary">🔑 {{ subhost.password }}</div>
+                    <!-- <div class="text-secondary">🔑 {{ subhost.password }}</div> -->
                 </q-card-section>
             </q-card>                
         </div>
@@ -65,7 +65,7 @@ const subhosts = ref([]);
 const subhostHandler = ref({
     name: '',
     login: '',
-    password: ''
+    password: 'MIDT'
 })
 const host = JSON.parse(sessionStorage.getItem('host'));
 const loading = ref(false);
@@ -75,7 +75,7 @@ const clearSubhostHandler = () => {
     subhostHandler.value = {
         name: '',
         login: '',
-        password: ''
+        password: 'MIDT'
     }
 }
 

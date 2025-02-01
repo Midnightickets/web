@@ -1,7 +1,7 @@
 <template>
     <q-layout view="hHh lpR lFr">
 
-        <q-header v-if="hostInfo" class="bg-dark text-white" height-hint="98">
+        <q-header v-if="hostInfo" class="bg-grad-1 text-white" height-hint="98">
             <q-toolbar>
                 <q-toolbar-title class="row items-center">
                     <q-avatar>
@@ -9,7 +9,7 @@
                     </q-avatar>
                     <a @click="goTo('/app')" style="text-decoration: none;" id="title-layout"
                         class="text-purple-1 q-pl-xs text-bold">
-                        {{hostInfo.login ? hostInfo.login : 'Midnight' }}
+                        Área do Produtor
                     </a>
                 </q-toolbar-title>
 
@@ -25,15 +25,15 @@
 
         <q-drawer v-if="hostInfo" show-if-above v-model="rightDrawerOpen" side="right" class="bg-dark relative">
             <div v-if="isAuthenticated" class="w100 flex q-mb-md flex-center q-mt-lg">
-                <q-avatar style="width:125px;height:110px;" class="shadow-2">
-                    <img v-if="hostInfo.img_url" :src="hostInfo.img_url" style="border-bottom: 3px solid #802DE0" alt="">
+                <q-avatar style="width:155px;height:150px;" class="shadow-2">
+                    <img v-if="hostInfo.img_url" :src="hostInfo.img_url" style="border-bottom: 4px solid #802DE0" alt="">
                     <q-icon v-else name="account_circle" size="100px" color="purple-1" />
                 </q-avatar>
             </div>
             <div id="title-menu" v-if="isHost" class="text-center q-px-sm text-bold text-purple-1">
                 {{ Utils.convertStringToFirstAndLast(hostInfo.name).toUpperCase() }}</div>
             <div v-if="isAuthenticated" class="text-center text-purple-1 mid-opacity text-bold q-mb-md "><q-btn
-                    @click="goTo({ to: '/host/me' })" label="Perfil Produtor(a)" flat></q-btn></div>
+                    @click="goTo({ to: '/host/me' })" label="Perfil" flat></q-btn></div>
             <q-list v-if="isAuthenticated" class="text-bold text-white" >
                 <q-item v-for="item in menuOptions.items" :key="item.label" clickable @click="goTo(item)"
                     style="border-radius: 8px;"

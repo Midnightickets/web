@@ -13,7 +13,7 @@
                     </a>
                 </q-toolbar-title>
 
-                <q-btn class="rounded-borders" size="md" :label="isMobile ? null :'menu'" color="primary" glossy icon-right="menu"
+                <q-btn class="rounded-borders" size="md" :label="isMobile ? null :'menu'" color="dark" glossy icon-right="menu"
                     @click="toggleRightDrawer" />
             </q-toolbar>
 
@@ -23,20 +23,21 @@
             <div v-if="adminInfo" class="w100">
                 <q-list class="q-pt-md text-bold text-white">
                     <q-item v-for="item in menuOptions.items" :key="item.label" clickable @click="goTo(item)"
-                        style="border-radius: 8px;"
-                        class="q-mt-md q-mx-md text-blue-2 shadow-2 bg-grad-4">
-                        <q-item-section avatar>
-                            <q-icon :name="item.icon" color="grey-4" />
-                        </q-item-section>
-                        <q-item-section>
-                            <q-item-label  class="text-grey-4">{{ item.label
-                                }}</q-item-label>
-                        </q-item-section>
-                    </q-item>
-                    <q-btn @click="Utils.logout()" class="z-index-999 absolute-bottom cursor-pointer q-py-md" label="logout" icon-right="logout" color="secondary"></q-btn>
-                </q-list>
-                <div class="absolute-bottom w100  row no-wrap items-center justify-center q-mt-xl text-primary q-py-sm">
-                    <div class="row items-center w100 q-mb-md">
+                    style="border-radius: 8px;"
+                    class="q-mt-md q-mx-md text-blue-2 shadow-2 bg-grad-4">
+                    <q-item-section avatar>
+                        <q-icon :name="item.icon" color="grey-4" />
+                    </q-item-section>
+                    <q-item-section>
+                        <q-item-label  class="text-grey-4">{{ item.label
+                        }}</q-item-label>
+                    </q-item-section>
+                </q-item>
+                <q-btn @click="Utils.logout()" class="z-index-999 absolute-bottom cursor-pointer q-py-md" label="logout" icon-right="logout" color="secondary"></q-btn>
+            </q-list>
+            <div class="absolute-bottom w100  row no-wrap items-center justify-center q-mt-xl text-primary q-py-sm">
+                <div class="row items-center w100 q-mb-md">
+                        <q-btn @click="goCloud()" flat class="w100 cursor-pointer q-py-md" label="Mongodb"  color="green-4"></q-btn>
                         <q-btn class="w100 q-mb-xl" flat @click="rightDrawerOpen = !rightDrawerOpen" color="secondary">fechar menu</q-btn>
                         <!-- <q-btn label="logout" icon-right="logout" color="secondary" class="w100 q-mx-md" to="/" glossy></q-btn> -->
                     </div>
@@ -51,7 +52,8 @@
                 <div class="text-center text-grey-4 q-mb-md q-mx-md">
                     Faça Login para gerenciar o Midnight Tickets 
                 </div>
-                <q-btn class="q-mt-xl" to="/admin-auth" flat label="Página Inicial" color="dark" icon="login" />
+                <q-btn class="q-mt-xl" to="/admin-auth" flat label="Logar" color="primary" icon-right="login" />
+                <q-btn class="q-mt-xl" to="/" flat label="Página Inicial" color="primary" icon-right="home" />
             </div>
         </q-drawer>
 
@@ -92,10 +94,12 @@ const menuOptions = ref({
         { label: 'Buscar Logs', icon: 'search', to: '/admidnightickets/buscar-logs', role: 'admin' },
         { label: 'Buscar Pagamento', icon: 'account_balance', to: '/admidnightickets/buscar-pagamento', role: 'admin' },
         { label: 'Produtores', icon: 'diamond', to: '/admidnightickets/hosts', role: 'admin' },
-        { label: 'Usuários', icon: 'groups', to: '/admidnightickets/users', role: 'admin' },
     ]
 })
 
+function goCloud() {
+    window.open(process.env.MONGODB_LINK_ADMIN, '_blank')
+}
 
 function goTo(item) {
     router.push(item.to)

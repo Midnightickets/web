@@ -72,8 +72,9 @@
                 <q-btn icon="close" flat color="grey-14" @click="filter.payment = null"></q-btn>
             </template>
         </q-input>
-        <div class="q-mb-md w100 row justify-end items-center">
-            <q-btn @click="buscarLogs()" :disabled="disableSearch()" class="w80 q-py-md" icon-right="search" label="Buscar logs" color="blue-14" glossy></q-btn>
+        <div class="q-mb-md w100 row no-wrap justify-between items-center">
+            <q-btn @click="cleanLogs()" :disabled="disableSearch()" class="w80 q-py-md" label="Limpar" color="orange-14" glossy></q-btn>
+            <q-btn @click="buscarLogs()" :disabled="disableSearch()" class="w80 q-ml-md q-py-md" icon-right="search" label="Buscar" color="blue-14" glossy></q-btn>
         </div>
     </div>
     <div id="logs" v-if="logs.length > 0" class="w100 q-px-md q-mt-md rounded-borders">
@@ -89,7 +90,10 @@
                     </q-item-label>
                 </q-card-section>
                 <q-card-section v-if="log.host" class="w100 bg-grey-6">
-                    [host] {{ log.host }}
+                    [host] {{ log.host }}<br><br>
+                    <div  v-if="log.type.includes('Saque')">
+                        {{ log.content.price ? 'Saldo Saque: R$ ' + Utils.formatCurrency(log.content.price) : null }}<br>{{ log.content.final_price ? 'Saque Final: R$ ' + Utils.formatCurrency(log.content.final_price) : null }}
+                    </div>
                 </q-card-section>
                 <q-card-section v-if="log.event" class="w100 bg-grey-6">
                     [evento] {{ log.event }}
@@ -107,7 +111,7 @@
                     [usuário] {{ log.user }}
                 </q-card-section>
                 <q-card-section v-if="log.sake_status" class="w100 bg-grey-6" :class="log.sake_status.includes('Aguardando') ? 'text-orange-2' : 'text-green-2'">
-                    {{ log.sake_status.includes('Aguardando') ? '🟡 ' + log.sake_status : '🟢 ' + log.sake_status }}
+                    {{ log.sake_status.includes('Aguardando') ? '🟡 ' + log.sake_status : '🟢 ' + log.sake_status }}<br>
                 </q-card-section>
                 <q-card-section  class="w100 bg-dark text-right">
                      {{ log.created_at }}
@@ -123,10 +127,10 @@
         <q-card class="bg-grey-4 text-white">
             <q-card-section>
                 <q-item-label class="text-h6 text-primary text-bold">
-                    Efetivar Saque
+                    💸 Efetivar Saque de {{ logHandler.host }}
                 </q-item-label>
-                <q-item-label class="text-dark q-py-md text-bold">
-                    Deseja efetivar o saque?
+                <q-item-label class="text-dark q-py-md text-bold text-center">
+                    Deseja efetivar o saque no valor<br>de<strong class="text-primary"> R$ {{ Utils.formatCurrency(logHandler.content.final_price) }}?</strong>
                 </q-item-label>
                 <q-file v-if="logHandler.content.comprovante_img_url === 'xxx'" outlined class="bg-grey-2" v-model="file" label="Comprovante Saque"
                                     @input="uploadImage" accept="image/*">
@@ -139,11 +143,18 @@
                                 </q-file>
             </q-card-section>
             <div v-if="logHandler.content && logHandler.content.comprovante_img_url" class="w100 row justify-center">
-                <q-img :src="logHandler.content.comprovante_img_url" style="width: 90%; height: 100%"  class="rounded-borders shadow-1"/>
+                <q-img v-if="logHandler.content.comprovante_img_url != 'xxx'" :src="logHandler.content.comprovante_img_url" style="width: 90%; height: 100%"  class="rounded-borders shadow-1"/>
+                <div  v-if="logHandler.content.comprovante_img_url === 'xxx'" class="w100 row justify-center q-my-md rounded-borders">
+                    <q-input label="Confirmar" v-model="confirmar" type="password" outlined class="rounded-borders bg-grey-2" color="primary">
+                        <template v-slot:prepend>
+                            <q-icon name="check" color="primary" />
+                        </template>
+                    </q-input>
+                </div>
             </div>
             <q-card-actions align="right">
                 <q-btn @click="saqueDialog = false" label="voltar" color="grey-14" flat></q-btn>
-                <q-btn @click="uploadImage" v-if="logHandler.content.comprovante_img_url === 'xxx'" label="Efetivar" color="primary" glossy icon-right="currency_exchange"></q-btn>
+                <q-btn @click="uploadImage" v-if="logHandler.content.comprovante_img_url === 'xxx'" :disabled="confirmar.toLowerCase() != CONFIRM_ADMIN || logHandler.content.comprovante_img_url != 'xxx'" label="Efetivar" color="primary" glossy icon-right="currency_exchange"></q-btn>
             </q-card-actions>
         </q-card>
     </q-dialog>
@@ -153,8 +164,21 @@
 <script setup>
 import { useQuasar } from 'quasar';
 import { api } from 'src/boot/axios';
+import { Utils } from 'src/utils/Utils';
 import { onBeforeMount, ref } from 'vue';
 
+const confirmar = ref('')
+
+const filter = ref({
+    _id: '',
+    payment: '',
+    event: '',
+    user: '',
+    host: '',
+    sake_status: null,
+    type: null,
+})
+const CONFIRM_ADMIN =  ref('samuel')
 const admin = JSON.parse(sessionStorage.getItem('admin'))
 const $q = useQuasar()
 const saqueDialog = ref(false)
@@ -179,6 +203,19 @@ const sakeStatusOptions = [
     {value: 1, label: 'Aguardando Saque', index_enum: 'SAKE_STATUS_REQUESTED'},
     {value: 2, label: 'Saque Realizado', index_enum: 'SAKE_STATUS_DONE'},
 ]
+
+function cleanLogs() {
+    logs.value = []
+    filter.value = {
+        _id: '',
+        payment: '',
+        event: '',
+        user: '',
+        host: '',
+        sake_status: null,
+        type: null,
+    }
+}
 
 const logHandler = ref(null)
 function abrirSaqueDialog(log) {
@@ -260,16 +297,6 @@ const logs = ref([])
 
 // }
 
-
-const filter = ref({
-    _id: '',
-    payment: '',
-    event: '',
-    user: '',
-    host: '',
-    sake_status: null,
-    type: null,
-})
 
 async function colar(params) {
     try {

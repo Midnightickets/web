@@ -7,6 +7,17 @@
                 </q-btn>
                 <div>
                     <q-btn 
+                      @click="goToSetting('/vendas-evento')" 
+                      class="q-pa-sm rounded-borders shadow-1"
+                      dense 
+                      glossy 
+                      flat 
+                      icon="payments" 
+                      color="primary"
+                    >
+                      <q-tooltip anchor="top" self="bottom">Vendas do Evento</q-tooltip>
+                    </q-btn>
+                    <q-btn 
                       @click="goToSetting('/andamento-evento')" 
                       class="q-pa-sm rounded-borders shadow-1 q-ml-sm"
                       dense 
@@ -17,17 +28,16 @@
                     >
                       <q-tooltip anchor="top" self="bottom">Andamento do Evento</q-tooltip>
                     </q-btn>
-                  
                     <q-btn 
-                      @click="goToSetting('/vendas-evento')" 
+                      @click="shareEvent(evento.event_url)" 
                       class="q-pa-sm rounded-borders shadow-1 q-mx-sm"
                       dense 
                       glossy 
                       flat 
-                      icon="payments" 
+                      icon="share" 
                       color="primary"
                     >
-                      <q-tooltip anchor="top" self="bottom">Vendas do Evento</q-tooltip>
+                      <q-tooltip anchor="top" self="bottom">Compartilhar Evento</q-tooltip>
                     </q-btn>
                   </div>
                   
@@ -393,6 +403,18 @@ function goToVendas() {
 
 function previewPublicEvent(eventId) {
     window.open(window.location.origin + '/events/' + eventId, '_blank');
+}
+
+async function shareEvent(eventUrl) {
+    const shareData = {
+        title: evento.value.title,
+        url: 'https://midnightickets.com/events/' + eventUrl,
+    }
+    navigator.share(shareData)
+    .then(() => console.log('Successful share'))
+    .catch((error) => console.log('Error sharing', error));
+    await navigator.clipboard.writeText(shareData.url)
+
 }
 
 async function removeSubhost(subhost) {

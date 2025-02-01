@@ -1,11 +1,17 @@
 <template>
     <q-page class="q-pb-xl bg-grey-4 animate__animated animate__fadeInLeft ">
-        <div class="w100 q-pt-sm q-px-sm row justify-between" >
+        <div class="w100 q-pt-sm q-px-sm row no-wrap justify-between items-start" >
             <div>
                 <q-btn @click="returnBack()" icon="keyboard_return" color="secondary" glossy></q-btn>
                 <q-btn to="/" icon="home" color="secondary"  class="q-ml-sm" glossy></q-btn>
+                <q-btn @click="shareEvent()" icon="share" color="blue-14" class="q-ml-sm" glossy></q-btn>
             </div>
-            <q-btn @click="shareEvent()" icon="share" color="blue-14" glossy></q-btn>
+            <div class="row items-start" v-if="event" >
+                <q-btn :to="'/' + event.host_login"  flat>
+                    <img :src="event.host_img_url"  style="border-radius: 100%; border-bottom: 4px solid #9573f3;" width="100px" height="100px" />
+                </q-btn>
+
+            </div>
         </div>
         <div class="w100 row justify-center q-mt-md q-px-md">
             <q-card v-if="eventoIndisponivel">
@@ -29,7 +35,7 @@
                     <q-item >
                         <q-item-section class="text-black">
                             <q-item-label id="title-2"  class="text-primary">INFORMAÇÕES</q-item-label>
-                            <img id="img-events" :src="event.img_url" class="q-my-md" alt="🎇 Banner do Evento"/>
+                            <img id="img-events" v-if="event.img_url" :src="event.img_url" class="q-my-md" alt="🎇 Banner do Evento"/>
                             <q-item-label style="font-size:1rem" class="text-bold text-primary w100 column text-bold" >📆 {{ event.date.replaceAll('-', '/') }} ⏱️ {{ event.initial_time ? event.initial_time : 'xx:xx' }}{{ event.final_time ? (' - ' + event.final_time) : ''}}</q-item-label>
                             <q-item-label style="font-size:1.15rem;white-space: pre-wrap" class="text-bold text-grey-14 q-py-sm">{{ event.desc }}</q-item-label>
                             <div id="ingressos"></div>

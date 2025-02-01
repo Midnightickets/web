@@ -183,12 +183,13 @@ onMounted(async () => {
 })
 
 const checkNext = () => {
-    if (ingressos.value.length == 0) {
-        return true
-    }
-    else {
-        return false
-    }
+    // if (ingressos.value.length == 0) {
+    //     return true
+    // }
+    // else {
+    //     return false
+    // }
+    return false
 }
 
 </script>

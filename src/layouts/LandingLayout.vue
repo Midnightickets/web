@@ -8,18 +8,18 @@
             <div style="font-size: .8rem;" class=" relative w100 row no-wrap items-center q-py-sm">
                 
                 <div class="row items-center no-wrap justify-center q-gutter-x-sm w100 q-px-md">
-                    <q-btn style="border-radius: 20px;" dense color="primary" label="área do produtor" glossy class="text-bold bg-primary rounded-borders  q-px-md q-py-sm text-purple-1 row items-center" v-if=" userInfo == ''" to="/login-host">
+                    <q-btn style="border-radius: 10px;" dense color="primary" label="área do produtor" glossy class="text-bold bg-primary rounded-borders  q-px-md q-py-sm text-white row items-center" v-if=" userInfo == ''" to="/login-host">
                     </q-btn>
-                    <a v-if="!isMobile & userInfo == ''" class="menu-item q-mr-md q-px-md" href="#quem-somos">
+                    <a v-if="!isMobile & userInfo == ''" class="menu-item text-grey-4 q-mr-md q-px-md" href="#quem-somos">
                         Quem Somos
                     </a>
-                    <a v-if="!isMobile & userInfo == ''" class="menu-item q-mr-md q-px-md" href="#vantagens">
+                    <a v-if="!isMobile & userInfo == ''" class="menu-item text-grey-4 q-mr-md q-px-md" href="#vantagens">
                         Vantagens
                     </a>
-                    <a v-if="!isMobile & userInfo == ''" class="menu-item q-mr-md q-px-md" href="#contato">
+                    <a v-if="!isMobile & userInfo == ''" class="menu-item text-grey-4 q-mr-md q-px-md" href="#contato">
                         Contato
                     </a>
-                    <q-btn style="border-radius: 20px;" v-if="userInfo == ''" glossy dense flat label="entrar" icon-right="login" class="text-bold bg-primary q-px-md q-py-sm text-purple-1 row items-center"
+                    <q-btn style="border-radius: 10px;" v-if="userInfo == ''" glossy dense flat label="entrar" icon-right="login" class="text-bold bg-primary q-px-md q-py-sm text-white row items-center"
                         @click="navigateTo('/login')">
                     </q-btn>
                     <q-btn label="meu perfil" icon="account_circle" color="primary" v-if="userInfo != ''" glossy dense class="text-bold text-white q-pa-sm row items-center"
@@ -93,7 +93,7 @@
                 <q-card id="search-card" class="q-mt-md q-mb-md q-mx-md animate__animated rounded-borders animate__fadeInDown animate__slower">
                     <q-card-section class="bg-grad-4 text-white text-bold text-center q-pa-md ">
                         <q-icon name="nightlife" size="lg" color="white" />
-                        <div class="text-center">Encontre Produtores e<br>Eventos em Andamento</div>
+                        <div class="text-center">Encontre Produtores e Eventos em Andamento</div>
                     </q-card-section>
                     <q-card-section class="rounded-borders q-pa-md column q-gutter-y-md">
                         <q-input maxlength="100" v-model="searchPublic.titleEventOrHostName" outlined label="Nome do Evento ou Produtor(a)*"
@@ -181,8 +181,8 @@
                     </div>
                     <div id="vantagens" style="font-size:1.1rem;"
                         class="text-shadow bg-grad-2 text-white high-opacity  text-bold q-px-sm  q-py-md text-center">
-                        Utilizamos tecnologias de ponta com criptografia de dados para garantir a redução do tráfego de dados e a segurança de suas informações
-                        na nuvem, diminuindo custos de operação e aumentando a eficiência de seus eventos
+                        Utilizamos tecnologias de ponta com criptografia e redução do tráfego de dados para garantir a segurança de suas informações
+                        na nuvem, diminuindo custos de operação e aumentando a eficiência de seus eventos cobrando apenas <strong>5% de taxa</strong> de saque.
                     </div>
                 </div>
                 <div class="rounded-borders" style="border: 4px solid #692EDD;">
@@ -433,6 +433,18 @@
             <div class="q-py-lg"></div>
         </q-page-container>
         <footer class="w100 row wrap justify-center items-center q-py-xl bg-primary q-px-xl">
+            <q-dialog v-model="suporteType">
+                <q-card class="rounded-borders q-pa-md">
+                    <q-card-section class="text-primary text-bold text-center">
+                        <q-icon name="support_agent" size="lg" />
+                        <div class="text-center">Selecione o Tipo de Usuário</div>
+                    </q-card-section>
+                    <q-card-section class="column q-gutter-y-md">
+                        <q-btn @click="openSuporte('host')" label="Suporte ao Produtor" color="primary" glossy class="shadow-1"></q-btn>
+                        <q-btn @click="openSuporte('user')" label="Suporte ao Usuário" color="primary" glossy class="shadow-1"></q-btn>
+                    </q-card-section>
+                </q-card>
+            </q-dialog>
             <div class=" column q-py-md">
                 <q-btn label="Crie seu evento" to="/login-host" class="text-grey-5" flat></q-btn>
                 <q-btn label="Valide ingressos" to="/login-subhost" class="text-grey-5" flat></q-btn>
@@ -441,7 +453,7 @@
             </div>
             <div class="w100 q-pt-xs bg-secondary rounded-borders"></div>
             <div class="column q-py-md items-center">
-                <q-btn label="Suporte" @click="goTo('/Manual-do-Produtor.pdf')" class="text-grey-5" flat></q-btn>
+                <q-btn label="Suporte" @click="suporteType = true" class="text-grey-5" flat></q-btn>
                 <q-btn label="termos de uso" to="/termos-de-uso"  class="text-grey-5" flat></q-btn>
                 <q-btn label="Mercado Pago" @click="goTo('https://www.mercadopago.com.br/developers/pt/docs/checkout-pro/landing')" class="text-grey-5" flat></q-btn>
                 <q-btn label="instagram" @click="goTo('https://www.instagram.com/midnightickets')" class="text-grey-5" flat></q-btn>
@@ -461,6 +473,7 @@ import { api } from 'src/boot/axios';
 import { useRouter } from "vue-router";
 import { Utils } from 'src/utils/Utils';
 const userInfo = ref('')
+const suporteType = ref(false)
 const searchPublic = ref({
     opened: true,
     isByHostName: false,
@@ -472,6 +485,14 @@ const nameLastEvent = ref(sessionStorage.getItem('comeFromTicketIntentionName') 
 const hostLastEvent = ref(sessionStorage.getItem('comeFromTicketIntentionHost') || null)
 function goTo(url) {
     window.open(url, '_blank');
+}
+
+function openSuporte(type) {
+    if (type === 'host') {
+        window.open('/Manual-do-Produtor.pdf', '_blank');
+    } else {
+        window.open('Manual-do-Usuario.pdf', '_blank');
+    }
 }
 
 function alertar(msg) {
@@ -713,6 +734,7 @@ a {
 
 .menu-item {
     font-size: 1.1rem;
+    color: white;
 }
 
 .q-btn:hover {
@@ -720,7 +742,7 @@ a {
 }
 
 .menu-item:hover {
-    color: #6310E1;
+    color: #6310E1!important;
     background: #ebd3ffde;
     filter: brightness(1.2);
     border-top-left-radius: 12px;

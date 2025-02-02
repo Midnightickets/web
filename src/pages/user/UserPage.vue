@@ -1,15 +1,19 @@
 <template>
     <q-page v-if="user != null" class="bg-grad-2 text-white q-px-md animate__animated animate__fadeIn q-pb-xl">
         <div class="w100 row no-wrap justify-between q-pt-md" >
-            <q-btn @click="retornar()" icon="keyboard_return" color="secondary" class="q-mr-sm" glossy></q-btn>
+            <q-btn to="/" icon="home" color="secondary" class="q-mr-sm" glossy>
+                <q-tooltip anchor="top" self="bottom">
+                    <div>Encontrar Eventos</div>
+                </q-tooltip>
+            </q-btn>
             <div>
-                <q-btn to="/"  icon-right="travel_explore" color="secondary" glossy>
-                    <q-tooltip anchor="top left" self="bottom right">
+                <!-- <q-btn to="/"  icon-right="travel_explore" color="secondary" glossy>
+                    <q-tooltip anchor="top" self="bottom">
                         <div>Encontrar Eventos</div>
                     </q-tooltip>
-                </q-btn>
+                </q-btn> -->
                 <q-btn to="/me"  icon-right="confirmation_number" class="q-ml-sm" color="secondary" glossy>
-                    <q-tooltip anchor="top left" self="bottom right">
+                    <q-tooltip anchor="top" self="bottom">
                         <div>Meus Ingressos</div>
                     </q-tooltip>
                 </q-btn>

@@ -55,6 +55,7 @@ const routes = [
       { path: 'acessos', component: () => import('src/pages/host/AcessosPage.vue') },
       { path: 'vendas-evento', component: () => import('src/pages/host/eventos/PainelVendasPage.vue') },
       { path: 'andamento-evento', component: () => import('src/pages/host/eventos/AndamentoEventoPage.vue') },
+      { path: 'saques', component: () => import('src/pages/host/SaquesPage.vue') },
       { path: 'me', component: () => import('src/pages/host/HostPerfilPage.vue') },
     ]
   },

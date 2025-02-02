@@ -144,7 +144,7 @@
             </q-card-section>
             <div v-if="logHandler.content && logHandler.content.comprovante_img_url" class="w100 row justify-center">
                 <q-img v-if="logHandler.content.comprovante_img_url != 'xxx'" :src="logHandler.content.comprovante_img_url" style="width: 90%; height: 100%"  class="rounded-borders shadow-1"/>
-                <div  v-if="logHandler.content.comprovante_img_url === 'xxx'" class="w100 row justify-center q-my-md rounded-borders">
+                <div  v-if="!logHandler.sake_status.includes('Realizado')" class="w100 row justify-center q-my-md rounded-borders">
                     <q-input label="Confirmar" v-model="confirmar" type="password" outlined class="q-mx-md rounded-borders bg-grey-2" color="primary">
                         <template v-slot:prepend>
                             <q-icon name="check" color="primary" />
@@ -154,7 +154,7 @@
             </div>
             <q-card-actions align="right">
                 <q-btn @click="saqueDialog = false" label="voltar" color="grey-14" flat></q-btn>
-                <q-btn @click="uploadImage" v-if="logHandler.content.comprovante_img_url === 'xxx'" :disabled="confirmar.toLowerCase() != CONFIRM_ADMIN || logHandler.content.comprovante_img_url != 'xxx'" label="Efetivar" color="primary" glossy icon-right="currency_exchange"></q-btn>
+                <q-btn @click="uploadImage" :disabled="confirmar.toLowerCase() != CONFIRM_ADMIN || logHandler.content.comprovante_img_url != 'xxx'" label="Efetivar" color="primary" glossy icon-right="currency_exchange"></q-btn>
             </q-card-actions>
         </q-card>
     </q-dialog>
@@ -233,7 +233,7 @@ async function uploadImage() {
         JSON.stringify({ id: admin.id, token: admin.token }) // Serializa o log como JSON
     );
     formData.append("log", logHandler.value.id); // Adiciona o ID do evento ao FormData
-
+    
     try {
         const response = await api.post("/saque/upload_image", formData, {
             headers: { "Content-Type": "multipart/form-data" },
@@ -252,8 +252,7 @@ async function uploadImage() {
     } catch (error) {
         console.error("Erro ao enviar a imagem:", error);
     } finally {
-        file.value = null;
-        saqueDialog.value = false;
+        // window.location.reload();
     }
 }
 

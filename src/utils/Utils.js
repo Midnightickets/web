@@ -24,6 +24,20 @@ const Utils = {
             return bigString;
         }
     },
+    formatDate: (dateData) => {
+  // Cria um objeto de data a partir da string
+    if(!dateData) return 'xx/xx/xxxx xx:xx'
+    const date = new Date(dateData);
+    // Subtrai 3 horas (3 * 60 * 60 * 1000 ms)
+    date.setHours(date.getHours());
+    // Formata a data no formato DD/MM/AAAA HH:mm
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
+    },
     logout: () => {
         const confirm = window.confirm('Deseja realmente finalizar sua sessão no Midnight Tickets ?\n');
         if (confirm) {

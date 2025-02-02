@@ -46,7 +46,7 @@
                             }}</q-item-label>
                     </q-item-section>
                 </q-item>
-                <q-btn @click="Utils.logout()" class="z-index-999 absolute-bottom cursor-pointer q-py-md" label="logout" icon-right="logout" color="secondary"></q-btn>
+                <q-btn @click="Utils.logout()" class="z-index-999 absolute-bottom cursor-pointer q-py-md" label="Sair" icon-right="logout" color="secondary"></q-btn>
             </q-list>
             <div v-if="!isAuthenticated" class="w100 text-white text-bold row items-center justify-center q-mt-xl">
                 <div class="text-center q-mb-md q-mx-md">
@@ -109,7 +109,7 @@ const menuOptions = ref({
         // HOST MENUS
         { label: 'Eventos', icon: 'calendar_month', to: '/host', role: 'host' },
         { label: 'Acessos', icon: 'sensor_occupied', to: '/host/acessos', role: 'host' },
-        { label: 'Saques', icon: 'currency_exchange', to: '#', role: 'host' },
+        { label: 'Saques', icon: 'currency_exchange', to: '/host/saques', role: 'host' },
         // { label: 'Suporte', icon: 'support_agent', to: 'https://samuelvictorol.github.io/portfolio/contato', selected: false },
     ]
 })

@@ -2,9 +2,11 @@
     <q-layout class="relative animate__animated animate__fadeIn">
         <q-header class="fixed bg-glass-2 text-white animate__animated animate__fadeInDown animate__slow shadow-1"
             height-hint="98">
-            <a @click="scrollBot()" class="menu-item q-pa-sm animate__animated animate__fadeInLeft animate__slow animate__delay-1s row no-wrap items-center" id="title-menu">
-                <q-icon class="q-pr-xs" name="local_activity" size="xl" /> Midnight Tickets
-            </a>
+            <div class="row justify-between items-center">
+                <a @click="scrollBot()" class="menu-item q-pa-sm animate__animated animate__fadeInLeft animate__slow animate__delay-1s row no-wrap items-center" id="title-menu">
+                    <q-icon class="q-pr-xs" name="local_activity" size="xl" /> Midnight Tickets
+                </a>
+            </div>
             <div style="font-size: .8rem;" class=" relative w100 row no-wrap items-center q-py-sm">
                 
                 <div class="row items-center no-wrap justify-center q-gutter-x-sm w100 q-px-md">
@@ -20,7 +22,7 @@
                         Contato
                     </a>
                     <q-btn  class="text-bold q-px-md q-py-sm text-white row items-center" style="border-radius: 10px;" v-if="userInfo == ''" glossy dense label="entrar"
-                    icon-right="login" color="green-14"
+                    icon-right="login" color="green-14  "
                         @click="navigateTo('/login')">
                     </q-btn>
                     <q-btn label="meu perfil" icon="account_circle" color="primary" v-if="userInfo != ''" glossy dense class="text-bold text-white q-pa-sm row items-center"
@@ -541,12 +543,12 @@ async function searchPublicEventsOrHost(isByHostName) {
                 hostsResults.value = []
             }
         }
-    }).catch(() => {
+    }).catch((error) => {
         $q.notify({
-            message: 'Erro ao buscar eventos',
-            color: 'orange-14',
+            message: error.response.data.error,
+            color: 'secondary',
             position: 'top',
-            icon: 'event',
+            icon: 'info',
         });
     }).
     finally(() => {

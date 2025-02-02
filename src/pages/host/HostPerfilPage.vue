@@ -147,7 +147,7 @@
                 </q-card-section>
                 <q-card-actions align="right" class="q-pb-md">
                     <q-btn @click="cancelar()" label="Cancelar" flat color="secondary" />
-                    <q-btn @click.prevent="solicitar()" label="Confirmar" color="primary" />
+                    <q-btn @click.prevent="solicitar()" label="Confirmar" icon-right="check" color="primary" />
                 </q-card-actions>
             </q-card>
 
@@ -186,9 +186,10 @@ import { onMounted, ref } from "vue";
 import { api } from 'src/boot/axios';
 import { useQuasar } from "quasar";
 import { Utils } from "src/utils/Utils";
+import { useRouter } from "vue-router";
 
 const editando = ref(false);
-
+const router = useRouter()
 const host = ref(JSON.parse(sessionStorage.getItem('host')) || null);
 const $q = useQuasar()
 const passwordModal = ref(false);
@@ -285,6 +286,9 @@ async function solicitar() {
                 message: err.response.data.message,
             })
             passwordOptions.value.password = ''
+        })
+        .finally(() => {
+            router.push('/host/saques')
         })
 }
 

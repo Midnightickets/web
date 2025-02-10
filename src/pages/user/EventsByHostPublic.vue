@@ -9,7 +9,7 @@
                 <img style="border-bottom: 4px solid #8E2DE2" :src="hostImgUrl ? hostImgUrl : '/favicon.svg'" alt="">
             </q-avatar>
         </div>
-        <div v-if="!loading" class="animate__animated animate__fadeInLeft w100 text-white text-center q-pb-lg q-mt-sm q-px-md" id="title-2">
+        <div v-if="!loading && events.length == 0" class="animate__animated animate__fadeInLeft w100 text-white text-center q-pb-lg q-mt-sm q-px-md" id="title-2">
             Eventos de<br>{{hostName.toUpperCase() }}
         </div>
         <div v-if="!loading" class="w100 row items-start q-gutter-y-md">
@@ -30,7 +30,7 @@
             </q-card>
         </div>
         <div v-if="!loading && events.length == 0" class="w100 text-center text-secondary" id="title-2">
-            Nenhum Evento Em Andamento foi encontrado para esse Host<br>( ˘︹˘ )
+            Esse Host não possui nenhum evento em Andamento<br>( ˘︹˘ )
         </div>
         <div v-if="loading" class="row w100 q-pb-xl justify-center">
             <q-spinner-ball color="secondary" size="lg" />

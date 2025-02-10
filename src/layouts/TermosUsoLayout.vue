@@ -117,7 +117,7 @@
                     A Plataforma permite ajustes gratuitos de lotes de ingressos.
                     O Produtor é responsável por garantir a precisão das informações inseridas durante os ajustes.
                 <br>3.3 Validação de Ingressos
-                    Subhosts podem ser designados pelo Produtor para validar ingressos via QR Code na entrada dos eventos.
+                    Subhosts podem ser designados pelo Produtor para validar ingressos via QR Code ou validação manual da identificação na entrada dos eventos.
                     O acesso dos Subhosts é restrito à funcionalidade de validação e deve ser gerenciado pelo Produtor.
                </div>
                <div class="q-pt-md" id="host-termos" style="font-size:1rem">

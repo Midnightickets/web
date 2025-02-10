@@ -29,7 +29,7 @@
             <div id="title" class="text-bold bg-grad-1 text-white text-center rounded-borders q-mb-md q-mt-lg">{{ ingresso.ticket_type.title }}</div>
             <div id="title-layout" class="text-bold text-blue-14 text-h6 text-left">{{ ingresso.event }}</div>
             <div  class="text-bold text-primary q-mt-sm text-h6 text-left">Identificação</div>
-            <div class="text-bold text-white text-h6 bg-grad-2 q-py-xs q-mb-md text-left q-pl-md rounded-borders">{{ ingresso.ticket_type.ticket_person_name.toUpperCase() }}
+            <div class="w100 text-bold text-white text-h6 bg-grad-2 q-py-xs q-mb-md rounded-borders q-px-sm text-center">{{ ingresso.ticket_type.ticket_person_name.toUpperCase() }}
                       <br>{{ ingresso.ticket_type.ticket_person_cpf.toUpperCase() }}
                     </div>
                     <q-select class="q-mt-md" v-model="option" outlined label="Outras Informações" :options="[ingresso.ticket_type.ticket_person_email, ingresso.ticket_type.ticket_person_phone, 'R$ ' + Utils.formatCurrency(ingresso.ticket_type.price), 'Comprado por: ' + ingresso.payer.name]">
@@ -40,7 +40,12 @@
                       Verifique se o Documento de Identificação do portador do ingresso é o mesmo que consta no ingresso antes de finalizar o checkin*
                     </div>
                     <div class="w100 text-grey-14 text-h6 q-mb-md text-bold text-center">{{ ingresso.isExpired ? "🟡 Checkin já realizado" : "🟢 Ingresso Disponível"}}</div>
-                    <q-btn v-if="!ingresso.isExpired" label="Validar Ingresso" glossy @click="validarCheckin()" color="blue-14" icon-right="sensor_occupied" class="q-pa-md" />
+                    <q-btn v-if="!ingresso.isExpired && !validarLoading" label="Validar Ingresso" glossy @click="validarCheckin()" color="blue-14" icon-right="sensor_occupied" class="q-pa-md" />
+                      <div v-if="validarLoading" class="row w100 justify-center q-mt-md q-py-xl">
+                        <q-spinner-ball color="primary" size="xl" />
+                        <q-spinner-ball color="primary" size="xl" />
+                        <q-spinner-ball color="primary" size="xl" />
+                    </div>
                     <q-btn label="voltar" class="q-mt-sm" @click="stopScanning()" color="secondary" flat />
           </div>
         </q-card>
@@ -67,6 +72,7 @@ const ingressoResponse = ref({
 });
 const cameraOpen = ref(false);
 const $q = useQuasar();
+const validarLoading = ref(false)
 const option = ref('');
 
 const startScanning = async () => {

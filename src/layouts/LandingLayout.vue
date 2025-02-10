@@ -94,18 +94,24 @@
             </div> -->
             <div v-if="searchPublic.opened" id="search-public" class="w100 rounded-borders row justify-center">
                 <q-card id="search-card" class="q-mt-md q-mb-md q-mx-md animate__animated rounded-borders animate__fadeInDown animate__slower">
-                    <q-card-section class="bg-grad-4 text-white text-bold text-center q-pa-md ">
-                        <q-icon name="nightlife" size="lg" color="white" />
-                        <div class="text-center">Encontre Produtores e Eventos em Andamento</div>
-                    </q-card-section>
-                    <q-card-section class="rounded-borders q-pa-md column q-gutter-y-md">
-                        <q-input maxlength="100" v-model="searchPublic.titleEventOrHostName" outlined label="Nome do Evento ou Produtor(a)*"
-                            placeholder="Digite o nome do Evento ou Produtor">
+                    <q-card-section class="w100 rounded-borders q-pa-md column q-gutter-y-md" style="border-bottom: 4px solid #792EDF">
+                        <q-input class="relative" maxlength="100" v-model="searchPublic.titleEventOrHostName" @keyup.enter="searchPublicEventsOrHost()" outlined 
+                        :label="searchPublic.isByHostName ? 'Nome do Produtor' : 'Título do Evento'"
+                             :placeholder="searchPublic.isByHostName ? 'Digite o Nome do Produtor' : 'Digite o Título do Evento'">
                             <template v-slot:prepend>
                                 <q-icon name="search" color="primary" />
                             </template>
+                            <template v-slot:append>
+                                <div class="bg-grad-2 q-pa-sm cursor-pointer rounded-borders absolute-right">
+                                    <q-icon name="send" size=sm color="white" @click="searchPublicEventsOrHost()" />
+                                </div>
+                            </template>
                         </q-input>
-                        <div v-if="isMobile" class="w100 column justify-center ">
+                        <div class="w100">
+                            <q-radio v-model="searchPublic.isByHostName" color="primary" :val="false" label="Buscar por Evento" />
+                            <q-radio v-model="searchPublic.isByHostName" color="primary" :val="true" label="Buscar por Produtor" />
+                        </div>
+                        <!-- <div v-if="isMobile" class="w100 column justify-center ">
                             <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(false)" color="blue-14" glossy class="shadow-1 w100 q-py-sm q-mb-md" label="Buscar por Evento"
                             icon="event" />
                             <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(true)" color="primary" glossy class="shadow-1 w100 q-py-sm" label="Buscar por Produtor"
@@ -115,8 +121,8 @@
                             <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(false)" color="blue-14" glossy class="shadow-1 w100 q-mr-md q-py-xl" label="Buscar por Evento"
                             icon="event" />
                             <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(true)" color="primary" glossy class="shadow-1 w100 q-py-xl" label="Buscar por Produtor"
-                                icon="person_search" />
-                        </div>
+                                icon="person_search" /> 
+                        </div> -->
                     </q-card-section>
                 </q-card>
             </div>
@@ -521,9 +527,8 @@ function disabledSearch() {
 const hostsResults = ref([])
 const eventsResults = ref([])
 const dialogResults = ref(false)
-async function searchPublicEventsOrHost(isByHostName) {
+async function searchPublicEventsOrHost() {
     loading.value = true
-    searchPublic.value.isByHostName = isByHostName
     searchPublic.value.titleEventOrHostName = searchPublic.value.titleEventOrHostName.trim()
     await api.post('/host/public_events', searchPublic.value).then((response) => {
         if (response.data.length === 0) {
@@ -535,7 +540,7 @@ async function searchPublicEventsOrHost(isByHostName) {
             });
         } else {
             dialogResults.value = true
-            if (isByHostName) {
+            if (searchPublic.value.isByHostName) {
                 hostsResults.value = response.data
                 eventsResults.value = []
             } else {

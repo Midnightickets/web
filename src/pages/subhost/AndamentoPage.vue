@@ -16,7 +16,9 @@
             <div class="w100 row wrap items-center justify-center q-gutter-md" v-if="checkins.length > 0">
                 <q-card v-for="checkin in checkins" :key="checkin.id" class="q-mb-md border-left-roxo">
                     <q-card-section>
-                          <div class="text-primary text-bold text-h6">{{checkin.validated_by}}</div>
+                          <div class="text-primary row items-center text-bold text-h6">
+                            <q-icon color="primary" name="sensor_occupied" size="md" class="q-mr-sm"></q-icon>
+                            {{checkin.validated_by}}</div>
                           <div class="text-secondary text-bold text-h6">{{checkin.person_name}}</div>
                           <div class="text-grey-14 text-h6">{{checkin.person_cpf}}</div>
                           <div class="text-grey-14 text-h6">{{checkin.createdAt}}</div>

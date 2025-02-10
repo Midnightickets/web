@@ -258,7 +258,7 @@
                       class="column no-wrap flex-center">
                   </q-carousel-slide>
               </q-carousel> -->
-                <div class=" relative">
+                <div class=" relative"  id="contato">
                     <div class="text-h4 rounded-borders text-bold q-py-md text-white text-center bg-grad-4 border-bottom q-mt-md">
                         Fale Conosco</div>
 
@@ -267,9 +267,7 @@
                         <q-card class="q-pa-md collumn q-gutter-y-md rounded-borders "
                             style="border: 15px solid #6310E1; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
                             <div class="text-shadow w100 text-center text-primary text-bold mid-opacity ">
-                                ALAVANQUE seus FATURAMENTO otimizando o LUCRO de suas VENDAS com uma CONSULTORIA
-                                PERSONALIZADA para a
-                                SUA DEMANDA</div>
+                                ALAVANQUE seu FATURAMENTO otimizando o LUCRO de suas VENDAS agora mesmo!<br>Digite seu EMAIL para solicitar o CONTATO de um dos nossos CONSULTORES</div>
                                 <q-input v-if="hostInfo == ''" placeholder="Digite seu email" :inputStyle="{ fontWeight: 'bold', color: '#6310E1' }" maxlength="200" filled
                                     v-model="contato.email" label="Email*">
                                     <template v-slot:append>

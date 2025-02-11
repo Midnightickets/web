@@ -27,7 +27,7 @@
                 </q-card>
             </div>
             <div v-else class="w100">
-                <div id="title-2" class="text-primary text-center text-bold q-mt-lg">Ainda não foi vendido nenhum ingresso neste evento</div>
+                <div  class="text-secondary text-left text-bold q-mt-lg">Ainda não foi vendido nenhum ingresso neste evento</div>
             </div>
         </div>
     </q-page>

@@ -44,7 +44,7 @@
                     <q-card-section>
                         <q-list class="column q-gutter-y-md">
                             <q-item class="card-search rounded-borders shadow-1  q-pb-md" v-for="host in hostsResults" :key="host.id" clickable>
-                                <q-avatar size="80px" class="q-mr-sm q-mt-sm shadow-2">
+                                <q-avatar size="80px" class="q-mr-sm q-mt-sm     shadow-2">
                                     <img v-if="host.img_url && host.img_url.trim() !== ''" :src="host.img_url" style="object-fit:fill" class="rounded-borders shadow-1" alt="banner do Evento">
                                 </q-avatar>
                                 <q-item-section>

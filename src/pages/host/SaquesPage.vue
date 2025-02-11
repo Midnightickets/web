@@ -15,7 +15,7 @@
                 <strong>Valor Solicitado:</strong> R$ {{ Utils.formatCurrency(saque.price) }}<br>
                 <strong>Valor a Receber:</strong> R$ {{ Utils.formatCurrency(saque.final_price) }} (5% de taxa) 
             </q-card-section>
-            <q-card-section class="text-black bg-white">
+            <q-card-section class="text-black bg-white" v-if="saque.pix_key != 'xxx'">
                 <strong>Chave Pix:</strong> {{ saque.pix_key }}<br>
                 <strong>Tipo: </strong> {{ saque.pix_type }}
             </q-card-section>

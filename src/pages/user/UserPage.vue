@@ -1,7 +1,7 @@
 <template>
-    <q-page v-if="user != null" class="bg-grad-2 text-white q-px-md animate__animated animate__fadeIn q-pb-xl">
+    <q-page v-if="user != null" class="bg-grad-3 text-white q-px-md animate__animated animate__fadeIn q-pb-xl">
         <div class="w100 row no-wrap justify-between q-pt-md" >
-            <q-btn to="/" icon="home" color="secondary" class="q-mr-sm" glossy>
+            <q-btn to="/" icon="event" color="secondary" label="eventos" class="q-mr-sm" glossy>
                 <q-tooltip anchor="top" self="bottom">
                     <div>Encontrar Eventos</div>
                 </q-tooltip>
@@ -12,7 +12,7 @@
                         <div>Encontrar Eventos</div>
                     </q-tooltip>
                 </q-btn> -->
-                <q-btn to="/me"  icon-right="confirmation_number" class="q-ml-sm" color="secondary" glossy>
+                <q-btn to="/me"  icon-right="confirmation_number" label="ingressos" class="q-ml-sm" color="secondary" glossy>
                     <q-tooltip anchor="top" self="bottom">
                         <div>Meus Ingressos</div>
                     </q-tooltip>
@@ -128,6 +128,9 @@ async function salvarEdicao() {
         })
         .finally(() => {
             loading.value = false
+            setTimeout(() => {
+                window.location.reload()
+            }, 1000)
         })
 }
 

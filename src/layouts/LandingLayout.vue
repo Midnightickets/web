@@ -25,12 +25,12 @@
                     icon-right="login" color="green-14  "
                         @click="navigateTo('/login')">
                     </q-btn>
-                    <q-btn label="meu perfil" icon="account_circle" color="primary" v-if="userInfo != ''" glossy dense class="text-bold text-white q-pa-sm row items-center"
-                    style="border-radius:8px" to="/me/perfil">
-                </q-btn>
-                <q-btn v-if="userInfo != ''" dense class="text-white text-bold q-pa-sm row items-center" icon-right="confirmation_number" label="meus ingressos" color="primary" glossy
+                    <q-btn v-if="userInfo != ''" dense class="text-white text-bold q-pa-sm row items-center" icon="confirmation_number" label="meus ingressos" color="primary" glossy
                     style="border-radius:8px" to="/me">
                 </q-btn>
+                <q-btn label="meu perfil" icon-right="account_circle" color="secondary" v-if="userInfo != ''" glossy dense class="text-bold text-white q-pa-sm row items-center"
+                style="border-radius:8px" to="/me/perfil">
+            </q-btn>
                 </div>
             </div>
             <q-dialog v-model="dialogResults">
@@ -385,7 +385,6 @@
             <div id="search-public" class="w100 rounded-borders row justify-center">
                 <q-card id="search-card" class="q-mt-md q-mb-md q-mx-md animate__animated rounded-borders animate__fadeInDown animate__slower">
                     <q-card-section class="bg-grad-4 text-white text-bold text-center q-pa-md ">
-                        <q-icon name="nightlife" size="lg" color="white" />
                         <div class="text-center" style="font-size:1rem">Encontre Produtores e Eventos em Andamento</div>
                     </q-card-section>
                     <q-card-section class="rounded-borders q-pa-md column q-gutter-y-md">

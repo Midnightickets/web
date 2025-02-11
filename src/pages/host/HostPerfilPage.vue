@@ -1,7 +1,9 @@
 <template>
     <q-page class=" w100 animate__animated animate__fadeIn relative q-pb-xl">
-        <div class="w100">
+        <div class="w100 row no-wrap justify-between">
             <q-btn to='/host' dense class="q-pr-xs" flat icon="keyboard_return" label="eventos"  color="primary" glossy>
+            </q-btn>
+            <q-btn  dense v-if="isMobile" class="q-pr-xs" @click="scrollDown()" icon-right="currency_exchange" label="solicitar saque"  color="secondary" glossy>
             </q-btn>
         </div>
         <div id="title" class="text-primary q-px-sm q-pb-sm text-center">
@@ -107,7 +109,7 @@
                     <q-btn @click="salvarEdicao()" :disabled="!host.email.includes('@') || !host.email.includes('.')" label="Salvar" class="q-pa-md" icon-right="save" color="orange-14" glossy></q-btn>
                 </q-card-section>
             </q-card>
-            <q-card v-if="!editando" class="q-mb-md animate__animated animate__fadeInLeft" style="border-right: 4px solid #9573f3;">
+            <q-card v-if="!editando" id="saque"  class="q-mb-md animate__animated animate__fadeInLeft" style="border-right: 4px solid #9573f3;">
                 <q-card-section class="q-pa-md">
                     <div class="text-h5 text-primary">Saldo</div>
                     <div class="text-h6 ">R$ {{ Utils.formatCurrency(host.balance) }}</div>
@@ -187,7 +189,7 @@ import { api } from 'src/boot/axios';
 import { useQuasar } from "quasar";
 import { Utils } from "src/utils/Utils";
 import { useRouter } from "vue-router";
-
+const isMobile = ref(window.innerWidth < 600);
 const editando = ref(false);
 const router = useRouter()
 const host = ref(JSON.parse(sessionStorage.getItem('host')) || null);
@@ -199,6 +201,10 @@ const passwordOptions = ref({
     visibility: false,
     type: ''
 })
+
+function scrollDown() {
+    document.getElementById('saque').scrollIntoView({ behavior: 'smooth' });
+}
 
 function confirmPassword(type) {
     passwordModal.value = true;

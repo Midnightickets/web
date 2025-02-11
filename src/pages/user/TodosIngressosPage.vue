@@ -30,18 +30,16 @@
                         <q-btn @click="generateQRCode(ingresso)" label="Ver detalhes" icon-right="visibility" class="w100 q-py-md" color="primary" glossy></q-btn>
                     </div>
                 </q-card>                
-                <q-card v-if="ingressos.length == 0 && !loading" class="w100 q-pb-md bg-grey-3">
+                <q-card v-if="ingressos.length == 0 && !loading" class="w100 q-pb-md bg-grey-3" style="border-left: 6px solid #6310E1">
                     <q-card-section>
-                        <div class="text-secondary text-center" id="title-menu">
-                            Você ainda <strong class="text-primary">não</strong> possui ingressos<br>
-                            <div class="w100 q-pt-xs bg-secondary q-mt-md"></div>
-                            <br><strong class="text-primary">Encontre eventos</strong> pelo menu ou<br>pelo botão acima <q-btn size="sm" icon="calendar_month" glossy color="secondary"></q-btn> e <strong class="text-primary">adquira já</strong> o seu ingresso<br>
+                        <div class="text-primary text-center" id="title-menu">
+                            Você ainda <strong class="text-primary">não</strong> comprou ingressos<br>
                         </div>
                     </q-card-section>
                 </q-card>                
             </q-list>
         </div>
-        <q-dialog v-model="dialogQrIngresso" persistent >
+        <q-dialog v-model="dialogQrIngresso"  >
             <div class="flex flex-center">
                 <q-icon class="q-pb-xs" size="lg" name="local_activity" color="white"></q-icon>
                 <div class="text-white w100 text-center text-shadow bg-dark q-pa-md shadow-2" id="title-2">

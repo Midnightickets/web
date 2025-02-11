@@ -251,14 +251,14 @@ const user = ref({
 })
 
 const isLoginFormInvalid = () => {
-    if (user.value.login.trim().length < 3 || user.value.password.trim().length < 3) {
+    if (user.value.login.trim().length < 3 || user.value.password.trim().length < 6) {
         return true
     }
     return false
 }
 
 const isRegisterFormInvalid = () => {
-    if (user.value.login.trim().length < 3 || user.value.password.trim().length < 3 || user.value.cpf.trim().length < 14
+    if (user.value.login.trim().length < 3 || user.value.password.trim().length < 6 || user.value.cpf.trim().length < 14
         || user.value.name.trim().length < 3 || user.value.phone.trim().length < 15 || user.value.email.trim().length < 3
         || user.value.birthday.trim().length < 10 || !termosUso.value
     ) {

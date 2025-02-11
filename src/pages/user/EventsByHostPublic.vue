@@ -9,7 +9,7 @@
                 <img style="border-bottom: 4px solid #8E2DE2" :src="hostImgUrl ? hostImgUrl : '/favicon.svg'" alt="">
             </q-avatar>
         </div>
-        <div v-if="!loading && events.length == 0" class="animate__animated animate__fadeInLeft w100 text-white text-center q-pb-lg q-mt-sm q-px-md" id="title-2">
+        <div v-if="!loading && events.length > 0" class="animate__animated animate__fadeInLeft w100 text-white text-center q-pb-lg q-mt-sm q-px-md" id="title-2">
             Eventos de<br>{{hostName.toUpperCase() }}
         </div>
         <div v-if="!loading" class="w100 row items-start q-gutter-y-md">

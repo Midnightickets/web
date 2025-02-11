@@ -44,8 +44,10 @@
                     <q-card-section>
                         <q-list class="column q-gutter-y-md">
                             <q-item class="card-search rounded-borders shadow-1  q-pb-md" v-for="host in hostsResults" :key="host.id" clickable>
+                                <q-avatar size="80px" class="q-mr-sm q-mt-sm shadow-2">
+                                    <img v-if="host.img_url && host.img_url.trim() !== ''" :src="host.img_url" style="object-fit:fill" class="rounded-borders shadow-1" alt="banner do Evento">
+                                </q-avatar>
                                 <q-item-section>
-                                        <img v-if="host.img_url && host.img_url.trim() !== ''" :src="host.img_url" class="rounded-borders shadow-1 q-mb-md q-mt-sm" alt="banner do Evento">
                                         <q-item-label class="text-bold text-primary" id="title-layout">
                                             {{ host.name.toUpperCase() }}
                                         </q-item-label>
@@ -58,12 +60,10 @@
                                         </q-item-section>
                                     </q-item-section>
                             </q-item>
-                            <q-item class="card-search q-py-md shadow-1 rounded-borders" v-for="event in eventsResults" :key="event.id" clickable>
+                            <q-item class="card-search q-py-md shadow-1 rounded-borders q-mb-xl " v-for="event in eventsResults" :key="event.id" clickable style="border-left: 4px solid #762ED3">
                                 <q-item-section>
+                                    <q-btn  @click="goToPublicEventPage(event.event_url)" :label="event.title.toLowerCase()" color="primary" glossy class="w100 q-pa-md q-mb-md shadow-2"></q-btn>
                                     <img v-if="event.img_url && event.img_url.trim() !== ''"  :src="event.img_url" class="rounded-borders shadow-1 q-mb-md" alt="banner do Evento">
-                                    <q-item-label class="text-bold text-primary" id="title-layout">
-                                        {{ event.title.toUpperCase() }}
-                                    </q-item-label>
                                     <div class="text-secondary row items-center q-mt-sm">
                                         <q-icon name="event" class="q-pr-xs" />
                                         {{ event.date.replaceAll('-', '/') }}
@@ -73,7 +73,7 @@
                                         {{ event.host.toLowerCase() }}
                                     </q-item-label>
                                     <q-item-section class="w100 q-mt-md">
-                                        <q-btn  @click="goToPublicEventPage(event.event_url)" label="ver evento"  icon="travel_explore" color="primary" glossy class="w100 q-pa-md shadow-2"></q-btn>
+                                        <q-btn  @click="goToPublicEventPage(event.event_url)" label="ver evento"  icon-right="search" color="green-14" glossy class="w100 q-pa-md shadow-2"></q-btn>
                                     </q-item-section>
                                 </q-item-section>
                             </q-item>
@@ -94,7 +94,7 @@
             </div> -->
             <div v-if="searchPublic.opened" id="search-public" class="w100 rounded-borders row justify-center">
                 <q-card id="search-card" class="q-mt-md q-mb-md q-mx-md animate__animated rounded-borders animate__fadeInDown animate__slower">
-                    <q-card-section class="w100 rounded-borders q-pa-md column q-gutter-y-md" style="border-bottom: 4px solid #792EDF">
+                    <q-card-section class="w100 rounded-borders q-pa-md column q-gutter-y-md" style="border: 4px solid #762ED3">
                         <q-input class="relative" maxlength="100" v-model="searchPublic.titleEventOrHostName" @keyup.enter="searchPublicEventsOrHost()" outlined 
                         :label="searchPublic.isByHostName ? 'Nome do Produtor' : 'Título do Evento'"
                              :placeholder="searchPublic.isByHostName ? 'Digite o Nome do Produtor' : 'Digite o Título do Evento'">
@@ -102,7 +102,7 @@
                                 <q-icon name="search" color="primary" />
                             </template>
                             <template v-slot:append>
-                                <div class="bg-grad-2 q-pa-sm cursor-pointer rounded-borders absolute-right">
+                                <div class="bg-grad-2 q-py-sm q-px-md cursor-pointer rounded-borders absolute-right">
                                     <q-icon name="send" size=sm color="white" @click="searchPublicEventsOrHost()" />
                                 </div>
                             </template>

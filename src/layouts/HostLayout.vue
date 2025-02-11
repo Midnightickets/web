@@ -26,7 +26,7 @@
         <q-drawer v-if="hostInfo" show-if-above v-model="rightDrawerOpen" side="right" class="bg-dark relative">
             <div v-if="isAuthenticated" class="w100 flex q-mb-md flex-center q-mt-lg">
                 <q-avatar style="width:155px;height:150px;" class="shadow-2">
-                    <img v-if="hostInfo.img_url" :src="hostInfo.img_url" style="border-bottom: 4px solid #802DE0" alt="">
+                    <img v-if="hostInfo.img_url" :src="hostInfo.img_url" style="border-bottom: 4px solid #802DE0;object-fit: cover;width: 100%;height: 100%;" alt="">
                     <q-icon v-else name="account_circle" size="100px" color="purple-1" />
                 </q-avatar>
             </div>

@@ -114,7 +114,7 @@
             </div>
         </q-dialog>
         <q-page-container class="relative w100 bg-grad-4 ">
-            <div v-if="!userInfo" class="w100 text-white text-bold row items-center wrap w100 justify-center q-gutter-y-sm q-gutter-x-md  q-pt-lg">
+            <!-- <div v-if="!userInfo" class="w100 text-white text-bold row items-center wrap w100 justify-center q-gutter-y-sm q-gutter-x-md  q-pt-lg">
                 <a href="/" style="text-decoration: none;" id="title-2"
                 class="text-white  text-shadow text-bold row items-center q-mb-sm">
             </a>
@@ -122,7 +122,7 @@
                 <div class="w100 q-pt-xs q-my-md mid-opacity bg-secondary rounded-borders">
 
                 </div>
-            </div>
+            </div> -->
             <router-view />
             <footer class="w100 row wrap justify-center items-center q-py-xl bg-primary q-px-xl">
                 <div class=" column q-py-md">

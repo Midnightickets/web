@@ -3,25 +3,25 @@
         <div class="w100 row no-wrap justify-between">
             <q-btn to='/host' dense class="q-pr-xs" flat icon="keyboard_return" label="eventos"  color="primary" glossy>
             </q-btn>
-            <q-btn  dense v-if="isMobile" class="q-pr-xs" @click="scrollDown()" icon-right="currency_exchange" label="solicitar saque"  color="secondary" glossy>
-            </q-btn>
+            <q-btn  @click="openPerfilPublico()" dense label="Perfil Público" color="secondary" glossy
+                icon-right="public"></q-btn>
         </div>
         <div id="title" class="text-primary q-px-sm q-pb-sm text-center">
             Meu Perfil
         </div>
         <div class="w100 row justify-center items-start relative q-mb-md">
             <q-avatar style="width:160px;height:160px;" class="shadow-2">
-                <img style="border-bottom: 4px solid #9573f3;" v-if="host.img_url" :src="host.img_url" alt="">
+                <img  v-if="host.img_url" :src="host.img_url" alt="" style="border-bottom: 4px solid #9573f3;object-fit: cover;width: 100%;height: 100%;"/>
                 <q-icon style="border-bottom: 4px solid #9573f3;" v-else name="account_circle" size="200px" color="purple-1" />
             </q-avatar>
         </div>
         <div class="w100 row justify-center q-mb-md q-gutter-x-md q-gutter-y-md q-px-md">
-            <q-btn v-if="!editando" @click="editando = !editando" label="Editar Pefil" color="orange-14" glossy
-                icon-right="account_circle"></q-btn>
-            <q-btn @click="openPerfilPublico()" v-if="!editando" label="Perfil Público" color="primary" glossy
-                icon-right="public"></q-btn>
-            <q-btn v-if="editando" @click="modalUploadImagem = true" label="Alterar Foto" class="q-mb-md" color="blue-14" glossy
+            <q-btn  @click="modalUploadImagem = true" label="Alterar Foto" color="blue-14" glossy
                 icon-right="upload"></q-btn>
+                <q-btn class="q-pr-xs" @click="scrollDown()" icon-right="currency_exchange" label="solicitar saque"  color="secondary" glossy>
+                </q-btn>
+                <q-btn v-if="!editando" @click="editando = !editando" label="Editar Pefil" color="orange-14" glossy
+                    icon-right="account_circle"></q-btn>
         </div>
         <div v-if="host" class="row wrap w100 q-pl-md q-mt-md cards-wrapper justify-center q-gutter-x-md items-start">
             <q-card v-if="!editando" class="q-mb-md animate__animated animate__fadeInRight" style="border-left: 4px solid #9573f3;">
@@ -263,6 +263,9 @@ async function uploadImage() {
         host.value.img_url = response.data.imageUrl; // URL retornada do backend
         sessionStorage.setItem('host', JSON.stringify(host.value))
         console.log("Imagem enviada:", response.data);
+        setTimeout(() => {
+            window.location.reload()
+        }, 1500)
     } catch (error) {
         console.error("Erro ao enviar a imagem:", error);
     }
@@ -283,6 +286,7 @@ async function solicitar() {
             })
             updateLogin()
             passwordModal.value = false
+            router.push('/host/saques')
         })
         .catch(err => {
             $q.notify({
@@ -293,9 +297,7 @@ async function solicitar() {
             })
             passwordOptions.value.password = ''
         })
-        .finally(() => {
-            router.push('/host/saques')
-        })
+
 }
 
 function pasteCode() {

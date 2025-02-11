@@ -9,11 +9,15 @@
             <div class="column q-gutter-y-md">
             </div>
             <div class="column q-gutter-y-md q-mb-xs">
-                <q-input :inputStyle="{ fontWeight: 'bold', color: '#6310E1' }" filled class=""
+                <q-input :inputStyle="{ fontWeight: 'bold', color: '' }" outlined class=""
                     v-model="ingressoHandler.title" placeholder="Entrada Masculina, Camarote, Pista Inteira"
-                    maxlength="40" label="Título do Ingresso*" />
-                <q-input :inputStyle="{ fontWeight: 'bold', color: '#6310E1' }" filled maxlength="7" prefix="R$"
-                    v-model="ingressoHandler.price" label="Preço do Ingresso*" reverse-fill-mask mask="####,##">
+                    maxlength="40" label="Título do Ingresso">
+                    <template v-slot:append>
+                        <q-icon name="confirmation_number" color="primary" />
+                    </template>
+                </q-input>
+                <q-input :inputStyle="{ fontWeight: 'bold', color: '' }" outlined maxlength="7" prefix="R$"
+                    v-model="ingressoHandler.price" label="Preço do Ingresso" reverse-fill-mask mask="####,##">
                     <template v-slot:append>
                         <q-icon name="payments" color="primary" />
                     </template>

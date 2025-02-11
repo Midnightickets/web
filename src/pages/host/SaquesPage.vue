@@ -35,8 +35,14 @@
                     <q-btn label="Fechar" flat color="primary" @click="showComprovante = false" />
                 </q-card-actions>
             </q-card>
-
         </q-dialog>
+    </div>
+    <div v-else class="w100 column q-px-md">
+        <q-card class="q-my-md">
+            <q-card-section class="text-grey-14 bg-white" style="font-size: 1rem;border-bottom: 4px solid #4E01DA;">
+                <strong>Nenhum saque solicitado</strong>
+            </q-card-section>
+        </q-card>
     </div>
 </q-page>
 </template>

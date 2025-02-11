@@ -8,7 +8,7 @@
             </div>
             <div class="row items-start" v-if="event" >
                 <q-btn :to="'/' + event.host_login"  flat>
-                    <img :src="event.host_img_url"  style="border-radius: 100%; border-bottom: 4px solid #9573f3;" width="100px" height="100px" />
+                    <img :src="event.host_img_url"  style="border-radius: 100%; border-bottom: 4px solid #9573f3;object-fit: fill;" width="100px" height="100px" />
                 </q-btn>
 
             </div>

@@ -5,8 +5,8 @@
             <q-btn to="/" icon="travel_explore" color="secondary" glossy class="shadow-1"></q-btn>
         </div>
         <div v-if="!loading" class="w100 row justify-center">
-            <q-avatar style="width:200px;height:180px" class="shadow-2">
-                <img style="border-bottom: 4px solid #8E2DE2" :src="hostImgUrl ? hostImgUrl : '/favicon.svg'" alt="">
+            <q-avatar style="width:180px;height:180px" class="shadow-2">
+                <img style="border-bottom: 4px solid #8E2DE2;object-fit: cover;width: 100%;height: 100%;" :src="hostImgUrl ? hostImgUrl : '/favicon.svg'" alt="">
             </q-avatar>
         </div>
         <div v-if="!loading && events.length > 0" class="animate__animated animate__fadeInLeft w100 text-white text-center q-pb-lg q-mt-sm q-px-md" id="title-2">
@@ -17,7 +17,8 @@
                 <q-card-section>
                     <q-item >
                         <q-item-section class="text-black">
-                            <q-item-label id="title-2"  class="text-primary">{{ (index + 1) + '. ' + event.title }}</q-item-label>
+                            <!-- <q-item-label id="title-2"  class="text-primary">{{ (index + 1) + '. ' + event.title }}</q-item-label> -->
+                            <q-btn @click="goToEvent(event.event_url)" id="title-2" :label="(index + 1) + '. ' + event.title" class="q-mb-sm"  glossy color="primary"/>
                             <q-item-label class="text-bold text-grey-14 q-py-sm" style="white-space: pre-wrap">{{ event.desc }}</q-item-label>
                             <q-item-label class="text-bold text-primary">📆 {{ event.date.replaceAll('-', '/') }}</q-item-label>
                             <img id="img-events" v-if="event.img_url" :src="event.img_url" class="q-mt-md" alt="🎇 Banner do Evento"/>

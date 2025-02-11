@@ -1,8 +1,8 @@
 <template>
   <q-page class="bg-dark w100 animate__animated animate__fadeIn relative">
-      <div class="steps w100  row justify-center bg-grey-14 q-py-sm">
-          <div  id="step-1" :class=" step == 1 ?  'bg-secondary' : 'bg-secondary mid-opacity'"></div>
-          <div  id="step-2" :class=" step == 2 ? 'bg-secondary' : 'bg-secondary mid-opacity'"></div>
+      <div class="steps w100  row justify-center bg-twitch q-py-sm">
+          <div  id="step-1" :class=" step == 1 ?  'bg-grad-2 shadow-2' : 'bg-grey-14'"></div>
+          <div  id="step-2" :class=" step == 2 ? 'bg-grad-2 shadow-2' : 'bg-grey-14'"></div>
       </div>
       <div class="step-wrapper">
           <CreateEventoStep1Component v-if="step == 1" @next="next"/>

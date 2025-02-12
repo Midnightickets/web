@@ -18,36 +18,6 @@
             </q-toolbar>
 
         </q-header>
-<!-- 
-        <q-drawer show-if-above v-model="rightDrawerOpen" side="right" class="bg-dark relative">
-            <div  class="w100 row justify-center q-mt-xl">
-                <a href="/" style="text-decoration: none;" id="title-layout"
-                class="text-purple-1 text-bold row items-center q-mb-md">
-                <q-icon size="md" class="q-pr-xs" color="purple-1" name="local_activity" />
-                Midnight Tickets
-                 </a>
-                 <q-btn flat color="secondary" icon-right="home" to="/" label="página inicial"></q-btn>
-                <q-list class="q-pt-md text-bold text-white">
-                    <q-item v-for="item in menuOptions.items" :key="item.label" clickable @click="goTo(item)"
-                        style="border-radius: 8px;"
-                        class="q-mt-md q-mx-md text-blue-2 shadow-2 bg-grad-4">
-                        <q-item-section avatar>
-                            <q-icon :name="item.icon" color="grey-4" />
-                        </q-item-section>
-                        <q-item-section>
-                            <q-item-label  class="text-grey-4">{{ item.label
-                                }}</q-item-label>
-                        </q-item-section>
-                    </q-item>
-                </q-list>
-                <div class="absolute-bottom w100  row no-wrap items-center justify-center q-mt-xl text-primary q-py-sm">
-                    <div class="row items-center w100 q-mb-md">
-                        <q-btn class="w100 q-mb-xl" flat @click="rightDrawerOpen = !rightDrawerOpen" color="secondary">fechar menu</q-btn>
-                        <q-btn label="logout" icon-right="logout" color="secondary" class="w100 q-mx-md" to="/" glossy></q-btn>
-                    </div>
-                </div>
-            </div>
-        </q-drawer> -->
 
         <q-page-container class="relative bg-grey-4 q-pa-md">
             <div class="w100 q-pt-md row justify-between">
@@ -79,7 +49,40 @@
                     <q-btn icon="sensor_occupied" href="#subhost-termos" style="text-decoration: none;" class="text-bold text-secondary" label="Subhosts"></q-btn>
                 </div>
             </div>
-            <div class="w100 bg-secondary q-pt-xs q-mt-md rounded-borders"></div>
+            <div class="w100 bg-secondary q-pt-xs q-my-md rounded-borders shadow-2"></div>
+            <q-card flat bordered class="q-pa-md rounded-borders">
+                <q-card-section>
+                  <div class="text-h6">Termos de Uso</div>
+                </q-card-section>
+                <q-card-section class="scroll">
+                  <p>
+                    Bem-vindo ao Midnight Tickets. Ao utilizar nossos serviços, você concorda com os seguintes termos:
+                  </p>
+                  <p>
+                    <strong>1. Coleta e Compartilhamento de Dados</strong><br>
+                    Ao se cadastrar e utilizar a plataforma, você concorda que seus dados pessoais, incluindo CPF, nome, e-mail e telefone, poderão ser compartilhados com os desenvolvedores do aplicativo para fins de suporte e melhoria dos serviços. Além disso, tais dados serão disponibilizados para produtores e seus colaboradores, garantindo a gestão e validação de ingressos nos eventos criados na plataforma.
+                  </p>
+                  <p>
+                    <strong>2. Taxas e Condições Financeiras</strong><br>
+                    O Midnight Tickets aplica as seguintes taxas sobre transações realizadas na plataforma:
+                  </p>
+                  <ul>
+                    <li>Taxa de 8% sobre cada ingresso vendido, paga pelo comprador.</li>
+                    <li>Taxa de 5% sobre cada saque realizado pelos produtores.</li>
+                  </ul>
+                  <p>
+                    Os saques de valores arrecadados pelos produtores podem ser realizados a cada 15 dias, respeitando o prazo mínimo entre solicitações.
+                  </p>
+                  <p>
+                    <strong>3. Responsabilidade sobre Vazamento de Dados</strong><br>
+                    O Midnight Tickets adota medidas de segurança para proteger as informações dos usuários. No entanto, ao compartilhar dados com produtores e seus colaboradores, a responsabilidade pelo armazenamento e uso correto dessas informações passa a ser dos mesmos. O Midnight Tickets não se responsabiliza por vazamentos ou uso indevido desses dados por terceiros, cabendo ao usuário entender que compartilha informações com produtores e colaboradores que utilizam a plataforma.
+                  </p>
+                  <p>
+                    <strong>4. Disposições Gerais</strong><br>
+                    O uso da plataforma implica na aceitação integral destes termos. O Midnight Tickets se reserva o direito de modificar os termos a qualquer momento, sendo responsabilidade do usuário revisá-los periodicamente.
+                  </p>
+                </q-card-section>
+              </q-card>
             <div id="host-termos" class="bg-grey-3 rounded-borders shadow-1 q-py-md border-left-roxo q-pl-md q-mt-md">
                 <div id="title-2" class="q-mb-md text-primary">
                     Termos de Uso para Produtores de Eventos<br>
@@ -164,6 +167,7 @@
                 A Midnight Tickets pode alterar os presentes Termos de Uso a qualquer momento. As alterações serão notificadas com antecedência e o uso continuado da Plataforma implica aceitação dos novos termos.
             </div>
             </div>
+            
             <div id="user-termos" class="bg-grey-3 rounded-borders shadow-1 q-py-md border-left-roxo q-pl-md q-mt-xl">
                 <div id="title-2" class="q-mb-md text-primary">
                     Termos de Uso para Usuários<br>

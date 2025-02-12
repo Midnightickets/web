@@ -190,8 +190,8 @@
                     </div>
                     <div id="vantagens" style="font-size:1.1rem;"
                         class="text-shadow bg-grad-2 text-white high-opacity  text-bold q-px-sm  q-py-md text-center">
-                        Utilizamos tecnologias de ponta com criptografia e redução do tráfego de dados para garantir a segurança de suas informações
-                        na nuvem, diminuindo custos de operação e aumentando a eficiência de seus eventos cobrando apenas <strong>5% de taxa</strong> de saque.
+                        Utilizamos tecnologias de ponta com criptografia e reduzimos o tráfego de dados para garantir a segurança de suas informações
+                        na nuvem com eficiência, diminuindo custos de operação de seus eventos cobrando apenas <strong>5% de taxa</strong> de saque.
                     </div>
                 </div>
                 <div class="rounded-borders" style="border: 4px solid #692EDD;">

@@ -270,7 +270,8 @@
             </div>
             <div class="w100 q-mt-xl q-px-sm" v-if="!loading">
                 <q-btn class="w100 q-py-xl" to="/host/andamento-evento"
-                    :label="evento.status.includes('andamento') ? 'Andamento do Evento' : 'Histórico do Evento'"
+                    v-if="!evento.status.includes('andamento')"
+                    label="Histórico do Evento"
                     color="primary" glossy
                     :icon-right="evento.status.includes('andamento') ? 'visibility' : 'history'"></q-btn>
                 <q-btn class="w100 q-py-xl q-mt-md" @click="goToVendas()" label="Painel de Vendas" color="green" glossy

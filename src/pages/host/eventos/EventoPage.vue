@@ -49,7 +49,7 @@
                     evento.initial_time : '') +
                 (evento.final_time ? (' - ' + evento.final_time) : '' ) }}</div>
             <q-btn 
-            v-if="!evento.status.includes('andamento')"
+            v-if="evento.status.includes('andamento')"
             @click="openImgDialog()" label="Banner do Evento"
                 glossy icon-right="image" class="q-pa-md q-ml-md q-mt-md" dense :color="evento.img_url ? 'green' : 'grey'"></q-btn>
             <q-btn v-if="evento.status.includes('andamento')" @click="previewPublicEvent(evento.event_url)"

@@ -10,28 +10,28 @@
                 criação do seu
                 evento, elas poderão ser editadas posteriormente:</div>
                 <div class="w100 text-left text-primary text-bold">Campos Obrigatórios*</div>
-            <q-input maxlength="50" outlined class="q-mt-lg" v-model="evento.title" label="Título*">
+            <q-input maxlength="50" outlined class="q-mt-lg bg-grey-3" v-model="evento.title" label="Título*">
                 <template v-slot:append>
                     <q-btn flat icon="nightlife" color="primary" />
                 </template>
             </q-input>
-            <q-input maxlength="1000" outlined type="textarea" v-model="evento.desc" label="Descrição">
+            <q-input maxlength="1000" outlined type="textarea" class="bg-grey-3" v-model="evento.desc" label="Descrição">
                 <template v-slot:append>
                     <q-btn flat icon="info" color="primary" />
                 </template>
             </q-input>
-            <q-input maxlength="400" outlined type="textarea" v-model="evento.address" label="Endereço*">
+            <q-input maxlength="400" outlined type="textarea" class="bg-grey-3" v-model="evento.address" label="Endereço*">
                 <template v-slot:append>
                     <q-btn flat icon="pin_drop" color="primary" />
                 </template>
             </q-input>
-            <q-input maxlength="200" outlined placeholder="Descreva o contato dos produtores do eventos" type="textarea" v-model="evento.contact" label="Contato*">
+            <q-input maxlength="200" outlined placeholder="Descreva o contato dos produtores do eventos" class="bg-grey-3" type="textarea" v-model="evento.contact" label="Contato*">
                 <template v-slot:append>
                     <q-btn flat icon="phone" color="primary" />
                 </template>
             </q-input>
-            <div class="w100 row justify-center items-center no-wrap">
-                <q-input class="q-mr-sm" id="times" label="Início" placeholder="00:00" outlined v-model="evento.initial_time" mask="time" :rules="['time']">
+            <div class="w100 row justify-center items-center no-wrap bg-grey-4 ">
+                <q-input class="q-mr-sm bg-grey-4" id="times" label="Início"  placeholder="00:00" outlined v-model="evento.initial_time" mask="time" :rules="['time']">
                     <template v-slot:append>
                         <q-icon name="access_time" color="primary" class="cursor-pointer">
                             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -44,7 +44,7 @@
                         </q-icon>
                     </template>
                 </q-input>
-                <q-input label="Final" outlined v-model="evento.final_time" placeholder="00:00" mask="time" :rules="['time']">
+                <q-input label="Final" outlined class="bg-grey-4" v-model="evento.final_time" placeholder="00:00" mask="time" :rules="['time']">
                     <template v-slot:append>
                         <q-icon name="access_time" color="primary" class="cursor-pointer">
                             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -69,7 +69,7 @@
                     return mydate >= new Date(minDate);
                 }" color="primary" />
             </div>
-            <q-input placeholder="Clique no ícone ao lado para ajuda" maxlength="800" outlined v-model="evento.maps_loc"
+            <q-input placeholder="Clique no ícone ao lado para ajuda" class="bg-grey-3" maxlength="800" outlined v-model="evento.maps_loc"
                 label="Localização Google Maps">
                 <template v-slot:append>
                     <q-btn flat icon="map" @click="helpLocGoogle()" color="primary" />

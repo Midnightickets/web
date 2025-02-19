@@ -9,19 +9,32 @@
             <div class="column q-gutter-y-md">
             </div>
             <div class="column q-gutter-y-md q-mb-xs">
-                <q-input :inputStyle="{ fontWeight: 'bold', color: '' }" outlined class=""
+                <q-input :inputStyle="{ fontWeight: 'bold', color: '' }" outlined class="bg-grey-2"
                     v-model="ingressoHandler.title" placeholder="Entrada Masculina, Camarote, Pista Inteira"
                     maxlength="40" label="Título do Ingresso">
                     <template v-slot:append>
                         <q-icon name="confirmation_number" color="primary" />
                     </template>
                 </q-input>
-                <q-input :inputStyle="{ fontWeight: 'bold', color: '' }" outlined maxlength="7" prefix="R$"
+                <q-input :inputStyle="{ fontWeight: 'bold', color: '' }" outlined maxlength="7" prefix="R$" class="bg-grey-2"
                     v-model="ingressoHandler.price" label="Preço do Ingresso" reverse-fill-mask mask="####,##">
                     <template v-slot:append>
                         <q-icon name="payments" color="primary" />
                     </template>
                 </q-input>
+                <div class="w100 row">
+                    <div class="w100  text-bold">Vendas</div>
+                    <div class="w100 q-mx-sm rounded-borders q-py-md">
+                        <q-radio v-model="limitedTickets.isLimited" :val="true" label="Limitar Ingressos" color="primary" />
+                        <q-input v-if="limitedTickets.isLimited" v-model="limitedTickets.maxTickets" outlined class="q-mx-sm q-my-sm bg-grey-2 rounded-borders" mask="####" maxlength="4" 
+                            label="Máximo de Ingressos">
+                            <template v-slot:append>
+                                <q-icon name="local_activity" color="primary" />
+                            </template>
+                        </q-input>
+                        <q-radio v-model="limitedTickets.isLimited" :val="false" label="Parar vendas manualmente" color="primary" />
+                    </div>
+                </div>
                 <q-btn class="q-py-md" label="Adicionar Ingresso" color="primary" glossy :disable="validaIngresso()"
                     @click="addIngresso()" icon-right="add_circle" />
             </div>
@@ -44,6 +57,9 @@
                         <q-btn class="absolute" style="top:-5px;left:-15px" color="secondary" flat icon="close"
                             @click="removeIngresso(index)" />
                         <div class="text-bold text-secondary text-shadow q-py-xs text-h6">R$ {{ Utils.formatCurrency(ingresso.price) }}</div>
+                    </div>
+                    <div v-if="ingresso.maxTickets < 999" class="w100">
+                        <div class="text-bold text-grey-6 q-pl-sm text-shadow q-py-xs text-h6">Máximo: {{ ingresso.maxTickets }}</div>
                     </div>
                 </div>
                 <div v-if="ingressos.length == 0" class="text-center text-bold text-secondary">No momento não há ingressos cadastrados</div>
@@ -70,9 +86,15 @@ const router = useRouter()
 const loading = ref(false)
 const hostInfo = sessionStorage.getItem('host') ? JSON.parse(sessionStorage.getItem('host')) : null;
 
+const limitedTickets = ref({
+    isLimited: false,
+    maxTickets: '0'
+})
+
 const ingressoHandler = ref({
     title: '',
     price: '',
+    maxTickets: '999',
     status: true
 })
 
@@ -115,13 +137,32 @@ const addIngresso = () => {
             return
         }
     });
+    if(limitedTickets.value.isLimited) {
+            if(limitedTickets.value.maxTickets == 0) {
+                $q.notify({
+                    color: 'orange-14',
+                    position: 'top',
+                    message: 'O número de ingressos deve ser maior que 0',
+                    icon: 'report_problem'
+                })
+                valid = false
+                return
+            }
+            ingressoHandler.value.maxTickets = limitedTickets.value.maxTickets
+        }
+        if(!limitedTickets.value.isLimited) {
+            ingressoHandler.value.maxTickets = 999
+        }
     if (valid) {
+        ingressoHandler.value.maxTickets = Number(ingressoHandler.value.maxTickets)
         ingressos.value.push(ingressoHandler.value)
         ingressoHandler.value = {
             title: '',
             price: '',
             status: true,
         }
+        limitedTickets.value.isLimited = false
+        console.log(JSON.stringify(ingressos.value))
     }
 }
 

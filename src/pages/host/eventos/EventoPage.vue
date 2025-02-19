@@ -223,12 +223,14 @@
                             <div class="text-bold text-secondary" :class="ticket.status ? '' : 'mid-opacity'"><q-icon
                                     name="confirmation_number" color="secondary" size="xs"></q-icon> {{ ticket.sales ?
                                 ticket.sales : 0
-                                }} vendidos</div>
+                                }}{{ ticket.maxTickets === 999 ?
+                                    '' : '/' + ticket.maxTickets    
+                                    }} vendidos</div>
                             <div class="row items-center justify-between q-mt-sm">
                                 <div :class="ticket.status ? '' : 'mid-opacity'"
                                     class="text-bold bg-secondary q-pa-xs rounded-borders text-white">{{ 'R$ ' +
                                     Utils.formatCurrency(ticket.price) }}</div>
-                                <q-toggle v-if="evento.status.includes('andamento')"
+                                <q-toggle v-if="evento.status.includes('andamento') && (ticket.sales != ticket.maxTickets)"
                                     :class="ticket.status ? 'text-green' : 'text-orange-14'" class="text-bold"
                                     v-model="ticket.status" @update:model-value="updateStatusTickets()" left-label
                                     :label="ticket.status ? 'Ativo' : 'Inativo'" color="green"></q-toggle>

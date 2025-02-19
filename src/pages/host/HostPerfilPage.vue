@@ -18,7 +18,7 @@
         <div class="w100 row justify-center q-mb-md q-gutter-x-md q-gutter-y-md q-px-md">
             <q-btn  @click="modalUploadImagem = true" label="Alterar Foto" color="blue-14" glossy
                 icon-right="upload"></q-btn>
-                <q-btn class="q-pr-xs" @click="scrollDown()" icon-right="currency_exchange" label="solicitar saque"  color="secondary" glossy>
+                <q-btn class="" @click="scrollDown()" icon-right="currency_exchange" label="solicitar saque"  color="green" glossy>
                 </q-btn>
                 <q-btn v-if="!editando" @click="editando = !editando" label="Editar Pefil" color="orange-14" glossy
                     icon-right="account_circle"></q-btn>
@@ -120,7 +120,7 @@
                     <div class="text-bold">{{ host.pix_key.key }}</div>
                 </q-card-section>
                 <q-card-section class="q-pa-md">
-                    <div class="text-h6 text-primary">Solicitação de Saque</div>
+                    <div class="text-h6 text-primary" id="saque">Solicitação de Saque</div>
                     <div class="text-bold">{{ host.waitingSake ? '🟣 Aguardando Processamento'
                         : '🟢 Disponível para saque' }}</div>
                 </q-card-section>

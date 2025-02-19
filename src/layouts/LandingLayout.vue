@@ -18,9 +18,9 @@
                     <a v-if="!isMobile & userInfo == ''" class="menu-item text-center text-grey-4 q-mr-md q-px-md" href="#vantagens">
                         Vantagens
                     </a>
-                    <a v-if="!isMobile & userInfo == ''" class="menu-item text-center text-grey-4 q-mr-md q-px-md" href="#contato">
+                    <!-- <a v-if="!isMobile & userInfo == ''" class="menu-item text-center text-grey-4 q-mr-md q-px-md" href="#contato">
                         Contato
-                    </a>
+                    </a> -->
                     <q-btn  class="text-bold q-px-md q-py-sm text-white row items-center" style="border-radius: 10px;" v-if="userInfo == ''" glossy dense label="entrar"
                     icon-right="login" color="green-14  "
                         @click="navigateTo('/login')">
@@ -85,7 +85,7 @@
                 </q-card>
             </q-dialog>
         </q-header>
-        <q-page-container v-if="userInfo === ''" class="bg-grey-4">
+        <q-page-container v-if="userInfo === ''" class="bg-grey-3">
             <!-- <div  class="rounded-borders w100 row justify-center q-mt-md relative" style="overflow: hidden ">
                 <div v-if="userInfo == ''" class="animate__animated animate__zoomInDown animate__delay-1s animate__slower column rounded-borders justify-center q-px-sm  w100"
                     style="overflow: hidden ;z-index: 9;">
@@ -93,24 +93,22 @@
                 </div>
             </div> -->
             <div v-if="searchPublic.opened" id="search-public" class="w100 rounded-borders row justify-center">
-                <q-card id="search-card" class="q-mt-md q-mb-md q-mx-md animate__animated rounded-borders animate__fadeInDown animate__slower">
-                    <q-card-section class="w100 rounded-borders q-pa-md column q-gutter-y-md" style="border: 4px solid #762ED3">
-                        <q-input class="relative" maxlength="100" v-model="searchPublic.titleEventOrHostName" @keyup.enter="searchPublicEventsOrHost()" outlined 
-                        :label="searchPublic.isByHostName ? 'Nome do Produtor' : 'Título do Evento'"
+                <q-card id="search-card" class="w100 q-mb-md animate__animated rounded-borders animate__fadeInDown animate__slower bg-grey-1">
+                    <q-card-section class="w100 rounded-borders q-pa-md column" style="border-bottom: 4px solid #762ED3">
+                        <q-input class="w100 relative" maxlength="100" v-model="searchPublic.titleEventOrHostName" @keyup.enter="searchPublicEventsOrHost()" outlined 
+                        :label="searchPublic.isByHostName ? 'Nome do Produtor' : 'Encontre Eventos'"
                              :placeholder="searchPublic.isByHostName ? 'Digite o Nome do Produtor' : 'Digite o Título do Evento'">
                             <template v-slot:prepend>
                                 <q-icon name="search" color="primary" />
                             </template>
                             <template v-slot:append>
-                                <div class="bg-grad-2 q-py-sm q-px-md cursor-pointer rounded-borders absolute-right">
-                                    <q-icon name="send" size=sm color="white" @click="searchPublicEventsOrHost()" />
-                                </div>
+                                <q-btn @click="searchPublicEventsOrHost()" class="absolute-right" icon-right="send" color="primary"></q-btn>
                             </template>
                         </q-input>
-                        <div class="w100">
+                        <!-- <div class="w100">
                             <q-radio v-model="searchPublic.isByHostName" color="primary" :val="false" label="Buscar por Evento" />
                             <q-radio v-model="searchPublic.isByHostName" color="primary" :val="true" label="Buscar por Produtor" />
-                        </div>
+                        </div> -->
                         <!-- <div v-if="isMobile" class="w100 column justify-center ">
                             <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(false)" color="blue-14" glossy class="shadow-1 w100 q-py-sm q-mb-md" label="Buscar por Evento"
                             icon="event" />
@@ -186,7 +184,7 @@
                         <img class="img" src="~/assets/landing-images/drawn1.png" alt="">
                     </div>
                     <div style="font-size:1.3rem" class="bg-grad-4 text-white text-bold q-px-sm q-py-md text-center">Como
-                        fazemos isso ?
+                        Fazemos ?
                     </div>
                     <div id="vantagens" style="font-size:1.1rem;"
                         class="text-shadow bg-grad-2 text-white high-opacity  text-bold q-px-sm  q-py-md text-center">
@@ -203,7 +201,7 @@
                         class="text-h4 bg-white rounded-borders text-primary text-center w100 border-bottom text-bold q-pt-md q-pb-md">
                         Vantagens
                     </div>
-                    <div style="font-size:1.1rem" class="text-shadow q-px-md bg-grey-4 text-left q-py-md rounded-borders">
+                    <div style="font-size:1.1rem" class="text-shadow q-px-md bg-grey-2 text-left q-py-md rounded-borders">
                         🟣 <strong class="text-primary">TAXA REDUZIDA, MAIS LUCRO PARA VOCÊ<br></strong>
                         Nosso <strong>modelo de negócio</strong> é <strong>diferente das plataformas tradicionais</strong>, nossa taxa é de apenas <strong>8% na venda</strong> e <strong>5% no saque</strong>. <strong>Pague menos e lucre mais</strong> com cada ingresso vendido!<br>
                         <br>🟣 <strong class="text-primary">LUCRO EM TEMPO REAL<br></strong>
@@ -215,10 +213,10 @@
                     </div>
                     <div id="title"
                         class="w100 text-h4 text-bold bg-white text-primary text-center q-px-md q-mt-md rounded-borders q-py-sm border-bottom"
-                        style="border:4px solid #692EDD">
+                        style="border-top:4px solid #692EDD">
                         Benefícios
                     </div>
-                    <div style="font-size:1.1rem" class="text-shadow q-px-md bg-grey-4 q-py-md rounded-borders border-bottom">
+                    <div style="font-size:1.1rem" class="text-shadow q-px-md bg-grey-2 q-py-md rounded-borders border-bottom">
                         💸 <strong style="font-size:1.2rem" class="text-primary text-bold">DIGA ADEUS ÀS TAXAS ABUSIVAS<br></strong>
                         Estamos <strong>integrados ao Mercado Pago</strong>, garantindo <strong>segurança</strong>, <strong>rapidez nos pagamentos</strong> e a <strong>menor taxa do mercado</strong> para produtores de eventos.<br>
                         <br>
@@ -258,7 +256,7 @@
                       class="column no-wrap flex-center">
                   </q-carousel-slide>
               </q-carousel> -->
-                <div class=" relative"  id="contato">
+                <!-- <div class=" relative"  id="contato">
                     <div class="text-h4 rounded-borders text-bold q-py-md text-white text-center bg-grad-4 border-bottom q-mt-md">
                         Fale Conosco</div>
 
@@ -357,18 +355,18 @@
                             </div>
                         </q-card>
                     </div>
-                    <!-- <div class="space rounded-borders q-my-md ">
+                     <div class="space rounded-borders q-my-md ">
                         <q-btn @click="wppConsultor()" class="q-pa-md w100" color="green" icon-right="sms"
                             label="Fale Agora Com um de nossos Consultores" glossy />
                     </div> -->
-                    <div v-if="userInfo == ''"
+                    <!-- <div v-if="userInfo == ''"
                         class="w100 text-bold rounded-borders column bg-primary items-center justify-center text-white q-pa-md text-center q-mt-md ">
                         <div class="column text-h5 text-white text-bold">Validar Ingressos</div>
                         <div class="text-purple-2">Recebeu credenciais de um produtor para validar ingressos ??</div>
                         <q-btn icon-right="sensor_occupied" label="Faça login Aqui" style="border-radius:12px"
                             glossy dense class="q-mt-md q-pa-lg shadow-2" color="primary" to="/login-subhost" />
                     </div>
-                </div>
+                </div> -->
                 <div class="w100 text-secondary text-bold q-mb-xl text-center q-mt-md q-pt-xl">
                     Siga-nos no <a href="https://www.instagram.com/midnightickets" class="text-primary"
                         target="_blank">Instagram</a>

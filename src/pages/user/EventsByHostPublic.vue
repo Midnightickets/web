@@ -6,7 +6,7 @@
         </div>
         <div v-if="!loading" class="w100 row justify-center">
             <q-avatar style="width:180px;height:180px" class="shadow-2">
-                <img style="border-bottom: 4px solid #8E2DE2;object-fit: cover;width: 100%;height: 100%;" :src="hostImgUrl ? hostImgUrl : '/favicon.svg'" alt="">
+                <img style="object-fit: cover;width: 100%;height: 100%;" :src="hostImgUrl ? hostImgUrl : '/favicon.svg'" alt="">
             </q-avatar>
         </div>
         <div v-if="!loading && events.length > 0" class="animate__animated animate__fadeInLeft w100 text-white text-center q-pb-lg q-mt-sm q-px-md" id="title-2">
@@ -30,6 +30,32 @@
                 </q-card-section>
             </q-card>
         </div>
+        <div v-if="hostEmail.includes('@')" class="w100 bg-glass-2  text-center text-white q-pb-lg q-my-xl q-px-md" >
+            <div id="title-2" class="text-white q-pt-md">
+                Contato do Produtor
+            </div>
+            <q-item>
+                <q-item-section class="">
+                    <q-input readonly outlined v-model="hostEmail" label="E-mail" class="text-bold bg-grey-2 rounded-borders text-grey-14">
+                        <template v-slot:prepend>
+                            <q-icon name="email" color="primary" />
+                        </template>
+                    </q-input>
+                    <q-input readonly outlined label="Telefone" v-model="hostPhone" class="text-bold text-grey-14 bg-grey-2 rounded-borders">
+                        <template v-slot:prepend>
+                            <q-icon name="phone" color="primary" />
+                        </template>
+                    </q-input>
+                    <q-input readonly outlined label="CNPJ ou CPF do Responsável" v-model="hostIdentity" class="text-bold text-grey-14 bg-grey-2 rounded-borders">
+                        <template v-slot:prepend>
+                            <q-icon name="fingerprint" color="primary" />
+                        </template>
+                    </q-input>
+
+                </q-item-section>
+            </q-item>
+
+        </div>
         <div v-if="!loading && events.length == 0" class="w100 text-center text-secondary q-pt-xl" id="title-2">
             Esse Host não possui nenhum evento em Andamento<br>( ˘︹˘ )
         </div>
@@ -52,7 +78,9 @@ const events = ref([]);
 const loading = ref(true);
 const hostName = ref('');
 const hostImgUrl = ref('');
-
+const hostEmail = ref('');
+const hostPhone = ref('');
+const hostIdentity = ref('');
 function returnRout() {
     window.history.back();
 }
@@ -64,6 +92,9 @@ onBeforeMount(async () => {
             events.value = res.data.events;
             hostImgUrl.value = res.data.host_img_url;
             hostName.value = res.data.events[0].host;
+            hostEmail.value = res.data.host_email;
+            hostPhone.value = res.data.host_phone;
+            hostIdentity.value = res.data.host_identity;
         }
     })
     .finally(() => {

@@ -300,7 +300,21 @@
                             <template v-slot:append>
                                 <q-icon name="attach_money" color="primary" size="xs" />
                             </template>
+                            
                         </q-input>
+                        <div class="w100 row">
+                            <div class="w100  text-bold">Vendas</div>
+                            <div class="w100 q-mx-sm rounded-borders q-py-md">
+                                <q-radio v-model="limitedTickets.isLimited" :val="true" label="Limitar Ingressos" color="primary" />
+                                <q-input v-if="limitedTickets.isLimited" v-model="limitedTickets.maxTickets" outlined class="q-mx-sm q-my-sm bg-grey-2 rounded-borders" mask="####" maxlength="4" 
+                                    label="Máximo de Ingressos">
+                                    <template v-slot:append>
+                                        <q-icon name="local_activity" color="primary" />
+                                    </template>
+                                </q-input>
+                                <q-radio v-model="limitedTickets.isLimited" :val="false" label="Parar vendas manualmente" color="primary" />
+                            </div>
+                        </div>
                     </q-card-section>
                     <div class="w100 row items-center justify-center q-pb-sm q-px-md">
                         <q-btn label="Adicionar" @click="addPackage()"
@@ -363,8 +377,14 @@ const imgLoading = ref(true);
 const packageHandler = ref({
     title: '',
     price: '',
+    sales: 0,
+    maxTickets: '999',
     status: true
 });
+const limitedTickets = ref({
+    isLimited: false,
+    maxTickets: '0'
+})
 const subhostOptions = ref([]);
 
 async function permitirSubhost(subhost) {
@@ -520,6 +540,11 @@ async function addPackage() {
         });
         return;
     } else {
+        if(limitedTickets.value.isLimited) {
+            packageHandler.value.maxTickets = Number(limitedTickets.value.maxTickets);
+        } else {
+            packageHandler.value.maxTickets = 999;
+        }
         packageHandler.value.price = Number(packageHandler.value.price.replace(',', '.')).toFixed(2).toString().replace('.', ',');
         evento.value.ticket_types.push(packageHandler.value);
         await updateTicketTypes();

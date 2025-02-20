@@ -375,27 +375,24 @@
                 </div>
             </q-page>
         </q-page-container>
-        <q-page-container v-else class="q-mb-xl q-mt-md">
+        <q-page-container v-else class="q-pb-xl q-mt-md bg-grey-3">
             <div v-if="lastEvent" class="w100 row q-gutter-md justify-center rounded-borders animate__animated animate__fadeInDown animate__slower">
                 <q-btn :to="'/' + hostLastEvent" color="secondary" glossy :label="hostLastEvent" icon="favorite" />
                 <q-btn :to="'/events/' + urlLastEvent" color="secondary" glossy :label="nameLastEvent" icon-right="event" />
             </div>
-            <div id="search-public" class="w100 rounded-borders row justify-center">
-                <q-card id="search-card" class="q-mt-md q-mb-md q-mx-md animate__animated rounded-borders animate__fadeInDown animate__slower">
-                    <q-card-section class="bg-grad-4 text-white text-bold text-center q-pa-md ">
-                        <div class="text-center" style="font-size:1rem">Encontre Produtores e Eventos em Andamento</div>
-                    </q-card-section>
-                    <q-card-section class="rounded-borders q-pa-md column q-gutter-y-md">
-                        <q-input maxlength="100" v-model="searchPublic.titleEventOrHostName" outlined label="Nome do Evento ou Produtor(a)*"
-                            placeholder="Digite o nome do Evento ou Produtor">
+            <div id="search-public" class="w100 rounded-borders q-mt-md q-px-md row justify-center">
+                <q-card id="search-card" class="w100 q-mb-md animate__animated rounded-borders animate__fadeInDown animate__slower bg-grey-2">
+                    <q-card-section class="w100 rounded-borders q-pa-md column" style="border-bottom: 4px solid #762ED3">
+                        <q-input class="w100 relative" maxlength="100" v-model="searchPublic.titleEventOrHostName" @keyup.enter="searchPublicEventsOrHost()" outlined 
+                        :label="searchPublic.isByHostName ? 'Nome do Produtor' : 'Encontre Eventos'"
+                             :placeholder="searchPublic.isByHostName ? 'Digite o Nome do Produtor' : 'Digite o Título do Evento'">
                             <template v-slot:prepend>
                                 <q-icon name="search" color="primary" />
                             </template>
+                            <template v-slot:append>
+                                <q-btn @click="searchPublicEventsOrHost()" class="absolute-right" icon-right="send" color="primary"></q-btn>
+                            </template>
                         </q-input>
-                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(false)" color="blue-14" glossy class="shadow-1 q-py-md" label="Buscar por Evento"
-                            icon="event" />
-                            <q-btn :disabled="disabledSearch()" @click="searchPublicEventsOrHost(true)" color="primary" glossy class="shadow-1 q-py-md" label="Buscar por Produtor"
-                                icon="person_search" />
                     </q-card-section>
                 </q-card>
             </div>

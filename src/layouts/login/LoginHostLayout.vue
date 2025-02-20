@@ -269,7 +269,7 @@ async function registrar(){
         })
         sessionStorage.setItem('host', JSON.stringify(response.data))
         sessionStorage.setItem('isHost', true)
-        router.push('/host')
+        router.push('/host/me')
     })
     .catch(err => {
         $q.notify({

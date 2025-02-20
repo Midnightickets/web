@@ -30,7 +30,7 @@
                 </q-card-section>
             </q-card>
         </div>
-        <div v-if="!loading && events.length == 0" class="w100 text-center text-secondary" id="title-2">
+        <div v-if="!loading && events.length == 0" class="w100 text-center text-secondary q-pt-xl" id="title-2">
             Esse Host não possui nenhum evento em Andamento<br>( ˘︹˘ )
         </div>
         <div v-if="loading" class="row w100 q-pb-xl justify-center">

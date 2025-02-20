@@ -67,7 +67,12 @@
             <div class="w100 hline bg-primary"></div>
             <q-btn v-if="!loading" :disabled="checkNext()" label="Criar Evento" glossy color="green" class="q-py-xl"
                 @click="criarEvento()" icon-right="event_available" />
-            <q-btn label="voltar" flat color="primary" @click="goPrev()" />
+            <div v-if="loading" class="row w100 q-py-md q-mt-xs justify-center">
+                <q-spinner-ball color="secondary" size="lg" />
+                <q-spinner-ball color="secondary" size="lg" />
+                <q-spinner-ball color="secondary" size="lg" />
+            </div>
+            <q-btn v-if="!loading" label="voltar" flat color="primary" @click="goPrev()" />
         </div>
 
     </div>

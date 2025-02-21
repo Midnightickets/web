@@ -172,6 +172,7 @@
                             :label="editing ? 'já possui uma conta ?' : 'Crie uma conta'"
                             @click="editing = !editing"
                             color="primary"
+                            :icon-right="editing ? 'login' : 'person_add'"
                             glossy
                             class="full-width q-mt-md q-py-sm"
                         />
@@ -264,6 +265,12 @@ const isRegisterFormInvalid = () => {
     ) {
         return true
     }
+    $q.notify({
+        color: 'primary',
+        position: 'top',
+        message: 'Confira seu e-mail',
+        icon: 'email',
+    })
     return false
 }
 onMounted(() => {

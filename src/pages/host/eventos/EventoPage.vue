@@ -541,6 +541,15 @@ async function addPackage() {
         return;
     } else {
         if(limitedTickets.value.isLimited) {
+            if(limitedTickets.value.maxTickets == 0) {
+                $q.notify({
+                    color: 'secondary',
+                    position: 'top',
+                    message: 'O número máximo de ingressos deve ser maior que 0',
+                    icon: 'report_problem'
+                });
+                return;
+            }
             packageHandler.value.maxTickets = Number(limitedTickets.value.maxTickets);
         } else {
             packageHandler.value.maxTickets = 999;

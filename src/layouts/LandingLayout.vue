@@ -138,7 +138,7 @@
                     </q-toolbar>
                     <div class="w100 text-center text-grey-1 text-shadow bg-secondary q-py-md text-bold q-px-md"
                         style="font-size:1rem">
-                        REALIZE EVENTOS com A MENOR TAXA do mercado e PARE de PAGAR TRIBUTOS excessivos na VENDA DE INGRESSOS
+                        REALIZE EVENTOS com  APENAS 5% de TAXA e PARE de PAGAR TRIBUTOS excessivos na VENDA DE INGRESSOS
                     </div>
                     <div v-if="userInfo == ''" class="rounded-borders row justify-center  q-mx-md">
                         <q-card  id="email-card"

@@ -102,7 +102,7 @@
                                 <q-icon name="search" color="primary" />
                             </template>
                             <template v-slot:append>
-                                <q-btn @click="searchPublicEventsOrHost()" class="absolute-right" icon-right="send" color="primary"></q-btn>
+                                <q-btn :disabled="searchPublic.titleEventOrHostName.length < 3" @click="searchPublicEventsOrHost()" class="absolute-right" icon-right="send" color="primary"></q-btn>
                             </template>
                         </q-input>
                         <!-- <div class="w100">

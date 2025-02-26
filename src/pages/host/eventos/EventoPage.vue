@@ -254,11 +254,13 @@
                                 class="relative rounded-borders shadow-2 q-mt-md">
                                 <div class="text-bold text-primary">{{ subhost.name }}</div>
                                 <div class="text-bold text-secondary">{{ subhost.login.toLowerCase() }}</div>
-                                <q-dialog v-model="showSubhostsPassword" class="text-bold  text-primary">
-                                    <div class="w100 bg-white q-pa-xl">
-                                        {{subhost.login}}#{{subhost.password}}#{{evento.id}}
+                                <q-dialog v-model="showSubhostsPassword" class="text-bold column text-primary">
+                                    <div class="w100 column bg-grey-2">
+                                        <div class="w100 bg-white q-pa-xl">
+                                            {{subhost.login}}#{{subhost.password}}#{{evento.id}}
+                                        </div>
+                                        <q-btn  label="ok" glossy @click="showSubhostsPassword = false" color="primary"></q-btn>
                                     </div>
-                                    <q-btn label="ok" glossy @click="showSubhostsPassword = false" color="primary"></q-btn>
                                 </q-dialog>
                                 <div class="w100 row q-gutter-x-sm" v-if="evento.status.includes('andamento')">
                                     <q-btn @click="copyCredentials(subhost)" icon="file_copy" icon-right="key"
@@ -497,11 +499,11 @@ function copyCredentials(subhost) {
     navigator.clipboard.writeText(`🎫 MIDNIGHT TICKETS\n\nSegue abaixo seu código de acesso para validar ingressos no evento ${evento.value.title}:\n\n${subhost.login}#${subhost.password}#${evento.value.id}
     \nMANTENHA AS CREDENCIAIS SEGURAS E NÃO COMPARTILHE COM TERCEIROS\n\n🎟️ Acesse: https://midnightickets.com/login-subhost`);
     $q.notify({
-        color: 'blue-14',
+        color: 'green-14',
         textColor: 'white',
-        icon: 'content_paste',
+        icon: 'check',
         position: 'top',
-        message: 'Credenciais copiadas para a área de transferência',
+        message: 'Credenciais copiadas para a área de transferência e prontas para colar',
     });
 }
 

@@ -374,6 +374,38 @@
                     acompanhe o nosso desenvolvimento!
                 </div>
             </q-page>
+            <footer class="w100 row wrap justify-center items-center q-py-xl rounded-borders  bg-primary q-px-lg">
+                <q-dialog v-model="suporteType">
+                    <q-card class="rounded-borders q-pa-md">
+                        <q-card-section class="text-primary text-bold text-center">
+                            <q-icon name="support_agent" size="lg" />
+                            <div class="text-center">Selecione o Tipo de Usuário</div>
+                        </q-card-section>
+                        <q-card-section class="column q-gutter-y-md">
+                            <q-btn @click="openSuporte('host')" label="Suporte ao Produtor" color="primary" glossy class="shadow-1"></q-btn>
+                            <q-btn @click="openSuporte('user')" label="Suporte ao Usuário" color="primary" glossy class="shadow-1"></q-btn>
+                        </q-card-section>
+                    </q-card>
+                </q-dialog>
+                <div class=" column q-py-md">
+                    <q-btn label="Criar evento" to="/login-host" class="text-grey-5" flat></q-btn>
+                    <q-btn label="Validar ingressos" to="/login-subhost" class="text-grey-5" flat></q-btn>
+                    <q-btn label="Comprar ingressos" to="/login" class="text-grey-5" flat></q-btn>
+                    <q-btn label="Encontrar eventos" @click="findEvents()" class="text-grey-5" flat></q-btn>
+                </div>
+                <div class="w100 q-pt-xs bg-secondary rounded-borders"></div>
+                <div class="column q-py-md items-center">
+                    <q-btn label="Suporte" @click="suporteType = true" class="text-grey-5" flat></q-btn>
+                    <q-btn label="termos de uso" to="/termos-de-uso"  class="text-grey-5" flat></q-btn>
+                    <q-btn label="Mercado Pago" @click="goTo('https://www.mercadopago.com.br/developers/pt/docs/checkout-pro/landing')" class="text-grey-5" flat></q-btn>
+                    <q-btn label="instagram" @click="goTo('https://www.instagram.com/midnightickets')" class="text-grey-5" flat></q-btn>
+                    <q-btn label="email" @click="alertar('midnightickets@gmail.com')" class="text-grey-5" flat></q-btn>
+                    <q-btn label="desenvolvedor" @click="goTo('https://samuelvictorol.github.io/portfolio')" class="text-grey-5" flat></q-btn>
+                </div>
+                <div class="w100 row q-pt-xl items-center justify-start text-secondary" id="title-layout">
+                    Midnight Tickets 
+                </div>
+            </footer>
         </q-page-container>
         <q-page-container v-else class="q-pb-xl q-mt-md bg-grey-3">
             <div v-if="lastEvent" class="w100 row q-gutter-md justify-center rounded-borders animate__animated animate__fadeInDown animate__slower">
@@ -398,38 +430,6 @@
             </div>
             <div class="q-py-lg"></div>
         </q-page-container>
-        <footer class="w100 row wrap justify-center items-center q-py-xl bg-primary q-px-xl">
-            <q-dialog v-model="suporteType">
-                <q-card class="rounded-borders q-pa-md">
-                    <q-card-section class="text-primary text-bold text-center">
-                        <q-icon name="support_agent" size="lg" />
-                        <div class="text-center">Selecione o Tipo de Usuário</div>
-                    </q-card-section>
-                    <q-card-section class="column q-gutter-y-md">
-                        <q-btn @click="openSuporte('host')" label="Suporte ao Produtor" color="primary" glossy class="shadow-1"></q-btn>
-                        <q-btn @click="openSuporte('user')" label="Suporte ao Usuário" color="primary" glossy class="shadow-1"></q-btn>
-                    </q-card-section>
-                </q-card>
-            </q-dialog>
-            <div class=" column q-py-md">
-                <q-btn label="Crie seu evento" to="/login-host" class="text-grey-5" flat></q-btn>
-                <q-btn label="Valide ingressos" to="/login-subhost" class="text-grey-5" flat></q-btn>
-                <q-btn label="Compre ingressos" to="/login" class="text-grey-5" flat></q-btn>
-                <q-btn label="Encontre eventos" @click="findEvents()" class="text-grey-5" flat></q-btn>
-            </div>
-            <div class="w100 q-pt-xs bg-secondary rounded-borders"></div>
-            <div class="column q-py-md items-center">
-                <q-btn label="Suporte" @click="suporteType = true" class="text-grey-5" flat></q-btn>
-                <q-btn label="termos de uso" to="/termos-de-uso"  class="text-grey-5" flat></q-btn>
-                <q-btn label="Mercado Pago" @click="goTo('https://www.mercadopago.com.br/developers/pt/docs/checkout-pro/landing')" class="text-grey-5" flat></q-btn>
-                <q-btn label="instagram" @click="goTo('https://www.instagram.com/midnightickets')" class="text-grey-5" flat></q-btn>
-                <q-btn label="email" @click="alertar('midnightickets@gmail.com')" class="text-grey-5" flat></q-btn>
-                <q-btn label="desenvolvedor" @click="goTo('https://samuelvictorol.github.io/portfolio')" class="text-grey-5" flat></q-btn>
-            </div>
-            <div class="w100 row q-pt-xl items-center justify-start text-secondary" id="title-layout">
-                Midnight Tickets 
-            </div>
-        </footer>
     </q-layout>
 </template>
 <script setup>

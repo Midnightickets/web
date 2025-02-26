@@ -10,6 +10,9 @@
         <div v-if="!editing" class="w100 flex flex-center q-mb-md">
             <q-btn @click="editing = !editing" label="Criar Acesso" color="primary" glossy icon-right="add_circle"></q-btn>
         </div>
+        <div v-if="!editing" class="w100 flex flex-center q-mb-md">
+            <q-btn @click="openManual()" label="Manual do Subhost"  color="blue-14" glossy icon-right="help"></q-btn>
+        </div>
         <div v-if="editing"  class="add-subhost bg-grad-1 q-px-xl q-py-md q-gutter-y-sm text-bold row justify-center q-mb-xl  q-mt-sm animate__animated animate__fadeIn shadow-2">
             <q-input maxlength="30" v-model="subhostHandler.name" dense  class="rounded-borders w80 bg-grey-4 q-px-sm text-white" color="primary" placeholder="Título*">
                 <template v-slot:prepend>
@@ -169,7 +172,9 @@ onMounted( async () => {
         loading.value = false;
     });
 });
-
+function openManual() {
+    window.open('/Manual-do-Subhost.pdf', '_blank')
+}
 
 </script>
 

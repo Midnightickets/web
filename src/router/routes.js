@@ -57,6 +57,7 @@ const routes = [
       { path: 'andamento-evento', component: () => import('src/pages/host/eventos/AndamentoEventoPage.vue') },
       { path: 'saques', component: () => import('src/pages/host/SaquesPage.vue') },
       { path: 'me', component: () => import('src/pages/host/HostPerfilPage.vue') },
+      { path: 'gerar-ingresso', component: () => import('src/pages/host/GerarIngressoPage.vue') },
     ]
   },
   {

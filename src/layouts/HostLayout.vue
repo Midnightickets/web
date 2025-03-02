@@ -107,8 +107,9 @@ const router = useRouter()
 const menuOptions = ref({
     items: [
         // HOST MENUS
-        { label: 'Eventos', icon: 'calendar_month', to: '/host', role: 'host' },
         { label: 'Acessos', icon: 'sensor_occupied', to: '/host/acessos', role: 'host' },
+        { label: 'Eventos', icon: 'calendar_month', to: '/host', role: 'host' },
+        { label: 'Gerar Ingresso', icon: 'confirmation_number', to: '/host/gerar-ingresso', role: 'host' },
         { label: 'Saques', icon: 'currency_exchange', to: '/host/saques', role: 'host' },
         // { label: 'Suporte', icon: 'support_agent', to: 'https://samuelvictorol.github.io/portfolio/contato', selected: false },
     ]
